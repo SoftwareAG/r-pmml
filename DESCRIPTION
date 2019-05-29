@@ -1,0 +1,50 @@
+Package: pmml
+Type: Package
+Title: Generate PMML for Various Models
+Version: 1.5.7.9000
+Authors@R: c(
+    person("Graham", "Williams", email = "graham.williams@togaware.net", role = "aut"),
+    person("Tridivesh", "Jena", email = "tridivesh.jena@softwareag.com", role = "aut"),
+    person("Wen-Ching", "Lin", role = "aut"),
+    person("Michael", "Hahsler", email = "michael@hahsler.net", role = "aut"),
+    person("Hemant", "Ishwaran", role = "aut"),
+    person("Udaya B.", "Kogalur", role = "aut"),
+    person("Rajarshi", "Guha", email = "rguha@indiana.edu", role = "aut"),
+    person("Dmitriy", "Bolotov", email = "rpmmlsupport@softwareag.com", role = c("aut", "cre")),
+    person("Software AG", role = c("cph")))
+Depends:
+    XML
+Suggests:
+    ada,
+    amap,
+    arules,
+    caret,
+    clue,
+    data.table,
+    gbm,
+    glmnet,
+    Matrix,
+    neighbr,
+    nnet,
+    rpart,
+    randomForestSRC (<= 2.5.0),
+    randomForest,
+    kernlab,
+    e1071,
+    testthat,
+    survival,
+    xgboost,
+    knitr,
+    rmarkdown
+Imports:
+    methods,
+    stats,
+    utils,
+    stringr
+License: GPL-3 | file LICENSE
+Description: The Predictive Model Markup Language (PMML) is an XML-based language which provides a way for applications to define machine learning, statistical and data mining models and to share models between PMML compliant applications. More information about the PMML industry standard and the Data Mining Group can be found at <http://www.dmg.org>. The generated PMML can be imported into any PMML consuming application, such as Zementis Predictive Analytics products, which integrate with web services, relational database systems and deploy natively on Hadoop in conjunction with Hive, Spark or Storm, as well as allow predictive analytics to be executed for IBM z Systems mainframe applications and real-time, streaming analytics platforms. The package isofor (used for anomaly detection) can be installed with devtools::install_github("Zelazny7/isofor").
+URL: https://www.softwareag.com/zementis
+NeedsCompilation: no
+RoxygenNote: 6.1.1
+VignetteBuilder: knitr
+Encoding: UTF-8
