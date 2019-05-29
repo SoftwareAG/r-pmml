@@ -7,3 +7,5 @@ tests/testthat/test_pmml_integration.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^CODE_OF_CONDUCT\.md$
+^docs$
+^pkgdown$
