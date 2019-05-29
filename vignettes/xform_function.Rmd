@@ -1,7 +1,5 @@
 ---
 title: "Introduction to xform_function"
-author: "Dmitriy Bolotov"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to xform_function}
