@@ -65,7 +65,7 @@ The following functions are used to transform input data.
 The following functions allow additional operations, such as creating specific nodes and adding attributes. For more information, check the documentation for each function.
 
 - add_attributes: add attribute values to an existing element in a given PMML file.
-- AddDDAttributes: add attribute values to an existing DataField element in a given PMML file.
+- add_data_field_attributes: add attribute values to an existing DataField element in a given PMML file.
 - add_data_field_children: add 'Interval' and 'Value' child elements to a given DataField element in a given PMML file.
 - add_mining_field_attributes: add attribute values to an existing MiningField element in a given PMML file.
 - add_output_field: add Output nodes to a PMML object.

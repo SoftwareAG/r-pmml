@@ -35,7 +35,7 @@ Add attribute values to an existing element in a given PMML file.
 \details{
 Add attributes to an arbitrary XML element. This is an experimental
 function designed to be more general than the 'add_mining_field_attributes' and
-'add_data_field_attriubutes' functions.
+'add_data_field_attributes' functions.
 
 The attribute information can be provided as a vector. Multiple attribute
 names and values can be passes as vector elements to enable inserting

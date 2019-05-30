@@ -83,11 +83,11 @@
 #' # as invalid.
 #' attributes[] <- lapply(attributes, as.character)
 #'
-#' add_data_field_attriubutes(model, attributes, namespace = "4_3")
+#' add_data_field_attributes(model, attributes, namespace = "4_3")
 #'
 #' # Alternative method to add attributes to a single field,
 #' # "Sepal.Width":
-#' add_data_field_attriubutes(
+#' add_data_field_attributes(
 #'   model, c(displayName = "FlowerWidth", isCyclic = 1),
 #'   "Sepal.Width"
 #' )
@@ -105,7 +105,7 @@
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export
-add_data_field_attriubutes <- function(xml_model = NULL, attributes = NULL, field = NULL, namespace = "4_3", ...) {
+add_data_field_attributes <- function(xml_model = NULL, attributes = NULL, field = NULL, namespace = "4_3", ...) {
 
   # Flush to avoid malloc error.
   flush.console()
