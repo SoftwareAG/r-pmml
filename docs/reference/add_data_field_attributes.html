@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add 'Interval' and 'Value' child elements to a given DataField element in a
-given PMML file. — add_data_field_children • pmml</title>
+<title>Add attribute values to an existing DataField element in a given PMML file — add_data_field_attributes • pmml</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,11 +30,9 @@ given PMML file. — add_data_field_children • pmml</title>
 
 
 
-<meta property="og:title" content="Add 'Interval' and 'Value' child elements to a given DataField element in a
-given PMML file. — add_data_field_children" />
+<meta property="og:title" content="Add attribute values to an existing DataField element in a given PMML file — add_data_field_attributes" />
 
-<meta property="og:description" content="Add 'Interval' and 'Value' child elements to a given DataField element in a
-given PMML file." />
+<meta property="og:description" content="Add attribute values to an existing DataField element in a given PMML file" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -115,21 +112,19 @@ given PMML file." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add 'Interval' and 'Value' child elements to a given DataField element in a
-given PMML file.</h1>
+    <h1>Add attribute values to an existing DataField element in a given PMML file</h1>
     
-    <div class="hidden name"><code>add_data_field_children.Rd</code></div>
+    <div class="hidden name"><code>add_data_field_attributes.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Add 'Interval' and 'Value' child elements to a given DataField element in a
-given PMML file.</p>
+    <p>Add attribute values to an existing DataField element in a given PMML file</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>add_data_field_children</span>(<span class='kw'>xml_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>add_data_field_attributes</span>(<span class='kw'>xml_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,23 +136,20 @@ file, it should be converted to an XML node, for example, using the
 file_to_xml_node function.</p></td>
     </tr>
     <tr>
+      <th>attributes</th>
+      <td><p>The attributes to be added to the data fields. The user
+should make sure that the attributes being added are allowed in the PMML
+schema.</p></td>
+    </tr>
+    <tr>
       <th>field</th>
       <td><p>The field to which the attributes are to be added. This is used
 when the attributes are a vector of name-value pairs, intended for this one
 field.</p></td>
     </tr>
     <tr>
-      <th>intervals</th>
-      <td><p>The 'Interval' elements given as a list</p></td>
-    </tr>
-    <tr>
-      <th>values</th>
-      <td><p>The 'Value' elements given as a list.</p></td>
-    </tr>
-    <tr>
       <th>namespace</th>
-      <td><p>The namespace of the PMML model. This is frequently also
-the PMML version of the model.</p></td>
+      <td><p>The namespace of the PMML model. This is frequently also the PMML version of the model.</p></td>
     </tr>
     <tr>
       <th>&#8230;</th>
@@ -173,14 +165,21 @@ type PMML. It can be written to file with <code>saveXML</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The PMML format allows a DataField element to have 'Interval' and 'Value'
-child elements which although useful, may not always be present in a PMML
-model. This function allows one to take an existing PMML file and add these
-elements to the DataFields.</p>
-<p>The 'Interval' elements or the 'Value' elements can be typed in, but more
-conviniently created by using the helper functions 'make_intervals' and
-'MakeValues'. This function can then add these extra information to the
-PMML.</p>
+    <p>The PMML format allows a DataField element to have various attributes,
+which, although useful, may not always be present in a PMML model. This
+function allows one to take an existing PMML file and add these attributes
+to the DataFields.</p>
+<p>The attribute information can be provided as a dataframe or a vector. Each
+row of the data frame corresponds to an attribute name and each column
+corresponding to a variable name. This way one can add as many attributes to
+as many variables as one wants in one step. A more convinient method to add
+multiple attributes to one field might be to give the attribute name and
+values as a vector. This function may be used multiple times to add new
+attribute values step-by-step. However this function overwrites any
+pre-existing attribute values, so it must be used with care. This behavior
+is by design as this feature is meant to help an user add new defined
+attribute values at different times. For example, one may use this to modify
+the display name of a field at different times.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -188,28 +187,72 @@ PMML.</p>
 <span class='no'>model0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model0</span>)
 
-<span class='co'># The resulting model has data fields but with no 'Interval' or Value'</span>
-<span class='co'># elements. This object is already an xml node (not an external text</span>
-<span class='co'># file), so there is no need to convert it to an xml node object.</span>
+<span class='co'># The resulting model has mining fields with no information besides</span>
+<span class='co'># fieldName, dataType and optype. This object is already an xml</span>
+<span class='co'># node (not an external text file), so there is no need to convert</span>
+<span class='co'># it to an xml node object.</span>
 
-<span class='co'># Add an 'Interval' element node by typing it in</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>,
-  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>,
-  <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'>newXMLNode</span>(<span class='st'>"Interval"</span>,
-    <span class='kw'>attrs</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>closure</span> <span class='kw'>=</span> <span class='st'>"openClosed"</span>, <span class='kw'>rightMargin</span> <span class='kw'>=</span> <span class='fl'>3</span>)
-  ))
+<span class='co'># Create data frame with attribute information:</span>
+
+<span class='no'>attributes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FlowerWidth"</span>, <span class='fl'>1</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"FlowerLength"</span>, <span class='fl'>0</span>),
+  <span class='kw'>stringAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span>(<span class='no'>attributes</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"displayName"</span>, <span class='st'>"isCyclic"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>attributes</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Sepal.Width"</span>, <span class='st'>"Petal.Length"</span>)
+
+<span class='co'># Although not needed in this first try, necessary to easily add</span>
+<span class='co'># new values later. Removes values as factors so that new values</span>
+<span class='co'># added later are not evaluated as factor values and thus rejected</span>
+<span class='co'># as invalid.</span>
+<span class='no'>attributes</span>[] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>attributes</span>, <span class='no'>as.character</span>)
+
+<span class='fu'>add_data_field_attributes</span>(<span class='no'>model</span>, <span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>)</div><div class='output co'>#&gt; [1] "WARNING: the following field additions will be ignored"
+#&gt; NA not in model</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
+#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
+#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
+#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
+#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
+#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:01&lt;/Timestamp&gt;
+#&gt;   &lt;/Header&gt;
+#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
+#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
+#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double" displayName="FlowerWidth" isCyclic="1"/&gt;
+#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double" displayName="FlowerLength" isCyclic="0"/&gt;
+#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
+#&gt;   &lt;/DataDictionary&gt;
+#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
+#&gt;     &lt;MiningSchema&gt;
+#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
+#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
+#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
+#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
+#&gt;     &lt;/MiningSchema&gt;
+#&gt;     &lt;Output&gt;
+#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
+#&gt;     &lt;/Output&gt;
+#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
+#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
+#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
+#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
+#&gt;     &lt;/RegressionTable&gt;
+#&gt;   &lt;/RegressionModel&gt;
+#&gt; &lt;/PMML&gt;
+#&gt;  </div><div class='input'>
+<span class='co'># Alternative method to add attributes to a single field,</span>
+<span class='co'># "Sepal.Width":</span>
+<span class='fu'>add_data_field_attributes</span>(
+  <span class='no'>model</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>displayName</span> <span class='kw'>=</span> <span class='st'>"FlowerWidth"</span>, <span class='kw'>isCyclic</span> <span class='kw'>=</span> <span class='fl'>1</span>),
+  <span class='st'>"Sepal.Width"</span>
 )</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
 #&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
 #&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
 #&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
 #&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:02&lt;/Timestamp&gt;
+#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:01&lt;/Timestamp&gt;
 #&gt;   &lt;/Header&gt;
 #&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;Interval closure="openClosed" rightMargin="3"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
+#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
+#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double" displayName="FlowerWidth" isCyclic="1"/&gt;
 #&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
 #&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
 #&gt;   &lt;/DataDictionary&gt;
@@ -231,72 +274,30 @@ PMML.</p>
 #&gt;   &lt;/RegressionModel&gt;
 #&gt; &lt;/PMML&gt;
 #&gt;  </div><div class='input'>
-<span class='co'># Use helper functions to create list of 'Interval' and 'Value'</span>
-<span class='co'># elements. We define the 3 Intervals as ,1]  (1,2)  and [2,</span>
+
 <span class='no'>mi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_intervals.html'>make_intervals</a></span>(
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"openClosed"</span>, <span class='st'>"openOpen"</span>, <span class='st'>"closedOpen"</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"openClosed"</span>, <span class='st'>"closedClosed"</span>, <span class='st'>"closedOpen"</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>NULL</span>, <span class='fl'>1</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='kw'>NULL</span>)
 )
-
-<span class='co'># Define 3 values, none with a 'displayValue' attribute and 1 value</span>
-<span class='co'># defined as 'invalid'. The 2nd one is 'valid' by default.</span>
 <span class='no'>mv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_values.html'>make_values</a></span>(
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fl'>1.1</span>, <span class='fl'>2.2</span>, <span class='fl'>3.3</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>NULL</span>, <span class='kw'>NULL</span>, <span class='kw'>NULL</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>NULL</span>, <span class='kw'>NULL</span>, <span class='kw'>NULL</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"valid"</span>, <span class='kw'>NULL</span>, <span class='st'>"invalid"</span>)
 )
-
-<span class='co'># As an example, apply these to the Sepal.Length field:</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
+<span class='fu'><a href='add_data_field_children.html'>add_data_field_children</a></span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
 #&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
 #&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
 #&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
 #&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:02&lt;/Timestamp&gt;
+#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:01&lt;/Timestamp&gt;
 #&gt;   &lt;/Header&gt;
 #&gt;   &lt;DataDictionary numberOfFields="4"&gt;
 #&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
 #&gt;       &lt;Interval closure="openClosed" rightMargin="1"/&gt;
-#&gt;       &lt;Interval closure="openOpen" leftMargin="1" rightMargin="2"/&gt;
+#&gt;       &lt;Interval closure="closedClosed" leftMargin="1" rightMargin="2"/&gt;
 #&gt;       &lt;Interval closure="closedOpen" leftMargin="2"/&gt;
-#&gt;       &lt;Value value="1.1" property="valid"/&gt;
-#&gt;       &lt;Value value="2.2"/&gt;
-#&gt;       &lt;Value value="3.3" property="invalid"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div><div class='input'>
-<span class='co'># Only defined 'Interval's:</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-05-30 14:34:02&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="openClosed" rightMargin="1"/&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="openOpen" leftMargin="1" rightMargin="2"/&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="closedOpen" leftMargin="2"/&gt;
+#&gt;       &lt;Value value="A" property="valid"/&gt;
+#&gt;       &lt;Value value="B"/&gt;
+#&gt;       &lt;Value value="C" property="invalid"/&gt;
 #&gt;     &lt;/DataField&gt;
 #&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
 #&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;

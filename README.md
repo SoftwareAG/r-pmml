@@ -11,7 +11,14 @@ status](https://www.r-pkg.org/badges/version/pmml)](https://cran.r-project.org/p
 
 ## Overview
 
-Generate PMML for various machine learning and statistical models.
+This package contains functions to export various machine learning and
+statistical models to PMML, as well as generate data transformations in
+PMML format.
+
+For a description of the supported packages, see the [Supported Packages
+and Additional
+Functions](https://softwareag.github.io/r-pmml/articles/packages_and_functions.html)
+vignette.
 
 ## Installation
 

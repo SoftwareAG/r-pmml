@@ -15,12 +15,15 @@ knitr::opts_chunk$set(
 ```
 ## Introduction
 
-This vignette lists the packages and model types supported by **pmml**, as well as functions that extend the basic exporter functionality.
+This vignette lists the packages and model types supported by **pmml**, as well as data transformations and functions that extend the basic exporter functionality.
 
 ## Supported packages
 
 This package supports the following packages and model types are supported:
 
+- Anomaly Detection
+    - [isofor](https://github.com/Zelazny7/isofor): `iForest`
+    - [e1071](https://CRAN.R-project.org/package=e1071): `svm` with "one-classification" type
 - Clustering
     - [amap](https://CRAN.R-project.org/package=amap): `hclust`
     - [neighbr](https://CRAN.R-project.org/package=neighbr): `neighbr`
@@ -37,7 +40,7 @@ This package supports the following packages and model types are supported:
     - [nnet](https://CRAN.R-project.org/package=nnet): `nnet`
 - Support Vector Machines
     - [e1071](https://CRAN.R-project.org/package=e1071): `svm`
-    - [kernlab](https://CRAN.R-project.org/package=kernlab): `ksvm` with "rbfdot", "polydot", "vanilladot", and "tanhdot" kernels.
+    - [kernlab](https://CRAN.R-project.org/package=kernlab): `ksvm` with "rbfdot", "polydot", "vanilladot", and "tanhdot" kernels
 - Tree-based Models and Ensembles
     - [ada](https://CRAN.R-project.org/package=ada): `ada`
     - [gbm](https://CRAN.R-project.org/package=gbm): `gbm` with "bernoulli", "poisson", and "multinomial" distribution types
@@ -60,6 +63,7 @@ The following functions are used to transform input data.
 - xform_norm_discrete: normalize discrete values.
 - xform_z_score: apply z-score normalization to continuous values.
 
+The general methodology is to first wrap the data with xform_wrap, and then perform transformations using the above functions.
 
 ## Additional functions
 The following functions allow additional operations, such as creating specific nodes and adding attributes. For more information, check the documentation for each function.

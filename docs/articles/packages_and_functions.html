@@ -89,13 +89,22 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This vignette lists the packages and model types supported by <strong>pmml</strong>, as well as functions that extend the basic exporter functionality.</p>
+<p>This vignette lists the packages and model types supported by <strong>pmml</strong>, as well as data transformations and functions that extend the basic exporter functionality.</p>
 </div>
 <div id="supported-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#supported-packages" class="anchor"></a>Supported packages</h2>
 <p>This package supports the following packages and model types are supported:</p>
 <ul>
+<li>Anomaly Detection
+<ul>
+<li>
+<a href="https://github.com/Zelazny7/isofor">isofor</a>: <code>iForest</code>
+</li>
+<li>
+<a href="https://CRAN.R-project.org/package=e1071">e1071</a>: <code>svm</code> with “one-classification” type</li>
+</ul>
+</li>
 <li>Clustering
 <ul>
 <li>
@@ -145,7 +154,7 @@
 <a href="https://CRAN.R-project.org/package=e1071">e1071</a>: <code>svm</code>
 </li>
 <li>
-<a href="https://CRAN.R-project.org/package=kernlab">kernlab</a>: <code>ksvm</code> with “rbfdot”, “polydot”, “vanilladot”, and “tanhdot” kernels.</li>
+<a href="https://CRAN.R-project.org/package=kernlab">kernlab</a>: <code>ksvm</code> with “rbfdot”, “polydot”, “vanilladot”, and “tanhdot” kernels</li>
 </ul>
 </li>
 <li>Tree-based Models and Ensembles
@@ -192,6 +201,7 @@
 <li>xform_norm_discrete: normalize discrete values.</li>
 <li>xform_z_score: apply z-score normalization to continuous values.</li>
 </ul>
+<p>The general methodology is to first wrap the data with xform_wrap, and then perform transformations using the above functions.</p>
 </div>
 <div id="additional-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -199,7 +209,7 @@
 <p>The following functions allow additional operations, such as creating specific nodes and adding attributes. For more information, check the documentation for each function.</p>
 <ul>
 <li>add_attributes: add attribute values to an existing element in a given PMML file.</li>
-<li>AddDDAttributes: add attribute values to an existing DataField element in a given PMML file.</li>
+<li>add_data_field_attributes: add attribute values to an existing DataField element in a given PMML file.</li>
 <li>add_data_field_children: add ‘Interval’ and ‘Value’ child elements to a given DataField element in a given PMML file.</li>
 <li>add_mining_field_attributes: add attribute values to an existing MiningField element in a given PMML file.</li>
 <li>add_output_field: add Output nodes to a PMML object.</li>
@@ -237,7 +247,7 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Graham Williams, Tridivesh Jena, Wen-Ching Lin, Michael Hahsler, Hemant Ishwaran, Udaya B. Kogalur, Rajarshi Guha, Dmitriy Bolotov.</p>
+  <p>Developed by Dmitriy Bolotov, Tridivesh Jena, Graham Williams, Wen-Ching Lin, Michael Hahsler, Hemant Ishwaran, Udaya B. Kogalur, Rajarshi Guha.</p>
 </div>
 
 <div class="pkgdown">

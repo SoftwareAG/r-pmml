@@ -84,8 +84,8 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Graham Williams \email{graham.williams@togaware.net}
   \item Tridivesh Jena \email{tridivesh.jena@softwareag.com}
+  \item Graham Williams \email{graham.williams@togaware.net}
   \item Wen-Ching Lin
   \item Michael Hahsler \email{michael@hahsler.net}
   \item Hemant Ishwaran
