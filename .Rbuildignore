@@ -9,3 +9,4 @@ tests/testthat/test_pmml_integration.R
 ^docs$
 ^pkgdown$
 ^revdep$
+^CRAN-RELEASE$
