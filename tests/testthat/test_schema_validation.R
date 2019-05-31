@@ -1,7 +1,6 @@
 context("test schema validation")
 
 library(amap)
-library(isofor)
 library(clue)
 library(data.table)
 library(glmnet)
@@ -139,6 +138,11 @@ zmz_transform_audit <- function(box_obj) {
 schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20180731_43.xsd")
 
 test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
+  
+  skip_on_cran()
+  
+  library(isofor)
+  
   fit <- iForest(iris, nt = 10, phi = 30)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
