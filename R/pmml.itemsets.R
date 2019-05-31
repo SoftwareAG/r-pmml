@@ -18,6 +18,7 @@
 # GNU General Public License for details (http://www.gnu.org/licenses/).
 # #############################################################################
 
+#' @export
 pmml.itemsets <- function(model,
                           model_name = "arules_Model",
                           app_name = "SoftwareAG PMML Generator",
