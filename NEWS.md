@@ -1,9 +1,15 @@
-# pmml 1.5.7.9000
-  * Transformation functions from `pmmlTransformations` are now in this package.
+# pmml 2.0.0
 
-  * Tidyverse style has been applied to exported functions.
+## Major Changes
+  * Transformation functions from `pmmlTransformations` have been merged into `pmml`.
 
-  * All documentation is now created with roxygen.
+  * Exported functions conform to the tidyverse style. Function and parameter names have been changed to snake case.
+
+## Other Changes
+
+  * All documentation is created with roxygen.
+
+  * Fixed documentation to be uniform across different exporters.
 
 # pmml 1.5.7
   * Add support for one-class svm (anomaly detection) models from e1071
