@@ -1,11 +1,11 @@
 ^cran-comments.md$
 ^README\.Rmd$
-^LICENSE\.md$
 ^.Renviron$
 ^\.github$
 tests/testthat/test_pmml_integration.R
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^CODE_OF_CONDUCT\.md$
+^\.github$
 ^docs$
 ^pkgdown$
+^revdep$

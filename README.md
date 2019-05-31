@@ -47,8 +47,9 @@ iris_lm_pmml <- pmml(iris_lm)
 -----
 
 Please note that the ‘pmml’ project is released with a [Contributor Code
-of Conduct](CODE_OF_CONDUCT.md). By contributing to this project, you
-agree to abide by its terms.
+of
+Conduct](https://github.com/SoftwareAG/r-pmml/blob/master/.github/CODE_OF_CONDUCT.md).
+By contributing to this project, you agree to abide by its terms.
 
 These tools are provided as-is and without warranty or support. They do
 not constitute part of the Software AG product suite. Users are free to
