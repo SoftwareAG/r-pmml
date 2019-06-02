@@ -28,4 +28,4 @@ New result: NOTE
   Undefined global functions or variables:
     pmml.itemsets
 
-This note is due to the method not being explicitly exported in the namespace. We have added an explicit export, and will deprecate properly in the future.
+This note is due to the method not being explicitly exported in the namespace. We have added an explicit export.
