@@ -66,8 +66,8 @@
 #' @references
 #' \href{https://github.com/Zelazny7/isofor}{isofor package on GitHub}
 #'
+#' @export pmml.iForest
 #' @export
-
 pmml.iForest <- function(model,
                          model_name = "isolationForest_Model",
                          app_name = "SoftwareAG PMML Generator",

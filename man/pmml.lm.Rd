@@ -46,6 +46,7 @@ fit <- lm(Sepal.Length ~ ., data = iris)
 pmml(fit)
 
 rm(fit)
+
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html}{R project: Fitting Linear Models}

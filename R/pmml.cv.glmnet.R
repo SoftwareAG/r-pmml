@@ -84,6 +84,8 @@
 #' # Output the regression model in PMML format at the lambda
 #' # parameter = 0.006:
 #' pmml(model2, s = 0.006)
+#' 
+#' @export pmml.cv.glmnet
 #' @export
 pmml.cv.glmnet <- function(model,
                            model_name = "Elasticnet_Model",

@@ -51,6 +51,8 @@
 #' pmml(iris.rf)
 #'
 #' rm(iris.rf)
+#' 
+#' @export pmml.randomForest
 #' @export
 pmml.randomForest <- function(model,
                               model_name = "randomForest_Model",

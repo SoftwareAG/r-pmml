@@ -51,6 +51,8 @@
 #' model <- ksvm(Species ~ ., data = iris)
 #'
 #' p <- pmml(model, dataset = iris)
+#' 
+#' @export pmml.ksvm
 #' @export
 pmml.ksvm <- function(model,
                       model_name = "SVM_model",

@@ -46,8 +46,9 @@
 #' fit <- rpart(Species ~ ., data = iris)
 #'
 #' pmml(fit)
+#' 
+#' @export pmml.rpart
 #' @export
-
 pmml.rpart <- function(model,
                        model_name = "RPart_Model",
                        app_name = "SoftwareAG PMML Generator",

@@ -51,6 +51,8 @@
 #' colnames(ds) <- c("Dimension1", "Dimension2")
 #' cl <- kmeans(ds, 2)
 #' pmml(cl)
+#' 
+#' @export pmml.kmeans
 #' @export
 pmml.kmeans <- function(model,
                         model_name = "KMeans_Model",

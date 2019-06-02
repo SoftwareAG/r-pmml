@@ -106,6 +106,7 @@
 #' )
 #' }
 #'
+#' @export pmml.xgb.Booster
 #' @export
 pmml.xgb.Booster <- function(model,
                              model_name = "xboost_Model",

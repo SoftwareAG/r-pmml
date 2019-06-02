@@ -63,6 +63,8 @@
 #' # The PMML will include a regression model to read the gbm object outputs
 #' # and convert to a "response" prediction type.
 #' pmml(mod2)
+#' 
+#' @export pmml.gbm
 #' @export
 pmml.gbm <- function(model,
                      model_name = "GBM_Model",

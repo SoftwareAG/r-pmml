@@ -64,6 +64,7 @@
 #' pmml(veteran_mod)
 #' }
 #'
+#' @export pmml.rfsrc
 #' @export
 pmml.rfsrc <- function(model,
                        model_name = "rsf_Model",

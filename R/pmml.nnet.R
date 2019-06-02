@@ -44,6 +44,8 @@
 #' pmml(fit)
 #'
 #' rm(fit)
+#' 
+#' @export pmml.nnet
 #' @export
 pmml.nnet <- function(model,
                       model_name = "NeuralNet_model",

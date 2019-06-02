@@ -45,6 +45,8 @@
 #' pmml(fit)
 #'
 #' rm(fit)
+#' 
+#' @export pmml.lm
 #' @export
 pmml.lm <- function(model,
                     model_name = "lm_Model",

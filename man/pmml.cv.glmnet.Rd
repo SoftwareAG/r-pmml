@@ -87,6 +87,7 @@ model2 <- cv.glmnet(x, y, family = "poisson")
 # Output the regression model in PMML format at the lambda
 # parameter = 0.006:
 pmml(model2, s = 0.006)
+
 }
 \references{
 \href{https://CRAN.R-project.org/package=glmnet}{glmnet: Lasso and

@@ -55,6 +55,7 @@ iris.rf <- randomForest(Species ~ ., data = iris, ntree = 20)
 pmml(iris.rf)
 
 rm(iris.rf)
+
 }
 \references{
 \href{https://CRAN.R-project.org/package=randomForest}{randomForest:

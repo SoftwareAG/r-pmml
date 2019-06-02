@@ -15,3 +15,17 @@ Old maintainer(s):
   Tridivesh Jena <rpmmlsupport@softwareag.com>
 
 The maintainer has changed.
+
+
+There was 1 NOTE during reverse dependency checks:
+
+Changes to worse in reverse depends:
+
+Package: fpmoutliers
+Check: R code for possible problems
+New result: NOTE
+  generatePMML: no visible global function definition for â€˜pmml.itemsetsâ€™
+  Undefined global functions or variables:
+    pmml.itemsets
+
+This note is due to the method not being explicitly exported in the namespace. We have added an explicit export, and will deprecate properly in the future.

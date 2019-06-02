@@ -38,7 +38,7 @@
 #' \href{https://CRAN.R-project.org/package=arules}{arules: Mining Association
 #' Rules and Frequent Itemsets}
 #'
-#'
+#' @export pmml.rules
 #' @export
 pmml.rules <- function(model,
                        model_name = "arules_Model",

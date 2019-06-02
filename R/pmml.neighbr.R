@@ -108,6 +108,7 @@
 #' @seealso \code{\link[pmml]{pmml}},
 #' \href{http://dmg.org/pmml/v4-3/KNN.html}{PMML KNN specification}
 #'
+#' @export pmml.neighbr
 #' @export
 pmml.neighbr <- function(model,
                          model_name = "kNN_model",

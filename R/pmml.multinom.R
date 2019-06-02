@@ -41,6 +41,7 @@
 #' \href{https://CRAN.R-project.org/package=nnet}{nnet: Feed-forward
 #' Neural Networks and Multinomial Log-Linear Models (on CRAN)}
 #'
+#' @export pmml.multinom
 #' @export
 pmml.multinom <- function(model,
                           model_name = "multinom_Model",

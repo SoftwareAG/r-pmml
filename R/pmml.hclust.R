@@ -70,6 +70,7 @@
 #' pmml(model, centers = centerInfo)
 #' }
 #'
+#' @export pmml.hclust
 #' @export
 pmml.hclust <- function(model,
                         model_name = "HClust_Model",

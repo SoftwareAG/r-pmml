@@ -68,6 +68,7 @@ dat$Species_setosa <- iris$Species == "setosa"
 mod <- glm(Species_setosa ~ ., data = dat, family = binomial(logit))
 mod_pmml <- pmml(mod)
 rm(dat, mod, mod_pmml)
+
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html}{R project: Fitting Generalized Linear Models}

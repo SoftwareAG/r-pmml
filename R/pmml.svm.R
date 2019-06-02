@@ -103,6 +103,7 @@
 #' @seealso \code{\link[pmml]{pmml}},
 #' \href{http://dmg.org/pmml/v4-3/SupportVectorMachine.html}{PMML SVM specification}
 #'
+#' @export pmml.svm
 #' @export
 pmml.svm <- function(model,
                      model_name = "LIBSVM_Model",

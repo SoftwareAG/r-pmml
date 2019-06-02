@@ -66,6 +66,8 @@
 #' mod <- glm(Species_setosa ~ ., data = dat, family = binomial(logit))
 #' mod_pmml <- pmml(mod)
 #' rm(dat, mod, mod_pmml)
+#' 
+#' @export pmml.glm
 #' @export
 pmml.glm <- function(model,
                      model_name = "General_Regression_Model",
