@@ -13,3 +13,5 @@ New maintainer:
   Dmitriy Bolotov <rpmmlsupport@softwareag.com>
 Old maintainer(s):
   Tridivesh Jena <rpmmlsupport@softwareag.com>
+
+The maintainer has changed.
