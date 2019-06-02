@@ -41,6 +41,7 @@
 #' \href{https://CRAN.R-project.org/package=survival}{coxph: Survival
 #' Analysis}
 #'
+#'@export
 pmml.coxph <- function(model,
                        model_name = "CoxPH_Survival_Regression_Model",
                        app_name = "SoftwareAG PMML Generator",
