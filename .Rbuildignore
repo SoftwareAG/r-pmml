@@ -10,3 +10,4 @@ tests/testthat/test_pmml_integration.R
 ^pkgdown$
 ^revdep$
 ^CRAN-RELEASE$
+^\.travis\.yml$
