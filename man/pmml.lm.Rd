@@ -43,9 +43,8 @@ terms. Currently, only numeric regression is supported.
 \examples{
 
 fit <- lm(Sepal.Length ~ ., data = iris)
-pmml(fit)
+fit_pmml <- pmml(fit)
 
-rm(fit)
 
 }
 \references{

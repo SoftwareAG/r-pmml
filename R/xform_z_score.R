@@ -78,11 +78,11 @@
 #' # Petal.Length, and Petal.Width. The 4 new derived variables
 #' # will be named derived_Sepal.Length, derived_Sepal.Width,
 #' # derived_Petal.Length, and derived_Petal.Width
-#' xform_z_score(iris_box)
+#' iris_box_1 <- xform_z_score(iris_box)
 #'
 #' # Perform a z-transform on the 1st column of the dataset (Sepal.Length)
 #' # and give the derived variable the name "dsl"
-#' xform_z_score(iris_box, xform_info = "column1 -> dsl")
+#' iris_box_2 <- xform_z_score(iris_box, xform_info = "column1 -> dsl")
 #'
 #' # Repeat the above operation; adding the new transformed variable
 #' # to the iris_box object
@@ -91,11 +91,11 @@
 #' # Transform Sepal.Width(the 2nd column)
 #' # The new transformed variable will be given the default name
 #' # "derived_Sepal.Width"
-#' xform_z_score(iris_box, xform_info = "column2")
+#' iris_box_3 <- xform_z_score(iris_box, xform_info = "column2")
 #'
 #' # Repeat the same operation as above, this time using the variable
 #' # name
-#' xform_z_score(iris_box, xform_info = "Sepal.Width")
+#' iris_box_4 <- xform_z_score(iris_box, xform_info = "Sepal.Width")
 #'
 #' # Repeat the same operation as above, assign the transformed variable
 #' # "derived_Sepal.Width". The value of 1.0 if the input value of the
@@ -105,6 +105,7 @@
 #'   xform_info = "Sepal.Width",
 #'   "map_missing_to=1.0"
 #' )
+#' 
 #' @export
 xform_z_score <-
   function(wrap_object, xform_info = NA, map_missing_to = NA, ...) {

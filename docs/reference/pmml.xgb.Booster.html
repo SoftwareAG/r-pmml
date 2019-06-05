@@ -246,7 +246,7 @@ saved file is needed as an input as well.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/xgboost/topics/xgb.dump'>xgb.dump</a></span>(<span class='no'>model1</span>, <span class='st'>"model1.dumped.trees"</span>)
 
 <span class='co'># Convert to PMML:</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model1</span>,
+<span class='no'>model1_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model1</span>,
   <span class='kw'>input_feature_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>train</span>$<span class='no'>data</span>),
   <span class='kw'>output_label_name</span> <span class='kw'>=</span> <span class='st'>"prediction1"</span>,
   <span class='kw'>output_categories</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"0"</span>, <span class='st'>"1"</span>),
@@ -265,7 +265,7 @@ saved file is needed as an input as well.</p>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/xgboost/topics/xgb.dump'>xgb.dump</a></span>(<span class='no'>model2</span>, <span class='st'>"model2.dumped.trees"</span>)
 
 <span class='co'># Convert to PMML:</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model2</span>,
+<span class='no'>model2_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model2</span>,
   <span class='kw'>input_feature_names</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])),
   <span class='kw'>output_label_name</span> <span class='kw'>=</span> <span class='st'>"Species"</span>,
   <span class='kw'>output_categories</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>), <span class='kw'>xgb_dump_file</span> <span class='kw'>=</span> <span class='st'>"model2.dumped.trees"</span>

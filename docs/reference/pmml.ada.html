@@ -198,7 +198,7 @@ stochastic boosting (on CRAN)</a></p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>ada</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: rpart</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>audit</span>)
 
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/ada/topics/ada'>ada</a></span>(<span class='no'>Adjusted</span> ~ <span class='no'>Employment</span> + <span class='no'>Education</span> + <span class='no'>Hours</span> + <span class='no'>Income</span>, <span class='kw'>iter</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='no'>audit</span>)
-<span class='no'>pmml_fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)</div></pre>
+<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

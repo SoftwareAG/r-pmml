@@ -89,15 +89,15 @@
 #'
 #' # Classification with a polynomial kernel
 #' fit <- svm(Species ~ ., data = iris, kernel = "polynomial")
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #'
 #' # Regression
 #' fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #'
 #' # Anomaly detection with one-classification
 #' fit <- svm(iris[, 1:4], y = NULL, type = "one-classification")
-#' pmml(fit, dataset = iris[, 1:4])
+#' fit_pmml <- pmml(fit, dataset = iris[, 1:4])
 #' }
 #'
 #' @seealso \code{\link[pmml]{pmml}},

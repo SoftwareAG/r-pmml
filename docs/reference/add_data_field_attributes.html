@@ -184,8 +184,8 @@ the display name of a field at different times.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Make a sample model:</span>
-<span class='no'>model0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model0</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
+<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)
 
 <span class='co'># The resulting model has mining fields with no information besides</span>
 <span class='co'># fieldName, dataType and optype. This object is already an xml</span>
@@ -206,74 +206,15 @@ the display name of a field at different times.</p>
 <span class='co'># as invalid.</span>
 <span class='no'>attributes</span>[] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>attributes</span>, <span class='no'>as.character</span>)
 
-<span class='fu'>add_data_field_attributes</span>(<span class='no'>model</span>, <span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>)</div><div class='output co'>#&gt; [1] "WARNING: the following field additions will be ignored"
-#&gt; NA not in model</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double" displayName="FlowerWidth" isCyclic="1"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double" displayName="FlowerLength" isCyclic="0"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div><div class='input'>
+<span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(<span class='no'>fit_pmml</span>, <span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>)</div><div class='output co'>#&gt; [1] "WARNING: the following field additions will be ignored"
+#&gt; NA not in model</div><div class='input'>
 <span class='co'># Alternative method to add attributes to a single field,</span>
 <span class='co'># "Sepal.Width":</span>
-<span class='fu'>add_data_field_attributes</span>(
-  <span class='no'>model</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>displayName</span> <span class='kw'>=</span> <span class='st'>"FlowerWidth"</span>, <span class='kw'>isCyclic</span> <span class='kw'>=</span> <span class='fl'>1</span>),
+<span class='no'>fit_pmml_3</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(
+  <span class='no'>fit_pmml</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>displayName</span> <span class='kw'>=</span> <span class='st'>"FlowerWidth"</span>, <span class='kw'>isCyclic</span> <span class='kw'>=</span> <span class='fl'>1</span>),
   <span class='st'>"Sepal.Width"</span>
-)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double" displayName="FlowerWidth" isCyclic="1"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div><div class='input'>
+)
+
 
 <span class='no'>mi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_intervals.html'>make_intervals</a></span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"openClosed"</span>, <span class='st'>"closedClosed"</span>, <span class='st'>"closedOpen"</span>),
@@ -283,44 +224,7 @@ the display name of a field at different times.</p>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>NULL</span>, <span class='kw'>NULL</span>, <span class='kw'>NULL</span>),
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='st'>"valid"</span>, <span class='kw'>NULL</span>, <span class='st'>"invalid"</span>)
 )
-<span class='fu'><a href='add_data_field_children.html'>add_data_field_children</a></span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;Interval closure="openClosed" rightMargin="1"/&gt;
-#&gt;       &lt;Interval closure="closedClosed" leftMargin="1" rightMargin="2"/&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="2"/&gt;
-#&gt;       &lt;Value value="A" property="valid"/&gt;
-#&gt;       &lt;Value value="B"/&gt;
-#&gt;       &lt;Value value="C" property="invalid"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div></pre>
+<span class='no'>fit_pmml_4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_data_field_children.html'>add_data_field_children</a></span>(<span class='no'>fit_pmml</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>interval</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

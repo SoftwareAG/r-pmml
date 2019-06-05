@@ -57,7 +57,7 @@ library(ada)
 data(audit)
 
 fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
-pmml_fit <- pmml(fit)
+fit_pmml <- pmml(fit)
 
 }
 \references{

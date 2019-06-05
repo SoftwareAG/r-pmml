@@ -198,40 +198,7 @@ project: K-Means Clustering</a></p>
 )
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span>(<span class='no'>ds</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Dimension1"</span>, <span class='st'>"Dimension2"</span>)
 <span class='no'>cl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>kmeans</a></span>(<span class='no'>ds</span>, <span class='fl'>2</span>)
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>cl</span>)</div><div class='output co'>#&gt; &lt;PMML version="4.3" xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;  &lt;Header copyright="Copyright (c) 2019 dmitriy" description="KMeans cluster model"&gt;
-#&gt;   &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;   &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;   &lt;Timestamp&gt;2019-06-04 17:04:24&lt;/Timestamp&gt;
-#&gt;  &lt;/Header&gt;
-#&gt;  &lt;DataDictionary numberOfFields="2"&gt;
-#&gt;   &lt;DataField name="Dimension1" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Dimension2" optype="continuous" dataType="double"/&gt;
-#&gt;  &lt;/DataDictionary&gt;
-#&gt;  &lt;ClusteringModel modelName="KMeans_Model" functionName="clustering" algorithmName="KMeans: Hartigan and Wong" modelClass="centerBased" numberOfClusters="2"&gt;
-#&gt;   &lt;MiningSchema&gt;
-#&gt;    &lt;MiningField name="Dimension1" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Dimension2" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;   &lt;/MiningSchema&gt;
-#&gt;   &lt;Output&gt;
-#&gt;    &lt;OutputField name="predictedValue" feature="predictedValue" dataType="string" optype="categorical"/&gt;
-#&gt;    &lt;OutputField name="clusterAffinity_1" feature="clusterAffinity" value="1" dataType="double"/&gt;
-#&gt;    &lt;OutputField name="clusterAffinity_2" feature="clusterAffinity" value="2" dataType="double"/&gt;
-#&gt;   &lt;/Output&gt;
-#&gt;   &lt;ComparisonMeasure kind="distance"&gt;
-#&gt;    &lt;squaredEuclidean/&gt;
-#&gt;   &lt;/ComparisonMeasure&gt;
-#&gt;   &lt;ClusteringField field="Dimension1" compareFunction="absDiff"/&gt;
-#&gt;   &lt;ClusteringField field="Dimension2" compareFunction="absDiff"/&gt;
-#&gt;   &lt;Cluster name="1" size="50" id="1"&gt;
-#&gt;    &lt;Array n="2" type="real"&gt;1.04657943542431 1.03059405914148&lt;/Array&gt;
-#&gt;   &lt;/Cluster&gt;
-#&gt;   &lt;Cluster name="2" size="50" id="2"&gt;
-#&gt;    &lt;Array n="2" type="real"&gt;-0.0572506663667143 -0.0186524801762376&lt;/Array&gt;
-#&gt;   &lt;/Cluster&gt;
-#&gt;  &lt;/ClusteringModel&gt;
-#&gt; &lt;/PMML&gt;</div><div class='input'>
-</div></pre>
+<span class='no'>cl_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>cl</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

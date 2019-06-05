@@ -185,52 +185,21 @@ PMML.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Make a sample model:</span>
-<span class='no'>model0</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
-<span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model0</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
+<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)
 
 <span class='co'># The resulting model has data fields but with no 'Interval' or Value'</span>
 <span class='co'># elements. This object is already an xml node (not an external text</span>
 <span class='co'># file), so there is no need to convert it to an xml node object.</span>
 
 <span class='co'># Add an 'Interval' element node by typing it in</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>,
+<span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_children</span>(<span class='no'>fit_pmml</span>,
   <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>,
   <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'>newXMLNode</span>(<span class='st'>"Interval"</span>,
     <span class='kw'>attrs</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>closure</span> <span class='kw'>=</span> <span class='st'>"openClosed"</span>, <span class='kw'>rightMargin</span> <span class='kw'>=</span> <span class='fl'>3</span>)
   ))
-)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;Interval closure="openClosed" rightMargin="3"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div><div class='input'>
+)
+
 <span class='co'># Use helper functions to create list of 'Interval' and 'Value'</span>
 <span class='co'># elements. We define the 3 Intervals as ,1]  (1,2)  and [2,</span>
 <span class='no'>mi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_intervals.html'>make_intervals</a></span>(
@@ -246,80 +215,10 @@ PMML.</p>
 )
 
 <span class='co'># As an example, apply these to the Sepal.Length field:</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;Interval closure="openClosed" rightMargin="1"/&gt;
-#&gt;       &lt;Interval closure="openOpen" leftMargin="1" rightMargin="2"/&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="2"/&gt;
-#&gt;       &lt;Value value="1.1" property="valid"/&gt;
-#&gt;       &lt;Value value="2.2"/&gt;
-#&gt;       &lt;Value value="3.3" property="invalid"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div><div class='input'>
+<span class='no'>fit_pmml_3</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_children</span>(<span class='no'>fit_pmml</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)
+
 <span class='co'># Only defined 'Interval's:</span>
-<span class='fu'>add_data_field_children</span>(<span class='no'>model</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>)</div><div class='output co'>#&gt; &lt;?xml version="1.0"?&gt;
-#&gt; &lt;PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="4.3" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;   &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;     &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;     &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;     &lt;Timestamp&gt;2019-06-04 17:04:15&lt;/Timestamp&gt;
-#&gt;   &lt;/Header&gt;
-#&gt;   &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;     &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="openClosed" rightMargin="1"/&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="openOpen" leftMargin="1" rightMargin="2"/&gt;
-#&gt;       &lt;default:Interval xmlns:default="http://www.dmg.org/PMML-4_3" closure="closedOpen" leftMargin="2"/&gt;
-#&gt;     &lt;/DataField&gt;
-#&gt;     &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;     &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;/DataDictionary&gt;
-#&gt;   &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;     &lt;MiningSchema&gt;
-#&gt;       &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;       &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;     &lt;/MiningSchema&gt;
-#&gt;     &lt;Output&gt;
-#&gt;       &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;     &lt;/Output&gt;
-#&gt;     &lt;RegressionTable intercept="1.85599749291754"&gt;
-#&gt;       &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.650837159313219"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.709131959136729"/&gt;
-#&gt;       &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.556482660167025"/&gt;
-#&gt;     &lt;/RegressionTable&gt;
-#&gt;   &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;
-#&gt;  </div></pre>
+<span class='no'>fit_pmml_3</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_children</span>(<span class='no'>fit_pmml</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>, <span class='kw'>intervals</span> <span class='kw'>=</span> <span class='no'>mi</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -83,7 +83,7 @@
 #' )
 #'
 #' # Create new pmml objects with the output nodes appended
-#' add_output_field(
+#' pmod2 <- add_output_field(
 #'   xml_model = pmod, outputNodes = onodes2, at = "End",
 #'   xformText = NULL, nodeName = NULL, attributes = NULL,
 #'   whichOutput = 1
@@ -95,14 +95,14 @@
 #' )
 #'
 #' # Create nodes with attributes and transformations
-#' add_output_field(xml_model = pmod2, outputNodes = onodes2, at = 2)
-#' add_output_field(
+#' pmod3 <- add_output_field(xml_model = pmod2, outputNodes = onodes2, at = 2)
+#' pmod4 <- add_output_field(
 #'   xml_model = pmod2, xformText = list("exp(x) && !x"),
 #'   nodeName = "Predicted_Sepal.Length"
 #' )
 #'
 #' att <- list(datype = "dbl", optpe = "dsc")
-#' add_output_field(
+#' pmod5 <- add_output_field(
 #'   xml_model = pmod2, nodeName = "Predicted_Sepal.Length",
 #'   attributes = att
 #' )

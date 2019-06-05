@@ -174,9 +174,10 @@ values.</p>
 <span class='co'># Output only the transformations in PMML format.</span>
 <span class='co'># This example will output just an empty "LocalTransformations"</span>
 <span class='co'># element as no transformations were performed.</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='kw'>NULL</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div><div class='output co'>#&gt; &lt;LocalTransformations/&gt;</div><div class='input'>
+<span class='no'>trans_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='kw'>NULL</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)
+
 <span class='co'># The following will also work</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div><div class='output co'>#&gt; &lt;LocalTransformations/&gt;</div></pre>
+<span class='no'>trans_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

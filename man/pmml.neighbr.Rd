@@ -67,7 +67,7 @@ fit <- knn(
   id = "ID"
 )
 
-pmml(fit)
+fit_pmml <- pmml(fit)
 
 
 # Logical features with categorical target and neighbor ranking:
@@ -108,7 +108,7 @@ fit <- knn(
   id = "ID"
 )
 
-pmml(fit)
+fit_pmml <- pmml(fit)
 }
 
 }

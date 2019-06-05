@@ -44,10 +44,10 @@ iris_box <- xform_wrap(iris)
 # Output only the transformations in PMML format.
 # This example will output just an empty "LocalTransformations"
 # element as no transformations were performed.
-pmml(NULL, transforms = iris_box)
+trans_pmml <- pmml(NULL, transforms = iris_box)
 
 # The following will also work
-pmml(, transforms = iris_box)
+trans_pmml_2 <- pmml(, transforms = iris_box)
 }
 \seealso{
 \code{\link[pmml]{pmml}}

@@ -67,7 +67,7 @@
 #' centerInfo <- centers.hclust(iris[, -5], model, 3)
 #'
 #' # Convert to pmml
-#' pmml(model, centers = centerInfo)
+#' model_pmml <- pmml(model, centers = centerInfo)
 #' }
 #'
 #' @export pmml.hclust

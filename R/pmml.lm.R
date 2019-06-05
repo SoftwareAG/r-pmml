@@ -42,9 +42,8 @@
 #' @examples
 #'
 #' fit <- lm(Sepal.Length ~ ., data = iris)
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #'
-#' rm(fit)
 #' 
 #' @export pmml.lm
 #' @export

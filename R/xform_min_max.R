@@ -84,11 +84,11 @@
 #' # "Petal.Length", "Petal.Width" to the 4 new derived variables named
 #' # derived_Sepal.Length, derived_Sepal.Width, derived_Petal.Length,
 #' # derived_Petal.Width.
-#' xform_min_max(iris_box)
+#' iris_box_1 <- xform_min_max(iris_box)
 #'
 #' # Normalize the 1st column values of the dataset (Sepal.Length) to lie
 #' # between 0 and 1 and give the derived variable the name "dsl"
-#' xform_min_max(iris_box, xform_info = "column1 -> dsl")
+#' iris_box_1 <- xform_min_max(iris_box, xform_info = "column1 -> dsl")
 #'
 #' # Repeat the above operation; adding the new transformed variable to
 #' # the iris_box object
@@ -97,24 +97,25 @@
 #' # Transform Sepal.Width(the 2nd column)
 #' # The new transformed variable will be given the default name
 #' # "derived_Sepal.Width"
-#' xform_min_max(iris_box, xform_info = "column2")
+#' iris_box_3 <- xform_min_max(iris_box, xform_info = "column2")
 #'
 #' # Repeat the same operation as above, this time using the variable name
-#' xform_min_max(iris_box, xform_info = "Sepal.Width")
+#' iris_box_4 <- xform_min_max(iris_box, xform_info = "Sepal.Width")
 #'
 #' # Repeat the same operation as above, assign the transformed variable,
 #' # "derived_Sepal.Width". the value of 0.5 if the input value of the
 #' # "Sepal.Width" variable is missing
-#' xform_min_max(iris_box, xform_info = "Sepal.Width", "map_missing_to=0.5")
+#' iris_box_5 <- xform_min_max(iris_box, xform_info = "Sepal.Width", "map_missing_to=0.5")
 #'
 #' # Transform Sepal.Width(the 2nd column) to lie between 2 and 3.
 #' # The new transformed variable will be given the default name
 #' # "derived_Sepal.Width"
-#' xform_min_max(iris_box, xform_info = "column2->[2,3]")
+#' iris_box_6 <- xform_min_max(iris_box, xform_info = "column2->[2,3]")
 #'
 #' # Repeat the above transformation, this time the transformed variable
 #' # lies between 0 and 10
-#' iris_box <- xform_min_max(iris_box, xform_info = "column2->[,10]")
+#' iris_box_7 <- xform_min_max(iris_box, xform_info = "column2->[,10]")
+#' 
 #' @export
 xform_min_max <- function(wrap_object, xform_info = NA, map_missing_to = NA, ...) {
   colmn <- NULL

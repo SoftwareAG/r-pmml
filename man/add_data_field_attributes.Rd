@@ -52,8 +52,8 @@ the display name of a field at different times.
 }
 \examples{
 # Make a sample model:
-model0 <- lm(Sepal.Length ~ ., data = iris[, -5])
-model <- pmml(model0)
+fit <- lm(Sepal.Length ~ ., data = iris[, -5])
+fit_pmml <- pmml(fit)
 
 # The resulting model has mining fields with no information besides
 # fieldName, dataType and optype. This object is already an xml
@@ -74,12 +74,12 @@ colnames(attributes) <- c("Sepal.Width", "Petal.Length")
 # as invalid.
 attributes[] <- lapply(attributes, as.character)
 
-add_data_field_attributes(model, attributes, namespace = "4_3")
+fit_pmml_2 <- add_data_field_attributes(fit_pmml, attributes, namespace = "4_3")
 
 # Alternative method to add attributes to a single field,
 # "Sepal.Width":
-add_data_field_attributes(
-  model, c(displayName = "FlowerWidth", isCyclic = 1),
+fit_pmml_3 <- add_data_field_attributes(
+  fit_pmml, c(displayName = "FlowerWidth", isCyclic = 1),
   "Sepal.Width"
 )
 
@@ -92,7 +92,8 @@ mv <- make_values(
   list("A", "B", "C"), list(NULL, NULL, NULL),
   list("valid", NULL, "invalid")
 )
-add_data_field_children(model, field = "Sepal.Length", interval = mi, values = mv)
+fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length", interval = mi, values = mv)
+
 }
 \author{
 Tridivesh Jena

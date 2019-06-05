@@ -54,7 +54,7 @@ veteran_mod <- rfsrc(Surv(time, status) ~ .,
   membership = TRUE
 )
 
-pmml(veteran_mod)
+veteran_mod_pmml <- pmml(veteran_mod)
 }
 
 }

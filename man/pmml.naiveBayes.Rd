@@ -55,7 +55,7 @@ house <- na.omit(houseVotes84)
 
 model <- naiveBayes(Class ~ V1 + V2 + V3, data = house, threshold = 0.003)
 
-pmml(model, dataset = house, predicted_field = "Class")
+model_pmml <- pmml(model, dataset = house, predicted_field = "Class")
 
 }
 \references{

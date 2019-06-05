@@ -138,7 +138,7 @@ audit_box <- xform_map(audit_box,
 
 # check what the pmml looks like
 fit <- lm(Adjusted ~ ., data = audit_box$data)
-pmml(fit, transforms = audit_box)
+fit_pmml <- pmml(fit, transforms = audit_box)
 }
 \seealso{
 \code{\link{xform_wrap}}, \code{\link[pmml]{pmml}}

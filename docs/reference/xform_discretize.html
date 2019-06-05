@@ -326,62 +326,7 @@ below.</p>
 
 <span class='co'># Make a simple model to see the effect.</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Petal.Width</span> ~ <span class='no'>.</span>, <span class='no'>iris_box</span>$<span class='no'>data</span>[, -<span class='fl'>5</span>])
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div><div class='output co'>#&gt; &lt;PMML version="4.3" xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;  &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;   &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;   &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;   &lt;Timestamp&gt;2019-06-04 17:04:30&lt;/Timestamp&gt;
-#&gt;  &lt;/Header&gt;
-#&gt;  &lt;DataDictionary numberOfFields="4"&gt;
-#&gt;   &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;  &lt;/DataDictionary&gt;
-#&gt;  &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;   &lt;MiningSchema&gt;
-#&gt;    &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;   &lt;/MiningSchema&gt;
-#&gt;   &lt;Output&gt;
-#&gt;    &lt;OutputField name="Predicted_Petal.Width" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;   &lt;/Output&gt;
-#&gt;   &lt;LocalTransformations&gt;
-#&gt;    &lt;DerivedField name="dis_pl" dataType="double" optype="continuous"&gt;
-#&gt;     &lt;Discretize field="Petal.Length" mapMissingTo="22" defaultValue="11"&gt;
-#&gt;      &lt;DiscretizeBin binValue="0"&gt;
-#&gt;       &lt;Interval closure="openOpen" rightMargin="0"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;      &lt;DiscretizeBin binValue="1"&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="0" rightMargin="1"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;      &lt;DiscretizeBin binValue="2"&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="1" rightMargin="2"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;      &lt;DiscretizeBin binValue="3"&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="2" rightMargin="3"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;      &lt;DiscretizeBin binValue="4"&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="3" rightMargin="4"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;      &lt;DiscretizeBin binValue="5"&gt;
-#&gt;       &lt;Interval closure="closedOpen" leftMargin="4"/&gt;
-#&gt;      &lt;/DiscretizeBin&gt;
-#&gt;     &lt;/Discretize&gt;
-#&gt;    &lt;/DerivedField&gt;
-#&gt;   &lt;/LocalTransformations&gt;
-#&gt;   &lt;RegressionTable intercept="-0.332315289038252"&gt;
-#&gt;    &lt;NumericPredictor name="Sepal.Length" exponent="1" coefficient="-0.199574274560871"/&gt;
-#&gt;    &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.24667020804958"/&gt;
-#&gt;    &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.500546261488381"/&gt;
-#&gt;    &lt;CategoricalPredictor name="dis_pl" value="2" coefficient="0"/&gt;
-#&gt;    &lt;CategoricalPredictor name="dis_pl" value="4" coefficient="0.102736958895943"/&gt;
-#&gt;    &lt;CategoricalPredictor name="dis_pl" value="5" coefficient="0.092844420763462"/&gt;
-#&gt;   &lt;/RegressionTable&gt;
-#&gt;  &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;</div></pre>
+<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

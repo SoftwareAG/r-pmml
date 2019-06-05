@@ -231,44 +231,8 @@ vignette:</p>
 <span class='no'>iris_lm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)
 
 <span class='co'># Convert to pmml</span>
-<span class='fu'>pmml</span>(<span class='no'>iris_lm</span>)</div><div class='output co'>#&gt; &lt;PMML version="4.3" xmlns="http://www.dmg.org/PMML-4_3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.dmg.org/PMML-4_3 http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"&gt;
-#&gt;  &lt;Header copyright="Copyright (c) 2019 dmitriy" description="Linear Regression Model"&gt;
-#&gt;   &lt;Extension name="user" value="dmitriy" extender="SoftwareAG PMML Generator"/&gt;
-#&gt;   &lt;Application name="SoftwareAG PMML Generator" version="1.4"/&gt;
-#&gt;   &lt;Timestamp&gt;2019-06-04 17:04:17&lt;/Timestamp&gt;
-#&gt;  &lt;/Header&gt;
-#&gt;  &lt;DataDictionary numberOfFields="5"&gt;
-#&gt;   &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;
-#&gt;   &lt;DataField name="Species" optype="categorical" dataType="string"&gt;
-#&gt;    &lt;Value value="setosa"/&gt;
-#&gt;    &lt;Value value="versicolor"/&gt;
-#&gt;    &lt;Value value="virginica"/&gt;
-#&gt;   &lt;/DataField&gt;
-#&gt;  &lt;/DataDictionary&gt;
-#&gt;  &lt;RegressionModel modelName="lm_Model" functionName="regression" algorithmName="least squares"&gt;
-#&gt;   &lt;MiningSchema&gt;
-#&gt;    &lt;MiningField name="Sepal.Length" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Petal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;    &lt;MiningField name="Species" usageType="active" invalidValueTreatment="returnInvalid"/&gt;
-#&gt;   &lt;/MiningSchema&gt;
-#&gt;   &lt;Output&gt;
-#&gt;    &lt;OutputField name="Predicted_Sepal.Length" optype="continuous" dataType="double" feature="predictedValue"/&gt;
-#&gt;   &lt;/Output&gt;
-#&gt;   &lt;RegressionTable intercept="2.17126629215507"&gt;
-#&gt;    &lt;NumericPredictor name="Sepal.Width" exponent="1" coefficient="0.495888938388552"/&gt;
-#&gt;    &lt;NumericPredictor name="Petal.Length" exponent="1" coefficient="0.829243912234806"/&gt;
-#&gt;    &lt;NumericPredictor name="Petal.Width" exponent="1" coefficient="-0.315155173326474"/&gt;
-#&gt;    &lt;CategoricalPredictor name="Species" value="setosa" coefficient="0"/&gt;
-#&gt;    &lt;CategoricalPredictor name="Species" value="versicolor" coefficient="-0.723561957780728"/&gt;
-#&gt;    &lt;CategoricalPredictor name="Species" value="virginica" coefficient="-1.02349781449083"/&gt;
-#&gt;   &lt;/RegressionTable&gt;
-#&gt;  &lt;/RegressionModel&gt;
-#&gt; &lt;/PMML&gt;</div><div class='input'>
+<span class='no'>iris_lm_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'>pmml</span>(<span class='no'>iris_lm</span>)
+
 <span class='co'># Create a data transformation object</span>
 <span class='no'>iris_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='xform_wrap.html'>xform_wrap</a></span>(<span class='no'>iris</span>)
 
@@ -276,14 +240,7 @@ vignette:</p>
 <span class='no'>iris_trans</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='xform_min_max.html'>xform_min_max</a></span>(<span class='no'>iris_trans</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='st'>"column1-&gt;d_sl"</span>)
 
 <span class='co'># Output the tranformation in PMML format</span>
-<span class='fu'>pmml</span>(<span class='kw'>NULL</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_trans</span>)</div><div class='output co'>#&gt; &lt;LocalTransformations&gt;
-#&gt;  &lt;DerivedField name="d_sl" dataType="double" optype="continuous"&gt;
-#&gt;   &lt;NormContinuous field="Sepal.Length"&gt;
-#&gt;    &lt;LinearNorm orig="4.3" norm="0"/&gt;
-#&gt;    &lt;LinearNorm orig="7.9" norm="1"/&gt;
-#&gt;   &lt;/NormContinuous&gt;
-#&gt;  &lt;/DerivedField&gt;
-#&gt; &lt;/LocalTransformations&gt;</div></pre>
+<span class='no'>iris_trans_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'>pmml</span>(<span class='kw'>NULL</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_trans</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

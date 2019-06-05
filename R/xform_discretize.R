@@ -204,7 +204,7 @@
 #'
 #' # Make a simple model to see the effect.
 #' fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
-#' pmml(fit, transforms = iris_box)
+#' fit_pmml <- pmml(fit, transforms = iris_box)
 #' @export
 xform_discretize <-
   function(wrap_object, xform_info, table, default_value = NA, map_missing_to = NA, ...) {

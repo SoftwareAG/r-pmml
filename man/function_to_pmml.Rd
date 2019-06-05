@@ -30,22 +30,22 @@ since PMML's '-' and '+' functions require two arguments. The resulting PMML nod
 }
 \examples{
 # Operator precedence and parenthesis
-function_to_pmml("1 + 3/5 - (4 * 2)")
+func_pmml <- function_to_pmml("1 + 3/5 - (4 * 2)")
 
 # Nested arbitrary functions
-function_to_pmml("foo(bar(x)) - bar(foo(y-z))")
+func_pmml <- function_to_pmml("foo(bar(x)) - bar(foo(y-z))")
 
 # If-else expression
-function_to_pmml("if (x==3) { 3 } else { 0 }")
+func_pmml <- function_to_pmml("if (x==3) { 3 } else { 0 }")
 
 # If-else with boolean output
-function_to_pmml("if (x==3) { TRUE } else { FALSE }")
+func_pmml <- function_to_pmml("if (x==3) { TRUE } else { FALSE }")
 
 # Function with string argument types
-function_to_pmml("colors('red','green','blue')")
+func_pmml <- function_to_pmml("colors('red','green','blue')")
 
 # Sign in front of expression
-function_to_pmml("-(x/y)")
+func_pmml <- function_to_pmml("-(x/y)")
 }
 \author{
 Dmitriy Bolotov

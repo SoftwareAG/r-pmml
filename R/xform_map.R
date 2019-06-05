@@ -147,7 +147,7 @@
 #'
 #' # check what the pmml looks like
 #' fit <- lm(Adjusted ~ ., data = audit_box$data)
-#' pmml(fit, transforms = audit_box)
+#' fit_pmml <- pmml(fit, transforms = audit_box)
 #' @export
 xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, map_missing_to = NA, ...) {
   newrow <- NULL

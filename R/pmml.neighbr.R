@@ -61,7 +61,7 @@
 #'   id = "ID"
 #' )
 #'
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #'
 #'
 #' # Logical features with categorical target and neighbor ranking:
@@ -102,7 +102,7 @@
 #'   id = "ID"
 #' )
 #'
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #' }
 #'
 #' @seealso \code{\link[pmml]{pmml}},

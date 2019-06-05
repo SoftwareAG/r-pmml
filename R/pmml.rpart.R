@@ -45,7 +45,7 @@
 #'
 #' fit <- rpart(Species ~ ., data = iris)
 #'
-#' pmml(fit)
+#' fit_pmml <- pmml(fit)
 #' 
 #' @export pmml.rpart
 #' @export

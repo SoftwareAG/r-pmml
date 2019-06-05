@@ -61,7 +61,7 @@
 #'   membership = TRUE
 #' )
 #'
-#' pmml(veteran_mod)
+#' veteran_mod_pmml <- pmml(veteran_mod)
 #' }
 #'
 #' @export pmml.rfsrc

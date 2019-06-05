@@ -54,7 +54,7 @@ library(kernlab)
 
 model <- ksvm(Species ~ ., data = iris)
 
-p <- pmml(model, dataset = iris)
+model_pmml <- pmml(model, dataset = iris)
 
 }
 \references{

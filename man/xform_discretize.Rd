@@ -195,7 +195,7 @@ iris_box <- xform_discretize(iris_box,
 
 # Make a simple model to see the effect.
 fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
-pmml(fit, transforms = iris_box)
+fit_pmml <- pmml(fit, transforms = iris_box)
 }
 \seealso{
 \code{\link{xform_wrap}}

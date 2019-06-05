@@ -58,7 +58,7 @@
 #' mod <- iForest(iris, nt = 10, phi = 30)
 #'
 #' # Convert to PMML:
-#' pm <- pmml(mod)
+#' mod_pmml <- pmml(mod)
 #' }
 #'
 #' @seealso \code{\link[pmml]{pmml}}

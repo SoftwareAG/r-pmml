@@ -88,7 +88,7 @@ model1 <- xgboost(
 xgb.dump(model1, "model1.dumped.trees")
 
 # Convert to PMML:
-pmml(model1,
+model1_pmml <- pmml(model1,
   input_feature_names = colnames(train$data),
   output_label_name = "prediction1",
   output_categories = c("0", "1"),
@@ -107,7 +107,7 @@ model2 <- xgboost(
 xgb.dump(model2, "model2.dumped.trees")
 
 # Convert to PMML:
-pmml(model2,
+model2_pmml <- pmml(model2,
   input_feature_names = colnames(as.matrix(iris[, 1:4])),
   output_label_name = "Species",
   output_categories = c(1, 2, 3), xgb_dump_file = "model2.dumped.trees"

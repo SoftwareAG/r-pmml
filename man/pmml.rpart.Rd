@@ -45,7 +45,7 @@ library(rpart)
 
 fit <- rpart(Species ~ ., data = iris)
 
-pmml(fit)
+fit_pmml <- pmml(fit)
 
 }
 \references{

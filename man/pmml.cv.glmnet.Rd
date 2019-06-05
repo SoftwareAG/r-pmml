@@ -69,7 +69,7 @@ y <- rnorm(100)
 model1 <- cv.glmnet(x, y)
 
 # Output the model in PMML format:
-pmml(model1)
+model1_pmml <- pmml(model1)
 
 # Shift y between 0 and 1 to create a poisson response:
 y <- y - min(y)
@@ -86,7 +86,7 @@ model2 <- cv.glmnet(x, y, family = "poisson")
 
 # Output the regression model in PMML format at the lambda
 # parameter = 0.006:
-pmml(model2, s = 0.006)
+model2_pmml <- pmml(model2, s = 0.006)
 
 }
 \references{

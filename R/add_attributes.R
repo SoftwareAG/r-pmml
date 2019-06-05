@@ -54,60 +54,33 @@
 #'
 #' @examples
 #' # Make a sample model:
-#' model0 <- lm(Sepal.Length ~ ., data = iris[, -5])
-#' model <- pmml(model0)
-#'
-#' # The resulting PMML:
-#' # <PMML version="4.3" ... xmlns="http://www.dmg.org/PMML-4_3">
-#' # <Header ... description="Linear Regression Model"/>
-#' # <DataDictionary numberOfFields="4">
-#' # .
-#' # .
-#' # </DataDictionary>
-#' # <RegressionModel modelName="Linear_Regression_Model"
-#' #     functionName="regression"
-#' #     algorithmName="least squares">
-#' #  <MiningSchema>
-#' #  .
-#' #  .
-#' #  </MiningSchema>
-#' # .
-#' # .
-#' #  <RegressionTable intercept="1.85599749291755">
-#' #   <NumericPredictor name="Sepal.Width" exponent="1"
-#' #    coefficient="0.650837159313218"/>
-#' #   <NumericPredictor name="Petal.Length" exponent="1"
-#' #    coefficient="0.709131959136729"/>
-#' #   <NumericPredictor name="Petal.Width" exponent="1"
-#' #    coefficient="-0.556482660167024"/>
-#' #  </RegressionTable>
-#' # </RegressionModel>
-#' # </PMML>
+#' fit <- lm(Sepal.Length ~ ., data = iris[, -5])
+#' fit_pmml <- pmml(fit)
 #'
 #' # Add arbitrary attributes to the 1st 'NumericPredictor' element. The
 #' # attributes are for demostration only (they are not allowed under
 #' # the PMML schema). The command assumes the default namespace.
-#' add_attributes(model, "/p:PMML/descendant::p:NumericPredictor[1]",
+#' fit_pmml_2 <- add_attributes(fit_pmml, "/p:PMML/descendant::p:NumericPredictor[1]",
 #'   attributes = c(a = 1, b = "b")
 #' )
 #'
 #' # Add attributes to the NumericPredictor element which has
 #' # 'Petal.Length' as the 'name' attribute:
-#' add_attributes(model,
+#' fit_pmml_3 <- add_attributes(fit_pmml,
 #'   "/p:PMML/descendant::p:NumericPredictor[@name='Petal.Length']",
 #'   attributes = c(a = 1, b = "b")
 #' )
 #'
 #' # 3 NumericElements exist which have '1' as the 'exponent' attribute.
 #' # Add new attributes to the 3rd one:
-#' add_attributes(model,
+#' fit_pmml_4 <- add_attributes(fit_pmml,
 #'   "/p:PMML/descendant::p:NumericPredictor[@exponent='1'][3]",
 #'   attributes = c(a = 1, b = "b")
 #' )
 #'
 #' # Add attributes to the 1st element whose 'name' attribute contains
 #' # 'Length':
-#' add_attributes(model,
+#' fit_pmml_5 <- add_attributes(fit_pmml,
 #'   "/p:PMML/descendant::p:NumericPredictor[contains(@name,'Length')]",
 #'   attributes = c(a = 1, b = "b")
 #' )

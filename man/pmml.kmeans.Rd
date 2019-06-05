@@ -49,7 +49,7 @@ ds <- rbind(
 )
 colnames(ds) <- c("Dimension1", "Dimension2")
 cl <- kmeans(ds, 2)
-pmml(cl)
+cl_pmml <- pmml(cl)
 
 }
 \references{
