@@ -140,6 +140,7 @@ schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20180731_43.xsd")
 test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
   
   skip_on_cran()
+  skip_on_ci()
   
   library(isofor)
   
