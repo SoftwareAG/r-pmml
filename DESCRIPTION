@@ -35,7 +35,8 @@ Suggests:
     survival,
     xgboost,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Imports:
     methods,
     stats,

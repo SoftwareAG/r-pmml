@@ -7,3 +7,6 @@ install:
   - R -e 'install.packages("devtools")'
   - R -e 'devtools::install_deps(dependencies = TRUE)'
   - R -e 'devtools::install_version("randomForestSRC", "2.5.0")'
+
+after_success:
+  - Rscript -e 'covr::codecov()'

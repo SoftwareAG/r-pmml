@@ -11,3 +11,4 @@ tests/testthat/test_pmml_integration.R
 ^revdep$
 ^CRAN-RELEASE$
 ^\.travis\.yml$
+^codecov\.yml$
