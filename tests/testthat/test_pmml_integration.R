@@ -780,8 +780,8 @@ test_that("MiningModel/gbm PMML output matches R", {
 
 
 test_that("MiningModel/randomForest PMML output matches R", {
-  # skip_on_cran()
-  # skip_on_ci()
+  skip_on_cran()
+  skip_on_ci()
 
   audit_nor_logical[, "Sex"] <- as.factor(audit_nor_logical[, "Sex"])
   suppressWarnings(fit <- randomForest(Adjusted ~ ., audit_nor_logical[, -1], ntree = 8))
