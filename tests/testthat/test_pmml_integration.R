@@ -75,11 +75,11 @@ xgb_tmp_01_save <- tempfile()
 xgb_tmp_01_dump <- tempfile()
 
 
-setup({
-  # Delete any PMML files on Zementis Server
-  mods <- get_models()
-  lapply(mods, delete_model)
-})
+# setup({
+#   # Delete any PMML files on Zementis Server
+#   mods <- get_models()
+#   lapply(mods, delete_model)
+# })
 
 
 teardown(unlink(c(xgb_tmp_01_save, xgb_tmp_01_dump), recursive = TRUE))
