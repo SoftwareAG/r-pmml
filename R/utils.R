@@ -140,11 +140,16 @@
   header <- xmlNode("Header", attrs = c(copyright = copyright, description = description))
 
   # Header -> Extension for user info
-  header <- append.XMLNode(header, xmlNode("Extension", attrs = c(name = "user", value = sprintf("%s", Sys.info()["user"]), extender = app_name)))
+  header <- append.XMLNode(header, 
+                           xmlNode("Extension", 
+                                   attrs = c(name = "user", 
+                                             value = sprintf("%s", Sys.info()["user"]), 
+                                             extender = app_name)))
 
   # Header -> Application
-  VERSION <- "1.4"
-  header <- append.XMLNode(header, xmlNode("Application", attrs = c(name = app_name, version = VERSION)))
+  header <- append.XMLNode(header, xmlNode("Application", 
+                                           attrs = c(name = app_name, 
+                                                     version = toString(packageVersion("pmml")))))
 
   # Header -> Timestamp
   header <- append.XMLNode(header, xmlNode("Timestamp", sprintf("%s", Sys.time())))
