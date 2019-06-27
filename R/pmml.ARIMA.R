@@ -104,14 +104,10 @@ pmml.ARIMA <- function(model,
   
   ts_model <- append.XMLNode(ts_model,arima_node)
   
-  
   pmml <- append.XMLNode(pmml, ts_model)
   
   return(pmml)
-  
 }
-
-#TODO: Number of residuals necessary changes; not always one
 
 
 .make_nsc_node <- function(model) {
@@ -123,31 +119,57 @@ pmml.ARIMA <- function(model,
   mod_len <- length(model$x)
     
   # (p,d,q) arrays
-  ns_p <- model$model$phi
-  ns_d <- model$model$Delta
-  ns_q <- model$model$theta[1:num_ma_elements]
+  phi_array <- model$model$phi
+  d_array <- model$model$Delta
+  theta_array <- if (num_ma_elements > 0) {model$model$theta[1:num_ma_elements]} else {0}
+  
+  # Check if theta_array is 0
+  ns_p <- .get_p_q(phi_array)
+  ns_d <- length(d_array)
+  ns_q <- .get_p_q(theta_array)
   
   nsc_node <- xmlNode("NonseasonalComponent",
-                      attrs = c(p=length(ns_p), d=length(ns_d), q=length(ns_q)))
+                      attrs = c(p=ns_p, d=ns_d, q=ns_q))
   
+  if (ns_p>0){
   ar_node <- append.XMLNode(xmlNode("AR"),
-                            xmlNode("Array",attrs = c(type="real",n=length(ns_p)),value=paste(ns_p,collapse=" ")))
+                            xmlNode("Array",attrs = c(type="real",n=ns_p),value=paste(phi_array,collapse=" ")))
+  nsc_node <- append.XMLNode(nsc_node,ar_node)
+  }
   
-  ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
-                                 xmlNode("Array",attrs = c(type="real",n=length(ns_q)),value=paste(ns_q,collapse=" ")))
-  
-  resids <- model$residuals[(mod_len - length(ns_q) + 1):mod_len]
-  ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
-                                  xmlNode("Array",
-                                          attrs = c(type="real",
-                                                    n=length(resids)),
-                                          value=paste(resids,collapse=" ")))
-  
-  ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
-  
-  nsc_node <- append.XMLNode(nsc_node,ar_node,ma_node)
+  if (ns_q > 0){
+    ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
+                                   xmlNode("Array",attrs = c(type="real",n=ns_q),value=paste(theta_array,collapse=" ")))
+    
+    resids <- model$residuals[(mod_len - ns_q + 1):mod_len]
+    ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
+                                    xmlNode("Array",
+                                            attrs = c(type="real",
+                                                      n=length(resids)),
+                                            value=paste(resids,collapse=" ")))
+    
+    ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
+    
+    nsc_node <- append.XMLNode(nsc_node,ma_node)
+  }
   
   return(nsc_node)
+}
+
+
+
+.get_p_q <- function(x_array){
+  if(length(x_array)==0){
+    return(0)
+  } else if (length(x_array)==1) {
+    if (x_array==0) {
+      return(0)
+    } else {
+      return(1)
+    }
+  } else {
+    return(length(x_array))
+  }
 }
 
 
@@ -157,7 +179,7 @@ pmml.ARIMA <- function(model,
   # start_time reflects the number of values necessary to make the first forecast.
   # num_ma_elements <- length(grep("ma",names(model$coef))) # not necessary since only AR components use previous values
   num_ar_elements <- length(grep("ar",names(model$coef)))
-  start_time <- length(model$x) - num_ma_elements
+  start_time <- length(model$x) - num_ar_elements
   end_time <- length(model$x)
   
   ts_node <- xmlNode("TimeSeries", attrs = c(usage="logical",

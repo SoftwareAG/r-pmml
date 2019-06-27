@@ -37,12 +37,12 @@ test_that("NonseasonalComponent node contains required elements 1", {
   
   # MA component - Residuals
   expect_equal(toString(p_fit_5[[3]][[3]][[1]][[2]][[2]]),
-               "<Residuals>\n <Array type=\"real\" value=\"-846.776313143145\"/>\n</Residuals>")
+               "<Residuals>\n <Array type=\"real\" n=\"1\">-846.776313143145</Array>\n</Residuals>")
 })
 
 test_that("NonseasonalComponent node contains required elements 2", {
   s <- ts(data=c(1.02, 2.9, 3.11, 4, 5, 4.4, 5.3))
-  fit_6 <- Arima(s, order=c(1,0,2))
+  fit_6 <- Arima(s, order=c(0,0,3))
   p_fit_6 <- pmml(fit_6)
   
   # # AR component
