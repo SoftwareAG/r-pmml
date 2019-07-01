@@ -42,7 +42,7 @@ test_that("NonseasonalComponent node contains required elements 1", {
 
 test_that("NonseasonalComponent node contains required elements 2", {
   s <- ts(data=c(1.02, 2.9, 3.11, 4, 5, 4.4, 5.3))
-  fit_6 <- Arima(s, order=c(0,0,3))
+  fit_6 <- Arima(s, order=c(3,0,3))
   p_fit_6 <- pmml(fit_6)
   
   # # AR component

@@ -52,15 +52,7 @@ pmml.ARIMA <- function(model,
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
   
   if(!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
-  # 
-  # field <- NULL
-  # field$name <- c("date","value")
-  # field$class <- c("numeric","numeric")
-  # names(field$class) <- c("date","value")
-  # functionName <- "timeSeries"
-  # target <- "value"
-  # 
-  
+
   field <- NULL
   field$name <- c("ts_value")
   field$class <- c("numeric")
@@ -85,6 +77,9 @@ pmml.ARIMA <- function(model,
   
   ts_model <- append.XMLNode(ts_model,
                              .pmmlMiningSchema(field,target,transforms,missing_value_replacement))
+  
+  ts_model <- append.XMLNode(ts_model,
+                             .pmmlOutput(field,target))
   
   
   ts_model <- append.XMLNode(ts_model,.make_ts_node(model))
@@ -176,11 +171,11 @@ pmml.ARIMA <- function(model,
 .make_ts_node <- function(model) {
   # creates TimeSeries node
   
-  # start_time reflects the number of values necessary to make the first forecast.
-  # num_ma_elements <- length(grep("ma",names(model$coef))) # not necessary since only AR components use previous values
+  # start_time corresponds to the number of values necessary to make the first forecast.
   num_ar_elements <- length(grep("ar",names(model$coef)))
-  start_time <- length(model$x) - num_ar_elements
   end_time <- length(model$x)
+  start_time <- end_time - num_ar_elements
+  
   
   ts_node <- xmlNode("TimeSeries", attrs = c(usage="logical",
                                              startTime=toString(start_time), endTime=toString(end_time)))
