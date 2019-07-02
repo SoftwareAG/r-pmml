@@ -21,6 +21,7 @@ Suggests:
     caret,
     clue,
     data.table,
+    forecast,
     gbm,
     glmnet,
     Matrix,
