@@ -29,12 +29,14 @@
 #' @return PMML representation of the \code{ARIMA} object.
 #' 
 #' @details The model is represented in the PMML TimeSeriesModel format.
-#' TODO
 #' 
 #' @author Dmitriy Bolotov
 #' 
 #' @examples
-#' TODO
+#' library(forecast)
+#' data("WWWusage")
+#' mod <- Arima(WWWusage,order=c(3,1,1))
+#' mod_pmml <- pmml(mod)
 #' 
 #'
 #' @export pmml.ARIMA
@@ -49,9 +51,9 @@ pmml.ARIMA <- function(model,
                        ...)
   
 {
-  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
+  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA stats object.")
   
-  if(!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
+  if(!is.null(transforms)) stop("Transforms not supported for ARIMA stats models.")
 
   field <- NULL
   field$name <- c("ts_value")
@@ -84,8 +86,7 @@ pmml.ARIMA <- function(model,
   
   ts_model <- append.XMLNode(ts_model,.make_ts_node(model))
   
-  
-  arima_rmse <- sqrt(sum(model$residuals^2)/(length(model$residuals)-1))
+  arima_rmse <- sqrt(sum((model$residuals)^2)/length(model$residuals))
   
   # constantTerm is used when d=0. Set the constantTerm to 0 when d != 0.
   # constantTerm = 0 by default.
@@ -117,6 +118,9 @@ pmml.ARIMA <- function(model,
   phi_array <- model$model$phi
   d_array <- model$model$Delta
   theta_array <- if (num_ma_elements > 0) {model$model$theta[1:num_ma_elements]} else {0}
+  
+  # Reverse sign of theta coefficients for PMML representation
+  theta_array <- (-1)*theta_array
   
   # Check if theta_array is 0
   ns_p <- .get_p_q(phi_array)
@@ -152,7 +156,6 @@ pmml.ARIMA <- function(model,
 }
 
 
-
 .get_p_q <- function(x_array){
   if(length(x_array)==0){
     return(0)
@@ -186,8 +189,6 @@ pmml.ARIMA <- function(model,
                                       attrs = c(index = toString(ts_index),
                                                 value = model$x[ts_index])))
   }
-  
-  
   return(ts_node)
 }
 

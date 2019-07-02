@@ -28,15 +28,15 @@ test_that("NonseasonalComponent node contains required elements 1", {
   p_fit_5 <- pmml(fit_5)
   
   # AR component
-  expect_equal(toString(p_fit_5[[3]][[3]][[1]][[1]][[1]][[1]]),
+  expect_equal(toString(p_fit_5[[3]][[4]][[1]][[1]][[1]][[1]]),
                '-0.196933688666896 0.0882676656284808 0.9429079310464')
 
   # MA component - MACoefficients
-  expect_equal(toString(p_fit_5[[3]][[3]][[1]][[2]][[1]][[1]]),
-               "<Array type=\"real\" n=\"1\">0.999467612244043</Array>")
+  expect_equal(toString(p_fit_5[[3]][[4]][[1]][[2]][[1]][[1]]),
+               "<Array type=\"real\" n=\"1\">-0.999467612244043</Array>")
   
   # MA component - Residuals
-  expect_equal(toString(p_fit_5[[3]][[3]][[1]][[2]][[2]]),
+  expect_equal(toString(p_fit_5[[3]][[4]][[1]][[2]][[2]]),
                "<Residuals>\n <Array type=\"real\" n=\"1\">-846.776313143145</Array>\n</Residuals>")
 })
 
