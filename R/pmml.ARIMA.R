@@ -98,6 +98,10 @@ pmml.ARIMA <- function(model,
   
   arima_node <- append.XMLNode(arima_node,.make_nsc_node(model))
   
+  if(TRUE){ # if seasonal component exists
+    arima_node <- append.XMLNode(arima_node,.make_sc_node(model))
+  }
+  
   ts_model <- append.XMLNode(ts_model,arima_node)
   
   pmml <- append.XMLNode(pmml, ts_model)
@@ -155,6 +159,12 @@ pmml.ARIMA <- function(model,
   return(nsc_node)
 }
 
+.make_sc_node <- function(model) {
+  # creates SeasonalComponent node
+  
+  sc_node <- xmlNode("SeasonalComponent",
+                      attrs = c(p=-99, d=-99, q=-99, period=-99))
+}
 
 .get_p_q <- function(x_array){
   if(length(x_array)==0){
