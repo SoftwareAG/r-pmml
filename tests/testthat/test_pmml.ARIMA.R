@@ -45,3 +45,7 @@ test_that("ARIMA node contains correct attributes", {
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]],name="predictionMethod"),"conditionalLeastSquares")
   
 })
+
+# TODO: Arima(3,2,2)
+
+# TODO: Arima(JohnsonJohnson,order=c(0,0,2),seasonal=c(0,0,1))
