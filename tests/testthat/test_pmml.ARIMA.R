@@ -3,6 +3,7 @@ context("test pmml.ARIMA converter")
 library(forecast)
 data("WWWusage")
 data("AirPassengers")
+data("JohnsonJohnson")
 
 test_that("Output node contains expected elements", {
   fit_4 <- auto.arima(WWWusage)
@@ -34,7 +35,7 @@ test_that("NonseasonalComponent node contains required elements 1", {
                "<Residuals>\n <Array type=\"real\" n=\"1\">-846.776313143145</Array>\n</Residuals>")
 })
 
-test_that("ARIMA node contains correct attributes", {
+test_that("non-seasonal ARIMA node contains correct attributes", {
   s <- ts(data=c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order=c(0,0,1))
   p_fit_6 <- pmml(fit_6)
@@ -46,6 +47,51 @@ test_that("ARIMA node contains correct attributes", {
   
 })
 
-# TODO: Arima(3,2,2)
 
-# TODO: Arima(JohnsonJohnson,order=c(0,0,2),seasonal=c(0,0,1))
+test_that("seasonal ARIMA model contains correct elements 1", {
+  fit_7 <- Arima(JohnsonJohnson,order=c(0,0,2),seasonal=c(0,0,1))
+  p_fit_7 <- pmml(fit_7)
+  
+  
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]],name="p"),0)
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]],name="d"),0)
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]],name="q"),2)
+  
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="P"),0)
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="D"),0)
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="Q"),1)
+  expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="period"),4)
+  
+  expect_equal(toString(p_fit_7[[3]][[4]][[2]][[1]][[1]][[1]]),'<Array type="real" n="1">-0.999999926590528</Array>')
+  expect_equal(toString(p_fit_7[[3]][[4]][[2]][[1]][[2]][[1]]),'<Array type="real" n="1">1.33444221515274</Array>')
+  
+})
+
+test_that("seasonal ARIMA model contains correct elements 2", {
+  fit_8 <- Arima(AirPassengers,order=c(1,1,1),seasonal=c(1,1,1))
+  p_fit_8 <- pmml(fit_8)
+  
+  
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[1]],name="p"),1)
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[1]],name="d"),1)
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[1]],name="q"),1)
+  
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[2]],name="P"),1)
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[2]],name="D"),1)
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[2]],name="Q"),1)
+  expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[2]],name="period"),12)
+  
+  expect_equal(toString(p_fit_8[[3]][[4]][[2]][[1]][[1]][[1]]),'<Array type="real" n="1">-0.926970851026725</Array>')
+  expect_equal(toString(p_fit_8[[3]][[4]][[2]][[2]][[2]][[1]]),'<Array type="real" n="1">-7.86142188676456</Array>') # does not match
+  
+})
+
+
+test_that("seasonal ARIMA model contains correct elements 3", {
+  fit_9 <- Arima(AirPassengers,order=c(1,2,3),seasonal=c(1,2,1))
+  p_fit_9 <- pmml(fit_9)
+})
+
+# TODO: compare coefficients in PMML directly with R coef
+
+# TODO: Arima(3,2,2), specifically so d is more than 1

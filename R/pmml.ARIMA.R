@@ -163,7 +163,7 @@ pmml.ARIMA <- function(model,
   mod_resids <- model$residuals
   
   sc_node <- xmlNode("SeasonalComponent",
-                     attrs = c(p=s_p, d=s_d, q=s_q, period=s_period))
+                     attrs = c(P=s_p, D=s_d, Q=s_q, period=s_period))
   sc_node <- .make_arma_nodes(sc_node, s_p, s_d, s_q, s_phi_array, s_theta_array, mod_len, mod_resids)
   return(sc_node)
 }
