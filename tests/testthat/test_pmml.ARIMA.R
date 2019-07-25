@@ -5,6 +5,20 @@ data("WWWusage")
 data("AirPassengers")
 data("JohnsonJohnson")
 
+
+test_that("DataDictionary node contains expected elements", {
+  fit_2 <- auto.arima(WWWusage)
+  p_fit_2 <- pmml(fit_2)
+  expect_equal(toString(p_fit_2[[2]]),"<DataDictionary numberOfFields=\"2\">\n <DataField name=\"ts_value\" optype=\"continuous\" dataType=\"double\"/>\n <DataField name=\"h\" optype=\"continuous\" dataType=\"double\"/>\n</DataDictionary>")
+})
+
+test_that("MiningSchema node contains expected elements", {
+  fit_3 <- auto.arima(WWWusage)
+  p_fit_3 <- pmml(fit_3)
+  expect_equal(toString(p_fit_3[[3]][[1]]),"<MiningSchema>\n <MiningField name=\"ts_value\" usageType=\"predicted\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"h\" usageType=\"supplementary\" invalidValueTreatment=\"returnInvalid\"/>\n</MiningSchema>")
+})
+
+
 test_that("Output node contains expected elements", {
   fit_4 <- auto.arima(WWWusage)
   p_fit_4 <- pmml(fit_4)

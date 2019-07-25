@@ -56,9 +56,9 @@ pmml.ARIMA <- function(model,
   if(!is.null(transforms)) stop("Transforms not supported for ARIMA stats models.")
 
   field <- NULL
-  field$name <- c("ts_value")
-  field$class <- c("numeric")
-  names(field$class) <- c("ts_value")
+  field$name <- c("ts_value","h")
+  field$class <- c("numeric","numeric")
+  names(field$class) <- c("ts_value","h")
   functionName <- "timeSeries"
   target <- "ts_value"
   
@@ -78,7 +78,7 @@ pmml.ARIMA <- function(model,
                       attrs=c(modelName=model_name,functionName="timeSeries",bestFit="ARIMA"))
   
   ts_model <- append.XMLNode(ts_model,
-                             .pmmlMiningSchema(field,target,transforms,missing_value_replacement))
+                             .pmmlMiningSchemaARIMA(field,target,transforms,missing_value_replacement))
   
   ts_model <- append.XMLNode(ts_model,
                              .pmmlOutput(field,target))

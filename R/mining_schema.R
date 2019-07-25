@@ -61,6 +61,55 @@
   return(mining.schema)
 }
 
+
+.pmmlMiningSchemaARIMA <- function(field, target = NULL, transformed = NULL,
+                              missing_value_replacement = NULL,
+                              invalidValueTreatment = "returnInvalid") {
+  namelist <- .origFieldList(field, transformed, target)
+  
+  mining.schema <- xmlNode("MiningSchema")
+  target <- .removeAsFactor(target)
+  
+  unknownVal <- NULL
+  for (j in 1:length(namelist)) {
+    if (!is.na(namelist[[j]])) {
+      # h (number of steps for forecast) is a supplementary field
+      usage <- ifelse(namelist[[j]] == target, "predicted", ifelse(namelist[[j]] == "h","supplementary","active"))
+      if ((!is.null(target)) && (namelist[[j]] != target)) {
+        if (!is.null(missing_value_replacement)) {
+          unknownVal <- missing_value_replacement
+          invalidValueTreatment <- "asMissing"
+        }
+      } else if (is.null(target) && !is.null(missing_value_replacement)) {
+        unknownVal <- missing_value_replacement
+        invalidValueTreatment <- "asMissing"
+      }
+      if (namelist[[j]] == "Temp" || namelist[[j]] == "DiscretePlaceHolder") {
+        # If field name is the naive bayes categorical field place holder, add missingValueReplacement.
+        if (length(field$levels[[namelist[[j]]]]) == 1) {
+          mf <- xmlNode("MiningField", attrs = c(
+            name = namelist[[j]],
+            usageType = usage, missingValueReplacement = field$levels[[namelist[[j]]]]
+          ))
+        }
+      } else {
+        mf <- xmlNode("MiningField", attrs = c(
+          name = namelist[[j]], usageType = usage,
+          missingValueReplacement = unknownVal, invalidValueTreatment = invalidValueTreatment
+        ))
+      }
+      
+      mining.schema <- append.XMLNode(mining.schema, mf)
+    }
+  }
+  
+  return(mining.schema)
+}
+
+
+
+
+
 .pmmlMiningSchemaRF <- function(field, target = NULL, inactive = NULL, transformed = NULL, missing_value_replacement = NULL) {
   # Generate the PMML for the MinimgSchema element.
   number.of.fields <- length(field$name)
