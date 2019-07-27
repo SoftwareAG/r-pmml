@@ -127,5 +127,14 @@ test_that("seasonal ARIMA model contains correct elements 3", {
   
 })
 
+test_that("Seasonal ARIMA without non-seasonal component does not contain NonseasonalComponent", {
+  fit_10 <- Arima(AirPassengers,order=c(0,0,0),seasonal=c(1,2,1))
+  p_fit_10 <- pmml(fit_10)
+  expect_equal(substr(toString(p_fit_10[[3]][[4]][[1]]),1,18),"<SeasonalComponent")
+})
+
+
+
+
 # TODO: compare coefficients in PMML directly with R coef
 

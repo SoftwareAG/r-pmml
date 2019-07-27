@@ -96,7 +96,9 @@ pmml.ARIMA <- function(model,
                                            constantTerm=arima_constant,
                                            predictionMethod="conditionalLeastSquares"))
   
-  arima_node <- append.XMLNode(arima_node,.make_nsc_node(model))
+  if(.is_nonseasonal(model)){
+    arima_node <- append.XMLNode(arima_node,.make_nsc_node(model))
+  }
   
   if(.is_seasonal(model)){
     arima_node <- append.XMLNode(arima_node,.make_sc_node(model))
@@ -203,7 +205,11 @@ pmml.ARIMA <- function(model,
   return(a[3]!=0 | a[4]!=0 | a[7]!=0)
 }
 
-
+.is_nonseasonal <- function(model){
+  # Checks if model has nonseasonal component.
+  a <- model$arma
+  return(a[1]!=0 | a[2]!=0 | a[6]!=0)
+}
 
 
 
