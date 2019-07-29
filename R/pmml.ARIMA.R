@@ -212,9 +212,28 @@ pmml.ARIMA <- function(model,
 }
 
 
-
 .make_ts_node <- function(model) {
-  # Creates TimeSeries node.
+  # Creates TimeSeries node. Exports the full time series.
+  
+  end_time <- length(model$x)
+  start_time <- 1
+  
+  ts_node <- xmlNode("TimeSeries", attrs = c(usage="logical",
+                                             startTime=toString(start_time), endTime=toString(end_time)))
+  
+  for (ts_index in c(start_time:end_time)){
+    ts_node <- append.XMLNode(ts_node,
+                              xmlNode("TimeValue",
+                                      attrs = c(index = toString(ts_index),
+                                                value = model$x[ts_index])))
+  }
+  return(ts_node)
+  
+}
+
+
+.make_ts_node_deprecated <- function(model) {
+  # Creates TimeSeries node. Only exports enough elements that are required to make the first predition.
   
   # start_time corresponds to the number of values necessary to make the first forecast.
   num_ar_elements <- length(grep("ar",names(model$coef)))
