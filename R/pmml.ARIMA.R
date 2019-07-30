@@ -55,14 +55,17 @@ pmml.ARIMA <- function(model,
   
   if(!is.null(transforms)) stop("Transforms not supported for ARIMA stats models.")
 
+  # Stop if model includes both intercept and drift terms
+  if (("intercept" %in% names(model$coef)) & ("drift") %in% names(model$coef)) {
+    stop("ARIMA models with both mean and drift terms not supported.")
+  }
+  
   field <- NULL
   field$name <- c("ts_value","h")
   field$class <- c("numeric","numeric")
   names(field$class) <- c("ts_value","h")
   functionName <- "timeSeries"
   target <- "ts_value"
-  
-  
   
   # PMML  
   pmml <- .pmmlRootNode("4.4")
@@ -88,8 +91,7 @@ pmml.ARIMA <- function(model,
   
   arima_rmse <- sqrt(sum((model$residuals)^2)/length(model$residuals))
   
-  # constantTerm is used when d=0. Set the constantTerm to 0 when d != 0.
-  # constantTerm = 0 by default.
+  # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
   arima_constant <- if(length(model$model$Delta)==0) {unname(model$coef["intercept"])} else {0}
   arima_node <- xmlNode("ARIMA", attrs = c(RMSE=arima_rmse,
                                            transformation="none",
@@ -124,7 +126,7 @@ pmml.ARIMA <- function(model,
   ma_ind <- grep("^ma",names(model$coef))
   theta_array <- unname(model$coef[ma_ind])
   
-  # Reverse sign of theta coefficients for PMML representation
+  # Reverse sign of theta coefficients for PMML representation.
   theta_array <- (-1)*theta_array
 
   ns_p <- model$arma[1]

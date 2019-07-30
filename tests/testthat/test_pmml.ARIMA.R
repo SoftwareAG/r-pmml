@@ -133,6 +133,16 @@ test_that("Seasonal ARIMA without non-seasonal component does not contain Nonsea
   expect_equal(substr(toString(p_fit_10[[3]][[4]][[1]]),1,18),"<SeasonalComponent")
 })
 
+test_that("ARIMA with both intercept and drift terms throws error", {
+  fit_11 <- Arima(AirPassengers,order=c(1,0,1), include.drift = TRUE)
+  expect_error(pmml(fit_11),"ARIMA models with both mean and drift terms not supported.")
+  
+  fit_12 <- Arima(AirPassengers,order=c(2,0,2), include.drift = TRUE)
+  expect_error(pmml(fit_12),"ARIMA models with both mean and drift terms not supported.")
+  
+})
+
+
 
 
 
