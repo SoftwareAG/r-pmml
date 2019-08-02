@@ -143,7 +143,7 @@ test_that("ARIMA with both intercept and drift terms throws error", {
 })
 
 
-
+# TODO: check that constant is not 0 when d=1 and include.drift is TRUE
 
 
 # TODO: compare coefficients in PMML directly with R coef
