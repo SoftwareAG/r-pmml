@@ -42,7 +42,7 @@ test_that("NonseasonalComponent node contains required elements 1", {
 
   # MA component - MACoefficients; sign of coefficients in PMML is opposite to R
   expect_equal(toString(p_fit_5[[3]][[4]][[1]][[2]][[1]][[1]]),
-               "<Array type=\"real\" n=\"1\">-0.999467612244043</Array>")
+               "<Array type=\"real\" n=\"1\">0.999467612244043</Array>")
   
   # MA component - Residuals
   expect_equal(toString(p_fit_5[[3]][[4]][[1]][[2]][[2]]),
@@ -116,7 +116,7 @@ test_that("seasonal ARIMA model contains correct elements 3", {
   
   # NonseasonalComponent coefficients
   expect_equal(toString(p_fit_9[[3]][[4]][[1]][[1]][[1]]),'<Array type="real" n="1">-0.918811953411307</Array>')
-  expect_equal(toString(p_fit_9[[3]][[4]][[1]][[2]][[1]][[1]]),'<Array type="real" n="3">0.488398025152718 0.981238492527093 -0.47123365713457</Array>')
+  expect_equal(toString(p_fit_9[[3]][[4]][[1]][[2]][[1]][[1]]),'<Array type="real" n="3">-0.488398025152718 -0.981238492527093 0.47123365713457</Array>')
   expect_equal(toString(p_fit_9[[3]][[4]][[1]][[2]][[2]][[1]]),'<Array type="real" n="3">10.6024485251517 -16.6110095847448 -3.45077032800267</Array>')
   
   # SeasonalComponent coefficients
