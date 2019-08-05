@@ -149,7 +149,10 @@ pmml.ARIMA <- function(model,
   
   nsc_node <- xmlNode("NonseasonalComponent",
                       attrs = c(p=ns_p, d=ns_d, q=ns_q))
-  nsc_node <- .make_arma_nodes(nsc_node, ns_p, ns_d, ns_q, phi_array, theta_array, mod_len, mod_resids)
+  nsc_node <- .make_arma_nodes(c_node = nsc_node, p_val = ns_p, d_val = ns_d,
+                               q_val = ns_q, phi_array = phi_array, theta_array = theta_array,
+                               mod_len = mod_len, mod_resids = mod_resids, seas = FALSE,
+                               ns_q = NA, seas_period = NA)
   return(nsc_node)
 }
 
@@ -180,12 +183,52 @@ pmml.ARIMA <- function(model,
   
   sc_node <- xmlNode("SeasonalComponent",
                      attrs = c(P=s_p, D=s_d, Q=s_q, period=s_period))
-  sc_node <- .make_arma_nodes(sc_node, s_p, s_d, s_q, s_phi_array, s_theta_array, mod_len, mod_resids)
+  sc_node <- .make_arma_nodes(c_node = sc_node, p_val = s_p, d_val = s_d,
+                              q_val = s_q, phi_array = s_phi_array, theta_array = s_theta_array,
+                              mod_len = mod_len, mod_resids = mod_resids,
+                              seas = TRUE, ns_q = model$arma[2], seas_period = model$arma[5])
   return(sc_node)
 }
 
 
-.make_arma_nodes <- function(c_node, p_val, d_val, q_val, phi_array, theta_array, mod_len, mod_resids){
+.make_arma_nodes <- function(c_node, p_val, d_val, q_val, phi_array, theta_array, mod_len, mod_resids, seas, ns_q = NA, seas_period = NA){
+  # Creates the AR and MA nodes for either non-seasonal or seasonal component nodes.
+  # seas: logical indicating if node is seasonal.
+  # ns_q: q value for non-seasonal component; only used when creating seasonal MA node.
+  # seas_period: period for seasonal component; only used when creating seasonal MA node.
+  
+  if (p_val > 0){
+    ar_node <- append.XMLNode(xmlNode("AR"),
+                              xmlNode("Array",attrs = c(type="real",n=p_val),value=paste(phi_array,collapse=" ")))
+    c_node <- append.XMLNode(c_node,ar_node)
+  }
+  
+  if (q_val > 0){
+    ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
+                                   xmlNode("Array",attrs = c(type="real",n=q_val),value=paste(theta_array,collapse=" ")))
+    
+    # Calculate the earliest necessary residual.
+    if(seas) {
+      resids <- mod_resids[(mod_len - (q_val*seas_period+ns_q) + 1):mod_len]
+    } else {
+      resids <- mod_resids[(mod_len - q_val + 1):mod_len]
+    }
+    ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
+                                    xmlNode("Array",
+                                            attrs = c(type="real",
+                                                      n=length(resids)),
+                                            value=paste(resids,collapse=" ")))
+    
+    ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
+    
+    c_node <- append.XMLNode(c_node,ma_node)
+  }
+  
+  return(c_node)
+}
+
+
+.make_arma_nodes_deprecated <- function(c_node, p_val, d_val, q_val, phi_array, theta_array, mod_len, mod_resids){
   # Creates the AR and MA nodes for either non-seasonal or seasonal component nodes.
   if (p_val > 0){
     ar_node <- append.XMLNode(xmlNode("AR"),
@@ -239,7 +282,7 @@ pmml.ARIMA <- function(model,
     
     tv_node <- xmlNode("TimeValue",attrs = c(index = toString(ts_index),value = model$x[ts_index]))
     
-    # tv_node <- append.XMLNode(tv_node, xmlNode("Timestamp", value="booboo"))
+    # tv_node <- append.XMLNode(tv_node, xmlNode("Timestamp", value="TEST"))
     
     ts_node <- append.XMLNode(ts_node, tv_node)
     
