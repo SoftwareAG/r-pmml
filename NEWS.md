@@ -3,16 +3,90 @@
 
 # pmml 2.0.0
 
-## Major Changes
-  * Transformation functions from `pmmlTransformations` have been merged into `pmml`.
+With this release, `pmmlTransformations ` has been merged into `pmml` and package development has been moved to GitHub. This was also a good opportunity to apply a style and rename many functions and parameters to make the code more uniform and easier to understand. 
 
-  * Exported functions conform to the tidyverse style. Function and parameter names have been changed to snake case.
+## Breaking Changes
+
+We used the tidyverse style guide when renaming functions, parameters, and arguments. In addition, some parameters and arguments have been renamed for clarity, and several functions were removed.
+
+For functions that use a dots (`...`) parameter, the old parameters will still be accepted, even though these old parameters will not be used. 
+
+* `pmml()` parameters and default arguments have been changed as follows:
+	- `model.name = "Rattle_Model"` -> `model_name = "R_Model"`
+	- `app.name = "Rattle/PMML"` -> `app_name = "SoftwareAG PMML Generator"`
+	- `unknownValue` -> `missing_value_replacement`
+
+* Individual exporters had the following changes:
+	- `pmml.iForest()`
+		- `parentInvalidValueTreatment` -> `parent_invalid_value_treatment`
+		- `childInvalidValueTreatment` -> `child_invalid_value_treatment`
+	- `pmml.lm()`
+		- The unused `dataset` argument has been removed.
+	- `pmml.naiveBayes()`
+		- `predictedField` - `predicted_field`
+	- `pmml.randomForest()`
+		- `unknownValue` -> `missing_value_replacement`
+		- `parentInvalidValueTreatment` -> `parent_invalid_value_treatment`
+		- `childInvalidValueTreatment` -> `child_invalid_value_treatment`
+	- `pmml.xgb.Booster()`
+		- `inputFeatureNames` -> `input_feature_names`
+		- `outputLabelName` -> `output_label_name`
+		- `outputCategories` -> `output_categories`
+		- `xgbDumpFile` -> `xgb_dump_file`
+		- `parentInvalidValueTreatment` -> `parent_invalid_value_treatment`
+		- `childInvalidValueTreatment` -> `child_invalid_value_treatment`
+
+* The following additional functions had name and parameter changes:
+	- `AddAttributes()` -> `add_attributes()`
+		- `xmlmodel` -> `xml_model`
+	- `addDDAttributes()` -> `add_data_field_attributes()`
+	- `addDFChildren()` -> `add_data_field_children()`
+	- `addMSAttributes()` -> `add_mining_field_attributes()`
+		`xmlmodel` -> `xml_model`
+	- `addOutputField()` -> `add_output_field()`
+		- `xmlmodel` -> `xml_model`
+	- `makeIntervals()` -> `make_intervals()`
+	- `makeOutputNodes()` -> `make_output_nodes()`
+	- `makeValues()` -> `make_values()`
+
+* Functions from `pmmlTransformations` have been merged into `pmml` and had the following name and parameter changes:
+	- All functions had the following parameters renamed where present:
+		- `xformInfo` -> `xform_info`
+		- `boxdata` -> `wrap_object` (except in `RenameVar`)
+		- `mapMissingTo` -> `map_missing_to`
+	- `DiscretizeXform()` -> `xform_discretize()`
+		- `defaultValue` -> `default_value`
+		- `mapMissingTo` -> `map_missing_to`
+	- `FunctionXform()` -> `xform_function()`
+		- `origFieldName` -> `orig_field_name`
+		- `newFieldName` -> `new_field_name`
+		- `newFieldDataType` -> `new_field_data_type`
+		- `formulaText` -> `expression`
+	- `MapXform()` -> `xform_map()`
+		- `defaultValue` -> `default_value`
+	- `MinMaxXform()` -> `xform_min_max()`
+	- `NormDiscreteXform()` -> `xform_norm_discrete()`
+	- `RenameVar()` -> `rename_wrap_var()`
+		- `boxdata` -> `wrap_data`
+	- `WrapData()` -> `xform_wrap()`
+		- `indata` -> `data`
+		- `useMatrix` -> `use_matrix`
+	- `ZScoreXform()` -> `xform_z_score()`
+
+## Deleted/moved functions
+* The following functions have been removed from the package:
+	- `pmmltoc()` - empty function.
+	- `addLT()` - unused function.
+	- `pmmlCanExport()` - unused function.
+	- `pmml.survreg()` - untested exporter that may be added in the future.
+
+* `Initialize()` has been made internal.
 
 ## Other Changes
 
   * All documentation is created with roxygen.
 
-  * Fixed documentation to be uniform across different exporters.
+  * Documentation is now uniform across different exporters.
 
 # pmml 1.5.7
   * Add support for one-class svm (anomaly detection) models from e1071
