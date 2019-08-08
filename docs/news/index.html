@@ -96,7 +96,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/SoftwareAG/r-pmml">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -110,24 +115,246 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="pmml-2-0-0-9000" class="section level1">
 <h1 class="page-header">
 <a href="#pmml-2-0-0-9000" class="anchor"></a>pmml 2.0.0.9000<small> Unreleased </small>
 </h1>
+<ul>
+<li>Application version in PMML Header corresponds to pmml package version.</li>
+</ul>
 </div>
     <div id="pmml-2-0-0" class="section level1">
 <h1 class="page-header">
 <a href="#pmml-2-0-0" class="anchor"></a>pmml 2.0.0<small> 2019-06-03 </small>
 </h1>
-<div id="major-changes" class="section level2">
+<p>With this release, <code>pmmlTransformations</code> has been merged into <code>pmml</code> and package development has been moved to GitHub. This was also a good opportunity to apply a style and rename many functions and parameters to make the code more uniform and easier to understand.</p>
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<p>We used the tidyverse style guide when renaming functions, parameters, and arguments. In addition, some parameters and arguments have been renamed for clarity, and several functions were removed.</p>
+<p>For functions that use a dots (<code>...</code>) parameter, the old parameters will still be accepted, even though these old parameters will not be used.</p>
 <ul>
-<li><p>Transformation functions from <code>pmmlTransformations</code> have been merged into <code>pmml</code>.</p></li>
-<li><p>Exported functions conform to the tidyverse style. Function and parameter names have been changed to snake case.</p></li>
+<li>
+<code><a href="../reference/pmml.html">pmml()</a></code> parameters and default arguments have been changed as follows:
+<ul>
+<li>
+<code>model.name = "Rattle_Model"</code> -&gt; <code>model_name = "R_Model"</code>
+</li>
+<li>
+<code>app.name = "Rattle/PMML"</code> -&gt; <code>app_name = "SoftwareAG PMML Generator"</code>
+</li>
+<li>
+<code>unknownValue</code> -&gt; <code>missing_value_replacement</code>
+</li>
+</ul>
+</li>
+<li>Individual exporters had the following changes:
+<ul>
+<li>
+<code><a href="../reference/pmml.iForest.html">pmml.iForest()</a></code>
+<ul>
+<li>
+<code>parentInvalidValueTreatment</code> -&gt; <code>parent_invalid_value_treatment</code>
+</li>
+<li>
+<code>childInvalidValueTreatment</code> -&gt; <code>child_invalid_value_treatment</code>
+</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/pmml.lm.html">pmml.lm()</a></code>
+<ul>
+<li>The unused <code>dataset</code> argument has been removed.</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/pmml.naiveBayes.html">pmml.naiveBayes()</a></code>
+<ul>
+<li>
+<code>predictedField</code> - <code>predicted_field</code>
+</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/pmml.randomForest.html">pmml.randomForest()</a></code>
+<ul>
+<li>
+<code>unknownValue</code> -&gt; <code>missing_value_replacement</code>
+</li>
+<li>
+<code>parentInvalidValueTreatment</code> -&gt; <code>parent_invalid_value_treatment</code>
+</li>
+<li>
+<code>childInvalidValueTreatment</code> -&gt; <code>child_invalid_value_treatment</code>
+</li>
+</ul>
+</li>
+<li>
+<code><a href="../reference/pmml.xgb.Booster.html">pmml.xgb.Booster()</a></code>
+<ul>
+<li>
+<code>inputFeatureNames</code> -&gt; <code>input_feature_names</code>
+</li>
+<li>
+<code>outputLabelName</code> -&gt; <code>output_label_name</code>
+</li>
+<li>
+<code>outputCategories</code> -&gt; <code>output_categories</code>
+</li>
+<li>
+<code>xgbDumpFile</code> -&gt; <code>xgb_dump_file</code>
+</li>
+<li>
+<code>parentInvalidValueTreatment</code> -&gt; <code>parent_invalid_value_treatment</code>
+</li>
+<li>
+<code>childInvalidValueTreatment</code> -&gt; <code>child_invalid_value_treatment</code>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The following additional functions had name and parameter changes:
+<ul>
+<li>
+<code>AddAttributes()</code> -&gt; <code><a href="../reference/add_attributes.html">add_attributes()</a></code>
+<ul>
+<li>
+<code>xmlmodel</code> -&gt; <code>xml_model</code>
+</li>
+</ul>
+</li>
+<li>
+<code>addDDAttributes()</code> -&gt; <code><a href="../reference/add_data_field_attributes.html">add_data_field_attributes()</a></code>
+</li>
+<li>
+<code>addDFChildren()</code> -&gt; <code><a href="../reference/add_data_field_children.html">add_data_field_children()</a></code>
+</li>
+<li>
+<code>addMSAttributes()</code> -&gt; <code><a href="../reference/add_mining_field_attributes.html">add_mining_field_attributes()</a></code> <code>xmlmodel</code> -&gt; <code>xml_model</code>
+</li>
+<li>
+<code>addOutputField()</code> -&gt; <code><a href="../reference/add_output_field.html">add_output_field()</a></code>
+<ul>
+<li>
+<code>xmlmodel</code> -&gt; <code>xml_model</code>
+</li>
+</ul>
+</li>
+<li>
+<code>makeIntervals()</code> -&gt; <code><a href="../reference/make_intervals.html">make_intervals()</a></code>
+</li>
+<li>
+<code>makeOutputNodes()</code> -&gt; <code><a href="../reference/make_output_nodes.html">make_output_nodes()</a></code>
+</li>
+<li>
+<code>makeValues()</code> -&gt; <code><a href="../reference/make_values.html">make_values()</a></code>
+</li>
+</ul>
+</li>
+<li>Functions from <code>pmmlTransformations</code> have been merged into <code>pmml</code> and had the following name and parameter changes:
+<ul>
+<li>All functions had the following parameters renamed where present:
+<ul>
+<li>
+<code>xformInfo</code> -&gt; <code>xform_info</code>
+</li>
+<li>
+<code>boxdata</code> -&gt; <code>wrap_object</code> (except in <code>RenameVar</code>)</li>
+<li>
+<code>mapMissingTo</code> -&gt; <code>map_missing_to</code>
+</li>
+</ul>
+</li>
+<li>
+<code>DiscretizeXform()</code> -&gt; <code><a href="../reference/xform_discretize.html">xform_discretize()</a></code>
+<ul>
+<li>
+<code>defaultValue</code> -&gt; <code>default_value</code>
+</li>
+<li>
+<code>mapMissingTo</code> -&gt; <code>map_missing_to</code>
+</li>
+</ul>
+</li>
+<li>
+<code>FunctionXform()</code> -&gt; <code><a href="../reference/xform_function.html">xform_function()</a></code>
+<ul>
+<li>
+<code>origFieldName</code> -&gt; <code>orig_field_name</code>
+</li>
+<li>
+<code>newFieldName</code> -&gt; <code>new_field_name</code>
+</li>
+<li>
+<code>newFieldDataType</code> -&gt; <code>new_field_data_type</code>
+</li>
+<li>
+<code>formulaText</code> -&gt; <code>expression</code>
+</li>
+</ul>
+</li>
+<li>
+<code>MapXform()</code> -&gt; <code><a href="../reference/xform_map.html">xform_map()</a></code>
+<ul>
+<li>
+<code>defaultValue</code> -&gt; <code>default_value</code>
+</li>
+</ul>
+</li>
+<li>
+<code>MinMaxXform()</code> -&gt; <code><a href="../reference/xform_min_max.html">xform_min_max()</a></code>
+</li>
+<li>
+<code>NormDiscreteXform()</code> -&gt; <code><a href="../reference/xform_norm_discrete.html">xform_norm_discrete()</a></code>
+</li>
+<li>
+<code>RenameVar()</code> -&gt; <code><a href="../reference/rename_wrap_var.html">rename_wrap_var()</a></code>
+<ul>
+<li>
+<code>boxdata</code> -&gt; <code>wrap_data</code>
+</li>
+</ul>
+</li>
+<li>
+<code>WrapData()</code> -&gt; <code><a href="../reference/xform_wrap.html">xform_wrap()</a></code>
+<ul>
+<li>
+<code>indata</code> -&gt; <code>data</code>
+</li>
+<li>
+<code>useMatrix</code> -&gt; <code>use_matrix</code>
+</li>
+</ul>
+</li>
+<li>
+<code>ZScoreXform()</code> -&gt; <code><a href="../reference/xform_z_score.html">xform_z_score()</a></code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="deletedmoved-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#deletedmoved-functions" class="anchor"></a>Deleted/moved functions</h2>
+<ul>
+<li>The following functions have been removed from the package:
+<ul>
+<li>
+<code>pmmltoc()</code> - empty function.</li>
+<li>
+<code>addLT()</code> - unused function.</li>
+<li>
+<code>pmmlCanExport()</code> - unused function.</li>
+<li>
+<code>pmml.survreg()</code> - untested exporter that may be added in the future.</li>
+</ul>
+</li>
+<li>
+<code>Initialize()</code> has been made internal.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level2">
@@ -135,7 +362,7 @@
 <a href="#other-changes" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>All documentation is created with roxygen.</p></li>
-<li><p>Fixed documentation to be uniform across different exporters.</p></li>
+<li><p>Documentation is now uniform across different exporters.</p></li>
 </ul>
 </div>
 </div>
