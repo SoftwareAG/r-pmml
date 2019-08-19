@@ -75,7 +75,7 @@ test_that("seasonal ARIMA model contains correct elements 1", {
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="Q"),1)
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]],name="period"),4)
   
-  expect_equal(toString(p_fit_7[[3]][[4]][[2]][[1]][[1]][[1]]),'<Array type="real" n="1">-0.999999926590528</Array>')
+  expect_equal(toString(p_fit_7[[3]][[4]][[2]][[1]][[1]][[1]]),'<Array type="real" n="1">0.999999926590528</Array>')
   # Seasonal residuals array should have 6 elements.
   expect_equal(toString(p_fit_7[[3]][[4]][[2]][[1]][[2]][[1]]),
                '<Array type="real" n="6">0.840294788225463 1.79540974711022 3.43600813764863 0.595257922098859 1.560371580367 1.33444221515274</Array>')
@@ -125,7 +125,7 @@ test_that("seasonal ARIMA model contains correct elements 3", {
   
   # SeasonalComponent coefficients
   expect_equal(toString(p_fit_9[[3]][[4]][[2]][[1]][[1]]),'<Array type="real" n="1">-0.33060697133757</Array>')
-  expect_equal(toString(p_fit_9[[3]][[4]][[2]][[2]][[1]][[1]]),'<Array type="real" n="1">0.964840603841212</Array>')
+  expect_equal(toString(p_fit_9[[3]][[4]][[2]][[2]][[1]][[1]]),'<Array type="real" n="1">-0.964840603841212</Array>')
   # Seasonal residuals array should have 15 elements.
   expect_equal(toString(p_fit_9[[3]][[4]][[2]][[2]][[2]][[1]]),'<Array type=\"real\" n=\"15\">-0.231414430272416 7.85449813502021 14.0341170808424 0.488050253167314 -3.47775177064476 -34.7531345572846 36.9803974323111 -0.721770286617552 3.21345471099022 5.83445945385706 -21.7707201166725 -1.21862197305704 10.6024485251517 -16.6110095847448 -3.45077032800267</Array>')
   

@@ -172,7 +172,7 @@ pmml.ARIMA <- function(model,
   s_theta_array <- unname(model$coef[sma_ind])
   
   # Reverse sign of theta coefficients for PMML representation.
-  s_theta_array <- (-1)*s_theta_array
+  # s_theta_array <- (-1)*s_theta_array
   
   s_p <- model$arma[3]
   s_d <- model$arma[7]
