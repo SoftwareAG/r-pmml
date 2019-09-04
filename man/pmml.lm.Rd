@@ -28,7 +28,7 @@ attribute for all MiningFields.}
 
 \item{weights}{The weights used for building the model.}
 
-\item{\dots}{Further arguments passed to or from other methods.}
+\item{...}{Further arguments passed to or from other methods.}
 }
 \value{
 PMML representation of the \code{lm} object.
