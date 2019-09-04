@@ -133,14 +133,11 @@ test_that("seasonal ARIMA model contains correct elements 3", {
 })
 
 
-test_that("seasonal ARIMA model contains correct elements 4", {
-  fit_9a <- Arima(AirPassengers,order=c(1,1,0),seasonal=c(0,1,1))
-  p_fit_9a <- pmml(fit_9a)
-  
-
-  
-  
-})
+# test_that("seasonal ARIMA model contains correct elements 4", {
+#   fit_9a <- Arima(AirPassengers,order=c(1,1,0),seasonal=c(0,1,1))
+#   p_fit_9a <- pmml(fit_9a)
+# 
+# })
 
 
 
@@ -159,9 +156,4 @@ test_that("ARIMA with both intercept and drift terms throws error", {
   
 })
 
-
-# TODO: check that constant is not 0 when d=1 and include.drift is TRUE
-
-
-# TODO: compare coefficients in PMML directly with R coef
 

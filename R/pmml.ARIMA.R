@@ -228,33 +228,6 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_arma_nodes_deprecated <- function(c_node, p_val, d_val, q_val, phi_array, theta_array, mod_len, mod_resids){
-  # Creates the AR and MA nodes for either non-seasonal or seasonal component nodes.
-  if (p_val > 0){
-    ar_node <- append.XMLNode(xmlNode("AR"),
-                              xmlNode("Array",attrs = c(type="real",n=p_val),value=paste(phi_array,collapse=" ")))
-    c_node <- append.XMLNode(c_node,ar_node)
-  }
-  
-  if (q_val > 0){
-    ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
-                                   xmlNode("Array",attrs = c(type="real",n=q_val),value=paste(theta_array,collapse=" ")))
-    
-    resids <- mod_resids[(mod_len - q_val + 1):mod_len]
-    ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
-                                    xmlNode("Array",
-                                            attrs = c(type="real",
-                                                      n=length(resids)),
-                                            value=paste(resids,collapse=" ")))
-    
-    ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
-    
-    c_node <- append.XMLNode(c_node,ma_node)
-  }
-  
-  return(c_node)
-}
-
 
 .is_seasonal <- function(model){
   # Checks if model has seasonal component.
@@ -293,106 +266,8 @@ pmml.ARIMA <- function(model,
 }
 
 
-
-
 .make_time_anchor_node <- function(){
   # creates TimeAnchor node in TimeSeries
   time_anchor_node <- xmlNode("TimeAnchor")
   return(time_anchor_node)
 }
-
-
-.make_nsc_node_deprecated <- function(model) {
-  # Creates NonseasonalComponent node; uses model$model to get the coefficients
-  
-  # model$model$theta may contain values of 0. This should not count towards q.
-  num_ma_elements <- length(grep("ma",names(model$coef)))
-  
-  mod_len <- length(model$x)
-  
-  # (p,d,q) arrays
-  phi_array <- model$model$phi
-  d_array <- model$model$Delta
-  theta_array <- if (num_ma_elements > 0) {model$model$theta[1:num_ma_elements]} else {0}
-  
-  # Reverse sign of theta coefficients for PMML representation
-  theta_array <- (-1)*theta_array
-  
-  # Check if theta_array is 0
-  ns_p <- .get_p_q(phi_array)
-  ns_d <- length(d_array)
-  ns_q <- .get_p_q(theta_array)
-  
-  nsc_node <- xmlNode("NonseasonalComponent",
-                      attrs = c(p=ns_p, d=ns_d, q=ns_q))
-  
-  if (ns_p>0){
-    ar_node <- append.XMLNode(xmlNode("AR"),
-                              xmlNode("Array",attrs = c(type="real",n=ns_p),value=paste(phi_array,collapse=" ")))
-    nsc_node <- append.XMLNode(nsc_node,ar_node)
-  }
-  
-  if (ns_q > 0){
-    ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
-                                   xmlNode("Array",attrs = c(type="real",n=ns_q),value=paste(theta_array,collapse=" ")))
-    
-    resids <- model$residuals[(mod_len - ns_q + 1):mod_len]
-    ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
-                                    xmlNode("Array",
-                                            attrs = c(type="real",
-                                                      n=length(resids)),
-                                            value=paste(resids,collapse=" ")))
-    
-    ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
-    
-    nsc_node <- append.XMLNode(nsc_node,ma_node)
-  }
-  
-  return(nsc_node)
-}
-
-
-
-# .get_p_q <- function(x_array){
-#   # DEPRECATED
-#   if(length(x_array)==0){
-#     return(0)
-#   } else if (length(x_array)==1) {
-#     if (x_array==0) {
-#       return(0)
-#     } else {
-#       return(1)
-#     }
-#   } else {
-#     return(length(x_array))
-#   }
-# }
-
-
-
-# nsc_node <- xmlNode("NonseasonalComponent",
-#                     attrs = c(p=ns_p, d=ns_d, q=ns_q))
-# 
-# if (ns_p > 0){
-# ar_node <- append.XMLNode(xmlNode("AR"),
-#                           xmlNode("Array",attrs = c(type="real",n=ns_p),value=paste(phi_array,collapse=" ")))
-# nsc_node <- append.XMLNode(nsc_node,ar_node)
-# }
-# 
-# if (ns_q > 0){
-#   ma_coef_node <- append.XMLNode(xmlNode("MACoefficients"),
-#                                  xmlNode("Array",attrs = c(type="real",n=ns_q),value=paste(theta_array,collapse=" ")))
-# 
-#   resids <- model$residuals[(mod_len - ns_q + 1):mod_len]
-#   ma_resid_node <- append.XMLNode(xmlNode("Residuals"),
-#                                   xmlNode("Array",
-#                                           attrs = c(type="real",
-#                                                     n=length(resids)),
-#                                           value=paste(resids,collapse=" ")))
-# 
-#   ma_node <- append.XMLNode(xmlNode("MA"),ma_coef_node,ma_resid_node)
-# 
-#   nsc_node <- append.XMLNode(nsc_node,ma_node)
-# }
-# 
-# return(nsc_node)
