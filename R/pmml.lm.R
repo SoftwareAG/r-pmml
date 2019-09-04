@@ -24,7 +24,6 @@
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
 #' @param weights The weights used for building the model.
-#' @param \dots Further arguments passed to or from other methods.
 #'
 #' @inheritParams pmml
 #'

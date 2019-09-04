@@ -75,7 +75,10 @@ Conference on Knowledge Discovery and Data Mining}
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://softwareag.github.io/r-pmml/}
+  \item \url{https://github.com/SoftwareAG/r-pmml}
   \item \url{https://www.softwareag.com/zementis}
+  \item Report bugs at \url{https://github.com/SoftwareAG/r-pmml/issues}
 }
 
 }
