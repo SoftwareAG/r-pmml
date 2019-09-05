@@ -190,15 +190,29 @@ pmml.svm <- function(model,
       )
     )
 
+    
+    # xmlOF_anomaly <- xmlNode("OutputField",
+    #   attrs = c(
+    #     name = "anomaly", feature = "anomaly",
+    #     dataType = "boolean", optype = "categorical",
+    #     threshold = "0"
+    #   )
+    # )
+
+    # updated anomaly field that replaces "threshold" attribute with Apply function.
     xmlOF_anomaly <- xmlNode("OutputField",
-      attrs = c(
-        name = "anomaly", feature = "anomaly",
-        dataType = "boolean", optype = "categorical",
-        threshold = "0"
-      )
-    )
+                             attrs = c(
+                               name = "anomaly", feature = "decision",
+                               dataType = "boolean", optype = "categorical"
+                             ))
 
+    xmlOF_anomaly_apply <- xmlNode("Apply", attrs = c("function" = "lessThan"))
+    xmlOF_anomaly_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
+    xmlOF_anomaly_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double")) #constant dataType="double"
+    xmlOF_anomaly_apply <- append.XMLNode(xmlOF_anomaly_apply, xmlOF_anomaly_fieldref, xmlOF_anomaly_constant)
+    xmlOF_anomaly <- append.XMLNode(xmlOF_anomaly, xmlOF_anomaly_apply)
 
+    
 
     # Additional output field with a transformed decision.values value.
     # This value corresponds to R's prediction for the one-class svm model.

@@ -136,8 +136,11 @@ zmz_transform_audit <- function(box_obj) {
   return(box_obj)
 }
 
-schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222_43.xsd")
-schema_44 <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222.xsd")
+# schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222_43.xsd")
+schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0_43.xsd")
+
+# schema_44 <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222.xsd")
+schema_44 <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
 
 test_that("TimeSeries/Arima PMML validates against schema", {
 
@@ -172,6 +175,7 @@ test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
   fit <- iForest(box_obj$data[, -c(1, 7, 9, 10)], nt = 5, phi = 420)
   expect_equal(validate_pmml(pmml(fit, transforms = box_obj), schema), 0)
 })
+
 
 test_that("ClusteringModel/stats kmeans PMML validates against schema", {
   fit <- kmeans(audit[, c(2, 7, 9, 10, 12)], 2)
@@ -209,6 +213,7 @@ test_that("ClusteringModel/stats kmeans PMML validates against schema", {
   p_fit <- pmml(fit, transform = box_obj)
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
+
 
 test_that("GeneralRegressionModel/glmnet PMML validates against schema", {
   x <- data.matrix(audit[, c(2, 7, 9:10)])
@@ -440,6 +445,7 @@ test_that("MiningModel/gbm PMML validates against schema", {
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
 
+
 test_that("MiningModel/randomForest PMML validates against schema", {
   audit_nor_logical[, "Sex"] <- as.factor(audit_nor_logical[, "Sex"])
   suppressWarnings(fit <- randomForest(Adjusted ~ ., audit_nor_logical[, -1], ntree = 8))
@@ -535,7 +541,6 @@ test_that("MiningModel/randomForest PMML validates against schema", {
   p_fit <- pmml(fit, transforms = box_obj)
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
-
 
 
 test_that("MiningModel/xgboost PMML validates against schema", {
@@ -956,7 +961,6 @@ test_that("NeuralNetwork/nnet PMML validates against schema", {
 })
 
 
-
 test_that("RegressionModel/nnet PMML validates against schema", {
   fit <- multinom(as.factor(Adjusted) ~ ., data = audit_nor, trace = F)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
@@ -981,7 +985,6 @@ test_that("RegressionModel/nnet PMML validates against schema", {
   p_fit <- pmml(fit, transform = box_obj)
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
-
 
 
 test_that("RegressionModel/stats PMML validates against schema", {
@@ -1049,7 +1052,7 @@ test_that("RegressionModel/stats PMML validates against schema", {
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
 
-
+#
 test_that("SupportVectorMachineModel/e1071 PMML validates against schema", {
   fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:3], model_name = "radial_iris_ocsvm"), schema), 0)
@@ -1630,3 +1633,4 @@ test_that("Transformations PMML validates against schema", {
   p_fit <- pmml(fit, transforms = numeric_10k_box)
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
+
