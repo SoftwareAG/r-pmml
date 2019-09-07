@@ -42,11 +42,6 @@
 #' labelled "."; this is kept in the PMML representation even though the use of this extra
 #' factor in the predict function is unclear.
 #'
-#' Isolation forest anomaly detection models are not yet supported by DMG PMML schema version 4.3. The PMML
-#' produced by this exporter uses an extended schema, and can be consumed by Zementis products.
-#' The extended schema is a superset of 4.3, and contains enhancements that will be part of
-#' the upcoming PMML 4.4 release.
-#'
 #' @examples
 #' \dontrun{
 #'

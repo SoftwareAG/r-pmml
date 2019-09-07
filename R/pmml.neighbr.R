@@ -161,7 +161,7 @@ pmml.neighbr <- function(model,
   field$class <- classes
 
   # PMML
-  pmml <- .pmmlRootNode("4.3")
+  pmml <- .pmmlRootNode()
 
   # PMML -> Header
   pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, app_name))

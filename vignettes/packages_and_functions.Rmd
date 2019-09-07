@@ -80,4 +80,4 @@ The following functions allow additional operations, such as creating specific n
 - make_values: create Values element to add to a DataDictionary element.
 
 ## References
-- [DMG PMML 4.3 specification](http://dmg.org/pmml/v4-3/GeneralStructure.html)
+- [DMG PMML 4.4 specification](http://dmg.org/pmml/v4-4/GeneralStructure.html)

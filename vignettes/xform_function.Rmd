@@ -314,4 +314,4 @@ function_to_pmml("if(a<2) {x+3} else if (a>4) {4} else {5}")
 
 
 ## References
-- [PMML 4.3 official specification](http://dmg.org/pmml/v4-3/GeneralStructure.html)
+- [DMG PMML 4.4 specification](http://dmg.org/pmml/v4-4/GeneralStructure.html)

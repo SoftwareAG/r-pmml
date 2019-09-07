@@ -1,5 +1,6 @@
 # pmml 2.0.0.9000
 * Application version in PMML Header corresponds to pmml package version.
+* Documentation now references PMML version 4.4.
 
 # pmml 2.0.0
 

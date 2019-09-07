@@ -69,11 +69,6 @@
 #' to train the SVM. The data used to train the one-class SVM must be numeric and not of
 #' integer class.
 #'
-#' SVM anomaly detection models are not yet supported by DMG PMML schema version 4.3. The PMML
-#' produced by this exporter uses an extended schema, and can be consumed by Zementis products.
-#' The extended schema is a superset of 4.3, and contains enhancements that will be part of
-#' the upcoming PMML 4.4 release.
-#'
 #' @references
 #' * R project CRAN package: \emph{\bold{e1071}: Misc Functions of the Department of Statistics,
 #' Probability Theory Group (Formerly: E1071), TU Wien} \url{https://CRAN.R-project.org/package=e1071}
@@ -190,12 +185,11 @@ pmml.svm <- function(model,
       )
     )
 
-    
+    ## old anomaly field that uses "threshold" attribute.
     # xmlOF_anomaly <- xmlNode("OutputField",
     #   attrs = c(
     #     name = "anomaly", feature = "anomaly",
-    #     dataType = "boolean", optype = "categorical",
-    #     threshold = "0"
+    #     dataType = "boolean", optype = "categorical", threshold = "0"
     #   )
     # )
 

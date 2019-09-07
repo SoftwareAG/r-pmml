@@ -65,7 +65,7 @@
 #' fields derived from a chain of transformations starting from an original
 #' field and multiple fields derived from the same original field.
 #'
-#' This package converts models to PMML version 4.3.
+#' This package exports models to PMML version 4.4.
 #'
 #' Please note that package \pkg{XML_3.95-0.1} or later is required to perform
 #' the full and correct functionality of \pkg{pmml}.
