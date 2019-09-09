@@ -106,23 +106,39 @@ pmml.iForest <- function(model,
 
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(field, transformed = transforms))
 
+  # # pre-4.4 node - ParameterList was used to store model$phi
+  # anomalyModel <- xmlNode("AnomalyDetectionModel", attrs = c(
+  #   functionName = "regression",
+  #   algorithmType = "iforest", modelName = model_name
+  # ))
+
+  # 4.4 node with sampleDataSize attribute
   anomalyModel <- xmlNode("AnomalyDetectionModel", attrs = c(
     functionName = "regression",
+    sampleDataSize = model$phi,
     algorithmType = "iforest", modelName = model_name
   ))
+  
+  
+  
   anomalyModel <- append.XMLNode(anomalyModel, .pmmlMiningSchema(field, target, transforms, missing_value_replacement,
     invalidValueTreatment = parent_invalid_value_treatment
   ))
+  
   anomalyModel <- append.XMLNode(anomalyModel, .pmmlAnomalyOutput(field, target, anomalyThreshold))
-  anomalyModel <- append.XMLNode(anomalyModel, .pmmlParameterList(model$phi))
+  
+  ## pre-4.4 usage of ParameterList
+  # anomalyModel <- append.XMLNode(anomalyModel, .pmmlParameterList(model$phi))
 
   mmodel <- xmlNode("MiningModel", attrs = c(
     modelName = model_name, algorithmName = "randomForest",
     functionName = "regression"
   ))
+  
   mmodel <- append.XMLNode(mmodel, .pmmlMiningSchema(field, target, transforms, missing_value_replacement,
     invalidValueTreatment = parent_invalid_value_treatment
   ))
+  
   mmodel <- append.XMLNode(mmodel, .pmmlAnomalyMiningOutput("avg_path_length"))
 
   # If interaction terms do exist, define a product in LocalTransformations and use
@@ -384,30 +400,54 @@ pmml.iForest <- function(model,
   return(rfNode)
 }
 
+
+# 4.4 function with decision field
 .pmmlAnomalyOutput <- function(field, target, anomalyThreshold) {
   output <- xmlNode("Output")
   output1 <- xmlNode("OutputField", attrs = c(
     name = "anomalyScore", optype = "continuous",
     dataType = "double", feature = "predictedValue"
   ))
-  output2 <- xmlNode("OutputField", attrs = c(
+  output_anomaly <- xmlNode("OutputField", attrs = c(
     name = "anomaly", optype = "categorical", dataType = "boolean",
-    feature = "transformedValue"
+    feature = "decision"
   ))
-
-  output2a <- xmlNode("Apply", attrs = c("function" = "if"))
-  output2b <- xmlNode("Apply", attrs = c("function" = "lessThan"))
-  output2c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-  output2d <- xmlNode("Constant", attrs = c(dataType = "double"), anomalyThreshold)
-  output2e <- xmlNode("Constant", attrs = c(dataType = "boolean"), "FALSE")
-  output2f <- xmlNode("Constant", attrs = c(dataType = "boolean"), "TRUE")
-  output2b <- append.XMLNode(output2b, output2c, output2d)
-  output2a <- append.XMLNode(output2a, output2b, output2e, output2f)
-  output2 <- append.XMLNode(output2, output2a)
-
-  output <- append.XMLNode(output, output1, output2)
+  
+  output_anomaly_comp <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
+  output_anomaly_c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
+  output_anomaly_d <- xmlNode("Constant", attrs = c(dataType = "double"), anomalyThreshold)
+  output_anomaly_comp <- append.XMLNode(output_anomaly_comp, output_anomaly_c, output_anomaly_d)
+  output_anomaly <- append.XMLNode(output_anomaly, output_anomaly_comp)
+  
+  output <- append.XMLNode(output, output1, output_anomaly)
   return(output)
 }
+
+# # pre-4.4 function
+# .pmmlAnomalyOutput <- function(field, target, anomalyThreshold) {
+#   output <- xmlNode("Output")
+#   output1 <- xmlNode("OutputField", attrs = c(
+#     name = "anomalyScore", optype = "continuous",
+#     dataType = "double", feature = "predictedValue"
+#   ))
+#   output2 <- xmlNode("OutputField", attrs = c(
+#     name = "anomaly", optype = "categorical", dataType = "boolean",
+#     feature = "transformedValue"
+#   ))
+# 
+#   output2a <- xmlNode("Apply", attrs = c("function" = "if"))
+#   output2b <- xmlNode("Apply", attrs = c("function" = "lessThan"))
+#   output2c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
+#   output2d <- xmlNode("Constant", attrs = c(dataType = "double"), anomalyThreshold)
+#   output2e <- xmlNode("Constant", attrs = c(dataType = "boolean"), "FALSE")
+#   output2f <- xmlNode("Constant", attrs = c(dataType = "boolean"), "TRUE")
+#   output2b <- append.XMLNode(output2b, output2c, output2d)
+#   output2a <- append.XMLNode(output2a, output2b, output2e, output2f)
+#   output2 <- append.XMLNode(output2, output2a)
+# 
+#   output <- append.XMLNode(output, output1, output2)
+#   return(output)
+# }
 
 .pmmlAnomalyMiningOutput <- function(targetName) {
   output <- xmlNode("Output")
