@@ -4,7 +4,7 @@
 \alias{save_pmml}
 \title{Save a pmml object as an external PMML file.}
 \usage{
-save_pmml(doc, name, version = 4.3)
+save_pmml(doc, name, version = 4.4)
 }
 \arguments{
 \item{doc}{The pmml model.}
