@@ -93,7 +93,7 @@
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export
-add_data_field_children <- function(xml_model = NULL, field = NULL, intervals = NULL, values = NULL, namespace = "4_3", ...) {
+add_data_field_children <- function(xml_model = NULL, field = NULL, intervals = NULL, values = NULL, namespace = "4_4", ...) {
 
   # Flush to avoid malloc error.
   flush.console()

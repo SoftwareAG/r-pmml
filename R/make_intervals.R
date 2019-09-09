@@ -45,7 +45,7 @@
 #' to add these xml fragments to the DataDictionary PMML element.
 #'
 #' @export
-make_intervals <- function(closure = NULL, leftMargin = NULL, rightMargin = NULL, namespace = "4_3") {
+make_intervals <- function(closure = NULL, leftMargin = NULL, rightMargin = NULL, namespace = "4_4") {
   namespace <- .getNamespace(namespace)
 
   if ((length(closure) != length(leftMargin)) || (length(closure) != length(rightMargin))

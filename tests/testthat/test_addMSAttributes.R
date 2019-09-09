@@ -24,7 +24,7 @@ test_that("add_mining_field_attributes function writes MiningField attributes pr
     attributes[[k]] <- as.character(attributes[[k]])
   }
 
-  model <- add_mining_field_attributes(model, attributes, namespace = "4_3")
+  model <- add_mining_field_attributes(model, attributes, namespace = "4_4")
 
   ms <- xmlToList(model)$RegressionModel$MiningSchema
   ms1 <- ms[[1]]

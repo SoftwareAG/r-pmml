@@ -44,7 +44,7 @@
 #' to add these xml fragments to the DataDictionary PMML element.
 #'
 #' @export
-make_values <- function(value = NULL, displayValue = NULL, property = NULL, namespace = "4_3") {
+make_values <- function(value = NULL, displayValue = NULL, property = NULL, namespace = "4_4") {
   namespace <- .getNamespace(namespace)
   if ((length(value) != length(displayValue)) || (length(value) != length(property))
   || (length(displayValue) != length(property))) {

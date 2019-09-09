@@ -137,7 +137,9 @@ zmz_transform_audit <- function(box_obj) {
 }
 
 # schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222_43.xsd")
-schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0_43.xsd")
+# schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0_43.xsd")
+schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
+
 
 # schema_44 <- XML::xmlSchemaParse("pmml-4-4_xslt_20190222.xsd")
 schema_44 <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
@@ -156,25 +158,25 @@ test_that("TimeSeries/Arima PMML validates against schema", {
 })
 
 
-test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
-
-  skip_on_cran()
-  skip_on_ci()
-
-  library(isofor)
-
-  fit <- iForest(iris, nt = 10, phi = 30)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- iForest(as.matrix(iris[, 1:4]), nt = 10, phi = 30)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  box_obj <- xform_wrap(audit[, -1])
-  box_obj <- xform_norm_discrete(box_obj, xform_info = "Sex")
-  box_obj <- xform_function(box_obj, orig_field_name = "Age,Hours", new_field_name = "Agrs", expression = "Age/Hours")
-  fit <- iForest(box_obj$data[, -c(1, 7, 9, 10)], nt = 5, phi = 420)
-  expect_equal(validate_pmml(pmml(fit, transforms = box_obj), schema), 0)
-})
+# test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
+# 
+#   skip_on_cran()
+#   skip_on_ci()
+# 
+#   library(isofor)
+# 
+#   fit <- iForest(iris, nt = 10, phi = 30)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- iForest(as.matrix(iris[, 1:4]), nt = 10, phi = 30)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   box_obj <- xform_wrap(audit[, -1])
+#   box_obj <- xform_norm_discrete(box_obj, xform_info = "Sex")
+#   box_obj <- xform_function(box_obj, orig_field_name = "Age,Hours", new_field_name = "Agrs", expression = "Age/Hours")
+#   fit <- iForest(box_obj$data[, -c(1, 7, 9, 10)], nt = 5, phi = 420)
+#   expect_equal(validate_pmml(pmml(fit, transforms = box_obj), schema), 0)
+# })
 
 
 test_that("ClusteringModel/stats kmeans PMML validates against schema", {
@@ -1052,273 +1054,273 @@ test_that("RegressionModel/stats PMML validates against schema", {
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
 
-#
-test_that("SupportVectorMachineModel/e1071 PMML validates against schema", {
-  fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
-  expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:3], model_name = "radial_iris_ocsvm"), schema), 0)
-
-  fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "linear")
-  expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
-
-  fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.11, scale = TRUE, kernel = "polynomial")
-  expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
-
-  fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.21, kernel = "sigmoid")
-  expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
-
-  iris_y <- as.numeric(iris$Species == "setosa")
-  fit <- svm(iris[, 1:4], y = iris_y, type = "one-classification", nu = 0.15, kernel = "sigmoid")
-  expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
-
-  fit <- svm(audit[100:400, c("Income", "Deductions")],
-    y = NULL, type = "one-classification",
-    nu = 0.10, scale = TRUE, kernel = "linear"
-  )
-  expect_equal(validate_pmml(pmml(fit, dataset = audit[, c("Income", "Deductions")]), schema), 0)
-
-  audit_numeric <- audit[1:500, c("Age", "Income", "Deductions", "Hours", "Adjustment", "Adjusted")]
-  audit_numeric$Age <- as.numeric(audit_numeric$Age)
-  audit_numeric$Hours <- as.numeric(audit_numeric$Hours)
-  audit_numeric$Adjustment <- as.numeric(audit_numeric$Adjustment)
-  audit_numeric$Adjusted <- as.numeric(audit_numeric$Adjusted)
-  fit <- svm(audit_numeric, y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "radial")
-  expect_equal(validate_pmml(pmml(fit, dataset = audit_numeric), schema), 0)
-
-  audit_numeric <- audit[600:900, c("Age", "Income", "Deductions", "Hours", "Adjustment", "Adjusted")]
-  audit_numeric$Age <- as.numeric(audit_numeric$Age)
-  audit_numeric$Hours <- as.numeric(audit_numeric$Hours)
-  audit_numeric$Adjustment <- as.numeric(audit_numeric$Adjustment)
-  audit_numeric$Adjusted <- as.numeric(audit_numeric$Adjusted)
-  fit <- svm(audit_numeric, y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "radial")
-  expect_equal(validate_pmml(pmml(fit, dataset = audit_numeric), schema), 0)
-
-  fit <- svm(Petal.Width ~ ., data = iris[, 1:4], kernel = "linear")
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Adjusted ~ Age + Income + Hours, data = audit[1:900, ])
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Sex ~ ., data = audit[200:700, 2:9], scale = FALSE)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  audit_logical <- audit[1:800, c(2, 8, 13)]
-  audit_logical$Adjusted <- as.logical(audit_logical$Adjusted)
-  fit <- svm(Sex ~ ., data = audit_logical, scale = FALSE)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(as.factor(Adjusted) ~ Age + Income + Deductions + Hours, data = audit[1:800, ])
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(as.factor(Adjusted) ~ ., data = audit[1:700, ])
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Marital ~ Income + Deductions, data = audit[1:700, ], kernel = "polynomial")
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Species ~ ., data = iris)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(sepal_length ~ ., data = iris_mini_dot)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Species ~ ., data = iris, scale = FALSE, probability = TRUE)
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Species ~ ., data = iris, kernel = "linear")
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Species ~ ., data = iris, kernel = "polynomial")
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-  fit <- svm(Species ~ ., data = iris, kernel = "sigmoid")
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
-
-
-  box_obj <- xform_wrap(iris[, 1:4])
-  fit <- svm(box_obj$data, y = NULL, type = "one-classification")
-  p_fit <- pmml(fit, dataset = iris[, 1:4], transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris[, 1:4])
-  box_obj <- xform_z_score(box_obj)
-  fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification")
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris[, 1:4])
-  box_obj <- zmz_transform_iris(box_obj)
-  fit <- svm(box_obj$data[, 13:16], y = NULL, type = "one-classification")
-  p_fit <- pmml(fit, dataset = box_obj$data[, 13:16], transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p[, 1:4])
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_length->dis_pl][double->integer]",
-    table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_width->dis_pw][double->integer]",
-    table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_length->dis_sl][double->integer]",
-    table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_width->dis_sw][double->integer]",
-    table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-  )
-  suppressWarnings(fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification"))
-  p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(audit)
-  box_obj <- zmz_transform_audit(box_obj)
-  box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
-  box_obj <- xform_map(box_obj,
-    xform_info = "[Marital-> d_Marital][string->double]",
-    table = "audit_marital_table.csv",
-    default_value = "-1", map_missing_to = "1"
-  )
-  fit <- svm(box_obj$data[, c(22, 23, 25)],
-    y = NULL, type = "one-classification", nu = 0.10,
-    scale = TRUE, kernel = "linear"
-  )
-  p_fit <- pmml(fit, dataset = box_obj$data[, c(22, 23, 25)], transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(audit[, c("Income", "Deductions")])
-  fit <- svm(box_obj$data, y = NULL, type = "one-classification")
-  p_fit <- pmml(fit, dataset = box_obj$data, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_length->dis_pl][double->integer]",
-    table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_width->dis_pw][double->integer]",
-    table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_length->dis_sl][double->integer]",
-    table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_width->dis_sw][double->integer]",
-    table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-  )
-  suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(audit)
-  box_obj <- zmz_transform_audit(box_obj)
-  box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
-  box_obj <- xform_map(box_obj,
-    xform_info = "[Marital-> d_Marital][string->double]",
-    table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
-  )
-  fit <- svm(Adjusted ~ ddd_Age + ddd_Income + ddd_Hours, data = box_obj$data)
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(audit_factor)
-  box_obj <- zmz_transform_audit(box_obj)
-  box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
-  box_obj <- xform_map(box_obj,
-    xform_info = "[Marital-> d_Marital][string->double]",
-    table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
-  )
-  fit <- svm(Adjusted ~ ., data = box_obj$data[, -c(1, 2, 7, 9, 10, 3, 5)])
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  fit <- svm(as.factor(Adjusted) ~ ddd_Age + ddd_Income + ddd_Deductions + ddd_Hours, data = box_obj$data)
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_length->dis_pl][double->integer]",
-    table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_width->dis_pw][double->integer]",
-    table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_length->dis_sl][double->integer]",
-    table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_width->dis_sw][double->integer]",
-    table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-  )
-  suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- zmz_transform_iris(box_obj)
-  fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- xform_z_score(box_obj)
-  fit <- svm(class ~ derived_petal_length + derived_petal_width + derived_sepal_length + derived_sepal_width,
-    data = box_obj$data
-  )
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- zmz_transform_iris(box_obj)
-  box_obj <- xform_map(box_obj,
-    xform_info = "[class->d_class][string->double]",
-    table = "iris_p_class_table.csv", default_value = "-1", map_missing_to = "1"
-  )
-  box_obj <- xform_norm_discrete(box_obj, inputVar = "class")
-  fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-
-
-  box_obj <- xform_wrap(iris_p)
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_length->dis_pl][double->integer]",
-    table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[petal_width->dis_pw][double->integer]",
-    table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_length->dis_sl][double->integer]",
-    table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-  )
-  box_obj <- xform_discretize(box_obj,
-    xform_info = "[sepal_width->dis_sw][double->integer]",
-    table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-  )
-  suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-  p_fit <- pmml(fit, transforms = box_obj)
-  expect_equal(validate_pmml(p_fit, schema), 0)
-})
+# #
+# test_that("SupportVectorMachineModel/e1071 PMML validates against schema", {
+#   fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
+#   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:3], model_name = "radial_iris_ocsvm"), schema), 0)
+# 
+#   fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "linear")
+#   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
+# 
+#   fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.11, scale = TRUE, kernel = "polynomial")
+#   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
+# 
+#   fit <- svm(iris[, 1:4], y = NULL, type = "one-classification", nu = 0.21, kernel = "sigmoid")
+#   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
+# 
+#   iris_y <- as.numeric(iris$Species == "setosa")
+#   fit <- svm(iris[, 1:4], y = iris_y, type = "one-classification", nu = 0.15, kernel = "sigmoid")
+#   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:4]), schema), 0)
+# 
+#   fit <- svm(audit[100:400, c("Income", "Deductions")],
+#     y = NULL, type = "one-classification",
+#     nu = 0.10, scale = TRUE, kernel = "linear"
+#   )
+#   expect_equal(validate_pmml(pmml(fit, dataset = audit[, c("Income", "Deductions")]), schema), 0)
+# 
+#   audit_numeric <- audit[1:500, c("Age", "Income", "Deductions", "Hours", "Adjustment", "Adjusted")]
+#   audit_numeric$Age <- as.numeric(audit_numeric$Age)
+#   audit_numeric$Hours <- as.numeric(audit_numeric$Hours)
+#   audit_numeric$Adjustment <- as.numeric(audit_numeric$Adjustment)
+#   audit_numeric$Adjusted <- as.numeric(audit_numeric$Adjusted)
+#   fit <- svm(audit_numeric, y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "radial")
+#   expect_equal(validate_pmml(pmml(fit, dataset = audit_numeric), schema), 0)
+# 
+#   audit_numeric <- audit[600:900, c("Age", "Income", "Deductions", "Hours", "Adjustment", "Adjusted")]
+#   audit_numeric$Age <- as.numeric(audit_numeric$Age)
+#   audit_numeric$Hours <- as.numeric(audit_numeric$Hours)
+#   audit_numeric$Adjustment <- as.numeric(audit_numeric$Adjustment)
+#   audit_numeric$Adjusted <- as.numeric(audit_numeric$Adjusted)
+#   fit <- svm(audit_numeric, y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "radial")
+#   expect_equal(validate_pmml(pmml(fit, dataset = audit_numeric), schema), 0)
+# 
+#   fit <- svm(Petal.Width ~ ., data = iris[, 1:4], kernel = "linear")
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Adjusted ~ Age + Income + Hours, data = audit[1:900, ])
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Sex ~ ., data = audit[200:700, 2:9], scale = FALSE)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   audit_logical <- audit[1:800, c(2, 8, 13)]
+#   audit_logical$Adjusted <- as.logical(audit_logical$Adjusted)
+#   fit <- svm(Sex ~ ., data = audit_logical, scale = FALSE)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(as.factor(Adjusted) ~ Age + Income + Deductions + Hours, data = audit[1:800, ])
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(as.factor(Adjusted) ~ ., data = audit[1:700, ])
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Marital ~ Income + Deductions, data = audit[1:700, ], kernel = "polynomial")
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Species ~ ., data = iris)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(sepal_length ~ ., data = iris_mini_dot)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Species ~ ., data = iris, scale = FALSE, probability = TRUE)
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Species ~ ., data = iris, kernel = "linear")
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Species ~ ., data = iris, kernel = "polynomial")
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+#   fit <- svm(Species ~ ., data = iris, kernel = "sigmoid")
+#   expect_equal(validate_pmml(pmml(fit), schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris[, 1:4])
+#   fit <- svm(box_obj$data, y = NULL, type = "one-classification")
+#   p_fit <- pmml(fit, dataset = iris[, 1:4], transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris[, 1:4])
+#   box_obj <- xform_z_score(box_obj)
+#   fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification")
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris[, 1:4])
+#   box_obj <- zmz_transform_iris(box_obj)
+#   fit <- svm(box_obj$data[, 13:16], y = NULL, type = "one-classification")
+#   p_fit <- pmml(fit, dataset = box_obj$data[, 13:16], transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p[, 1:4])
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_length->dis_pl][double->integer]",
+#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_width->dis_pw][double->integer]",
+#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_length->dis_sl][double->integer]",
+#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_width->dis_sw][double->integer]",
+#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   suppressWarnings(fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification"))
+#   p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(audit)
+#   box_obj <- zmz_transform_audit(box_obj)
+#   box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
+#   box_obj <- xform_map(box_obj,
+#     xform_info = "[Marital-> d_Marital][string->double]",
+#     table = "audit_marital_table.csv",
+#     default_value = "-1", map_missing_to = "1"
+#   )
+#   fit <- svm(box_obj$data[, c(22, 23, 25)],
+#     y = NULL, type = "one-classification", nu = 0.10,
+#     scale = TRUE, kernel = "linear"
+#   )
+#   p_fit <- pmml(fit, dataset = box_obj$data[, c(22, 23, 25)], transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(audit[, c("Income", "Deductions")])
+#   fit <- svm(box_obj$data, y = NULL, type = "one-classification")
+#   p_fit <- pmml(fit, dataset = box_obj$data, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_length->dis_pl][double->integer]",
+#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_width->dis_pw][double->integer]",
+#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_length->dis_sl][double->integer]",
+#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_width->dis_sw][double->integer]",
+#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(audit)
+#   box_obj <- zmz_transform_audit(box_obj)
+#   box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
+#   box_obj <- xform_map(box_obj,
+#     xform_info = "[Marital-> d_Marital][string->double]",
+#     table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
+#   )
+#   fit <- svm(Adjusted ~ ddd_Age + ddd_Income + ddd_Hours, data = box_obj$data)
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(audit_factor)
+#   box_obj <- zmz_transform_audit(box_obj)
+#   box_obj <- xform_norm_discrete(box_obj, inputVar = "Employment")
+#   box_obj <- xform_map(box_obj,
+#     xform_info = "[Marital-> d_Marital][string->double]",
+#     table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
+#   )
+#   fit <- svm(Adjusted ~ ., data = box_obj$data[, -c(1, 2, 7, 9, 10, 3, 5)])
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   fit <- svm(as.factor(Adjusted) ~ ddd_Age + ddd_Income + ddd_Deductions + ddd_Hours, data = box_obj$data)
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_length->dis_pl][double->integer]",
+#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_width->dis_pw][double->integer]",
+#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_length->dis_sl][double->integer]",
+#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_width->dis_sw][double->integer]",
+#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- zmz_transform_iris(box_obj)
+#   fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- xform_z_score(box_obj)
+#   fit <- svm(class ~ derived_petal_length + derived_petal_width + derived_sepal_length + derived_sepal_width,
+#     data = box_obj$data
+#   )
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- zmz_transform_iris(box_obj)
+#   box_obj <- xform_map(box_obj,
+#     xform_info = "[class->d_class][string->double]",
+#     table = "iris_p_class_table.csv", default_value = "-1", map_missing_to = "1"
+#   )
+#   box_obj <- xform_norm_discrete(box_obj, inputVar = "class")
+#   fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# 
+# 
+#   box_obj <- xform_wrap(iris_p)
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_length->dis_pl][double->integer]",
+#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[petal_width->dis_pw][double->integer]",
+#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_length->dis_sl][double->integer]",
+#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   box_obj <- xform_discretize(box_obj,
+#     xform_info = "[sepal_width->dis_sw][double->integer]",
+#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
+#   )
+#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
+#   p_fit <- pmml(fit, transforms = box_obj)
+#   expect_equal(validate_pmml(p_fit, schema), 0)
+# })
 
 
 test_that("SupportVectorMachineModel/kernlab PMML validates against schema", {

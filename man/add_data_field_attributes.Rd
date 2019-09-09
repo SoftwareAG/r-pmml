@@ -5,7 +5,7 @@
 \title{Add attribute values to an existing DataField element in a given PMML file}
 \usage{
 add_data_field_attributes(xml_model = NULL, attributes = NULL,
-  field = NULL, namespace = "4_3", ...)
+  field = NULL, namespace = "4_4", ...)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text
@@ -74,7 +74,7 @@ colnames(attributes) <- c("Sepal.Width", "Petal.Length")
 # as invalid.
 attributes[] <- lapply(attributes, as.character)
 
-fit_pmml_2 <- add_data_field_attributes(fit_pmml, attributes, namespace = "4_3")
+fit_pmml_2 <- add_data_field_attributes(fit_pmml, attributes, namespace = "4_4")
 
 # Alternative method to add attributes to a single field,
 # "Sepal.Width":

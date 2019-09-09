@@ -71,7 +71,7 @@
 }
 
 
-.pmmlRootNode <- function(version = "4.3") {
+.pmmlRootNode <- function(version = "4.4") {
   if (version == "4.4") {
     node <- xmlNode("PMML",
                     attrs = c(

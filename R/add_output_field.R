@@ -110,7 +110,7 @@
 #'
 #' @export
 add_output_field <- function(xml_model = NULL, outputNodes = NULL, at = "End", xformText = NULL, nodeName = NULL,
-                             attributes = NULL, whichOutput = 1, namespace = "4_3") {
+                             attributes = NULL, whichOutput = 1, namespace = "4_4") {
 
   # Flush to avoid malloc error.
   flush.console()

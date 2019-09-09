@@ -6,7 +6,7 @@
 file.}
 \usage{
 add_mining_field_attributes(xml_model = NULL, attributes = NULL,
-  namespace = "4_3", ...)
+  namespace = "4_4", ...)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text
@@ -79,7 +79,7 @@ for (k in 1:ncol(attributes)) {
   attributes[[k]] <- as.character(attributes[[k]])
 }
 
-fit_pmml <- add_mining_field_attributes(fit_pmml, attributes, namespace = "4_3")
+fit_pmml <- add_mining_field_attributes(fit_pmml, attributes, namespace = "4_4")
 
 }
 \author{

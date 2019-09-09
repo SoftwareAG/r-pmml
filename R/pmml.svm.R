@@ -139,7 +139,7 @@ pmml.svm <- function(model,
     #----------------------------------------------------------
     # PMML
 
-    pmml <- .pmmlRootNode("4.3Ext") # one-class svm uses 4.3Ext schema
+    pmml <- .pmmlRootNode("4.4")
 
     #----------------------------------------------------------
     # PMML -> Header

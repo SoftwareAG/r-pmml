@@ -6,7 +6,7 @@
 \usage{
 add_output_field(xml_model = NULL, outputNodes = NULL, at = "End",
   xformText = NULL, nodeName = NULL, attributes = NULL,
-  whichOutput = 1, namespace = "4_3")
+  whichOutput = 1, namespace = "4_4")
 }
 \arguments{
 \item{xml_model}{The PMML model to which the OutputField elements are to be added}

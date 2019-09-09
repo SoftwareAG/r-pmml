@@ -89,12 +89,12 @@
 #'   attributes[[k]] <- as.character(attributes[[k]])
 #' }
 #'
-#' fit_pmml <- add_mining_field_attributes(fit_pmml, attributes, namespace = "4_3")
+#' fit_pmml <- add_mining_field_attributes(fit_pmml, attributes, namespace = "4_4")
 #' 
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export
-add_mining_field_attributes <- function(xml_model = NULL, attributes = NULL, namespace = "4_3", ...) {
+add_mining_field_attributes <- function(xml_model = NULL, attributes = NULL, namespace = "4_4", ...) {
   # Flush to avoid malloc error.
   flush.console()
 

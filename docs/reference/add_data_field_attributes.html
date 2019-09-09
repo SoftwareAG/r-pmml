@@ -133,7 +133,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>add_data_field_attributes</span>(<span class='kw'>xml_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,7 +213,7 @@ the display name of a field at different times.</p>
 <span class='co'># as invalid.</span>
 <span class='no'>attributes</span>[] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>attributes</span>, <span class='no'>as.character</span>)
 
-<span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(<span class='no'>fit_pmml</span>, <span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_3"</span>)</div><div class='output co'>#&gt; [1] "WARNING: the following field additions will be ignored"
+<span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(<span class='no'>fit_pmml</span>, <span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>)</div><div class='output co'>#&gt; [1] "WARNING: the following field additions will be ignored"
 #&gt; NA not in model</div><div class='input'>
 <span class='co'># Alternative method to add attributes to a single field,</span>
 <span class='co'># "Sepal.Width":</span>

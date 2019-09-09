@@ -44,7 +44,7 @@
 #'   expression = list("ln(x)", "ln(x/(1-x))")
 #' )
 #' @export
-make_output_nodes <- function(name = "OutputField", attributes = NULL, expression = NULL, namespace = "4_3") {
+make_output_nodes <- function(name = "OutputField", attributes = NULL, expression = NULL, namespace = "4_4") {
   if (!is.list(name)) {
     stop("Please provide name, attributes and expression as a list")
   }

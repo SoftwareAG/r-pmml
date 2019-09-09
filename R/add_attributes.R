@@ -85,7 +85,7 @@
 #'   attributes = c(a = 1, b = "b")
 #' )
 #' @export
-add_attributes <- function(xml_model = NULL, xpath = NULL, attributes = NULL, namespace = "4_3", ...) {
+add_attributes <- function(xml_model = NULL, xpath = NULL, attributes = NULL, namespace = "4_4", ...) {
   # Flush to avoid malloc error.
   flush.console()
   namespace <- .getNamespace(namespace)
