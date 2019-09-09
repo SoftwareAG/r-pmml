@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to xform_function • pmml</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to xform_function">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -67,7 +68,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/SoftwareAG/r-pmml">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -80,6 +81,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -105,8 +107,8 @@
 <h2 class="hasAnchor">
 <a href="#single-numeric-field" class="anchor"></a>Single numeric field</h2>
 <p>Using the <code>iris</code> dataset as an example, let’s construct a new feature by transforming one variable. Load the dataset and show the first few lines:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(iris)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(iris)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -142,7 +144,7 @@
 <p>Create the <code>iris_box</code> object with <code>xform_wrap</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a></code></pre></div>
 <p><code>iris_box</code> contains the data and transform information that will be used to produce PMML later. The original data is in <code>iris_box$data</code>. Any new features created with a transformation are added as columns to this data frame.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -288,7 +290,7 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2">                         <span class="dt">new_field_name=</span><span class="st">"Sepal.Length.Sqrt"</span>,</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">                         <span class="dt">expression=</span><span class="st">"sqrt(Sepal.Length)"</span>)</a></code></pre></div>
 <p>The new feature is calculated and added as a column to the <code>iris_box$data</code> data frame:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -326,7 +328,7 @@
 </tbody>
 </table>
 <p><code>iris_box$field_data</code> now contains a new row with the transformation expression:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span>,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -344,7 +346,7 @@
 </tr></tbody>
 </table>
 <p>Construct a linear model for <code>Petal.Width</code> using this new feature, and convert it to PMML:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length.Sqrt, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length.Sqrt, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
 <p>Since the model predicts <code>Petal.Width</code> using a variable based on <code>Sepal.Length</code>, the PMML will contain these two fields in the <code>DataDictionary</code> and <code>MiningSchema</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
@@ -375,7 +377,7 @@
 <a class="sourceLine" id="cb11-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Species"</span>,</a>
 <a class="sourceLine" id="cb11-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Species.Setosa"</span>,</a>
 <a class="sourceLine" id="cb11-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"if (Species == 'setosa') {1} else {0}"</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -413,7 +415,7 @@
 </tbody>
 </table>
 <p>Create a linear model and check the <code>LocalTransformations</code> node:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
@@ -438,7 +440,7 @@
 <a class="sourceLine" id="cb13-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Length.Ratio"</span>,</a>
 <a class="sourceLine" id="cb13-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"Sepal.Length / Petal.Length"</span>)</a></code></pre></div>
 <p>As before, the new field is added as a column to the <code>iris_box$data</code> data frame:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -476,7 +478,7 @@
 </tbody>
 </table>
 <p>Fit a linear model using this new feature, and convert it to pmml:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
 <p>The pmml will contain <code>Sepal.Length</code> and <code>Petal.Length</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
@@ -514,7 +516,7 @@
 <a class="sourceLine" id="cb18-6" data-line-number="6">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,</a>
 <a class="sourceLine" id="cb18-7" data-line-number="7">                         <span class="dt">new_field_name=</span><span class="st">"Length.R.Times.S.Width"</span>,</a>
 <a class="sourceLine" id="cb18-8" data-line-number="8">                         <span class="dt">expression=</span><span class="st">"Length.Ratio * Sepal.Width"</span>)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span><span class="op">:</span><span class="dv">7</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
+<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span><span class="op">:</span><span class="dv">7</span>,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -540,7 +542,7 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.R.Times.S.Width, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.R.Times.S.Width, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb19-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
 <p>The pmml will contain <code>Sepal.Length</code>, <code>Petal.Length</code>, and <code>Sepal.Width</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
@@ -602,13 +604,13 @@
 <p>In this case, an error will be thrown when R tries to calculate a new feature using the function passed to <code>xform_function</code>, but does not see that function in the environment.</p>
 <p>It is still possible to make <code>xform_function</code> work, but the PMML function must be defined in the R environment first.</p>
 <p>Let’s use <code>isIn</code>, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on <a href="http://dmg.org/pmml/v4-3/BuiltinFunctions.html#boolean5">this DMG page</a>.</p>
-<p>One way to implement this in R is by using <code>%in%</code>, with the list of values being represented by <code>...</code>:</p>
+<p>One way to implement this in R is by using <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code>, with the list of values being represented by <code>...</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">isIn &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(...)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)</a>
 <a class="sourceLine" id="cb22-3" data-line-number="3">  <span class="cf">if</span> (x <span class="op">%in%</span><span class="st"> </span>dots) {</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb22-5" data-line-number="5">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb22-7" data-line-number="7">  }</a>
 <a class="sourceLine" id="cb22-8" data-line-number="8">}</a>
 <a class="sourceLine" id="cb22-9" data-line-number="9"></a>
@@ -620,7 +622,7 @@
 <a class="sourceLine" id="cb23-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Species.Setosa.or.Versicolor"</span>,</a>
 <a class="sourceLine" id="cb23-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"isIn(Species,'setosa','versicolor')"</span>)</a></code></pre></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -658,7 +660,7 @@
 </tbody>
 </table>
 <p>Create a linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa.or.Versicolor, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa.or.Versicolor, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
 <a class="sourceLine" id="cb25-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
 <a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
@@ -676,8 +678,8 @@
 <a href="#pmml-function-not-supported-by-xform_function---another-example" class="anchor"></a>PMML Function not supported by <code>xform_function</code> - another example</h2>
 <p>As another example, let’s use R’s <code>mean</code> function to create a new feature. PMML has a built-in <code>avg</code>, so we will define an R function with this name.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">avg &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(...)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/mean">mean</a></span>(dots))</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(dots))</a>
 <a class="sourceLine" id="cb26-4" data-line-number="4">}</a></code></pre></div>
 <p>Now use this function to take an average of several other features and combine with another field:</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
@@ -685,7 +687,7 @@
 <a class="sourceLine" id="cb27-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Length.Average.Ratio"</span>,</a>
 <a class="sourceLine" id="cb27-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"avg(Sepal.Length,Petal.Length)/Sepal.Width"</span>)</a></code></pre></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -723,7 +725,7 @@
 </tbody>
 </table>
 <p>Create a simple linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Average.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Average.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
 <a class="sourceLine" id="cb29-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
 <a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
@@ -766,7 +768,7 @@
 <a href="#more-notes-on-functions" class="anchor"></a>More notes on functions</h2>
 <p>There are several limitations to parsing expressions in <code>xform_function</code>.</p>
 <p>Each transformation operates on one data row at a time. For example, it is not possible to compute the mean of an entire feature column in <code>xform_function</code>.</p>
-<p>An expression such as <code>foo(x)</code> is treated as a function <code>foo</code> with argument <code>x</code>. Consequently, passing in an R vector <code><a href="https://www.rdocumentation.org/packages/base/topics/c">c(1,2,3)</a></code> will produce PMML where <code>c</code> is a function and <code>1,2,3</code> are the arguments:</p>
+<p>An expression such as <code>foo(x)</code> is treated as a function <code>foo</code> with argument <code>x</code>. Consequently, passing in an R vector <code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code> will produce PMML where <code>c</code> is a function and <code>1,2,3</code> are the arguments:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"c(1,2,3)"</span>)</a>
 <a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="c"&gt;</span></a>
 <a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
@@ -786,7 +788,7 @@
 <a class="sourceLine" id="cb32-10" data-line-number="10"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
 <a class="sourceLine" id="cb32-11" data-line-number="11"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
 <p>Additionally, passing in a vector to <code>prod</code> produces incorrect PMML:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/prod">prod</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; [1] 6</span></a>
 <a class="sourceLine" id="cb33-3" data-line-number="3"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(c(1,2,3))"</span>)</a>
 <a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; &lt;Apply function="product"&gt;</span></a>
@@ -843,6 +845,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -866,17 +869,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Dmitriy Bolotov, Tridivesh Jena, Graham Williams, Wen-Ching Lin, Michael Hahsler, Hemant Ishwaran, Udaya B. Kogalur, Rajarshi Guha.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
