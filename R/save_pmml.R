@@ -21,7 +21,7 @@
 #' Save a pmml object as an external PMML file.
 #'
 #'
-#' Save a pmml object to an external PMML file more efficient further processing.
+#' Save a pmml object to an external PMML file for more efficient further processing.
 #'
 #'
 #' @param doc The pmml model.

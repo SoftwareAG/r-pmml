@@ -14,7 +14,7 @@ save_pmml(doc, name, version = 4.4)
 \item{version}{The PMML version with which the PMML model is compliant.}
 }
 \description{
-Save a pmml object to an external PMML file more efficient further processing.
+Save a pmml object to an external PMML file for more efficient further processing.
 }
 \examples{
 \dontrun{
