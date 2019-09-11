@@ -679,8 +679,8 @@ test_that("GeneralRegressionModel/stats PMML output matches R", {
 test_that("MiningModel/ada PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
-  skip("skip ada")
 
+  set.seed(1234)
   fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
   p_fit <- pmml(fit)
   r_pred <- predict(fit, audit, type = "both")
@@ -690,7 +690,7 @@ test_that("MiningModel/ada PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Probability_0, r_pred$probs[, 1], tolerance = 1e-3)
   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, as.numeric(r_pred$class) - 1)
 
-
+  set.seed(12345)
   fit <- ada(as.factor(fbs) ~ ., iter = 5, data = heart)
   p_fit <- pmml(fit)
   r_pred <- predict(fit, heart, type = "both")
@@ -700,7 +700,7 @@ test_that("MiningModel/ada PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Probability_0, r_pred$probs[, 1])
   expect_equal_nn(z_pred$outputs$Predicted_fbs, as.character(r_pred$class))
 
-
+  set.seed(1236)
   fit <- ada(target ~ ., iter = 11, data = credit_class)
   p_fit <- pmml(fit)
   r_pred <- predict(fit, credit_class)
@@ -709,7 +709,7 @@ test_that("MiningModel/ada PMML output matches R", {
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_target, as.character(r_pred))
 
-
+  set.seed(1834)
   iris_binom_2 <- iris[iris[, 5] != "setosa", ]
   iris_binom_2[, 5] <- as.factor(levels(iris[, 5])[2:3])[as.numeric(iris[, 5]) - 1]
   fit <- ada(Species ~ ., data = iris_binom_2, iter = 20, nu = 0.9, type = "discrete")
@@ -723,7 +723,7 @@ test_that("MiningModel/ada PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_Species, as.character(r_pred$class))
   expect_equal_nn(z_pred$outputs$Probability_versicolor, r_pred$probs[, 1])
 
-
+  set.seed(534)
   fit <- ada(as.factor(Adjusted) ~ Employment + Education + Hours + Income, iter = 3, audit)
   p_fit <- pmml(fit)
   r_pred <- predict(fit, audit)
@@ -746,6 +746,7 @@ test_that("MiningModel/ada PMML output matches R", {
   box_obj <- xform_z_score(box_obj, "dd_Income->ddd_Income")
   box_obj <- xform_z_score(box_obj, "dd_Deductions->ddd_Deductions")
   box_obj <- xform_z_score(box_obj, "dd_Hours->ddd_Hours")
+  set.seed(12884)
   fit <- ada(as.factor(Adjusted) ~ ddd_Age + ddd_Income + Sex + ddd_Deductions + ddd_Hours, iter = 3, box_obj$data)
   p_fit <- pmml(fit, transforms = box_obj)
   r_pred <- predict(fit, box_obj$data)
@@ -2579,7 +2580,7 @@ test_that("SupportVectorMachineModel/kernlab PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
-  fit <- ksvm(target ~ ., data = credit, kernel = "rbfdot")
+  fit <- ksvm(target ~ ., data = credit, kernel = "rbfdot", model_name = "ksvm")
   p_fit <- pmml(fit, data = credit)
   r_pred <- as.numeric(predict(fit, credit))
   up_stat <- upload_model(p_fit)
