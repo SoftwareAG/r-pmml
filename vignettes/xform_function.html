@@ -801,17 +801,52 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="pmml-functions-supported-by-xform_function" class="section level2">
 <h2>PMML functions supported by <code>xform_function</code></h2>
 <p>The following R functions and operators are directly supported by <code>xform_function</code>. Their PMML equivalents are listed on the second line:</p>
-<ul>
-<li><ul>
-<li>/ * ^ &lt; &lt;= &gt; &gt;= &amp;&amp; &amp; | || == != ! ceiling prod log — — — — —- ——— ———— ———— ————— —- —- — — —— ——— —- ——– ——– —-</li>
-</ul></li>
-<li><ul>
-<li>/ * ^ &lt; &lt;= &gt; &gt;= &amp;&amp; &amp; | || == != ! ceiling prod log</li>
-</ul></li>
-<li><ul>
-<li>/ * pow lessThan lessOrEqual greaterThan greaterOrEqual and and or or equal notEqual not ceil product ln</li>
-</ul></li>
-</ul>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">+</td>
+<td align="left">-</td>
+<td align="left">/</td>
+<td align="left">*</td>
+<td align="left">^</td>
+<td align="left">&lt;</td>
+<td align="left">&lt;=</td>
+<td align="left">&gt;</td>
+<td align="left">&gt;=</td>
+<td align="left">&amp;&amp;</td>
+<td align="left">&amp;</td>
+<td align="left">|</td>
+<td align="left">||</td>
+<td align="left">==</td>
+<td align="left">!=</td>
+<td align="left">!</td>
+<td align="left">ceiling</td>
+<td align="left">prod</td>
+<td align="left">log</td>
+</tr>
+<tr class="even">
+<td align="left">+</td>
+<td align="left">-</td>
+<td align="left">/</td>
+<td align="left">*</td>
+<td align="left">pow</td>
+<td align="left">lessThan</td>
+<td align="left">lessOrEqual</td>
+<td align="left">greaterThan</td>
+<td align="left">greaterOrEqual</td>
+<td align="left">and</td>
+<td align="left">and</td>
+<td align="left">or</td>
+<td align="left">or</td>
+<td align="left">equal</td>
+<td align="left">notEqual</td>
+<td align="left">not</td>
+<td align="left">ceil</td>
+<td align="left">product</td>
+<td align="left">ln</td>
+</tr>
+</tbody>
+</table>
 <p>For these functions, no extra code is required for translation.</p>
 <p>The R function <code>prod</code> can be used as long as only numeric arguments are specified. That is, <code>prod</code> can take an <code>na.rm</code> argument, but specifying this in <code>xform_function</code> directly will not produce PMML equivalent to the R expression.</p>
 <p>Similarly, the R function <code>log</code> can be used directly as long as the second argument (the base) is not specified.</p>

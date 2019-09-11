@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 ```
 ## Introduction
 
-This vignette lists the packages and model types supported by **pmml**, as well as data transformations and functions that extend the basic exporter functionality.
+This vignette lists the packages and model types exported by **pmml**, as well as data transformations and functions that extend the basic exporter functionality.
 
 ## Supported packages
 
-This package supports the following packages and model types are supported:
+This package supports the following packages and model types:
 
 - Anomaly Detection
     - [isofor](https://github.com/Zelazny7/isofor): `iForest`
@@ -41,6 +41,8 @@ This package supports the following packages and model types are supported:
 - Support Vector Machines
     - [e1071](https://CRAN.R-project.org/package=e1071): `svm`
     - [kernlab](https://CRAN.R-project.org/package=kernlab): `ksvm` with "rbfdot", "polydot", "vanilladot", and "tanhdot" kernels
+- Time Series
+    - [forecast](https://CRAN.R-project.org/web/package=forecast): `Arima`
 - Tree-based Models and Ensembles
     - [ada](https://CRAN.R-project.org/package=ada): `ada`
     - [gbm](https://CRAN.R-project.org/package=gbm): `gbm` with "bernoulli", "poisson", and "multinomial" distribution types
@@ -56,28 +58,28 @@ This package supports the following packages and model types are supported:
 ## Data transformations
 The following functions are used to transform input data.
 
-- xform_discretize: discretize continous values.
-- xform_function: apply a user-defined function to the input values.
-- xform_map: map discrete values between input and output.
-- xform_min_max: normalize continous values.
-- xform_norm_discrete: normalize discrete values.
-- xform_z_score: apply z-score normalization to continuous values.
+- `xform_discretize`: discretize continous values.
+- `xform_function`: apply a user-defined function to the input values.
+- `xform_map`: map discrete values between input and output.
+- `xform_min_max`: normalize continous values.
+- `xform_norm_discrete`: normalize discrete values.
+- `xform_z_score`: apply z-score normalization to continuous values.
 
-The general methodology is to first wrap the data with xform_wrap, and then perform transformations using the above functions.
+The general methodology is to first wrap the data with `xform_wrap`, and then perform transformations using the above functions.
 
 ## Additional functions
 The following functions allow additional operations, such as creating specific nodes and adding attributes. For more information, check the documentation for each function.
 
-- add_attributes: add attribute values to an existing element in a given PMML file.
-- add_data_field_attributes: add attribute values to an existing DataField element in a given PMML file.
-- add_data_field_children: add 'Interval' and 'Value' child elements to a given DataField element in a given PMML file.
-- add_mining_field_attributes: add attribute values to an existing MiningField element in a given PMML file.
-- add_output_field: add Output nodes to a PMML object.
-- file_to_xml_node: read in a file and parse it into an object of type XMLNode.
-- function_to_pmml: convert an R expression to PMML.
-- make_intervals: create Interval elements to add to a DataDictionary element.
-- make_output_nodes: add Output nodes to a PMML object.
-- make_values: create Values element to add to a DataDictionary element.
+- `add_attributes`: add attribute values to an existing element in a given PMML file.
+- `add_data_field_attributes`: add attribute values to an existing DataField element in a given PMML file.
+- `add_data_field_children`: add 'Interval' and 'Value' child elements to a given DataField element in a given PMML file.
+- `add_mining_field_attributes`: add attribute values to an existing MiningField element in a given PMML file.
+- `add_output_field`: add Output nodes to a PMML object.
+- `file_to_xml_node`: read in a file and parse it into an object of type XMLNode.
+- `function_to_pmml`: convert an R expression to PMML.
+- `make_intervals`: create Interval elements to add to a DataDictionary element.
+- `make_output_nodes`: add Output nodes to a PMML object.
+- `make_values`: create Values element to add to a DataDictionary element.
 
 ## References
 - [DMG PMML 4.4 specification](http://dmg.org/pmml/v4-4/GeneralStructure.html)

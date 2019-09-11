@@ -98,12 +98,12 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>This vignette lists the packages and model types supported by <strong>pmml</strong>, as well as data transformations and functions that extend the basic exporter functionality.</p>
+<p>This vignette lists the packages and model types exported by <strong>pmml</strong>, as well as data transformations and functions that extend the basic exporter functionality.</p>
 </div>
 <div id="supported-packages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#supported-packages" class="anchor"></a>Supported packages</h2>
-<p>This package supports the following packages and model types are supported:</p>
+<p>This package supports the following packages and model types:</p>
 <ul>
 <li>Anomaly Detection
 <ul>
@@ -166,6 +166,13 @@
 <a href="https://CRAN.R-project.org/package=kernlab">kernlab</a>: <code>ksvm</code> with “rbfdot”, “polydot”, “vanilladot”, and “tanhdot” kernels</li>
 </ul>
 </li>
+<li>Time Series
+<ul>
+<li>
+<a href="https://CRAN.R-project.org/web/package=forecast">forecast</a>: <code>Arima</code>
+</li>
+</ul>
+</li>
 <li>Tree-based Models and Ensembles
 <ul>
 <li>
@@ -203,30 +210,46 @@
 <a href="#data-transformations" class="anchor"></a>Data transformations</h2>
 <p>The following functions are used to transform input data.</p>
 <ul>
-<li>xform_discretize: discretize continous values.</li>
-<li>xform_function: apply a user-defined function to the input values.</li>
-<li>xform_map: map discrete values between input and output.</li>
-<li>xform_min_max: normalize continous values.</li>
-<li>xform_norm_discrete: normalize discrete values.</li>
-<li>xform_z_score: apply z-score normalization to continuous values.</li>
+<li>
+<code>xform_discretize</code>: discretize continous values.</li>
+<li>
+<code>xform_function</code>: apply a user-defined function to the input values.</li>
+<li>
+<code>xform_map</code>: map discrete values between input and output.</li>
+<li>
+<code>xform_min_max</code>: normalize continous values.</li>
+<li>
+<code>xform_norm_discrete</code>: normalize discrete values.</li>
+<li>
+<code>xform_z_score</code>: apply z-score normalization to continuous values.</li>
 </ul>
-<p>The general methodology is to first wrap the data with xform_wrap, and then perform transformations using the above functions.</p>
+<p>The general methodology is to first wrap the data with <code>xform_wrap</code>, and then perform transformations using the above functions.</p>
 </div>
 <div id="additional-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#additional-functions" class="anchor"></a>Additional functions</h2>
 <p>The following functions allow additional operations, such as creating specific nodes and adding attributes. For more information, check the documentation for each function.</p>
 <ul>
-<li>add_attributes: add attribute values to an existing element in a given PMML file.</li>
-<li>add_data_field_attributes: add attribute values to an existing DataField element in a given PMML file.</li>
-<li>add_data_field_children: add ‘Interval’ and ‘Value’ child elements to a given DataField element in a given PMML file.</li>
-<li>add_mining_field_attributes: add attribute values to an existing MiningField element in a given PMML file.</li>
-<li>add_output_field: add Output nodes to a PMML object.</li>
-<li>file_to_xml_node: read in a file and parse it into an object of type XMLNode.</li>
-<li>function_to_pmml: convert an R expression to PMML.</li>
-<li>make_intervals: create Interval elements to add to a DataDictionary element.</li>
-<li>make_output_nodes: add Output nodes to a PMML object.</li>
-<li>make_values: create Values element to add to a DataDictionary element.</li>
+<li>
+<code>add_attributes</code>: add attribute values to an existing element in a given PMML file.</li>
+<li>
+<code>add_data_field_attributes</code>: add attribute values to an existing DataField element in a given PMML file.</li>
+<li>
+<code>add_data_field_children</code>: add ‘Interval’ and ‘Value’ child elements to a given DataField element in a given PMML file.</li>
+<li>
+<code>add_mining_field_attributes</code>: add attribute values to an existing MiningField element in a given PMML file.</li>
+<li>
+<code>add_output_field</code>: add Output nodes to a PMML object.</li>
+<li>
+<code>file_to_xml_node</code>: read in a file and parse it into an object of type XMLNode.</li>
+<li>
+<code>function_to_pmml</code>: convert an R expression to PMML.</li>
+<li>
+<code>make_intervals</code>: create Interval elements to add to a DataDictionary element.</li>
+<li>
+<code>make_output_nodes</code>: add Output nodes to a PMML object.</li>
+<li>
+<code>make_values</code>: create Values element to add to a DataDictionary element.</li>
 </ul>
 </div>
 <div id="references" class="section level2">
