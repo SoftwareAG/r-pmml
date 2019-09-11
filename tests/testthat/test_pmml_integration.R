@@ -101,6 +101,32 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
+  fit <- auto.arima(sunspots)
+  p_fit <- pmml(fit, model_name = "arima_auto_01")
+  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
+  
+  fit <- auto.arima(JohnsonJohnson)
+  p_fit <- pmml(fit, model_name = "arima_auto_02")
+  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
+  
+  fit <- Arima(AirPassengers,order=c(2,1,2))
+  p_fit <- pmml(fit, model_name = "arima_313")
+  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
+  
+  ###
+  
   fit <- Arima(AirPassengers,order=c(1,1,1))
   p_fit <- pmml(fit, model_name = "arima_111")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)

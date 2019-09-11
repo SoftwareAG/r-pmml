@@ -92,8 +92,6 @@ pmml.ARIMA <- function(model,
   arima_rmse <- sqrt(sum((model$residuals)^2)/length(model$residuals))
   
   # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
-  # arima_constant <- if(length(model$model$Delta)==0) {unname(model$coef["intercept"])} else {0}
-  
   if(any(is.element(c("intercept","drift"), names(model$coef)))) {
     if(is.element("intercept",names(model$coef))){
       arima_constant <- unname(model$coef["intercept"])
@@ -241,7 +239,6 @@ pmml.ARIMA <- function(model,
   return(a[1]!=0 | a[2]!=0 | a[6]!=0)
 }
 
-
 .make_ts_node <- function(model) {
   # Creates TimeSeries node. Exports the full time series.
   
@@ -252,17 +249,10 @@ pmml.ARIMA <- function(model,
                                              startTime=toString(start_time), endTime=toString(end_time)))
   
   for (ts_index in c(start_time:end_time)){
-    
     tv_node <- xmlNode("TimeValue",attrs = c(index = toString(ts_index),value = model$x[ts_index]))
-    
-    # tv_node <- append.XMLNode(tv_node, xmlNode("Timestamp", value="TEST"))
-    
     ts_node <- append.XMLNode(ts_node, tv_node)
-    
-    
   }
   return(ts_node)
-  
 }
 
 
