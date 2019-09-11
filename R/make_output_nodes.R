@@ -20,16 +20,18 @@
 
 #' Add Output nodes to a PMML object.
 #'
-#' @param name The name of the element to be created
-#' @param attributes The node attributes to be added
-#' @param expression Post-processing information to be included in the element.
-#'              This expression will be processed by the function_to_pmml function
-#' @param namespace The namespace of the PMML model
+#' @param name The name of the element to be created.
+#' @param attributes The node attributes to be added.
+#' @param expression Post-processing information to be included in the element. 
+#' This expression will be processed by \code{function_to_pmml}.
+#' @param namespace The namespace of the PMML model.
 #' @details
-#'   This function will create a list of nodes with names 'name', attributes 'attributes' and
-#' child elements 'expression'. 'expression' is a string converted to XML similar to th
-#' function_to_pmml function. Meant to create OutputField elements, 'expressions' allows one
-#' to include post-processing transformations to a model. To create multiple such nodes,
+#' Create a list of nodes with names \code{'name'}, attributes \code{'attributes'} and
+#' child elements \code{'expression'}. \code{'expression'} is a string converted to XML 
+#' similar to \code{function_to_pmml}.
+#' 
+#' Meant to create OutputField elements, 'expressions' can be used to add 
+#' post-processing transformations to a model. To create multiple such nodes,
 #' all the parameters must be given as lists of equal length.
 #'
 #' @return List of nodes
@@ -38,7 +40,7 @@
 #'
 #' @examples
 #' # Make two nodes, one with attributes
-#' TwoNodes <- make_output_nodes(
+#' two_nodes <- make_output_nodes(
 #'   name = list("OutputField", "OutputField"),
 #'   attributes = list(list(name = "dbl", optype = "continuous"), NULL),
 #'   expression = list("ln(x)", "ln(x/(1-x))")
