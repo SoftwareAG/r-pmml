@@ -1,6 +1,25 @@
-# pmml 2.0.0.9000
+# pmml 2.0.0.9000 (development version)
+
+## Major Changes
 * Application version in PMML Header corresponds to pmml package version.
+
 * Documentation now references PMML version 4.4.
+
+* Package is now compliant with PMML schema 4.4, including support for ARIMA time series models with conditional least squares forecasting from the `forecast` package.
+
+* The following arguments are deprecated. They can still be used, but will produce a warning message:
+  - pmml.iForest: `anomalyThreshold` -> `anomaly_threshold`
+  - pmml.kmeans: `algorithm.name` -> `algorithm_name`
+  - rename_wrap_var, `wrap_data` -> `wrap_object`
+  - xform_norm_discrete: `inputVar` -> `input_var`
+
+## Other Changes
+* `pmml.iForest` now uses `sampleDataSize` instead of `ParameterList` to store the `model$phi` value. This should not affect the user.
+* `testthat` file names now correspond to the functions being tested.
+* Minor edits in `make_output_nodes` doc for clarity.
+* Minor formatting edits in vignettes.
+
+
 
 # pmml 2.0.0
 

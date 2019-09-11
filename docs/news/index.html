@@ -125,14 +125,43 @@
       <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pmml-2-0-0-9000" class="section level1">
+    <div id="pmml-2-0-0-9000-development-version" class="section level1">
 <h1 class="page-header">
-<a href="#pmml-2-0-0-9000" class="anchor"></a>pmml 2.0.0.9000<small> Unreleased </small>
+<a href="#pmml-2-0-0-9000-development-version" class="anchor"></a>pmml 2.0.0.9000 (development version)<small> Unreleased </small>
 </h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major Changes</h2>
 <ul>
-<li>Application version in PMML Header corresponds to pmml package version.</li>
-<li>Documentation now references PMML version 4.4.</li>
+<li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
+<li><p>Documentation now references PMML version 4.4.</p></li>
+<li><p>Package is now compliant with PMML schema 4.4, including support for ARIMA time series models with conditional least squares forecasting from the <code>forecast</code> package.</p></li>
+<li>The following arguments are deprecated. They can still be used, but will produce a warning message:
+<ul>
+<li>pmml.iForest: <code>anomalyThreshold</code> -&gt; <code>anomaly_threshold</code>
+</li>
+<li>pmml.kmeans: <code>algorithm.name</code> -&gt; <code>algorithm_name</code>
+</li>
+<li>rename_wrap_var, <code>wrap_data</code> -&gt; <code>wrap_object</code>
+</li>
+<li>xform_norm_discrete: <code>inputVar</code> -&gt; <code>input_var</code>
+</li>
 </ul>
+</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<ul>
+<li>
+<code>pmml.iForest</code> now uses <code>sampleDataSize</code> instead of <code>ParameterList</code> to store the <code>model$phi</code> value. This should not affect the user.</li>
+<li>
+<code>testthat</code> file names now correspond to the functions being tested.</li>
+<li>Minor edits in <code>make_output_nodes</code> doc for clarity.</li>
+<li>Minor formatting edits in vignettes.</li>
+</ul>
+</div>
 </div>
     <div id="pmml-2-0-0" class="section level1">
 <h1 class="page-header">
@@ -365,9 +394,9 @@
 <code>Initialize()</code> has been made internal.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>All documentation is created with roxygen.</p></li>
 <li><p>Documentation is now uniform across different exporters.</p></li>
@@ -925,7 +954,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pmml-2-0-0-9000">2.0.0.9000</a></li>
+        <li><a href="#pmml-2-0-0-9000-development-version">2.0.0.9000</a></li>
         <li><a href="#pmml-2-0-0">2.0.0</a></li>
         <li><a href="#pmml-1-5-7">1.5.7</a></li>
         <li><a href="#pmml-1-5-6">1.5.6</a></li>
