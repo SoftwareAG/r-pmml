@@ -55,7 +55,6 @@ library(kernlab)
 model <- ksvm(Species ~ ., data = iris)
 
 model_pmml <- pmml(model, dataset = iris)
-
 }
 \references{
 \href{https://CRAN.R-project.org/package=kernlab}{kernlab: Kernel-based

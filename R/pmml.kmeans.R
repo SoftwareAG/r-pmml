@@ -52,7 +52,6 @@
 #' colnames(ds) <- c("Dimension1", "Dimension2")
 #' cl <- kmeans(ds, 2)
 #' cl_pmml <- pmml(cl)
-#' 
 #' @export pmml.kmeans
 #' @export
 pmml.kmeans <- function(model,
@@ -70,10 +69,11 @@ pmml.kmeans <- function(model,
   # Deprecated argument.
   if (!missing(algorithm.name)) {
     warning("argument algorithm.name is deprecated; please use algorithm_name instead.",
-            call. = FALSE)
+      call. = FALSE
+    )
     algorithm_name <- algorithm.name
   }
-  
+
   field <- NULL
   field$name <- colnames(model$centers)
   number.of.fields <- length(field$name)

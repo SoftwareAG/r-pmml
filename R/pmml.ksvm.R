@@ -51,7 +51,6 @@
 #' model <- ksvm(Species ~ ., data = iris)
 #'
 #' model_pmml <- pmml(model, dataset = iris)
-#' 
 #' @export pmml.ksvm
 #' @export
 pmml.ksvm <- function(model,

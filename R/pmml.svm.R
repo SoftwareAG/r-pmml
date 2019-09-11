@@ -48,25 +48,25 @@
 #'
 #' For a one-classification svm (OCSVM) model, the PMML has three OutputField elements.
 #'
-#' The OutputField \code{anomalyScore} is the signed distance to the separating boundary; 
-#' \code{anomalyScore} corresponds to the decision.values attribute of the output of the 
+#' The OutputField \code{anomalyScore} is the signed distance to the separating boundary;
+#' \code{anomalyScore} corresponds to the decision.values attribute of the output of the
 #' svm predict function in R.
 #'
-#' The OutputField \code{anomaly} is a boolean value that is TRUE when an anomaly is detected. 
-#' This field conforms to the DMG definition of an anomaly detection model. This value is the 
+#' The OutputField \code{anomaly} is a boolean value that is TRUE when an anomaly is detected.
+#' This field conforms to the DMG definition of an anomaly detection model. This value is the
 #' opposite of the prediction by the e1071::svm object in R.
 #'
-#' The OutputField \code{svm_predict_function} is a boolean value that is TRUE when an inlier is 
-#' detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when 
-#' an anomaly is detected; that is, the R svm model predicts whether an input belongs to the 
-#' class. When comparing the predictions from R and PMML, this field should be used, since it 
+#' The OutputField \code{svm_predict_function} is a boolean value that is TRUE when an inlier is
+#' detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when
+#' an anomaly is detected; that is, the R svm model predicts whether an input belongs to the
+#' class. When comparing the predictions from R and PMML, this field should be used, since it
 #' will match R's output.
 #'
-#' For example, say that for an input of observations, the R OCSVM model predicts a positive 
-#' decision value of 0.4 and label of TRUE. According to the R object, this means that the 
-#' observation is an inlier. The PMML export of this model will give the following for the 
-#' same input: \code{anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"}. 
-#' According to the PMML, the observation is not an anomaly. Note that there is no sign flip 
+#' For example, say that for an input of observations, the R OCSVM model predicts a positive
+#' decision value of 0.4 and label of TRUE. According to the R object, this means that the
+#' observation is an inlier. The PMML export of this model will give the following for the
+#' same input: \code{anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"}.
+#' According to the PMML, the observation is not an anomaly. Note that there is no sign flip
 #' for \code{anomalyScore} between R and PMML for OCSVM models.
 #'
 #'
@@ -204,10 +204,11 @@ pmml.svm <- function(model,
 
     # updated anomaly field that replaces "threshold" attribute with Apply function.
     xmlOF_anomaly <- xmlNode("OutputField",
-                             attrs = c(
-                               name = "anomaly", feature = "decision",
-                               dataType = "boolean", optype = "categorical"
-                             ))
+      attrs = c(
+        name = "anomaly", feature = "decision",
+        dataType = "boolean", optype = "categorical"
+      )
+    )
 
     xmlOF_anomaly_apply <- xmlNode("Apply", attrs = c("function" = "lessThan"))
     xmlOF_anomaly_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
@@ -229,13 +230,15 @@ pmml.svm <- function(model,
     xmlOF_svm_predict_anomaly_apply <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
     xmlOF_svm_predict_anomaly_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
     xmlOF_svm_predict_anomaly_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
-    xmlOF_svm_predict_anomaly_apply <- append.XMLNode(xmlOF_svm_predict_anomaly_apply,
-                                                      xmlOF_svm_predict_anomaly_fieldref,
-                                                      xmlOF_svm_predict_anomaly_constant)
+    xmlOF_svm_predict_anomaly_apply <- append.XMLNode(
+      xmlOF_svm_predict_anomaly_apply,
+      xmlOF_svm_predict_anomaly_fieldref,
+      xmlOF_svm_predict_anomaly_constant
+    )
     xmlOF_svm_predict_anomaly <- append.XMLNode(xmlOF_svm_predict_anomaly, xmlOF_svm_predict_anomaly_apply)
-    
-    
-    
+
+
+
     # # pre-4.4 negation of anomaly field to correspond to R
     # xmlApply <- xmlNode("Apply", attrs = c("function" = "not"))
     # xmlFR <- xmlNode("FieldRef", attrs = c(field = "anomaly"))

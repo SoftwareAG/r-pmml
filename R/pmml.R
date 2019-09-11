@@ -115,7 +115,6 @@
 #'
 #' # Output the tranformation in PMML format
 #' iris_trans_pmml <- pmml(NULL, transforms = iris_trans)
-#' 
 #' @import XML
 #' @importFrom stringr str_detect str_split str_subset str_replace str_interp str_extract
 #' @importFrom stats coef coefficients na.omit

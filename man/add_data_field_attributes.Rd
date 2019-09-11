@@ -93,7 +93,6 @@ mv <- make_values(
   list("valid", NULL, "invalid")
 )
 fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length", interval = mi, values = mv)
-
 }
 \author{
 Tridivesh Jena

@@ -74,7 +74,7 @@ svm_ad_predict <- function(fit, newdata) {
   return(preds_df)
 }
 
-single_col_h_df <- function(h){
+single_col_h_df <- function(h) {
   # For ARIMA models, create a data frame with a single column of h (number of steps ahead) values.
   dframe <- data.frame("h" = c(1:h))
   return(dframe)
@@ -108,7 +108,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
+
   fit <- auto.arima(JohnsonJohnson)
   p_fit <- pmml(fit, model_name = "arima_auto_02")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
@@ -116,117 +116,115 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(AirPassengers,order=c(2,1,2))
+
+  fit <- Arima(AirPassengers, order = c(2, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_313")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
+
   ###
-  
-  fit <- Arima(AirPassengers,order=c(1,1,1))
+
+  fit <- Arima(AirPassengers, order = c(1, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_111")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(WWWusage,order=c(2,0,2))
+
+  fit <- Arima(WWWusage, order = c(2, 0, 2))
   p_fit <- pmml(fit, model_name = "arima_202")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(WWWusage, order=c(3,1,1), include.drift = TRUE)
+
+  fit <- Arima(WWWusage, order = c(3, 1, 1), include.drift = TRUE)
   p_fit <- pmml(fit, model_name = "arima_311")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(USAccDeaths, order=c(1,2,0))
+
+  fit <- Arima(USAccDeaths, order = c(1, 2, 0))
   p_fit <- pmml(fit, model_name = "arima_120")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(JohnsonJohnson,order=c(1,1,0), seasonal=c(0,1,1))
+
+  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_110011")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(JohnsonJohnson,order=c(0,1,0), seasonal=c(0,1,0))
+
+  fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_010010")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(JohnsonJohnson,order=c(0,1,0), seasonal=c(0,1,2))
+
+  fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_010012")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(AirPassengers,order=c(0,1,1), seasonal=c(0,1,1))
+
+  fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_011011")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  fit <- Arima(JohnsonJohnson,order=c(1,1,1), seasonal=c(1,1,1))
+
+  fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_111111")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
-  
-  fit <- Arima(JohnsonJohnson,order=c(0,0,1), seasonal=c(0,1,0))
+
+
+  fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_001010")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
 
-  fit <- Arima(sunspots,order=c(1,0,0), seasonal=c(1,0,0))
+
+  fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
   p_fit <- pmml(fit, model_name = "arima_100100")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
+
   # expect the following test to fail
-  fit <- Arima(JohnsonJohnson,order=c(1,1,0), seasonal=c(0,0,1))
+  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
   p_fit <- pmml(fit, model_name = "arima_110001")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_failure(expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred))
-
-  
 })
 
 
@@ -2106,8 +2104,8 @@ test_that("SupportVectorMachineModel/e1071 one-classification PMML output matche
   expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
   fit <- svm(audit[100:400, c("Income", "Deductions")],
-             y = NULL, type = "one-classification",
-             nu = 0.10, scale = TRUE, kernel = "linear"
+    y = NULL, type = "one-classification",
+    nu = 0.10, scale = TRUE, kernel = "linear"
   )
   p_fit <- pmml(fit, dataset = audit[, c("Income", "Deductions")])
   r_pred <- svm_ad_predict(fit, audit[, c("Income", "Deductions")])
@@ -2147,124 +2145,120 @@ test_that("SupportVectorMachineModel/e1071 one-classification PMML output matche
   expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
   expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
-    box_obj <- xform_wrap(iris[, 1:4])
-    fit <- svm(box_obj$data, y = NULL, type = "one-classification")
-    p_fit <- pmml(fit, dataset = iris[, 1:4], transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, box_obj$data)
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
+  box_obj <- xform_wrap(iris[, 1:4])
+  fit <- svm(box_obj$data, y = NULL, type = "one-classification")
+  p_fit <- pmml(fit, dataset = iris[, 1:4], transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, box_obj$data)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
 
-    box_obj <- xform_wrap(iris[, 1:4])
-    box_obj <- xform_z_score(box_obj)
-    fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification")
-    p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, box_obj$data[, 5:8])
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
+  box_obj <- xform_wrap(iris[, 1:4])
+  box_obj <- xform_z_score(box_obj)
+  fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification")
+  p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, box_obj$data[, 5:8])
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
 
-    box_obj <- xform_wrap(iris[, 1:4])
-    box_obj <- xform_z_score(box_obj, xform_info = "column1->d1")
-    box_obj <- xform_z_score(box_obj, xform_info = "column2->d2")
-    box_obj <- xform_z_score(box_obj, xform_info = "column3->d3")
-    box_obj <- xform_z_score(box_obj, xform_info = "column4->d4")
-    box_obj <- xform_min_max(box_obj, xform_info = "d1->dd1")
-    box_obj <- xform_min_max(box_obj, xform_info = "d2->dd2")
-    box_obj <- xform_min_max(box_obj, xform_info = "d3->dd3")
-    box_obj <- xform_min_max(box_obj, xform_info = "d4->dd4")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd1->ddd1")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd2->ddd2")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd3->ddd3")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd4->ddd4")
-    fit <- svm(box_obj$data[, 13:16], y = NULL, type = "one-classification")
-    p_fit <- pmml(fit, dataset = box_obj$data[, 13:16], transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, box_obj$data[, 13:16])
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
+  box_obj <- xform_wrap(iris[, 1:4])
+  box_obj <- xform_z_score(box_obj, xform_info = "column1->d1")
+  box_obj <- xform_z_score(box_obj, xform_info = "column2->d2")
+  box_obj <- xform_z_score(box_obj, xform_info = "column3->d3")
+  box_obj <- xform_z_score(box_obj, xform_info = "column4->d4")
+  box_obj <- xform_min_max(box_obj, xform_info = "d1->dd1")
+  box_obj <- xform_min_max(box_obj, xform_info = "d2->dd2")
+  box_obj <- xform_min_max(box_obj, xform_info = "d3->dd3")
+  box_obj <- xform_min_max(box_obj, xform_info = "d4->dd4")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd1->ddd1")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd2->ddd2")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd3->ddd3")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd4->ddd4")
+  fit <- svm(box_obj$data[, 13:16], y = NULL, type = "one-classification")
+  p_fit <- pmml(fit, dataset = box_obj$data[, 13:16], transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, box_obj$data[, 13:16])
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
 
-    box_obj <- xform_wrap(iris_p[, 1:4])
-    box_obj <- xform_discretize(box_obj,
-      xform_info = "[petal_length->dis_pl][double->integer]",
-      table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-    )
-    box_obj <- xform_discretize(box_obj,
-      xform_info = "[petal_width->dis_pw][double->integer]",
-      table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-    )
-    box_obj <- xform_discretize(box_obj,
-      xform_info = "[sepal_length->dis_sl][double->integer]",
-      table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-    )
-    box_obj <- xform_discretize(box_obj,
-      xform_info = "[sepal_width->dis_sw][double->integer]",
-      table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-    )
-    suppressWarnings(fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification"))
-    p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, box_obj$data[, 5:8])
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(iris_p[, 1:4], up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
+  box_obj <- xform_wrap(iris_p[, 1:4])
+  box_obj <- xform_discretize(box_obj,
+    xform_info = "[petal_length->dis_pl][double->integer]",
+    table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
+  )
+  box_obj <- xform_discretize(box_obj,
+    xform_info = "[petal_width->dis_pw][double->integer]",
+    table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
+  )
+  box_obj <- xform_discretize(box_obj,
+    xform_info = "[sepal_length->dis_sl][double->integer]",
+    table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
+  )
+  box_obj <- xform_discretize(box_obj,
+    xform_info = "[sepal_width->dis_sw][double->integer]",
+    table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
+  )
+  suppressWarnings(fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification"))
+  p_fit <- pmml(fit, dataset = box_obj$data[, 5:8], transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, box_obj$data[, 5:8])
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris_p[, 1:4], up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
 
-    box_obj <- xform_wrap(audit)
-    box_obj <- xform_z_score(box_obj, xform_info = "column2->d_Age")
-    box_obj <- xform_z_score(box_obj, xform_info = "column7->d_Income")
-    box_obj <- xform_z_score(box_obj, xform_info = "column9->d_Deductions")
-    box_obj <- xform_z_score(box_obj, xform_info = "column10->d_Hours")
-    box_obj <- xform_min_max(box_obj, xform_info = "d_Age->dd_Age")
-    box_obj <- xform_min_max(box_obj, xform_info = "d_Income->dd_Income")
-    box_obj <- xform_min_max(box_obj, xform_info = "d_Deductions->dd_Deductions")
-    box_obj <- xform_min_max(box_obj, xform_info = "d_Hours->dd_Hours")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd_Age->ddd_Age")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd_Income->ddd_Income")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd_Deductions->ddd_Deductions")
-    box_obj <- xform_z_score(box_obj, xform_info = "dd_Hours->ddd_Hours")
-    box_obj <- xform_norm_discrete(box_obj, input_var = "Employment")
-    box_obj <- xform_map(box_obj,
-      xform_info = "[Marital-> d_Marital][string->double]",
-      table = "audit_marital_table.csv",
-      default_value = "-1", map_missing_to = "1"
-    )
-    fit <- svm(box_obj$data[, c(22, 23, 25)],
-      y = NULL, type = "one-classification", nu = 0.10,
-      scale = TRUE, kernel = "linear"
-    )
-    p_fit <- pmml(fit, dataset = box_obj$data[, c(22, 23, 25)], transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, box_obj$data[, c(22, 23, 25)])
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(audit, up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
+  box_obj <- xform_wrap(audit)
+  box_obj <- xform_z_score(box_obj, xform_info = "column2->d_Age")
+  box_obj <- xform_z_score(box_obj, xform_info = "column7->d_Income")
+  box_obj <- xform_z_score(box_obj, xform_info = "column9->d_Deductions")
+  box_obj <- xform_z_score(box_obj, xform_info = "column10->d_Hours")
+  box_obj <- xform_min_max(box_obj, xform_info = "d_Age->dd_Age")
+  box_obj <- xform_min_max(box_obj, xform_info = "d_Income->dd_Income")
+  box_obj <- xform_min_max(box_obj, xform_info = "d_Deductions->dd_Deductions")
+  box_obj <- xform_min_max(box_obj, xform_info = "d_Hours->dd_Hours")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd_Age->ddd_Age")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd_Income->ddd_Income")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd_Deductions->ddd_Deductions")
+  box_obj <- xform_z_score(box_obj, xform_info = "dd_Hours->ddd_Hours")
+  box_obj <- xform_norm_discrete(box_obj, input_var = "Employment")
+  box_obj <- xform_map(box_obj,
+    xform_info = "[Marital-> d_Marital][string->double]",
+    table = "audit_marital_table.csv",
+    default_value = "-1", map_missing_to = "1"
+  )
+  fit <- svm(box_obj$data[, c(22, 23, 25)],
+    y = NULL, type = "one-classification", nu = 0.10,
+    scale = TRUE, kernel = "linear"
+  )
+  p_fit <- pmml(fit, dataset = box_obj$data[, c(22, 23, 25)], transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, box_obj$data[, c(22, 23, 25)])
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(audit, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 
 
-    box_obj <- xform_wrap(audit[, c("Income", "Deductions")])
-    fit <- svm(box_obj$data, y = NULL, type = "one-classification")
-    p_fit <- pmml(fit, dataset = box_obj$data, transforms = box_obj)
-    r_pred <- svm_ad_predict(fit, audit[, c("Income", "Deductions")])
-    up_stat <- upload_model(p_fit)
-    z_pred <- predict_pmml_batch(audit, up_stat$model_name)
-    delete_model(up_stat$model_name)
-    expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
-    expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
-
-
-
-
+  box_obj <- xform_wrap(audit[, c("Income", "Deductions")])
+  fit <- svm(box_obj$data, y = NULL, type = "one-classification")
+  p_fit <- pmml(fit, dataset = box_obj$data, transforms = box_obj)
+  r_pred <- svm_ad_predict(fit, audit[, c("Income", "Deductions")])
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(audit, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
+  expect_equal_nn(z_pred$outputs$svm_predict_anomaly, r_pred$svm_predict_anomaly)
 })
 
 

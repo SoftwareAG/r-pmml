@@ -115,7 +115,6 @@
 #' # Repeat the above transformation, this time the transformed variable
 #' # lies between 0 and 10
 #' iris_box_7 <- xform_min_max(iris_box, xform_info = "column2->[,10]")
-#' 
 #' @export
 xform_min_max <- function(wrap_object, xform_info = NA, map_missing_to = NA, ...) {
   colmn <- NULL

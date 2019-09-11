@@ -79,11 +79,12 @@ pmml.iForest <- function(model,
   if (!inherits(model, "iForest")) {
     stop("Not a legitimate iForest object")
   }
-  
+
   # Deprecated argument.
   if (!missing(anomalyThreshold)) {
     warning("argument anomalyThreshold is deprecated; please use anomaly_threshold instead.",
-              call. = FALSE)
+      call. = FALSE
+    )
     anomaly_threshold <- anomalyThreshold
   }
 
@@ -127,15 +128,15 @@ pmml.iForest <- function(model,
     sampleDataSize = model$phi,
     algorithmType = "iforest", modelName = model_name
   ))
-  
-  
-  
+
+
+
   anomalyModel <- append.XMLNode(anomalyModel, .pmmlMiningSchema(field, target, transforms, missing_value_replacement,
     invalidValueTreatment = parent_invalid_value_treatment
   ))
-  
+
   anomalyModel <- append.XMLNode(anomalyModel, .pmmlAnomalyOutput(field, target, anomaly_threshold))
-  
+
   ## pre-4.4 usage of ParameterList
   # anomalyModel <- append.XMLNode(anomalyModel, .pmmlParameterList(model$phi))
 
@@ -143,11 +144,11 @@ pmml.iForest <- function(model,
     modelName = model_name, algorithmName = "randomForest",
     functionName = "regression"
   ))
-  
+
   mmodel <- append.XMLNode(mmodel, .pmmlMiningSchema(field, target, transforms, missing_value_replacement,
     invalidValueTreatment = parent_invalid_value_treatment
   ))
-  
+
   mmodel <- append.XMLNode(mmodel, .pmmlAnomalyMiningOutput("avg_path_length"))
 
   # If interaction terms do exist, define a product in LocalTransformations and use
@@ -421,13 +422,13 @@ pmml.iForest <- function(model,
     name = "anomaly", optype = "categorical", dataType = "boolean",
     feature = "decision"
   ))
-  
+
   output_anomaly_comp <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
   output_anomaly_c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
   output_anomaly_d <- xmlNode("Constant", attrs = c(dataType = "double"), anomaly_threshold)
   output_anomaly_comp <- append.XMLNode(output_anomaly_comp, output_anomaly_c, output_anomaly_d)
   output_anomaly <- append.XMLNode(output_anomaly, output_anomaly_comp)
-  
+
   output <- append.XMLNode(output, output1, output_anomaly)
   return(output)
 }
@@ -443,7 +444,7 @@ pmml.iForest <- function(model,
 #     name = "anomaly", optype = "categorical", dataType = "boolean",
 #     feature = "transformedValue"
 #   ))
-# 
+#
 #   output2a <- xmlNode("Apply", attrs = c("function" = "if"))
 #   output2b <- xmlNode("Apply", attrs = c("function" = "lessThan"))
 #   output2c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
@@ -453,7 +454,7 @@ pmml.iForest <- function(model,
 #   output2b <- append.XMLNode(output2b, output2c, output2d)
 #   output2a <- append.XMLNode(output2a, output2b, output2e, output2f)
 #   output2 <- append.XMLNode(output2, output2a)
-# 
+#
 #   output <- append.XMLNode(output, output1, output2)
 #   return(output)
 # }

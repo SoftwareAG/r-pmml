@@ -93,7 +93,6 @@ iris_box <- xform_z_score(iris_box,
   xform_info = "Sepal.Width",
   "map_missing_to=1.0"
 )
-
 }
 \seealso{
 \code{\link{xform_wrap}}

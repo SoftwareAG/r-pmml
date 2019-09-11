@@ -106,123 +106,124 @@ xform_norm_discrete <- function(wrap_object,
                                 inputVar,
                                 map_missing_to = NA,
                                 ...) {
-    
-    # Deprecated argument.
-    if (!missing(inputVar)) {
-      warning("argument inputVar is deprecated; please use input_var instead.",
-              call. = FALSE)
-      input_var <- inputVar
-    }
-    
-    
-    map <- NULL
-    colmn <- NULL
-    newrow <- NULL
-    colnamesGiven <- FALSE
-    j <- 0
-    sampleMin <- NA
-    sampleMax <- NA
-    xformedMin <- NA
-    xformedMax <- NA
-    centers <- NA
-    scales <- NA
-    default <- NA
-    missingValue <- NA
-    xform_function <- NA
 
-    
-    if (is.na(xform_info) && is.na(input_var)) {
-      stop("xform_info/input_var parameter required.")
-    }
-
-    if (is.na(input_var)) {
-      input_var <- xform_info
-    }
-
-    newBoxData <- .init_wrap_params(wrap_object)
-
-    dots <- list(...)
-    if (!is.null(dots$levelSeparator)) {
-      variableLevelSeparator <- dots$levelSeparator
-    } else {
-      variableLevelSeparator <- "_"
-    }
-    ignoreOperators <- FALSE
-    if (!is.null(dots$ignoreOperatorSigns)) {
-      ignoreOperators <- TRUE
-    }
-
-    if (!is.na(map_missing_to)) {
-      missingValue <- as.character(map_missing_to)
-    }
-
-    # expected input format: initialName or [initialName]
-    input <- as.character(input_var)
-    fromName <- gsub("\\[", "", input)
-    fromName <- gsub("\\]", "", fromName)
-    fromName <- gsub("^[ ]*", "", fromName)
-    fromName <- gsub("[ $]*", "", fromName)
-    origName <- fromName
-    if (grepl("column", origName, ignore.case = TRUE)) {
-      origName <- gsub("column", "", origName, ignore.case = TRUE)
-    }
-    if (grepl("^[-,_]", origName)) {
-      origName <- gsub("^[-,_]*", "", origName)
-    }
-    if (suppressWarnings(!is.na(as.numeric(origName)))) {
-      colmn <- as.numeric(origName)
-      fromName <- names(newBoxData$data)[colmn]
-    }
-
-    catNames <- NULL
-    toNames <- NULL
-    levels <- unique(newBoxData$data[fromName])[[1]]
-    for (i in 1:length(levels))
-    {
-      catNames <- c(catNames, as.character(levels[i]))
-      # name all derived fields as [original field name]_[category name].
-      # Replace special characters with '_'.
-      name <- paste0(fromName, variableLevelSeparator, levels[i])
-      if (!ignoreOperators) {
-        name <- gsub("-", "_", name)
-        name <- gsub("\\+", "_", name)
-        name <- gsub("\\*", "_", name)
-        name <- gsub(":", "_", name)
-        name <- gsub("'", "_", name)
-      }
-      toNames <- c(toNames, name)
-    }
-
-    for (i in 1:length(catNames))
-    {
-      type <- "derived"
-      dataType <- "numeric"
-      orig_field_name <- fromName
-      derivedFieldName <- toNames[i]
-      fieldsMap <- list(as.character(catNames[i]))
-
-      transform <- "NormDiscrete"
-      newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, I(fieldsMap), transform, default, missingValue, xform_function, row.names = derivedFieldName, check.names = FALSE)
-      suppressWarnings(newBoxData$field_data <- rbind(newBoxData$field_data, newrow))
-
-      newcol <- NULL
-      newcol <- 1 * (newBoxData$data[, fromName] == catNames[i])
-      newcol[is.na(newcol)] <- missingValue
-
-      names <- toNames[i]
-      newmat <- as.matrix(newcol)
-      colnames(newmat) <- names
-      rownames(newmat) <- NULL
-
-      newBoxData$data <- data.frame(newBoxData$data, newmat, check.names = FALSE)
-
-      if (!is.null(newBoxData$matrixData)) {
-        newBoxData$matrixData <- cbind(newBoxData$matrixData, newmat)
-      }
-    }
-
-    newBoxData$field_data[nrow(newBoxData$field_data), "missingValue"] <- missingValue
-    newBoxData$field_data[nrow(newBoxData$field_data), "default"] <- default
-
-    return(newBoxData)
+  # Deprecated argument.
+  if (!missing(inputVar)) {
+    warning("argument inputVar is deprecated; please use input_var instead.",
+      call. = FALSE
+    )
+    input_var <- inputVar
   }
+
+
+  map <- NULL
+  colmn <- NULL
+  newrow <- NULL
+  colnamesGiven <- FALSE
+  j <- 0
+  sampleMin <- NA
+  sampleMax <- NA
+  xformedMin <- NA
+  xformedMax <- NA
+  centers <- NA
+  scales <- NA
+  default <- NA
+  missingValue <- NA
+  xform_function <- NA
+
+
+  if (is.na(xform_info) && is.na(input_var)) {
+    stop("xform_info/input_var parameter required.")
+  }
+
+  if (is.na(input_var)) {
+    input_var <- xform_info
+  }
+
+  newBoxData <- .init_wrap_params(wrap_object)
+
+  dots <- list(...)
+  if (!is.null(dots$levelSeparator)) {
+    variableLevelSeparator <- dots$levelSeparator
+  } else {
+    variableLevelSeparator <- "_"
+  }
+  ignoreOperators <- FALSE
+  if (!is.null(dots$ignoreOperatorSigns)) {
+    ignoreOperators <- TRUE
+  }
+
+  if (!is.na(map_missing_to)) {
+    missingValue <- as.character(map_missing_to)
+  }
+
+  # expected input format: initialName or [initialName]
+  input <- as.character(input_var)
+  fromName <- gsub("\\[", "", input)
+  fromName <- gsub("\\]", "", fromName)
+  fromName <- gsub("^[ ]*", "", fromName)
+  fromName <- gsub("[ $]*", "", fromName)
+  origName <- fromName
+  if (grepl("column", origName, ignore.case = TRUE)) {
+    origName <- gsub("column", "", origName, ignore.case = TRUE)
+  }
+  if (grepl("^[-,_]", origName)) {
+    origName <- gsub("^[-,_]*", "", origName)
+  }
+  if (suppressWarnings(!is.na(as.numeric(origName)))) {
+    colmn <- as.numeric(origName)
+    fromName <- names(newBoxData$data)[colmn]
+  }
+
+  catNames <- NULL
+  toNames <- NULL
+  levels <- unique(newBoxData$data[fromName])[[1]]
+  for (i in 1:length(levels))
+  {
+    catNames <- c(catNames, as.character(levels[i]))
+    # name all derived fields as [original field name]_[category name].
+    # Replace special characters with '_'.
+    name <- paste0(fromName, variableLevelSeparator, levels[i])
+    if (!ignoreOperators) {
+      name <- gsub("-", "_", name)
+      name <- gsub("\\+", "_", name)
+      name <- gsub("\\*", "_", name)
+      name <- gsub(":", "_", name)
+      name <- gsub("'", "_", name)
+    }
+    toNames <- c(toNames, name)
+  }
+
+  for (i in 1:length(catNames))
+  {
+    type <- "derived"
+    dataType <- "numeric"
+    orig_field_name <- fromName
+    derivedFieldName <- toNames[i]
+    fieldsMap <- list(as.character(catNames[i]))
+
+    transform <- "NormDiscrete"
+    newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, I(fieldsMap), transform, default, missingValue, xform_function, row.names = derivedFieldName, check.names = FALSE)
+    suppressWarnings(newBoxData$field_data <- rbind(newBoxData$field_data, newrow))
+
+    newcol <- NULL
+    newcol <- 1 * (newBoxData$data[, fromName] == catNames[i])
+    newcol[is.na(newcol)] <- missingValue
+
+    names <- toNames[i]
+    newmat <- as.matrix(newcol)
+    colnames(newmat) <- names
+    rownames(newmat) <- NULL
+
+    newBoxData$data <- data.frame(newBoxData$data, newmat, check.names = FALSE)
+
+    if (!is.null(newBoxData$matrixData)) {
+      newBoxData$matrixData <- cbind(newBoxData$matrixData, newmat)
+    }
+  }
+
+  newBoxData$field_data[nrow(newBoxData$field_data), "missingValue"] <- missingValue
+  newBoxData$field_data[nrow(newBoxData$field_data), "default"] <- default
+
+  return(newBoxData)
+}

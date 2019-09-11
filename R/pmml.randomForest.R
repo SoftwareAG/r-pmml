@@ -51,7 +51,6 @@
 #' iris_rf_pmml <- pmml(iris_rf)
 #'
 #' rm(iris_rf)
-#' 
 #' @export pmml.randomForest
 #' @export
 pmml.randomForest <- function(model,

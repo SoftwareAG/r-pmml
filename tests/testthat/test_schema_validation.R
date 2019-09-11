@@ -141,26 +141,24 @@ schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
 
 
 test_that("TimeSeries/Arima PMML validates against schema", {
-
-  fit <- Arima(WWWusage,order=c(1,0,1))
+  fit <- Arima(WWWusage, order = c(1, 0, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
-  fit <- Arima(WWWusage,order=c(0,0,0))
+  fit <- Arima(WWWusage, order = c(0, 0, 0))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
-  fit <- Arima(WWWusage,order=c(3,1,1))
+  fit <- Arima(WWWusage, order = c(3, 1, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
-  
-  fit <- Arima(JohnsonJohnson,order=c(0,1,0), seasonal=c(0,1,2))
+
+  fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
-  
-  fit <- Arima(AirPassengers,order=c(0,1,1), seasonal=c(0,1,1))
+
+  fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 })
 
 
 test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
-
   skip_on_cran()
   skip_on_ci()
 
@@ -1095,7 +1093,6 @@ test_that("SupportVectorMachineModel/e1071 one-classification PMML validates aga
   audit_numeric$Adjusted <- as.numeric(audit_numeric$Adjusted)
   fit <- svm(audit_numeric, y = NULL, type = "one-classification", nu = 0.10, scale = FALSE, kernel = "radial")
   expect_equal(validate_pmml(pmml(fit, dataset = audit_numeric), schema), 0)
-
 })
 
 
@@ -1641,4 +1638,3 @@ test_that("Transformations PMML validates against schema", {
   p_fit <- pmml(fit, transforms = numeric_10k_box)
   expect_equal(validate_pmml(p_fit, schema), 0)
 })
-

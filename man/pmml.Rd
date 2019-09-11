@@ -89,7 +89,6 @@ iris_trans <- xform_min_max(iris_trans, xform_info = "column1->d_sl")
 
 # Output the tranformation in PMML format
 iris_trans_pmml <- pmml(NULL, transforms = iris_trans)
-
 }
 \references{
 \itemize{

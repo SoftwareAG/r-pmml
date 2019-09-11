@@ -103,7 +103,6 @@ iris_box_6 <- xform_min_max(iris_box, xform_info = "column2->[2,3]")
 # Repeat the above transformation, this time the transformed variable
 # lies between 0 and 10
 iris_box_7 <- xform_min_max(iris_box, xform_info = "column2->[,10]")
-
 }
 \seealso{
 \code{\link{xform_wrap}}

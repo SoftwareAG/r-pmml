@@ -105,7 +105,6 @@
 #'   xform_info = "Sepal.Width",
 #'   "map_missing_to=1.0"
 #' )
-#' 
 #' @export
 xform_z_score <-
   function(wrap_object, xform_info = NA, map_missing_to = NA, ...) {

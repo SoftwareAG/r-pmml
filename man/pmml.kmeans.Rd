@@ -52,7 +52,6 @@ ds <- rbind(
 colnames(ds) <- c("Dimension1", "Dimension2")
 cl <- kmeans(ds, 2)
 cl_pmml <- pmml(cl)
-
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html}{R

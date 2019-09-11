@@ -70,14 +70,15 @@
 rename_wrap_var <- function(wrap_object,
                             wrap_data,
                             xform_info = NA, ...) {
-  
+
   # Deprecated argument.
   if (!missing(wrap_data)) {
     warning("argument wrap_data is deprecated; please use wrap_object instead.",
-            call. = FALSE)
+      call. = FALSE
+    )
     wrap_object <- wrap_data
   }
-  
+
   i <- NULL
   j <- NULL
   colnm <- NULL

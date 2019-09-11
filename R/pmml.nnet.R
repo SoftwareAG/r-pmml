@@ -44,7 +44,6 @@
 #' fit_pmml <- pmml(fit)
 #'
 #' rm(fit)
-#' 
 #' @export pmml.nnet
 #' @export
 pmml.nnet <- function(model,

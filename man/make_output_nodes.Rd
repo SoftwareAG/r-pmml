@@ -12,7 +12,7 @@ make_output_nodes(name = "OutputField", attributes = NULL,
 
 \item{attributes}{The node attributes to be added.}
 
-\item{expression}{Post-processing information to be included in the element. 
+\item{expression}{Post-processing information to be included in the element.
 This expression will be processed by \code{function_to_pmml}.}
 
 \item{namespace}{The namespace of the PMML model.}
@@ -25,10 +25,10 @@ Add Output nodes to a PMML object.
 }
 \details{
 Create a list of nodes with names \code{'name'}, attributes \code{'attributes'} and
-child elements \code{'expression'}. \code{'expression'} is a string converted to XML 
+child elements \code{'expression'}. \code{'expression'} is a string converted to XML
 similar to \code{function_to_pmml}.
 
-Meant to create OutputField elements, 'expressions' can be used to add 
+Meant to create OutputField elements, 'expressions' can be used to add
 post-processing transformations to a model. To create multiple such nodes,
 all the parameters must be given as lists of equal length.
 }

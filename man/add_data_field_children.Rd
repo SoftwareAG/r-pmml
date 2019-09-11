@@ -82,7 +82,6 @@ fit_pmml_3 <- add_data_field_children(fit_pmml, field = "Sepal.Length", interval
 
 # Only defined 'Interval's:
 fit_pmml_3 <- add_data_field_children(fit_pmml, field = "Sepal.Length", intervals = mi)
-
 }
 \author{
 Tridivesh Jena

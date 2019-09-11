@@ -90,7 +90,6 @@
 #' }
 #'
 #' fit_pmml <- add_mining_field_attributes(fit_pmml, attributes, namespace = "4_4")
-#' 
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export

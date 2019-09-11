@@ -43,7 +43,6 @@ fit <- nnet(Species ~ ., data = iris, size = 4)
 fit_pmml <- pmml(fit)
 
 rm(fit)
-
 }
 \references{
 \href{https://CRAN.R-project.org/package=nnet}{nnet: Feed-forward

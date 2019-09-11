@@ -60,7 +60,6 @@
 #'
 #' fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
 #' fit_pmml <- pmml(fit)
-#' 
 #' @export pmml.ada
 #' @export
 pmml.ada <- function(model,

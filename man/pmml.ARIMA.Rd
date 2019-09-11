@@ -39,10 +39,8 @@ The model is represented in the PMML TimeSeriesModel format.
 \examples{
 library(forecast)
 data("WWWusage")
-mod <- Arima(WWWusage,order=c(3,1,1))
+mod <- Arima(WWWusage, order = c(3, 1, 1))
 mod_pmml <- pmml(mod)
-
-
 }
 \author{
 Dmitriy Bolotov

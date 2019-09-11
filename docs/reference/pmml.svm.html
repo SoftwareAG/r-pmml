@@ -200,22 +200,22 @@ the LIBSVM defines the winning category as the right side of threshold 0.</p>
 <code>svm_predict_function</code> gives the value corresponding to the R predict function for the svm
 model. This output should be used when making model predictions.</p>
 <p>For a one-classification svm (OCSVM) model, the PMML has three OutputField elements.</p>
-<p>The OutputField <code>anomalyScore</code> is the signed distance to the separating boundary; 
-<code>anomalyScore</code> corresponds to the decision.values attribute of the output of the 
+<p>The OutputField <code>anomalyScore</code> is the signed distance to the separating boundary;
+<code>anomalyScore</code> corresponds to the decision.values attribute of the output of the
 svm predict function in R.</p>
-<p>The OutputField <code>anomaly</code> is a boolean value that is TRUE when an anomaly is detected. 
-This field conforms to the DMG definition of an anomaly detection model. This value is the 
+<p>The OutputField <code>anomaly</code> is a boolean value that is TRUE when an anomaly is detected.
+This field conforms to the DMG definition of an anomaly detection model. This value is the
 opposite of the prediction by the e1071::svm object in R.</p>
-<p>The OutputField <code>svm_predict_function</code> is a boolean value that is TRUE when an inlier is 
-detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when 
-an anomaly is detected; that is, the R svm model predicts whether an input belongs to the 
-class. When comparing the predictions from R and PMML, this field should be used, since it 
+<p>The OutputField <code>svm_predict_function</code> is a boolean value that is TRUE when an inlier is
+detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when
+an anomaly is detected; that is, the R svm model predicts whether an input belongs to the
+class. When comparing the predictions from R and PMML, this field should be used, since it
 will match R's output.</p>
-<p>For example, say that for an input of observations, the R OCSVM model predicts a positive 
-decision value of 0.4 and label of TRUE. According to the R object, this means that the 
-observation is an inlier. The PMML export of this model will give the following for the 
-same input: <code>anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"</code>. 
-According to the PMML, the observation is not an anomaly. Note that there is no sign flip 
+<p>For example, say that for an input of observations, the R OCSVM model predicts a positive
+decision value of 0.4 and label of TRUE. According to the R object, this means that the
+observation is an inlier. The PMML export of this model will give the following for the
+same input: <code>anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"</code>.
+According to the PMML, the observation is not an anomaly. Note that there is no sign flip
 for <code>anomalyScore</code> between R and PMML for OCSVM models.</p>
 
 <p>To export a OCSVM model, an additional argument, <code>dataset</code>, is required by the function.

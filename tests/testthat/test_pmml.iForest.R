@@ -5,7 +5,7 @@ data(iris)
 test_that("confirm non-existent category is still automatically created by iForest function", {
   skip_on_cran()
   skip_on_ci()
-  
+
   library(isofor)
   mod <- iForest(iris, nt = 2, phi = 30)
   model_pmml <- pmml(model = mod)

@@ -63,18 +63,18 @@
 
 
 .pmmlMiningSchemaARIMA <- function(field, target = NULL, transformed = NULL,
-                              missing_value_replacement = NULL,
-                              invalidValueTreatment = "returnInvalid") {
+                                   missing_value_replacement = NULL,
+                                   invalidValueTreatment = "returnInvalid") {
   namelist <- .origFieldList(field, transformed, target)
-  
+
   mining.schema <- xmlNode("MiningSchema")
   target <- .removeAsFactor(target)
-  
+
   unknownVal <- NULL
   for (j in 1:length(namelist)) {
     if (!is.na(namelist[[j]])) {
       # h (number of steps for forecast) is a supplementary field
-      usage <- ifelse(namelist[[j]] == target, "predicted", ifelse(namelist[[j]] == "h","supplementary","active"))
+      usage <- ifelse(namelist[[j]] == target, "predicted", ifelse(namelist[[j]] == "h", "supplementary", "active"))
       if ((!is.null(target)) && (namelist[[j]] != target)) {
         if (!is.null(missing_value_replacement)) {
           unknownVal <- missing_value_replacement
@@ -98,11 +98,11 @@
           missingValueReplacement = unknownVal, invalidValueTreatment = invalidValueTreatment
         ))
       }
-      
+
       mining.schema <- append.XMLNode(mining.schema, mf)
     }
   }
-  
+
   return(mining.schema)
 }
 
