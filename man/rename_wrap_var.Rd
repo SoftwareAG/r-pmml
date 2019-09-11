@@ -4,11 +4,13 @@
 \alias{rename_wrap_var}
 \title{Rename a variable in the xform_wrap transform object.}
 \usage{
-rename_wrap_var(wrap_data, xform_info = NA, ...)
+rename_wrap_var(wrap_object, wrap_data, xform_info = NA, ...)
 }
 \arguments{
-\item{wrap_data}{Wrapper object obtained by using the xform_wrap function on the
+\item{wrap_object}{Wrapper object obtained by using the xform_wrap function on the
 raw data.}
+
+\item{wrap_data}{Deprecated.}
 
 \item{xform_info}{Specification of details of the renaming.}
 
@@ -24,10 +26,10 @@ Rename a variable in the xform_wrap transform object.
 \details{
 Once input data is wrapped by the \bold{xform_wrap} function, it is somewhat
 involved to rename a variable inside. This function makes it easier to do
-so.  Given an variable named \bold{InputVar} and the name one wishes to
-rename it to, \bold{OutputVar}, the rename command options are:
+so.  Given a variable named \bold{input_var} and the name one wishes to
+rename it to, \bold{output_var}, the rename command options are:
 
-xform_info="InputVar -> OutputVar"
+xform_info="input_var -> output_var"
 
 There are two methods in which the variables can be referred to. The first
 method is to use its column number; given the \bold{data} attribute of the
@@ -49,8 +51,8 @@ iris_box <- xform_wrap(iris)
 
 # We wish to refer to the variables "Sepal.Length" and
 # "Sepal.Width" as "SL" and "SW"
-iris_box <- rename_wrap_var(iris_box, "column1->SL")
-iris_box <- rename_wrap_var(iris_box, "Sepal.Width->SW")
+iris_box <- rename_wrap_var(wrap_object = iris_box, xform_info = "column1->SL")
+iris_box <- rename_wrap_var(wrap_object = iris_box, xform_info = "Sepal.Width->SW")
 }
 \seealso{
 \code{\link{xform_wrap}}

@@ -137,7 +137,7 @@
   <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Isolation Forest Model"</span>, <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>anomalyThreshold</span> <span class='kw'>=</span> <span class='fl'>0.6</span>,
+  <span class='kw'>anomaly_threshold</span> <span class='kw'>=</span> <span class='fl'>0.6</span>, <span class='no'>anomalyThreshold</span>,
   <span class='kw'>parent_invalid_value_treatment</span> <span class='kw'>=</span> <span class='st'>"returnInvalid"</span>,
   <span class='kw'>child_invalid_value_treatment</span> <span class='kw'>=</span> <span class='st'>"asIs"</span>, <span class='no'>...</span>)</pre>
 
@@ -174,8 +174,12 @@
 attribute for all MiningFields.</p></td>
     </tr>
     <tr>
-      <th>anomalyThreshold</th>
+      <th>anomaly_threshold</th>
       <td><p>Double between 0 and 1. Predicted values greater than this are classified as anomalies.</p></td>
+    </tr>
+    <tr>
+      <th>anomalyThreshold</th>
+      <td><p>Deprecated.</p></td>
     </tr>
     <tr>
       <th>parent_invalid_value_treatment</th>
@@ -199,7 +203,7 @@ attribute for all MiningFields.</p></td>
     <p>This function converts the iForest model object to the PMML format. The
 PMML outputs the anomaly score as well as a boolean value indicating whether the
 input is an anomaly or not. This is done by simply comparing the anomaly score with
-<code>anomalyThreshold</code>, a parameter in the <code>pmml</code> function.
+<code>anomaly_threshold</code>, a parameter in the <code>pmml</code> function.
 The iForest function automatically adds an extra level to all categorical variables,
 labelled "."; this is kept in the PMML representation even though the use of this extra
 factor in the predict function is unclear.</p>

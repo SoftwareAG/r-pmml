@@ -21,8 +21,9 @@
 #' Rename a variable in the xform_wrap transform object.
 #'
 #'
-#' @param wrap_data Wrapper object obtained by using the xform_wrap function on the
+#' @param wrap_object Wrapper object obtained by using the xform_wrap function on the
 #' raw data.
+#' @param wrap_data Deprecated.
 #' @param xform_info Specification of details of the renaming.
 #' @param \dots Further arguments passed to or from other methods.
 #'
@@ -32,10 +33,10 @@
 #' @details
 #' Once input data is wrapped by the \bold{xform_wrap} function, it is somewhat
 #' involved to rename a variable inside. This function makes it easier to do
-#' so.  Given an variable named \bold{InputVar} and the name one wishes to
-#' rename it to, \bold{OutputVar}, the rename command options are:
+#' so.  Given a variable named \bold{input_var} and the name one wishes to
+#' rename it to, \bold{output_var}, the rename command options are:
 #'
-#' xform_info="InputVar -> OutputVar"
+#' xform_info="input_var -> output_var"
 #'
 #' There are two methods in which the variables can be referred to. The first
 #' method is to use its column number; given the \bold{data} attribute of the
@@ -63,19 +64,29 @@
 #'
 #' # We wish to refer to the variables "Sepal.Length" and
 #' # "Sepal.Width" as "SL" and "SW"
-#' iris_box <- rename_wrap_var(iris_box, "column1->SL")
-#' iris_box <- rename_wrap_var(iris_box, "Sepal.Width->SW")
+#' iris_box <- rename_wrap_var(wrap_object = iris_box, xform_info = "column1->SL")
+#' iris_box <- rename_wrap_var(wrap_object = iris_box, xform_info = "Sepal.Width->SW")
 #' @export
-rename_wrap_var <- function(wrap_data, xform_info = NA, ...) {
+rename_wrap_var <- function(wrap_object,
+                            wrap_data,
+                            xform_info = NA, ...) {
+  
+  # Deprecated argument.
+  if (!missing(wrap_data)) {
+    warning("argument wrap_data is deprecated; please use wrap_object instead.",
+            call. = FALSE)
+    wrap_object <- wrap_data
+  }
+  
   i <- NULL
   j <- NULL
   colnm <- NULL
 
-  boxData <- .init_wrap_params(wrap_data)
+  boxData <- .init_wrap_params(wrap_object)
 
   if (is.na(xform_info)) {
     warning("No field name to rename found")
-    return(wrap_data)
+    return(wrap_object)
   } else {
     # For each argument given:
     coln <- as.character(xform_info)

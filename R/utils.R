@@ -891,3 +891,16 @@
 
   return(inbox)
 }
+
+
+
+# deprecate_arg <- function(old_arg, new_arg) {
+#   # deprecate an argument in a function
+#   
+#   if (!missing(old_arg)) {
+#     warning_string <- paste0("argument ", old_arg, " is deprecated; please use ", new_arg, " instead.")
+#     warning(warning_string, call. = FALSE)
+#   }
+#   new_arg <- old_arg
+# }
+

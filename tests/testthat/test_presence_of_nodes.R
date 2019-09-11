@@ -79,7 +79,7 @@ test_that("Transformations pmml() output contains MiningSchema, Output, LocalTra
   dataBox <- xform_wrap(iris)
   dataBox <- xform_min_max(dataBox, "1")
   dataBox <- xform_z_score(dataBox, "1", map_missing_to = 999)
-  dataBox <- xform_norm_discrete(dataBox, inputVar = "Species")
+  dataBox <- xform_norm_discrete(dataBox, input_var = "Species")
   dataBox <- xform_function(dataBox, orig_field_name = "Sepal.Width", new_field_name = "a_derived_field", expression = "sqrt(Sepal.Width^2 - 3)")
 
   fit <- lm(Petal.Width ~ ., data = dataBox$data)

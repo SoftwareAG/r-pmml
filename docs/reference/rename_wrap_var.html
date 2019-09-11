@@ -132,15 +132,19 @@
     <p>Rename a variable in the xform_wrap transform object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rename_wrap_var</span>(<span class='no'>wrap_data</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>rename_wrap_var</span>(<span class='no'>wrap_object</span>, <span class='no'>wrap_data</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>wrap_data</th>
+      <th>wrap_object</th>
       <td><p>Wrapper object obtained by using the xform_wrap function on the
 raw data.</p></td>
+    </tr>
+    <tr>
+      <th>wrap_data</th>
+      <td><p>Deprecated.</p></td>
     </tr>
     <tr>
       <th>xform_info</th>
@@ -160,9 +164,9 @@ statistics.</p>
 
     <p>Once input data is wrapped by the <b>xform_wrap</b> function, it is somewhat
 involved to rename a variable inside. This function makes it easier to do
-so.  Given an variable named <b>InputVar</b> and the name one wishes to
-rename it to, <b>OutputVar</b>, the rename command options are:</p>
-<p>xform_info="InputVar -&gt; OutputVar"</p>
+so.  Given a variable named <b>input_var</b> and the name one wishes to
+rename it to, <b>output_var</b>, the rename command options are:</p>
+<p>xform_info="input_var -&gt; output_var"</p>
 <p>There are two methods in which the variables can be referred to. The first
 method is to use its column number; given the <b>data</b> attribute of the
 <b>boxData</b> object, this would be the order at which the variable
@@ -185,8 +189,8 @@ no renamings performed.</p>
 
 <span class='co'># We wish to refer to the variables "Sepal.Length" and</span>
 <span class='co'># "Sepal.Width" as "SL" and "SW"</span>
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>rename_wrap_var</span>(<span class='no'>iris_box</span>, <span class='st'>"column1-&gt;SL"</span>)
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>rename_wrap_var</span>(<span class='no'>iris_box</span>, <span class='st'>"Sepal.Width-&gt;SW"</span>)</div></pre>
+<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>rename_wrap_var</span>(<span class='kw'>wrap_object</span> <span class='kw'>=</span> <span class='no'>iris_box</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='st'>"column1-&gt;SL"</span>)
+<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>rename_wrap_var</span>(<span class='kw'>wrap_object</span> <span class='kw'>=</span> <span class='no'>iris_box</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='st'>"Sepal.Width-&gt;SW"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

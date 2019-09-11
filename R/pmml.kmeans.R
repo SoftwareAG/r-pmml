@@ -32,7 +32,8 @@
 #' @param model A kmeans object.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param algorithm.name The variety of kmeans used.
+#' @param algorithm_name The variety of kmeans used.
+#' @param algorithm.name Deprecated.
 #'
 #' @inheritParams pmml
 #'
@@ -61,9 +62,18 @@ pmml.kmeans <- function(model,
                         copyright = NULL,
                         transforms = NULL,
                         missing_value_replacement = NULL,
-                        algorithm.name = "KMeans: Hartigan and Wong", ...) {
+                        algorithm_name = "KMeans: Hartigan and Wong",
+                        algorithm.name,
+                        ...) {
   if (!inherits(model, "kmeans")) stop("Not a legitimate kmeans object")
 
+  # Deprecated argument.
+  if (!missing(algorithm.name)) {
+    warning("argument algorithm.name is deprecated; please use algorithm_name instead.",
+            call. = FALSE)
+    algorithm_name <- algorithm.name
+  }
+  
   field <- NULL
   field$name <- colnames(model$centers)
   number.of.fields <- length(field$name)
@@ -107,7 +117,7 @@ pmml.kmeans <- function(model,
     attrs = c(
       modelName = model_name,
       functionName = "clustering", # Required
-      algorithmName = algorithm.name,
+      algorithmName = algorithm_name,
       modelClass = "centerBased", # Required
       numberOfClusters = number.of.clusters
     )

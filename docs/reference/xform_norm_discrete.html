@@ -132,8 +132,8 @@
     <p>Normalize discrete values in accordance with the PMML element <b>NormDiscrete</b>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xform_norm_discrete</span>(<span class='no'>wrap_object</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>inputVar</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>xform_norm_discrete</span>(<span class='no'>wrap_object</span>, <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>input_var</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='no'>inputVar</span>, <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,9 +148,13 @@
 the input variable to be transformed.</p></td>
     </tr>
     <tr>
-      <th>inputVar</th>
+      <th>input_var</th>
       <td><p>The input variable name in the data on which the
-transformation is to be applied</p></td>
+transformation is to be applied.</p></td>
+    </tr>
+    <tr>
+      <th>inputVar</th>
+      <td><p>Deprecated.</p></td>
     </tr>
     <tr>
       <th>map_missing_to</th>
@@ -175,24 +179,24 @@ values <b>A</b> and <b>B</b>, this will create 2 derived variables
 <b>catVar_A</b> and <b>catVar_B</b>. If, for example, the input value of
 <b>catVar</b> is <b>A</b> then <b>catVar_A</b> equals 1 and <b>catVar_B</b>
 equals 0.</p>
-<p>Given an input variable, <b>InputVar</b> and <b>missingVal</b>, the desired
+<p>Given an input variable, <b>input_var</b> and <b>missingVal</b>, the desired
 value of the transformed variable if the input variable value is missing,
 the xform_norm_discrete command including all optional parameters is in the
 format:</p>
-<p>xform_info="inputVar=input_variable, map_missing_to=missingVal"</p>
+<p>xform_info="input_var=input_variable, map_missing_to=missingVal"</p>
 <p>There are two methods in which the input variable can be referred to. The
 first method is to use its column number; given the <b>data</b> attribute of
 the <b>boxData</b> object, this would be the order at which the variable
 appears. This can be indicated in the format "column#". The second method is
 to refer to the variable by its name.</p>
-<p>The <b>xform_info</b> and <b>inputVar</b> parameters provide the same
+<p>The <b>xform_info</b> and <b>input_var</b> parameters provide the same
 information. While either one may be used when using this function, at least
-one of them is required. If both parameters are given, the <b>inputVar</b>
+one of them is required. If both parameters are given, the <b>input_var</b>
 parameter is used as the default.</p>
 <p>The output of this transformation is a set of transformed variables, one for
 each possible value of the input variable. For example, given possible
 values of the input variable <b>val1</b>, <b>val2</b>, ... these transformed
-variables are by default named <b>InputVar_val1</b>, <b>InputVar_val2</b>,
+variables are by default named <b>input_var_val1</b>, <b>input_var_val2</b>,
 ...</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -217,7 +221,7 @@ variables are by default named <b>InputVar_val1</b>, <b>InputVar_val2</b>,
 <span class='co'># 	"Species_virginica" such that it is 1 if</span>
 <span class='co'>#      "Species" equals "virginica", else 0</span>
 
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_norm_discrete</span>(<span class='no'>iris_box</span>, <span class='kw'>inputVar</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
+<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_norm_discrete</span>(<span class='no'>iris_box</span>, <span class='kw'>input_var</span> <span class='kw'>=</span> <span class='st'>"Species"</span>)
 
 <span class='co'># Exact same operation performed with a different parameter name.</span>
 <span class='co'># Use of this new parameter is the preferred method as the previous</span>

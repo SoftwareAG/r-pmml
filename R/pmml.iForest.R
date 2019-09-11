@@ -23,7 +23,8 @@
 #' @param model An iForest object from package \bold{isofor}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param anomalyThreshold Double between 0 and 1. Predicted values greater than this are classified as anomalies.
+#' @param anomaly_threshold Double between 0 and 1. Predicted values greater than this are classified as anomalies.
+#' @param anomalyThreshold Deprecated.
 #' @param parent_invalid_value_treatment Invalid value treatment at the top MiningField level.
 #' @param child_invalid_value_treatment Invalid value treatment at the model segment MiningField level.
 #' @param ... Further arguments passed to or from other methods.
@@ -37,7 +38,7 @@
 #' @details This function converts the iForest model object to the PMML format. The
 #' PMML outputs the anomaly score as well as a boolean value indicating whether the
 #' input is an anomaly or not. This is done by simply comparing the anomaly score with
-#' \code{anomalyThreshold}, a parameter in the \code{pmml} function.
+#' \code{anomaly_threshold}, a parameter in the \code{pmml} function.
 #' The iForest function automatically adds an extra level to all categorical variables,
 #' labelled "."; this is kept in the PMML representation even though the use of this extra
 #' factor in the predict function is unclear.
@@ -70,12 +71,20 @@ pmml.iForest <- function(model,
                          copyright = NULL,
                          transforms = NULL,
                          missing_value_replacement = NULL,
-                         anomalyThreshold = 0.6,
+                         anomaly_threshold = 0.6,
+                         anomalyThreshold,
                          parent_invalid_value_treatment = "returnInvalid",
                          child_invalid_value_treatment = "asIs",
                          ...) {
   if (!inherits(model, "iForest")) {
     stop("Not a legitimate iForest object")
+  }
+  
+  # Deprecated argument.
+  if (!missing(anomalyThreshold)) {
+    warning("argument anomalyThreshold is deprecated; please use anomaly_threshold instead.",
+              call. = FALSE)
+    anomaly_threshold <- anomalyThreshold
   }
 
   field <- list()
@@ -125,7 +134,7 @@ pmml.iForest <- function(model,
     invalidValueTreatment = parent_invalid_value_treatment
   ))
   
-  anomalyModel <- append.XMLNode(anomalyModel, .pmmlAnomalyOutput(field, target, anomalyThreshold))
+  anomalyModel <- append.XMLNode(anomalyModel, .pmmlAnomalyOutput(field, target, anomaly_threshold))
   
   ## pre-4.4 usage of ParameterList
   # anomalyModel <- append.XMLNode(anomalyModel, .pmmlParameterList(model$phi))
@@ -402,7 +411,7 @@ pmml.iForest <- function(model,
 
 
 # 4.4 function with decision field
-.pmmlAnomalyOutput <- function(field, target, anomalyThreshold) {
+.pmmlAnomalyOutput <- function(field, target, anomaly_threshold) {
   output <- xmlNode("Output")
   output1 <- xmlNode("OutputField", attrs = c(
     name = "anomalyScore", optype = "continuous",
@@ -415,7 +424,7 @@ pmml.iForest <- function(model,
   
   output_anomaly_comp <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
   output_anomaly_c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-  output_anomaly_d <- xmlNode("Constant", attrs = c(dataType = "double"), anomalyThreshold)
+  output_anomaly_d <- xmlNode("Constant", attrs = c(dataType = "double"), anomaly_threshold)
   output_anomaly_comp <- append.XMLNode(output_anomaly_comp, output_anomaly_c, output_anomaly_d)
   output_anomaly <- append.XMLNode(output_anomaly, output_anomaly_comp)
   
@@ -424,7 +433,7 @@ pmml.iForest <- function(model,
 }
 
 # # pre-4.4 function
-# .pmmlAnomalyOutput <- function(field, target, anomalyThreshold) {
+# .pmmlAnomalyOutput <- function(field, target, anomaly_threshold) {
 #   output <- xmlNode("Output")
 #   output1 <- xmlNode("OutputField", attrs = c(
 #     name = "anomalyScore", optype = "continuous",
@@ -438,7 +447,7 @@ pmml.iForest <- function(model,
 #   output2a <- xmlNode("Apply", attrs = c("function" = "if"))
 #   output2b <- xmlNode("Apply", attrs = c("function" = "lessThan"))
 #   output2c <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-#   output2d <- xmlNode("Constant", attrs = c(dataType = "double"), anomalyThreshold)
+#   output2d <- xmlNode("Constant", attrs = c(dataType = "double"), anomaly_threshold)
 #   output2e <- xmlNode("Constant", attrs = c(dataType = "boolean"), "FALSE")
 #   output2f <- xmlNode("Constant", attrs = c(dataType = "boolean"), "TRUE")
 #   output2b <- append.XMLNode(output2b, output2c, output2d)

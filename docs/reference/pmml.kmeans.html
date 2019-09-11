@@ -142,7 +142,7 @@ converted into a PMML representation.</p>
   <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"KMeans cluster model"</span>, <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>algorithm.name</span> <span class='kw'>=</span> <span class='st'>"KMeans: Hartigan and Wong"</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>algorithm_name</span> <span class='kw'>=</span> <span class='st'>"KMeans: Hartigan and Wong"</span>, <span class='no'>algorithm.name</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,8 +177,12 @@ converted into a PMML representation.</p>
 attribute for all MiningFields.</p></td>
     </tr>
     <tr>
-      <th>algorithm.name</th>
+      <th>algorithm_name</th>
       <td><p>The variety of kmeans used.</p></td>
+    </tr>
+    <tr>
+      <th>algorithm.name</th>
+      <td><p>Deprecated.</p></td>
     </tr>
     <tr>
       <th>...</th>

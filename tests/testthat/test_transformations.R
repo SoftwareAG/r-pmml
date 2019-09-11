@@ -58,7 +58,7 @@ test_that("xform_norm_discrete box$field_data$fieldsMap contains values of setos
 
 test_that("rename_wrap_var box$field_data and box$data contain renamed variable", {
   iris_box <- xform_wrap(iris)
-  iris_box <- rename_wrap_var(iris_box, "column1->SL")
+  iris_box <- rename_wrap_var(wrap_object = iris_box, xform_info = "column1->SL")
   expect_equal(row.names(iris_box$field_data)[[1]], "SL")
   expect_equal(names(iris_box$data)[[1]], "SL")
 })

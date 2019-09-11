@@ -24,8 +24,9 @@
 #' @param wrap_object Output of xform_wrap or another transformation function.
 #' @param xform_info Specification of details of the transformation: the name of
 #' the input variable to be transformed.
-#' @param inputVar The input variable name in the data on which the
-#' transformation is to be applied
+#' @param input_var The input variable name in the data on which the
+#' transformation is to be applied.
+#' @param inputVar Deprecated.
 #' @param map_missing_to Value to be given to the transformed variable if the
 #' value of the input variable is missing.
 #' @param \dots Further arguments passed to or from other methods.
@@ -41,12 +42,12 @@
 #' \bold{catVar} is \bold{A} then \bold{catVar_A} equals 1 and \bold{catVar_B}
 #' equals 0.
 #'
-#' Given an input variable, \bold{InputVar} and \bold{missingVal}, the desired
+#' Given an input variable, \bold{input_var} and \bold{missingVal}, the desired
 #' value of the transformed variable if the input variable value is missing,
 #' the xform_norm_discrete command including all optional parameters is in the
 #' format:
 #'
-#' xform_info="inputVar=input_variable, map_missing_to=missingVal"
+#' xform_info="input_var=input_variable, map_missing_to=missingVal"
 #'
 #' There are two methods in which the input variable can be referred to. The
 #' first method is to use its column number; given the \bold{data} attribute of
@@ -54,15 +55,15 @@
 #' appears. This can be indicated in the format "column#". The second method is
 #' to refer to the variable by its name.
 #'
-#' The \bold{xform_info} and \bold{inputVar} parameters provide the same
+#' The \bold{xform_info} and \bold{input_var} parameters provide the same
 #' information. While either one may be used when using this function, at least
-#' one of them is required. If both parameters are given, the \bold{inputVar}
+#' one of them is required. If both parameters are given, the \bold{input_var}
 #' parameter is used as the default.
 #'
 #' The output of this transformation is a set of transformed variables, one for
 #' each possible value of the input variable. For example, given possible
 #' values of the input variable \bold{val1}, \bold{val2}, ... these transformed
-#' variables are by default named \bold{InputVar_val1}, \bold{InputVar_val2},
+#' variables are by default named \bold{input_var_val1}, \bold{input_var_val2},
 #' ...
 #'
 #' @author Tridivesh Jena
@@ -90,7 +91,7 @@
 #' # 	"Species_virginica" such that it is 1 if
 #' #      "Species" equals "virginica", else 0
 #'
-#' iris_box <- xform_norm_discrete(iris_box, inputVar = "Species")
+#' iris_box <- xform_norm_discrete(iris_box, input_var = "Species")
 #'
 #' # Exact same operation performed with a different parameter name.
 #' # Use of this new parameter is the preferred method as the previous
@@ -99,8 +100,21 @@
 #' iris_box <- xform_wrap(iris)
 #' iris_box <- xform_norm_discrete(iris_box, xform_info = "Species")
 #' @export
-xform_norm_discrete <-
-  function(wrap_object, xform_info = NA, inputVar = NA, map_missing_to = NA, ...) {
+xform_norm_discrete <- function(wrap_object,
+                                xform_info = NA,
+                                input_var = NA,
+                                inputVar,
+                                map_missing_to = NA,
+                                ...) {
+    
+    # Deprecated argument.
+    if (!missing(inputVar)) {
+      warning("argument inputVar is deprecated; please use input_var instead.",
+              call. = FALSE)
+      input_var <- inputVar
+    }
+    
+    
     map <- NULL
     colmn <- NULL
     newrow <- NULL
@@ -116,12 +130,13 @@ xform_norm_discrete <-
     missingValue <- NA
     xform_function <- NA
 
-    if (is.na(xform_info) && is.na(inputVar)) {
-      stop("xform_info/inputVar parameter required.")
+    
+    if (is.na(xform_info) && is.na(input_var)) {
+      stop("xform_info/input_var parameter required.")
     }
 
-    if (is.na(inputVar)) {
-      inputVar <- xform_info
+    if (is.na(input_var)) {
+      input_var <- xform_info
     }
 
     newBoxData <- .init_wrap_params(wrap_object)
@@ -142,7 +157,7 @@ xform_norm_discrete <-
     }
 
     # expected input format: initialName or [initialName]
-    input <- as.character(inputVar)
+    input <- as.character(input_var)
     fromName <- gsub("\\[", "", input)
     fromName <- gsub("\\]", "", fromName)
     fromName <- gsub("^[ ]*", "", fromName)
