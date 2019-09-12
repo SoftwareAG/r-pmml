@@ -24,10 +24,6 @@ test_that("error when dataset is null for one-classification", {
   )
 })
 
-# test_that("pmml.svm no error when model is one-class svm", {
-#   expect_silent(pmml(svm_model_1,feature.info=sapply(df_1,class)))
-# })
-
 test_that("pmml.svm no error when model is one-class svm", {
   expect_silent(pmml(svm_model_1, dataset = df_1))
 })

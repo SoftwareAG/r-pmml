@@ -8,7 +8,7 @@
   app_name = "SoftwareAG PMML Generator",
   description = "Support Vector Machine Model", copyright = NULL,
   transforms = NULL, missing_value_replacement = NULL,
-  dataset = NULL, ...)
+  dataset = NULL, detect_anomaly = TRUE, ...)
 }
 \arguments{
 \item{model}{An svm object from package \pkg{e1071}.}
@@ -27,6 +27,9 @@
 
 \item{dataset}{Required for one-classification only; data used to train the one-class SVM model.}
 
+\item{detect_anomaly}{Required for one-classification only; boolean indicating whether to 
+detect anomalies (TRUE) or inliers (FALSE).}
+
 \item{...}{Further arguments passed to or from other methods.}
 }
 \value{
@@ -36,7 +39,13 @@ PMML representation of the svm object.
 Generate the PMML representation of an svm object from the \pkg{e1071} package.
 }
 \details{
-The model is represented in the PMML SupportVectorMachineModel format.
+Classification and regression models are represented in the PMML 
+SupportVectorMachineModel format. One-Classification models are represented 
+in the PMML AnomalyDetectionModel format. Please see below for details on 
+the differences.
+}
+\section{Classification and Regression Models}{
+
 
 Note that the sign of the coefficient of each support vector flips between the R object
 and the exported PMML file for classification and regression models. This is due to the minor
@@ -53,30 +62,38 @@ For a regression model, the exported PMML code has two OutputField elements. The
 \code{predictedValue} shows the support vector machine output per DMG definition. The OutputField
 \code{svm_predict_function} gives the value corresponding to the R predict function for the svm
 model. This output should be used when making model predictions.
+}
 
-For a one-classification svm (OCSVM) model, the PMML has three OutputField elements.
+\section{One-Classification SVM Models}{
+
+
+For a one-classification svm (OCSVM) model, the PMML has two OutputField elements.
 
 The OutputField \code{anomalyScore} is the signed distance to the separating boundary;
-\code{anomalyScore} corresponds to the decision.values attribute of the output of the
+\code{anomalyScore} corresponds to the \code{decision.values} attribute of the output of the
 svm predict function in R.
 
-The OutputField \code{anomaly} is a boolean value that is TRUE when an anomaly is detected.
+The second OutputField depends the value of \code{detect_anomaly}. By default, \code{detect_anomaly} is TRUE, 
+which results in the second OutputField being \code{anomaly}.
+The \code{anomaly} OutputField is TRUE when an anomaly is detected.
 This field conforms to the DMG definition of an anomaly detection model. This value is the
 opposite of the prediction by the e1071::svm object in R.
 
-The OutputField \code{svm_predict_function} is a boolean value that is TRUE when an inlier is
-detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when
+Setting \code{detect_anomaly} to FALSE results in the second field instead being \code{inlier}.
+This OutputField is TRUE when an inlier is
+detected, and conforms to the \pkg{e1071} definition of one-class SVMs. This field is FALSE when
 an anomaly is detected; that is, the R svm model predicts whether an input belongs to the
 class. When comparing the predictions from R and PMML, this field should be used, since it
 will match R's output.
 
 For example, say that for an input of observations, the R OCSVM model predicts a positive
 decision value of 0.4 and label of TRUE. According to the R object, this means that the
-observation is an inlier. The PMML export of this model will give the following for the
-same input: \code{anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"}.
-According to the PMML, the observation is not an anomaly. Note that there is no sign flip
-for \code{anomalyScore} between R and PMML for OCSVM models.
+observation is an inlier. By default, the PMML export of this model will give the following for the
+same input: \code{anomalyScore = 0.4, anomaly = "false"}. According to the PMML, the observation is not an anomaly. 
+If the same R object is instead exported with \code{detect_anomaly = FALSE},
+the PMML will then give: \code{anomalyScore = 0.4, inlier = "true"}, and this result agrees with R.
 
+Note that there is no sign flip for \code{anomalyScore} between R and PMML for OCSVM models.
 
 To export a OCSVM model, an additional argument, \code{dataset}, is required by the function.
 This argument expects a dataframe with data that was used to train the model. This is
@@ -86,6 +103,7 @@ the formula interface for one-classification models, so the default S3 method mu
 to train the SVM. The data used to train the one-class SVM must be numeric and not of
 integer class.
 }
+
 \examples{
 
 \dontrun{
@@ -101,7 +119,14 @@ fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
 fit_pmml <- pmml(fit)
 
 # Anomaly detection with one-classification
-fit <- svm(iris[, 1:4], y = NULL, type = "one-classification")
+fit <- svm(iris[, 1:4], y = NULL, 
+           type = "one-classification")
+fit_pmml <- pmml(fit, dataset = iris[, 1:4])
+
+# Inlier detection with one-classification
+fit <- svm(iris[, 1:4], y = NULL, 
+           type = "one-classification",
+           detect_anomaly = FALSE)
 fit_pmml <- pmml(fit, dataset = iris[, 1:4])
 }
 

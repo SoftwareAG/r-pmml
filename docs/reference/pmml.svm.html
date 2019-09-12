@@ -137,7 +137,7 @@
   <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
   <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Support Vector Machine Model"</span>, <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>detect_anomaly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +175,11 @@
       <td><p>Required for one-classification only; data used to train the one-class SVM model.</p></td>
     </tr>
     <tr>
+      <th>detect_anomaly</th>
+      <td><p>Required for one-classification only; boolean indicating whether to 
+detect anomalies (TRUE) or inliers (FALSE).</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Further arguments passed to or from other methods.</p></td>
     </tr>
@@ -185,7 +190,15 @@
     <p>PMML representation of the svm object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model is represented in the PMML SupportVectorMachineModel format.</p>
+    <p>Classification and regression models are represented in the PMML 
+SupportVectorMachineModel format. One-Classification models are represented 
+in the PMML AnomalyDetectionModel format. Please see below for details on 
+the differences.</p>
+    <h2 class="hasAnchor" id="classification-and-regression-models"><a class="anchor" href="#classification-and-regression-models"></a>Classification and Regression Models</h2>
+
+    
+
+
 <p>Note that the sign of the coefficient of each support vector flips between the R object
 and the exported PMML file for classification and regression models. This is due to the minor
 difference in the training/scoring formula between the LIBSVM algorithm and the DMG specification.
@@ -199,25 +212,33 @@ the LIBSVM defines the winning category as the right side of threshold 0.</p>
 <code>predictedValue</code> shows the support vector machine output per DMG definition. The OutputField
 <code>svm_predict_function</code> gives the value corresponding to the R predict function for the svm
 model. This output should be used when making model predictions.</p>
-<p>For a one-classification svm (OCSVM) model, the PMML has three OutputField elements.</p>
+    <h2 class="hasAnchor" id="one-classification-svm-models"><a class="anchor" href="#one-classification-svm-models"></a>One-Classification SVM Models</h2>
+
+    
+
+
+<p>For a one-classification svm (OCSVM) model, the PMML has two OutputField elements.</p>
 <p>The OutputField <code>anomalyScore</code> is the signed distance to the separating boundary;
-<code>anomalyScore</code> corresponds to the decision.values attribute of the output of the
+<code>anomalyScore</code> corresponds to the <code>decision.values</code> attribute of the output of the
 svm predict function in R.</p>
-<p>The OutputField <code>anomaly</code> is a boolean value that is TRUE when an anomaly is detected.
+<p>The second OutputField depends the value of <code>detect_anomaly</code>. By default, <code>detect_anomaly</code> is TRUE, 
+which results in the second OutputField being <code>anomaly</code>.
+The <code>anomaly</code> OutputField is TRUE when an anomaly is detected.
 This field conforms to the DMG definition of an anomaly detection model. This value is the
 opposite of the prediction by the e1071::svm object in R.</p>
-<p>The OutputField <code>svm_predict_function</code> is a boolean value that is TRUE when an inlier is
-detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when
+<p>Setting <code>detect_anomaly</code> to FALSE results in the second field instead being <code>inlier</code>.
+This OutputField is TRUE when an inlier is
+detected, and conforms to the <span class="pkg">e1071</span> definition of one-class SVMs. This field is FALSE when
 an anomaly is detected; that is, the R svm model predicts whether an input belongs to the
 class. When comparing the predictions from R and PMML, this field should be used, since it
 will match R's output.</p>
 <p>For example, say that for an input of observations, the R OCSVM model predicts a positive
 decision value of 0.4 and label of TRUE. According to the R object, this means that the
-observation is an inlier. The PMML export of this model will give the following for the
-same input: <code>anomalyScore = 0.4, anomaly = "false", svm_predict_function="true"</code>.
-According to the PMML, the observation is not an anomaly. Note that there is no sign flip
-for <code>anomalyScore</code> between R and PMML for OCSVM models.</p>
-
+observation is an inlier. By default, the PMML export of this model will give the following for the
+same input: <code>anomalyScore = 0.4, anomaly = "false"</code>. According to the PMML, the observation is not an anomaly. 
+If the same R object is instead exported with <code>detect_anomaly = FALSE</code>,
+the PMML will then give: <code>anomalyScore = 0.4, inlier = "true"</code>, and this result agrees with R.</p>
+<p>Note that there is no sign flip for <code>anomalyScore</code> between R and PMML for OCSVM models.</p>
 <p>To export a OCSVM model, an additional argument, <code>dataset</code>, is required by the function.
 This argument expects a dataframe with data that was used to train the model. This is
 necessary because for one-class svm, the R svm object does not contain information about
@@ -251,7 +272,14 @@ Probability Theory Group (Formerly: E1071), TU Wien</em> <a href='https://CRAN.R
 <span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)
 
 <span class='co'># Anomaly detection with one-classification</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/e1071/man/svm.html'>svm</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"one-classification"</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/e1071/man/svm.html'>svm</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+           <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"one-classification"</span>)
+<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
+
+<span class='co'># Inlier detection with one-classification</span>
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/e1071/man/svm.html'>svm</a></span>(<span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+           <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"one-classification"</span>,
+           <span class='kw'>detect_anomaly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='no'>iris</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
 }</div></pre>
   </div>
@@ -261,6 +289,8 @@ Probability Theory Group (Formerly: E1071), TU Wien</em> <a href='https://CRAN.R
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
+      <li><a href="#classification-and-regression-models">Classification and Regression Models</a></li>
+      <li><a href="#one-classification-svm-models">One-Classification SVM Models</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

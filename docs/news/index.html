@@ -133,9 +133,9 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major Changes</h2>
 <ul>
-<li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
-<li><p>Documentation now references PMML version 4.4.</p></li>
-<li><p>Package is now compliant with PMML schema 4.4, including support for ARIMA time series models with conditional least squares forecasting from the <code>forecast</code> package.</p></li>
+<li><p>Package is now compliant with PMML schema 4.4</p></li>
+<li><p>Package now supports ARIMA time series models with conditional least squares forecasting from the <code>forecast</code> package.</p></li>
+<li><p>pmml.svm() now has <code>detect_anomaly</code> argument, allowing the user to specify whether the PMML detects anomalies or inliers. Please see the doc for more details.</p></li>
 <li>The following arguments are deprecated. They can still be used, but will produce a warning message:
 <ul>
 <li>pmml.iForest: <code>anomalyThreshold</code> -&gt; <code>anomaly_threshold</code>
@@ -154,12 +154,13 @@
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other Changes</h2>
 <ul>
+<li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
 <li>
 <code>pmml.iForest</code> now uses <code>sampleDataSize</code> instead of <code>ParameterList</code> to store the <code>model$phi</code> value. This should not affect the user.</li>
 <li>
 <code>testthat</code> file names now correspond to the functions being tested.</li>
 <li>Minor edits in <code>make_output_nodes</code> doc for clarity.</li>
-<li>Minor formatting edits in vignettes.</li>
+<li><p>Minor formatting edits in vignettes.</p></li>
 </ul>
 </div>
 </div>

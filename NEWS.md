@@ -1,11 +1,11 @@
 # pmml 2.0.0.9000 (development version)
 
 ## Major Changes
-* Application version in PMML Header corresponds to pmml package version.
+* Package is now compliant with PMML schema 4.4
 
-* Documentation now references PMML version 4.4.
+* Package now supports ARIMA time series models with conditional least squares forecasting from the `forecast` package.
 
-* Package is now compliant with PMML schema 4.4, including support for ARIMA time series models with conditional least squares forecasting from the `forecast` package.
+* pmml.svm() now has `detect_anomaly` argument, allowing the user to specify whether the PMML detects anomalies or inliers. Please see the doc for more details.
 
 * The following arguments are deprecated. They can still be used, but will produce a warning message:
   - pmml.iForest: `anomalyThreshold` -> `anomaly_threshold`
@@ -14,6 +14,8 @@
   - xform_norm_discrete: `inputVar` -> `input_var`
 
 ## Other Changes
+* Application version in PMML Header corresponds to pmml package version.
+
 * `pmml.iForest` now uses `sampleDataSize` instead of `ParameterList` to store the `model$phi` value. This should not affect the user.
 * `testthat` file names now correspond to the functions being tested.
 * Minor edits in `make_output_nodes` doc for clarity.

@@ -1055,7 +1055,7 @@ test_that("RegressionModel/stats PMML validates against schema", {
 
 
 
-test_that("SupportVectorMachineModel/e1071 one-classification PMML validates against schema", {
+test_that("AnomalyDetectionModel/e1071 one-classification PMML validates against schema", {
   fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:3], model_name = "radial_iris_ocsvm"), schema), 0)
 
