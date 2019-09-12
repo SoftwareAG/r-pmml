@@ -17,8 +17,13 @@
 * Application version in PMML Header corresponds to pmml package version.
 
 * `pmml.iForest` now uses `sampleDataSize` instead of `ParameterList` to store the `model$phi` value. This should not affect the user.
+
+* `pmml.gbm` now adds `modelName` attribute to the final segment for multinomial gbm models.
+
 * `testthat` file names now correspond to the functions being tested.
+
 * Minor edits in `make_output_nodes` doc for clarity.
+
 * Minor formatting edits in vignettes.
 
 
