@@ -48,7 +48,7 @@ child elements (which should be OutputField nodes) at the 'at' position in the c
 an OutputField element with name 'nodeName' element using the 'xml_model', 'outputNodes' and 'at' parameters.
   Finally, one can use this to add the transformation expression given by the 'xformText' parameter
 to the node with name 'nodeName'. The string given via 'xformText' is converted to an XML expression similarly
-to the function_to_pmml function. In other words, find the OutputField node with tha name 'nodeName' and add
+to the function_to_pmml function. In other words, find the OutputField node with the name 'nodeName' and add
 the list of attributes given with 'attributes' and also, add the child transformations given in the 'xformText'
 parameter.
 }

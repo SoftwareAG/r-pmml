@@ -267,7 +267,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.2.22
   
-  * Header extension must be fist elmt. lm NA coeff now 0
+  * Header extension must be first element. lm NA coeff now 0
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   
@@ -321,7 +321,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.2.13
   
-  * Change strcutre used to record transforms.
+  * Change structure used to record transforms.
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   
@@ -333,7 +333,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.2.11
   
-  * Fix categroics with one singularity in lm were marked inactive.
+  * Fix categorics with one singularity in lm were marked inactive.
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   
@@ -399,7 +399,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.2.0
   
-  * Fix documentation and packaing and release to CRAN
+  * Fix documentation and packaging and release to CRAN
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   
@@ -411,7 +411,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.1.19
   
-  * Tidyup and update ClusterField
+  * Tidy up and update ClusterField
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   
@@ -507,7 +507,7 @@ For functions that use a dots (`...`) parameter, the old parameters will still b
   
 # rattle 1.1.2
   
-  * Expose pmml.lm in NAMESPACE - woops.
+  * Expose pmml.lm in NAMESPACE - whoops.
   
  -- Graham Williams <Graham.Williams@togaware.com>  Thu, 06 Jan 2011 06:43:50 +1100
   

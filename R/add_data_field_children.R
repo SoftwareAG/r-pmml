@@ -45,7 +45,7 @@
 #' elements to the DataFields.
 #'
 #' The 'Interval' elements or the 'Value' elements can be typed in, but more
-#' conviniently created by using the helper functions 'make_intervals' and
+#' conveniently created by using the helper functions 'make_intervals' and
 #' 'MakeValues'. This function can then add these extra information to the
 #' PMML.
 #'

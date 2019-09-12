@@ -40,7 +40,7 @@ renamed value already exists; in which case there will be two variables with
 the same name.
 
 If no input variable name is provided, the original object is returned with
-no renamings performed.
+no renaming performed.
 }
 \examples{
 # Load the standard iris dataset, already built into R

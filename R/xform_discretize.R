@@ -106,7 +106,7 @@
 #' and 'map_missing_to' parameters should be vectors. The first element of each
 #' vector will correspond to the derived field defined in the 1st element of
 #' the 'xform_info' list etc. Although somewhat more complicated, this method is
-#' designed to not require any external features. Further, once the intial list
+#' designed to not require any external features. Further, once the initial list
 #' is constructed, modifying it is a simple operation; making this a better
 #' method to use if the parameters of the transformation are to be modified
 #' frequently and/or automatically. This is made more clear in the example

@@ -47,7 +47,7 @@
 #' the same name.
 #'
 #' If no input variable name is provided, the original object is returned with
-#' no renamings performed.
+#' no renaming performed.
 #'
 #' @author Tridivesh Jena
 #'

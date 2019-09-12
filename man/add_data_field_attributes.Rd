@@ -41,7 +41,7 @@ to the DataFields.
 The attribute information can be provided as a dataframe or a vector. Each
 row of the data frame corresponds to an attribute name and each column
 corresponding to a variable name. This way one can add as many attributes to
-as many variables as one wants in one step. A more convinient method to add
+as many variables as one wants in one step. A more convenient method to add
 multiple attributes to one field might be to give the attribute name and
 values as a vector. This function may be used multiple times to add new
 attribute values step-by-step. However this function overwrites any

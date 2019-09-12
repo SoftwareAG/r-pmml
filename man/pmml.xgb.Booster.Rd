@@ -56,7 +56,7 @@ hence the field information must be passed on as inputs. This enables the PMML
 to specify field names in its model representation. The R model object does not store
 information about the fitted tree structure either. However, this information can
 be extracted from the \code{xgb.model.dt.tree} function and the file saved using the
-\code{xgb.dump} function. The xgboost library is therefore needed in the environmant and this
+\code{xgb.dump} function. The xgboost library is therefore needed in the environment and this
 saved file is needed as an input as well.
 
 The following objectives are currently supported: \code{multi:softprob},
