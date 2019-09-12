@@ -27,7 +27,7 @@
 
 \item{dataset}{Required for one-classification only; data used to train the one-class SVM model.}
 
-\item{detect_anomaly}{Required for one-classification only; boolean indicating whether to 
+\item{detect_anomaly}{Required for one-classification only; boolean indicating whether to
 detect anomalies (TRUE) or inliers (FALSE).}
 
 \item{...}{Further arguments passed to or from other methods.}
@@ -39,9 +39,9 @@ PMML representation of the svm object.
 Generate the PMML representation of an svm object from the \pkg{e1071} package.
 }
 \details{
-Classification and regression models are represented in the PMML 
-SupportVectorMachineModel format. One-Classification models are represented 
-in the PMML AnomalyDetectionModel format. Please see below for details on 
+Classification and regression models are represented in the PMML
+SupportVectorMachineModel format. One-Classification models are represented
+in the PMML AnomalyDetectionModel format. Please see below for details on
 the differences.
 }
 \section{Classification and Regression Models}{
@@ -73,7 +73,7 @@ The OutputField \code{anomalyScore} is the signed distance to the separating bou
 \code{anomalyScore} corresponds to the \code{decision.values} attribute of the output of the
 svm predict function in R.
 
-The second OutputField depends the value of \code{detect_anomaly}. By default, \code{detect_anomaly} is TRUE, 
+The second OutputField depends the value of \code{detect_anomaly}. By default, \code{detect_anomaly} is TRUE,
 which results in the second OutputField being \code{anomaly}.
 The \code{anomaly} OutputField is TRUE when an anomaly is detected.
 This field conforms to the DMG definition of an anomaly detection model. This value is the
@@ -89,7 +89,7 @@ will match R's output.
 For example, say that for an input of observations, the R OCSVM model predicts a positive
 decision value of 0.4 and label of TRUE. According to the R object, this means that the
 observation is an inlier. By default, the PMML export of this model will give the following for the
-same input: \code{anomalyScore = 0.4, anomaly = "false"}. According to the PMML, the observation is not an anomaly. 
+same input: \code{anomalyScore = 0.4, anomaly = "false"}. According to the PMML, the observation is not an anomaly.
 If the same R object is instead exported with \code{detect_anomaly = FALSE},
 the PMML will then give: \code{anomalyScore = 0.4, inlier = "true"}, and this result agrees with R.
 
@@ -119,14 +119,18 @@ fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
 fit_pmml <- pmml(fit)
 
 # Anomaly detection with one-classification
-fit <- svm(iris[, 1:4], y = NULL, 
-           type = "one-classification")
+fit <- svm(iris[, 1:4],
+  y = NULL,
+  type = "one-classification"
+)
 fit_pmml <- pmml(fit, dataset = iris[, 1:4])
 
 # Inlier detection with one-classification
-fit <- svm(iris[, 1:4], y = NULL, 
-           type = "one-classification",
-           detect_anomaly = FALSE)
+fit <- svm(iris[, 1:4],
+  y = NULL,
+  type = "one-classification",
+  detect_anomaly = FALSE
+)
 fit_pmml <- pmml(fit, dataset = iris[, 1:4])
 }
 

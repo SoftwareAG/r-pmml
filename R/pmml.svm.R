@@ -220,81 +220,9 @@ pmml.svm <- function(model,
       )
     )
 
-    anomaly_or_inlier <- function(detect_anomaly) {
-      # Create OutputField "anomaly" or "inlier" depending on value of detect_anomaly.
-      if (detect_anomaly) {
-        output <- xmlNode("OutputField", attrs = c(
-          name = "anomaly",
-          feature = "decision",
-          dataType = "boolean",
-          optype = "categorical"
-        ))
-
-        output_apply <- xmlNode("Apply", attrs = c("function" = "lessThan"))
-        output_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-        output_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
-        output_apply <- append.XMLNode(output_apply, output_fieldref, output_constant)
-        output <- append.XMLNode(output, output_apply)
-      } else {
-        output <- xmlNode("OutputField", attrs = c(
-          name = "inlier",
-          feature = "decision",
-          dataType = "boolean",
-          optype = "categorical"
-        ))
-
-        output_apply <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
-        output_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-        output_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
-        output_apply <- append.XMLNode(output_apply, output_fieldref, output_constant)
-        output <- append.XMLNode(output, output_apply)
-      }
-      return(output)
-    }
-
-
-    # # updated anomaly field that replaces "threshold" attribute with Apply function.
-    # xmlOF_anomaly <- xmlNode("OutputField",
-    #   attrs = c(
-    #     name = "anomaly", feature = "decision",
-    #     dataType = "boolean", optype = "categorical"
-    #   )
-    # )
-    #
-    # xmlOF_anomaly_apply <- xmlNode("Apply", attrs = c("function" = "lessThan"))
-    # xmlOF_anomaly_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-    # xmlOF_anomaly_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
-    # xmlOF_anomaly_apply <- append.XMLNode(xmlOF_anomaly_apply, xmlOF_anomaly_fieldref, xmlOF_anomaly_constant)
-    # xmlOF_anomaly <- append.XMLNode(xmlOF_anomaly, xmlOF_anomaly_apply)
-    #
-    # # Additional output field with a transformed decision.values value.
-    # # This value corresponds to R's prediction for the one-class svm model.
-    # xmlOF_svm_predict_anomaly <- xmlNode("OutputField",
-    #   attrs = c(
-    #     name = "svm_predict_anomaly",
-    #     feature = "transformedValue",
-    #     dataType = "boolean",
-    #     optype = "categorical"
-    #   )
-    # )
-    #
-    # xmlOF_svm_predict_anomaly_apply <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
-    # xmlOF_svm_predict_anomaly_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
-    # xmlOF_svm_predict_anomaly_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
-    # xmlOF_svm_predict_anomaly_apply <- append.XMLNode(
-    #   xmlOF_svm_predict_anomaly_apply,
-    #   xmlOF_svm_predict_anomaly_fieldref,
-    #   xmlOF_svm_predict_anomaly_constant
-    # )
-    # xmlOF_svm_predict_anomaly <- append.XMLNode(xmlOF_svm_predict_anomaly, xmlOF_svm_predict_anomaly_apply)
-    # xmlADOutput <- append.XMLNode(xmlADOutput, xmlOF_anomalyScore)
-    # xmlADOutput <- append.XMLNode(xmlADOutput, xmlOF_anomaly)
-    # xmlADOutput <- append.XMLNode(xmlADOutput, xmlOF_svm_predict_anomaly)
-
-
 
     xmlADOutput <- append.XMLNode(xmlADOutput, xmlOF_anomalyScore)
-    xmlADOutput <- append.XMLNode(xmlADOutput, anomaly_or_inlier(detect_anomaly))
+    xmlADOutput <- append.XMLNode(xmlADOutput, .anomaly_or_inlier(detect_anomaly))
 
     xmlADModel <- append.XMLNode(xmlADModel, xmlADOutput)
 
@@ -449,7 +377,7 @@ pmml.svm <- function(model,
 }
 
 .makeOtherNodes <- function(model, field, transforms, functionName, xmlModel) {
-  # Function to create LocalTransformations, Kernel, Vector Instances, and Suppor Vector Machines.
+  # Create LocalTransformations, Kernel, Vector Instances, and Suppor Vector Machines.
   # This function is very similar for one-class SVM and and other SVMs; vfStart is the only variable that changes.
   #
   # vfStart: starting value for a for loop. For Anomaly Detection (type 2), set vfStart to 1.
@@ -736,3 +664,37 @@ pmml.svm <- function(model,
 
   return(xmlModel)
 }
+
+.anomaly_or_inlier <- function(detect_anomaly) {
+  # Create OutputField "anomaly" or "inlier" depending on value of detect_anomaly.
+  if (detect_anomaly) {
+    output <- xmlNode("OutputField", attrs = c(
+      name = "anomaly",
+      feature = "decision",
+      dataType = "boolean",
+      optype = "categorical"
+    ))
+    
+    output_apply <- xmlNode("Apply", attrs = c("function" = "lessThan"))
+    output_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
+    output_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
+    output_apply <- append.XMLNode(output_apply, output_fieldref, output_constant)
+    output <- append.XMLNode(output, output_apply)
+  } else {
+    output <- xmlNode("OutputField", attrs = c(
+      name = "inlier",
+      feature = "decision",
+      dataType = "boolean",
+      optype = "categorical"
+    ))
+    
+    output_apply <- xmlNode("Apply", attrs = c("function" = "greaterOrEqual"))
+    output_fieldref <- xmlNode("FieldRef", attrs = c(field = "anomalyScore"))
+    output_constant <- xmlNode("Constant", 0, attrs = c(dataType = "double"))
+    output_apply <- append.XMLNode(output_apply, output_fieldref, output_constant)
+    output <- append.XMLNode(output, output_apply)
+  }
+  return(output)
+}
+
+
