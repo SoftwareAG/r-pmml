@@ -34,13 +34,27 @@ PMML representation of the \code{ARIMA} object.
 Generate PMML for an ARIMA object the \bold{forecast} package.
 }
 \details{
-The model is represented in the PMML TimeSeriesModel format.
+The model is represented in the PMML TimeSeriesModel format with conditional
+least squares forecasting. Note that ARIMA models in R are
+estimated using a state space formulation.
+
+Transforms are currently not supported for ARIMA models.
 }
 \examples{
 library(forecast)
+
+# non-seasonal model
 data("WWWusage")
 mod <- Arima(WWWusage, order = c(3, 1, 1))
 mod_pmml <- pmml(mod)
+
+# seasonal model
+data("JohnsonJohnson")
+mod_02 <- Arima(JohnsonJohnson,
+  order = c(1, 1, 1),
+  seasonal = c(1, 1, 1)
+)
+mod_02_pmml <- pmml(mod_02)
 }
 \author{
 Dmitriy Bolotov

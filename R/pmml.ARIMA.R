@@ -28,15 +28,29 @@
 #'
 #' @return PMML representation of the \code{ARIMA} object.
 #'
-#' @details The model is represented in the PMML TimeSeriesModel format.
+#' @details The model is represented in the PMML TimeSeriesModel format with conditional
+#' least squares forecasting. Note that ARIMA models in R are
+#' estimated using a state space formulation.
+#'
+#' Transforms are currently not supported for ARIMA models.
 #'
 #' @author Dmitriy Bolotov
 #'
 #' @examples
 #' library(forecast)
+#'
+#' # non-seasonal model
 #' data("WWWusage")
 #' mod <- Arima(WWWusage, order = c(3, 1, 1))
 #' mod_pmml <- pmml(mod)
+#'
+#' # seasonal model
+#' data("JohnsonJohnson")
+#' mod_02 <- Arima(JohnsonJohnson,
+#'   order = c(1, 1, 1),
+#'   seasonal = c(1, 1, 1)
+#' )
+#' mod_02_pmml <- pmml(mod_02)
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,
@@ -47,9 +61,9 @@ pmml.ARIMA <- function(model,
                        transforms = NULL,
                        missing_value_replacement = NULL,
                        ...) {
-  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA stats object.")
+  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 
-  if (!is.null(transforms)) stop("Transforms not supported for ARIMA stats models.")
+  if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
 
   # Stop if model includes both intercept and drift terms
   if (("intercept" %in% names(model$coef)) & ("drift") %in% names(model$coef)) {

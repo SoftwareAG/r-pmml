@@ -1,30 +1,35 @@
-# pmml 2.0.0.9000 (development version)
+# pmml 2.1.0
 
 ## Major Changes
-* Package is now compliant with PMML schema 4.4
+* Package now exports PMML with schema version 4.4.
 
-* Package now supports ARIMA time series models with conditional least squares forecasting from the `forecast` package.
+* `pmml.ARIMA()` function added - exports ARIMA time series models from the `forecast` package with conditional least squares forecasting.
 
-* pmml.svm() now has `detect_anomaly` argument, allowing the user to specify whether the PMML detects anomalies or inliers. Please see the doc for more details.
 
-* The following arguments are deprecated. They can still be used, but will produce a warning message:
-  - pmml.iForest: `anomalyThreshold` -> `anomaly_threshold`
-  - pmml.kmeans: `algorithm.name` -> `algorithm_name`
-  - rename_wrap_var, `wrap_data` -> `wrap_object`
-  - xform_norm_discrete: `inputVar` -> `input_var`
+## Breaking Changes
+* `pmml.svm()` now has a `detect_anomaly` argument, allowing the user to specify whether the PMML detects anomalies or inliers. The exported PMML now has two OutputField elements: `anomalyScore` and one of `anomaly` or `inlier`.
+
+* The following arguments are deprecated. They can still be used, but will produce a warning message and will be removed in a future release.
+  - `pmml.iForest`: `anomalyThreshold` -> `anomaly_threshold`
+  - `pmml.kmeans`: `algorithm.name` -> `algorithm_name`
+  - `rename_wrap_var`: `wrap_data` -> `wrap_object`
+  - `xform_norm_discrete`: `inputVar` -> `input_var`
+
 
 ## Other Changes
 * Application version in PMML Header corresponds to pmml package version.
 
-* `pmml.iForest` now uses `sampleDataSize` instead of `ParameterList` to store the `model$phi` value. This should not affect the user.
+* `pmml.iForest` now uses attribute `sampleDataSize` instead of element `ParameterList` to store the `model$phi` value.
 
 * `pmml.gbm` now adds `modelName` attribute to the final segment for multinomial gbm models.
 
-* `testthat` file names now correspond to the functions being tested.
+* `testthat` file names correspond to the functions being tested.
 
-* Minor edits in `make_output_nodes` doc for clarity.
+* Edited `make_output_nodes` doc for clarity.
 
-* Minor formatting edits in vignettes.
+* Updated formatting in vignettes.
+
+* Fixed spelling and added word list via `spelling` package.
 
 
 

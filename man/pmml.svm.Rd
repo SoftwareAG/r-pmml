@@ -67,7 +67,8 @@ model. This output should be used when making model predictions.
 \section{One-Classification SVM Models}{
 
 
-For a one-classification svm (OCSVM) model, the PMML has two OutputField elements.
+For a one-classification svm (OCSVM) model, the PMML has two OutputField elements:
+\code{anomalyScore} and one of \code{anomaly} or \code{outlier}.
 
 The OutputField \code{anomalyScore} is the signed distance to the separating boundary;
 \code{anomalyScore} corresponds to the \code{decision.values} attribute of the output of the
@@ -81,12 +82,12 @@ opposite of the prediction by the e1071::svm object in R.
 
 Setting \code{detect_anomaly} to FALSE results in the second field instead being \code{inlier}.
 This OutputField is TRUE when an inlier is
-detected, and conforms to the \pkg{e1071} definition of one-class SVMs. This field is FALSE when
-an anomaly is detected; that is, the R svm model predicts whether an input belongs to the
+detected, and conforms to the e1071 definition of one-class SVMs. This field is FALSE when
+an anomaly is detected; that is, the R svm model predicts whether an observation belongs to the
 class. When comparing the predictions from R and PMML, this field should be used, since it
 will match R's output.
 
-For example, say that for an input of observations, the R OCSVM model predicts a positive
+For example, say that for an an observation, the R OCSVM model predicts a positive
 decision value of 0.4 and label of TRUE. According to the R object, this means that the
 observation is an inlier. By default, the PMML export of this model will give the following for the
 same input: \code{anomalyScore = 0.4, anomaly = "false"}. According to the PMML, the observation is not an anomaly.

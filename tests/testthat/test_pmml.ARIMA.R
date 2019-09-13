@@ -12,7 +12,7 @@ text_to_num_list <- function(xml_element) {
   dd <- as.numeric(cc)
 }
 
-expect_equal_ttnl <- function(xml_element, current){
+expect_equal_ttnl <- function(xml_element, current) {
   expect_equal(text_to_num_list(xml_element), current, tolerance = 1e-2)
 }
 
@@ -54,17 +54,18 @@ test_that("NonseasonalComponent node contains required elements 1", {
   expect_equal(xmlGetAttr(p_fit_5[[3]][[4]][[1]], name = "q"), 1)
 
   # AR component
-  expect_equal_ttnl(p_fit_5[[3]][[4]][[1]][[1]][[1]][[1]],
-                    c(-0.19693368896618, 0.0882676656284808, 0.9429079310464))
-  
-  
+  expect_equal_ttnl(
+    p_fit_5[[3]][[4]][[1]][[1]][[1]][[1]],
+    c(-0.19693368896618, 0.0882676656284808, 0.9429079310464)
+  )
+
+
   # MA component - MACoefficients
-  expect_equal_ttnl(p_fit_5[[3]][[4]][[1]][[2]][[1]][[1]][[1]],0.999467612244043)
+  expect_equal_ttnl(p_fit_5[[3]][[4]][[1]][[2]][[1]][[1]][[1]], 0.999467612244043)
 
 
   # MA component - Residuals
-  expect_equal_ttnl(p_fit_5[[3]][[4]][[1]][[2]][[2]][[1]][[1]],-846.776313143145)
-  
+  expect_equal_ttnl(p_fit_5[[3]][[4]][[1]][[2]][[2]][[1]][[1]], -846.776313143145)
 })
 
 test_that("non-seasonal ARIMA node contains correct attributes", {
@@ -93,12 +94,15 @@ test_that("seasonal ARIMA model contains correct elements 1", {
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[2]], name = "period"), 4)
 
   expect_equal_ttnl(p_fit_7[[3]][[4]][[2]][[1]][[1]][[1]][[1]], 0.999999926590528)
-  
+
   # Seasonal residuals array should have 6 elements.
-  expect_equal_ttnl(p_fit_7[[3]][[4]][[2]][[1]][[2]][[1]][[1]],
-                    c(0.840294788225463, 1.79540974711022, 3.43600813764863, 
-                      0.595257922098859, 1.560371580367, 1.33444221515274))
-  
+  expect_equal_ttnl(
+    p_fit_7[[3]][[4]][[2]][[1]][[2]][[1]][[1]],
+    c(
+      0.840294788225463, 1.79540974711022, 3.43600813764863,
+      0.595257922098859, 1.560371580367, 1.33444221515274
+    )
+  )
 })
 
 test_that("seasonal ARIMA model contains correct elements 2", {
@@ -117,11 +121,14 @@ test_that("seasonal ARIMA model contains correct elements 2", {
 
   expect_equal_ttnl(p_fit_8[[3]][[4]][[2]][[1]][[1]][[1]], -0.926970851026725)
   # Seasonal residuals array should have 13 elements.
-  expect_equal_ttnl(p_fit_8[[3]][[4]][[2]][[2]][[2]][[1]][[1]],
-    c(16.6406514721613, -2.15049966299974, -8.78471974960152, -34.7165557860653,
+  expect_equal_ttnl(
+    p_fit_8[[3]][[4]][[2]][[2]][[2]][[1]][[1]],
+    c(
+      16.6406514721613, -2.15049966299974, -8.78471974960152, -34.7165557860653,
       42.1922537998818, 2.72016048914321, 5.57048733936438, 14.8646481189408,
       -23.3767800799817, -7.00132283870703, 5.56068703039644, -24.4368048030507,
-      -7.86142188676456)
+      -7.86142188676456
+    )
   )
 })
 
@@ -143,21 +150,29 @@ test_that("seasonal ARIMA model contains correct elements 3", {
 
   # NonseasonalComponent coefficients
   expect_equal_ttnl(p_fit_9[[3]][[4]][[1]][[1]][[1]][[1]], -0.918811953411307)
-  expect_equal_ttnl(p_fit_9[[3]][[4]][[1]][[2]][[1]][[1]][[1]],
-                    c(-0.488398025152718, -0.981238492527093, 0.47123365713457))
-  expect_equal_ttnl(p_fit_9[[3]][[4]][[1]][[2]][[2]][[1]][[1]],
-                    c(10.6024485251517, -16.6110095847448, -3.45077032800267))
+  expect_equal_ttnl(
+    p_fit_9[[3]][[4]][[1]][[2]][[1]][[1]][[1]],
+    c(-0.488398025152718, -0.981238492527093, 0.47123365713457)
+  )
+  expect_equal_ttnl(
+    p_fit_9[[3]][[4]][[1]][[2]][[2]][[1]][[1]],
+    c(10.6024485251517, -16.6110095847448, -3.45077032800267)
+  )
 
   # SeasonalComponent coefficients
   expect_equal_ttnl(p_fit_9[[3]][[4]][[2]][[1]][[1]][[1]], -0.33060697133757)
   expect_equal_ttnl(p_fit_9[[3]][[4]][[2]][[2]][[1]][[1]][[1]], -0.964840603841212)
   # Seasonal residuals array should have 15 elements.
-  expect_equal_ttnl(p_fit_9[[3]][[4]][[2]][[2]][[2]][[1]][[1]],
-               c(-0.231414430272416, 7.85449813502021, 14.0341170808424, 
-                 0.488050253167314, -3.47775177064476, -34.7531345572846, 
-                 36.9803974323111, -0.721770286617552, 3.21345471099022, 5.83445945385706,
-                 -21.7707201166725, -1.21862197305704, 10.6024485251517, -16.6110095847448,
-                 -3.45077032800267))
+  expect_equal_ttnl(
+    p_fit_9[[3]][[4]][[2]][[2]][[2]][[1]][[1]],
+    c(
+      -0.231414430272416, 7.85449813502021, 14.0341170808424,
+      0.488050253167314, -3.47775177064476, -34.7531345572846,
+      36.9803974323111, -0.721770286617552, 3.21345471099022, 5.83445945385706,
+      -21.7707201166725, -1.21862197305704, 10.6024485251517, -16.6110095847448,
+      -3.45077032800267
+    )
+  )
 })
 
 

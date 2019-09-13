@@ -42,7 +42,7 @@ This package supports the following packages and model types:
     - [e1071](https://CRAN.R-project.org/package=e1071): `svm`
     - [kernlab](https://CRAN.R-project.org/package=kernlab): `ksvm` with "rbfdot", "polydot", "vanilladot", and "tanhdot" kernels
 - Time Series
-    - [forecast](https://CRAN.R-project.org/web/package=forecast): `Arima`
+    - [forecast](https://CRAN.R-project.org/package=forecast): `Arima`
 - Tree-based Models and Ensembles
     - [ada](https://CRAN.R-project.org/package=ada): `ada`
     - [gbm](https://CRAN.R-project.org/package=gbm): `gbm` with "bernoulli", "poisson", and "multinomial" distribution types

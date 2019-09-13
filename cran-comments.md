@@ -1,31 +1,17 @@
 ## Test environments
-* Local Linux Mint install, R 3.6.0
-* win-builder (devel and release)
+* Local Linux Mint install, R 3.6.1
+* win-builder (release)
 
 ## R CMD check results
 
-There was 1 NOTE:
+There were no ERRORs, WARNINGs, or NOTEs during local or win-builder checks.
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Dmitriy Bolotov <rpmmlsupport@softwareag.com>'
+There wsas 1 ERROR on r-patched-solaris-x86 (https://cloud.r-project.org/web/checks/check_results_pmml.html):
 
-New maintainer:
-  Dmitriy Bolotov <rpmmlsupport@softwareag.com>
-Old maintainer(s):
-  Tridivesh Jena <rpmmlsupport@softwareag.com>
+     > library(testthat)
+     > library(pmml, quietly = T)
+     >
+     > test_check("pmml")
+     Error: segfault from C stack overflow
 
-The maintainer has changed.
-
-
-There was 1 NOTE during reverse dependency checks:
-
-Changes to worse in reverse depends:
-
-Package: fpmoutliers
-Check: R code for possible problems
-New result: NOTE
-  generatePMML: no visible global function definition for â€˜pmml.itemsetsâ€™
-  Undefined global functions or variables:
-    pmml.itemsets
-
-This note is due to the method not being explicitly exported in the namespace. We have added an explicit export.
+We are not sure how to address this issue.
