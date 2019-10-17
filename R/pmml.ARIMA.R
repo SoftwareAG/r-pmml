@@ -20,9 +20,11 @@
 
 #' Generate PMML for an ARIMA object the \bold{forecast} package.
 #'
-#' @param model an ARIMA object from the package \pkg{forecast}.
+#' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
+#' @param exact_least_squares If TRUE, use exact least squares for forecasting.
+#' Otherwise, use conditional least squares.
 #'
 #' @inheritParams pmml
 #'
@@ -60,8 +62,13 @@ pmml.ARIMA <- function(model,
                        copyright = NULL,
                        transforms = NULL,
                        missing_value_replacement = NULL,
+                       exact_least_squares = TRUE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
+  
+  if (!is.logical(exact_least_squares)) {
+    stop("exact_least_squares must be logical (TRUE/FALSE).")
+  }
 
   if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
 

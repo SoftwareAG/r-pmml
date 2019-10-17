@@ -7,10 +7,11 @@
 \method{pmml}{ARIMA}(model, model_name = "ARIMA_model",
   app_name = "SoftwareAG PMML Generator",
   description = "ARIMA Time Series Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  transforms = NULL, missing_value_replacement = NULL,
+  exact_least_squares = TRUE, ...)
 }
 \arguments{
-\item{model}{an ARIMA object from the package \pkg{forecast}.}
+\item{model}{An ARIMA object from the package \pkg{forecast}.}
 
 \item{model_name}{A name to be given to the PMML model.}
 
@@ -24,6 +25,9 @@
 
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
+
+\item{exact_least_squares}{If TRUE, use exact least squares for forecasting.
+Otherwise, use conditional least squares.}
 
 \item{...}{Further arguments passed to or from other methods.}
 }

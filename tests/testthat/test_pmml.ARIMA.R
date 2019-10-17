@@ -190,3 +190,9 @@ test_that("ARIMA with both intercept and drift terms throws error", {
   fit_12 <- Arima(AirPassengers, order = c(2, 0, 2), include.drift = TRUE)
   expect_error(pmml(fit_12), "ARIMA models with both mean and drift terms not supported.")
 })
+
+test_that("Error if exact_least_squares is not logical", {
+  fit_13 <- auto.arima(WWWusage)
+  expect_error(pmml(fit_13, exact_least_squares = "foo"),
+               "exact_least_squares must be logical (TRUE/FALSE).", fixed=TRUE)
+})
