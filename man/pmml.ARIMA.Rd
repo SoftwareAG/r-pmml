@@ -8,7 +8,7 @@
   app_name = "SoftwareAG PMML Generator",
   description = "ARIMA Time Series Model", copyright = NULL,
   transforms = NULL, missing_value_replacement = NULL,
-  exact_least_squares = TRUE, ...)
+  exact_least_squares = FALSE, ...)
 }
 \arguments{
 \item{model}{An ARIMA object from the package \pkg{forecast}.}

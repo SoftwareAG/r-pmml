@@ -62,7 +62,7 @@ pmml.ARIMA <- function(model,
                        copyright = NULL,
                        transforms = NULL,
                        missing_value_replacement = NULL,
-                       exact_least_squares = TRUE,
+                       exact_least_squares = FALSE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
   
@@ -125,21 +125,28 @@ pmml.ARIMA <- function(model,
   }
 
 
+  prediction_method <- if(exact_least_squares) {"exactLeastSquares"} else {"conditionalLeastSquares"}
+  
   arima_node <- xmlNode("ARIMA", attrs = c(
     RMSE = arima_rmse,
     transformation = "none",
     constantTerm = arima_constant,
-    predictionMethod = "conditionalLeastSquares"
+    predictionMethod = prediction_method
   ))
 
   if (.is_nonseasonal(model)) {
-    arima_node <- append.XMLNode(arima_node, .make_nsc_node(model))
+    arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
   }
 
   if (.is_seasonal(model)) {
-    arima_node <- append.XMLNode(arima_node, .make_sc_node(model))
+    arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
   }
 
+  if (exact_least_squares){
+    arima_node <- append.XMLNode(arima_node, .make_mls_node(model))
+  }
+  
+  
   ts_model <- append.XMLNode(ts_model, arima_node)
 
   pmml <- append.XMLNode(pmml, ts_model)
@@ -147,7 +154,66 @@ pmml.ARIMA <- function(model,
   return(pmml)
 }
 
-.make_nsc_node <- function(model) {
+
+.make_mls_node <- function(model) {
+  # Creates MaximumLikelihoodStat node to be used with predictionMethod="exactLeastSquares"
+  mls_node <- xmlNode("MaximumLikelihoodStat",
+                      attrs = c(method = "kalman", periodDeficit = "0"))
+  
+  kalman_state_node <- xmlNode("KalmanState")
+  
+  final_omega_node <- .make_final_omega_node(model)
+  
+  final_state_vector <- .make_fs_vector_node(model)
+  
+  kalman_state_node <- append.XMLNode(kalman_state_node, final_omega_node, final_state_vector)
+  
+  
+  mls_node <- append.XMLNode(mls_node, kalman_state_node)
+  
+  return(mls_node)
+}
+
+
+.make_final_omega_node <- function(model){
+  fo_node <- xmlNode("FinalOmega")
+  
+  matrix_node <- append.XMLNode(xmlNode("Matrix",
+                                        attrs = c(kind = "symmetric", nbRows = "1", nbCols = "1")),
+                                xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
+  
+  fo_node <- append.XMLNode(fo_node, matrix_node)
+  
+  return(fo_node)
+}
+
+
+.make_fs_vector_node <- function(model){
+  
+  # hard-coded example for ARIMA(1,0,1)
+  phi_1 <- unname(model$coef["ar1"])
+  theta_1 <- unname(model$coef["ma1"])
+  r <- unname(model$residuals)
+  t_i <- length(model$x)
+  
+  S_t0 <- model$model$a[1]
+  
+  fs_array <- phi_1*S_t0 + theta_1*r[t_i]
+  
+  fsv_node <- xmlNode("FinalStateVector")
+  fsv_node <- append.XMLNode(fsv_node,
+                             xmlNode("Array",
+                                     attrs = c(type = "real",
+                                               n = toString(length(fs_array))),
+                                     value = paste(fs_array, collapse = " ")))
+  
+  return(fsv_node)
+}
+
+
+
+
+.make_nsc_node <- function(model, exact_least_squares) {
   # Creates NonseasonalComponent node.
 
   mod_len <- length(model$x)
@@ -176,13 +242,13 @@ pmml.ARIMA <- function(model,
     c_node = nsc_node, p_val = ns_p, d_val = ns_d,
     q_val = ns_q, phi_array = phi_array, theta_array = theta_array,
     mod_len = mod_len, mod_resids = mod_resids, seas = FALSE,
-    ns_q = NA, seas_period = NA
+    ns_q = NA, seas_period = NA, exact_least_squares = exact_least_squares
   )
   return(nsc_node)
 }
 
 
-.make_sc_node <- function(model) {
+.make_sc_node <- function(model, exact_least_squares) {
   # Creates SeasonalComponent node.
 
   num_sma_elements <- length(grep("^sma", names(model$coef))) # deprecated
@@ -213,13 +279,18 @@ pmml.ARIMA <- function(model,
     c_node = sc_node, p_val = s_p, d_val = s_d,
     q_val = s_q, phi_array = s_phi_array, theta_array = s_theta_array,
     mod_len = mod_len, mod_resids = mod_resids,
-    seas = TRUE, ns_q = model$arma[2], seas_period = model$arma[5]
+    seas = TRUE, ns_q = model$arma[2], seas_period = model$arma[5],
+    exact_least_squares = exact_least_squares
   )
   return(sc_node)
 }
 
 
-.make_arma_nodes <- function(c_node, p_val, d_val, q_val, phi_array, theta_array, mod_len, mod_resids, seas, ns_q = NA, seas_period = NA) {
+.make_arma_nodes <- function(c_node, p_val, d_val, q_val,
+                             phi_array, theta_array, mod_len,
+                             mod_resids, seas, ns_q = NA,
+                             seas_period = NA,
+                             exact_least_squares) {
   # Creates the AR and MA nodes for either non-seasonal or seasonal component nodes.
   # seas: logical indicating if node is seasonal.
   # ns_q: q value for non-seasonal component; only used when creating seasonal MA node.
@@ -245,6 +316,8 @@ pmml.ARIMA <- function(model,
     } else {
       resids <- mod_resids[(mod_len - q_val + 1):mod_len]
     }
+    
+    if (!exact_least_squares) {
     ma_resid_node <- append.XMLNode(
       xmlNode("Residuals"),
       xmlNode("Array",
@@ -255,8 +328,10 @@ pmml.ARIMA <- function(model,
         value = paste(resids, collapse = " ")
       )
     )
-
     ma_node <- append.XMLNode(xmlNode("MA"), ma_coef_node, ma_resid_node)
+    } else {
+      ma_node <- append.XMLNode(xmlNode("MA"), ma_coef_node)
+    }
 
     c_node <- append.XMLNode(c_node, ma_node)
   }
