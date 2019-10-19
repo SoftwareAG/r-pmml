@@ -189,23 +189,18 @@ pmml.ARIMA <- function(model,
 
 
 .make_fs_vector_node <- function(model){
+  # Create FinalStateVector node
   
-  # hard-coded example for ARIMA(1,0,1)
-  phi_1 <- unname(model$coef["ar1"])
-  theta_1 <- unname(model$coef["ma1"])
-  r <- unname(model$residuals)
-  t_i <- length(model$x)
-  
-  S_t0 <- model$model$a[1]
-  
-  fs_array <- phi_1*S_t0 + theta_1*r[t_i]
+  f_matrix <- model$model$T # transition matrix
+  s_t0 <- model$model$a # current state estimate
+  s_t1 <- (f_matrix %*% s_t0)[1]
   
   fsv_node <- xmlNode("FinalStateVector")
   fsv_node <- append.XMLNode(fsv_node,
                              xmlNode("Array",
                                      attrs = c(type = "real",
-                                               n = toString(length(fs_array))),
-                                     value = paste(fs_array, collapse = " ")))
+                                               n = toString(length(s_t1))),
+                                     value = paste(s_t1, collapse = " ")))
   
   return(fsv_node)
 }
