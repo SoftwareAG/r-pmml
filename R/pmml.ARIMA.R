@@ -193,7 +193,8 @@ pmml.ARIMA <- function(model,
   
   f_matrix <- model$model$T # transition matrix
   s_t0 <- model$model$a # current state estimate
-  s_t1 <- (f_matrix %*% s_t0)[1]
+  # s_t1 <- (f_matrix %*% s_t0)[1]
+  s_t1 <- (f_matrix %*% s_t0)
   
   fsv_node <- xmlNode("FinalStateVector")
   fsv_node <- append.XMLNode(fsv_node,
