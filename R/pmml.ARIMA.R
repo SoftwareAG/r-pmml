@@ -196,12 +196,17 @@ pmml.ARIMA <- function(model,
   # s_t1 <- (f_matrix %*% s_t0)[1]
   s_t1 <- (f_matrix %*% s_t0)
   
+  p <- model$arma[1]
+  q <- model$arma[2]
+  
+  final_state_vector <- s_t1[1:max(p,q)]
+  
   fsv_node <- xmlNode("FinalStateVector")
   fsv_node <- append.XMLNode(fsv_node,
                              xmlNode("Array",
                                      attrs = c(type = "real",
-                                               n = toString(length(s_t1))),
-                                     value = paste(s_t1, collapse = " ")))
+                                               n = toString(length(final_state_vector))),
+                                     value = paste(final_state_vector, collapse = " ")))
   
   return(fsv_node)
 }
