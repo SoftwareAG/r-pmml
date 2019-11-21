@@ -169,16 +169,29 @@ pmml.ARIMA <- function(model,
   
   kalman_state_node <- xmlNode("KalmanState")
   
-  extension_node <- .make_extension_node(model)
+  # extension_node <- .make_extension_node(model)
+  
+  # trans_m_node <- .make_transition_matrix_node(model)
+  # meas_m_node <- .make_measurement_matrix_node(model) 
+
   
   final_omega_node <- .make_final_omega_node(model)
   
   final_state_vector <- .make_fs_vector_node(model)
   
+  
+  trans_m_node <- append.XMLNode(xmlNode("TransitionMatrix"),
+                                 .make_matrix_node(model$model$T))
+  
+  meas_m_node <- append.XMLNode(xmlNode("MeasurementMatrix"),
+                                .make_matrix_node(matrix(model$model$Z, nrow = 1)))
+  
   kalman_state_node <- append.XMLNode(kalman_state_node,
-                                      extension_node,
+                                      # extension_node,
                                       final_omega_node,
-                                      final_state_vector)
+                                      final_state_vector,
+                                      trans_m_node,
+                                      meas_m_node)
   
   
   mls_node <- append.XMLNode(mls_node, kalman_state_node)
