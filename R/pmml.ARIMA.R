@@ -25,6 +25,7 @@
 #' attribute for all MiningFields.
 #' @param exact_least_squares If TRUE, use exact least squares for forecasting.
 #' Otherwise, use conditional least squares.
+#' @param prediction_intervals If TRUE, add prediction intervals as output fields.
 #'
 #' @inheritParams pmml
 #'
@@ -63,6 +64,7 @@ pmml.ARIMA <- function(model,
                        transforms = NULL,
                        missing_value_replacement = NULL,
                        exact_least_squares = FALSE,
+                       prediction_intervals = FALSE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
   
@@ -161,6 +163,23 @@ pmml.ARIMA <- function(model,
   return(pmml)
 }
 
+.make_pi_node <- function() {
+  # create prediction interval output node
+  pi_node <- xmlNode("OutputField", attrs = c(name = "prediction_interval_95",
+                                              optype = "continuous",
+                                              dataType = "double",
+                                              feature = "predictedValue"))
+  return(pi_node)
+}
+
+
+.make_h_vector_node <- function(model) {
+  hv_node <- xmlNode("HVector")
+  
+  hv_node <- append.XMLNode(hv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
+  
+  return(hv_node)
+}
 
 .make_mls_node <- function(model) {
   # Creates MaximumLikelihoodStat node to be used with predictionMethod="exactLeastSquares"
@@ -179,6 +198,7 @@ pmml.ARIMA <- function(model,
   
   final_state_vector <- .make_fs_vector_node(model)
   
+  # h_vector <- .make_h_vector_node(model)
   
   trans_m_node <- append.XMLNode(xmlNode("TransitionMatrix"),
                                  .make_matrix_node(model$model$T))
@@ -190,6 +210,7 @@ pmml.ARIMA <- function(model,
                                       # extension_node,
                                       final_omega_node,
                                       final_state_vector,
+                                      # h_vector,
                                       trans_m_node,
                                       meas_m_node)
   
