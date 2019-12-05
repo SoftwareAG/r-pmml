@@ -108,13 +108,15 @@ pmml.ARIMA <- function(model,
 
   ts_model <- append.XMLNode(
     ts_model,
-    .pmmlOutput(field, target)
+    # .pmmlOutput(field, target)
+    .make_arima_output_node(target)
   )
 
 
   ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
 
-  arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
+  # arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
+  arima_rmse <- sqrt(model$sigma2) # use the approximation
 
   # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
   if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
@@ -164,12 +166,34 @@ pmml.ARIMA <- function(model,
   return(pmml)
 }
 
-.make_pi_node <- function() {
+
+.make_arima_output_node <- function(target){
+  output_node <- xmlNode("Output")
+  
+  point_forecast_node <- xmlNode("OutputField", attrs = c(name = paste("Predicted_",target, sep = ""),
+                                                     optype = "continuous",
+                                                     dataType = "double",
+                                                     feature = "predictedValue"))
+  
+  output_node <- append.XMLNode(output_node, point_forecast_node)
+  output_node <- append.XMLNode(output_node, .make_pi_node("80","lower"))
+  output_node <- append.XMLNode(output_node, .make_pi_node("80","upper"))
+  output_node <- append.XMLNode(output_node, .make_pi_node("95","lower"))
+  output_node <- append.XMLNode(output_node, .make_pi_node("95","upper"))
+    
+  return(output_node)
+}
+  
+.make_pi_node <- function(perc, interv) {
   # create prediction interval output node
-  pi_node <- xmlNode("OutputField", attrs = c(name = "prediction_interval_95",
+  pi_node <- xmlNode("OutputField", attrs = c(name = paste("cpi_", perc, "_", interv, sep = ""),
                                               optype = "continuous",
                                               dataType = "double",
-                                              feature = "predictedValue"))
+                                              feature = "transformedValue"))
+  ext_node <- xmlNode("Extension", attrs = c(extender = "ADAPA", 
+                                             name = "cpi", 
+                                             value = paste(toupper(interv), perc, sep = "")))
+  pi_node <- append.XMLNode(pi_node,ext_node)
   return(pi_node)
 }
 
