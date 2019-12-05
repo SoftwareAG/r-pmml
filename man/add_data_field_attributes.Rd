@@ -4,8 +4,13 @@
 \alias{add_data_field_attributes}
 \title{Add attribute values to an existing DataField element in a given PMML file}
 \usage{
-add_data_field_attributes(xml_model = NULL, attributes = NULL,
-  field = NULL, namespace = "4_4", ...)
+add_data_field_attributes(
+  xml_model = NULL,
+  attributes = NULL,
+  field = NULL,
+  namespace = "4_4",
+  ...
+)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text

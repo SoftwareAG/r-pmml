@@ -4,9 +4,15 @@
 \alias{pmml}
 \title{Generate the PMML representation for R objects.}
 \usage{
-pmml(model = NULL, model_name = "R_Model",
-  app_name = "SoftwareAG PMML Generator", description = NULL,
-  copyright = NULL, transforms = NULL, ...)
+pmml(
+  model = NULL,
+  model_name = "R_Model",
+  app_name = "SoftwareAG PMML Generator",
+  description = NULL,
+  copyright = NULL,
+  transforms = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{An object to be converted to PMML.}

@@ -4,10 +4,16 @@
 \alias{pmml.gbm}
 \title{Generate the PMML representation for a gbm object from the package \pkg{gbm}.}
 \usage{
-\method{pmml}{gbm}(model, model_name = "GBM_Model",
+\method{pmml}{gbm}(
+  model,
+  model_name = "GBM_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Generalized Boosted Tree Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "Generalized Boosted Tree Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A \code{gbm} object.}

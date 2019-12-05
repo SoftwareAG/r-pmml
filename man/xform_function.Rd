@@ -4,8 +4,14 @@
 \alias{xform_function}
 \title{Add a function transformation to a xform_wrap object.}
 \usage{
-xform_function(wrap_object, orig_field_name, new_field_name = "newField",
-  new_field_data_type = "numeric", expression, map_missing_to = NA)
+xform_function(
+  wrap_object,
+  orig_field_name,
+  new_field_name = "newField",
+  new_field_data_type = "numeric",
+  expression,
+  map_missing_to = NA
+)
 }
 \arguments{
 \item{wrap_object}{Output of xform_wrap or another transformation function}

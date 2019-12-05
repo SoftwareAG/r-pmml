@@ -4,8 +4,12 @@
 \alias{make_intervals}
 \title{Create Interval elements, most likely to add to a DataDictionary element.}
 \usage{
-make_intervals(closure = NULL, leftMargin = NULL, rightMargin = NULL,
-  namespace = "4_4")
+make_intervals(
+  closure = NULL,
+  leftMargin = NULL,
+  rightMargin = NULL,
+  namespace = "4_4"
+)
 }
 \arguments{
 \item{closure}{The 'closure' attribute of each 'Interval' element to be created in order.}

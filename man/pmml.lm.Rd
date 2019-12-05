@@ -4,11 +4,17 @@
 \alias{pmml.lm}
 \title{Generate the PMML representation for an lm object from the package \pkg{stats}.}
 \usage{
-\method{pmml}{lm}(model, model_name = "lm_Model",
+\method{pmml}{lm}(
+  model,
+  model_name = "lm_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Linear Regression Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  weights = NULL, ...)
+  description = "Linear Regression Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  weights = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{An lm object.}

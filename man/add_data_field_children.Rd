@@ -5,8 +5,14 @@
 \title{Add 'Interval' and 'Value' child elements to a given DataField element in a
 given PMML file.}
 \usage{
-add_data_field_children(xml_model = NULL, field = NULL,
-  intervals = NULL, values = NULL, namespace = "4_4", ...)
+add_data_field_children(
+  xml_model = NULL,
+  field = NULL,
+  intervals = NULL,
+  values = NULL,
+  namespace = "4_4",
+  ...
+)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text

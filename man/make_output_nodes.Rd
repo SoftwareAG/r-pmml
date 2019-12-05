@@ -4,8 +4,12 @@
 \alias{make_output_nodes}
 \title{Add Output nodes to a PMML object.}
 \usage{
-make_output_nodes(name = "OutputField", attributes = NULL,
-  expression = NULL, namespace = "4_4")
+make_output_nodes(
+  name = "OutputField",
+  attributes = NULL,
+  expression = NULL,
+  namespace = "4_4"
+)
 }
 \arguments{
 \item{name}{The name of the element to be created.}

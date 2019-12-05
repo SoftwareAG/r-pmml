@@ -4,11 +4,17 @@
 \alias{pmml.glm}
 \title{Generate the PMML representation for a glm object from the package \pkg{stats}.}
 \usage{
-\method{pmml}{glm}(model, model_name = "General_Regression_Model",
+\method{pmml}{glm}(
+  model,
+  model_name = "General_Regression_Model",
   app_name = "SoftwareAG PMML Generator",
   description = "Generalized Linear Regression Model",
-  copyright = NULL, transforms = NULL,
-  missing_value_replacement = NULL, weights = NULL, ...)
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  weights = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A glm object.}

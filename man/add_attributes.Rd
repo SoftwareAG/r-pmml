@@ -4,8 +4,13 @@
 \alias{add_attributes}
 \title{Add attribute values to an existing element in a given PMML file.}
 \usage{
-add_attributes(xml_model = NULL, xpath = NULL, attributes = NULL,
-  namespace = "4_4", ...)
+add_attributes(
+  xml_model = NULL,
+  xpath = NULL,
+  attributes = NULL,
+  namespace = "4_4",
+  ...
+)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text

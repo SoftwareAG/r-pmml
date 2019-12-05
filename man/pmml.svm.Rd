@@ -4,11 +4,18 @@
 \alias{pmml.svm}
 \title{Generate the PMML representation of an svm object from the \pkg{e1071} package.}
 \usage{
-\method{pmml}{svm}(model, model_name = "LIBSVM_Model",
+\method{pmml}{svm}(
+  model,
+  model_name = "LIBSVM_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Support Vector Machine Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  dataset = NULL, detect_anomaly = TRUE, ...)
+  description = "Support Vector Machine Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  dataset = NULL,
+  detect_anomaly = TRUE,
+  ...
+)
 }
 \arguments{
 \item{model}{An svm object from package \pkg{e1071}.}

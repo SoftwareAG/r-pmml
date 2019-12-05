@@ -5,11 +5,17 @@
 \title{Generate the PMML representation for a naiveBayes object from the package
 \pkg{e1071}.}
 \usage{
-\method{pmml}{naiveBayes}(model, model_name = "naiveBayes_Model",
+\method{pmml}{naiveBayes}(
+  model,
+  model_name = "naiveBayes_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "NaiveBayes Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, predicted_field,
-  ...)
+  description = "NaiveBayes Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  predicted_field,
+  ...
+)
 }
 \arguments{
 \item{model}{A naiveBayes object.}

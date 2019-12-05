@@ -5,11 +5,18 @@
 \title{Generate the PMML representation for a cv.glmnet object from the package
 \pkg{glmnet}.}
 \usage{
-\method{pmml}{cv.glmnet}(model, model_name = "Elasticnet_Model",
+\method{pmml}{cv.glmnet}(
+  model,
+  model_name = "Elasticnet_Model",
   app_name = "SoftwareAG PMML Generator",
   description = "Generalized Linear Regression Model",
-  copyright = NULL, transforms = NULL,
-  missing_value_replacement = NULL, dataset = NULL, s = NULL, ...)
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  dataset = NULL,
+  s = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A cv.glmnet object.}

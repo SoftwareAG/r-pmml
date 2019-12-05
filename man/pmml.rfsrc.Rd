@@ -4,10 +4,16 @@
 \alias{pmml.rfsrc}
 \title{Generate the PMML representation for an rfsrc object from the package \pkg{randomForestSRC}.}
 \usage{
-\method{pmml}{rfsrc}(model, model_name = "rsf_Model",
+\method{pmml}{rfsrc}(
+  model,
+  model_name = "rsf_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Random Survival Forest Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "Random Survival Forest Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{An rfsrc object returned by the function \code{rfsrc} with

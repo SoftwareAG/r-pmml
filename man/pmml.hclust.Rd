@@ -4,10 +4,17 @@
 \alias{pmml.hclust}
 \title{Generate the PMML representation for a hclust object from the package \pkg{amap}.}
 \usage{
-\method{pmml}{hclust}(model, model_name = "HClust_Model",
+\method{pmml}{hclust}(
+  model,
+  model_name = "HClust_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Hierarchical Cluster Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, centers, ...)
+  description = "Hierarchical Cluster Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  centers,
+  ...
+)
 }
 \arguments{
 \item{model}{A hclust object.}

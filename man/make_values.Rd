@@ -4,8 +4,12 @@
 \alias{make_values}
 \title{Create Values element, most likely to add to a DataDictionary element.}
 \usage{
-make_values(value = NULL, displayValue = NULL, property = NULL,
-  namespace = "4_4")
+make_values(
+  value = NULL,
+  displayValue = NULL,
+  property = NULL,
+  namespace = "4_4"
+)
 }
 \arguments{
 \item{value}{The 'value' attribute of each 'Value' element to be created in order.}

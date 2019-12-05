@@ -4,10 +4,16 @@
 \alias{pmml.nnet}
 \title{Generate the PMML representation for a nnet object from package \pkg{nnet}.}
 \usage{
-\method{pmml}{nnet}(model, model_name = "NeuralNet_model",
+\method{pmml}{nnet}(
+  model,
+  model_name = "NeuralNet_model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Neural Network Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "Neural Network Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A nnet object.}

@@ -48,6 +48,6 @@ Description: The Predictive Model Markup Language (PMML) is an XML-based languag
 URL: https://softwareag.github.io/r-pmml/, https://github.com/SoftwareAG/r-pmml, https://www.softwareag.com/zementis
 BugReports: https://github.com/SoftwareAG/r-pmml/issues
 NeedsCompilation: no
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 Encoding: UTF-8

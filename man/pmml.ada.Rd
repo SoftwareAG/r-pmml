@@ -4,10 +4,16 @@
 \alias{pmml.ada}
 \title{Generate the PMML representation for an ada object from the package \pkg{ada}.}
 \usage{
-\method{pmml}{ada}(model, model_name = "AdaBoost_Model",
+\method{pmml}{ada}(
+  model,
+  model_name = "AdaBoost_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "AdaBoost Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "AdaBoost Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{An ada object.}

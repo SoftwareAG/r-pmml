@@ -4,14 +4,22 @@
 \alias{pmml.xgb.Booster}
 \title{Generate PMML for a xgb.Booster object from the package \pkg{xgboost}.}
 \usage{
-\method{pmml}{xgb.Booster}(model, model_name = "xboost_Model",
+\method{pmml}{xgb.Booster}(
+  model,
+  model_name = "xboost_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Extreme Gradient Boosting Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  input_feature_names = NULL, output_label_name = NULL,
-  output_categories = NULL, xgb_dump_file = NULL,
+  description = "Extreme Gradient Boosting Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  input_feature_names = NULL,
+  output_label_name = NULL,
+  output_categories = NULL,
+  xgb_dump_file = NULL,
   parent_invalid_value_treatment = "returnInvalid",
-  child_invalid_value_treatment = "asIs", ...)
+  child_invalid_value_treatment = "asIs",
+  ...
+)
 }
 \arguments{
 \item{model}{An object created by the 'xgboost' function.}

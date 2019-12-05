@@ -5,10 +5,16 @@
 \title{Generate the PMML representation for a multinom object from package
 \pkg{nnet}.}
 \usage{
-\method{pmml}{multinom}(model, model_name = "multinom_Model",
+\method{pmml}{multinom}(
+  model,
+  model_name = "multinom_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Multinomial Logistic Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "Multinomial Logistic Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A multinom object.}

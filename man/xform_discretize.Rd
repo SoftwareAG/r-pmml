@@ -5,8 +5,14 @@
 \title{Discretize a continuous variable as indicated by interval mappings in
 accordance with the PMML element \bold{Discretize}.}
 \usage{
-xform_discretize(wrap_object, xform_info, table, default_value = NA,
-  map_missing_to = NA, ...)
+xform_discretize(
+  wrap_object,
+  xform_info,
+  table,
+  default_value = NA,
+  map_missing_to = NA,
+  ...
+)
 }
 \arguments{
 \item{wrap_object}{Output of xform_wrap or another transformation function.}

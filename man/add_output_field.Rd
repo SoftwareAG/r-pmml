@@ -4,9 +4,16 @@
 \alias{add_output_field}
 \title{Add Output nodes to a PMML object.}
 \usage{
-add_output_field(xml_model = NULL, outputNodes = NULL, at = "End",
-  xformText = NULL, nodeName = NULL, attributes = NULL,
-  whichOutput = 1, namespace = "4_4")
+add_output_field(
+  xml_model = NULL,
+  outputNodes = NULL,
+  at = "End",
+  xformText = NULL,
+  nodeName = NULL,
+  attributes = NULL,
+  whichOutput = 1,
+  namespace = "4_4"
+)
 }
 \arguments{
 \item{xml_model}{The PMML model to which the OutputField elements are to be added}

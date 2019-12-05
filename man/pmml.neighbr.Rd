@@ -4,10 +4,16 @@
 \alias{pmml.neighbr}
 \title{Generate PMML for a neighbr object from the \bold{neighbr} package.}
 \usage{
-\method{pmml}{neighbr}(model, model_name = "kNN_model",
+\method{pmml}{neighbr}(
+  model,
+  model_name = "kNN_model",
   app_name = "SoftwareAG PMML Generator",
-  description = "K Nearest Neighbors Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "K Nearest Neighbors Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A neighbr object.}

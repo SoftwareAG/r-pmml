@@ -3,7 +3,7 @@
 ## Major Changes
 * Package now exports PMML with schema version 4.4.
 
-* `pmml.ARIMA()` function added - exports ARIMA time series models from the `forecast` package with conditional least squares forecasting.
+* `pmml.ARIMA()` function added - exports ARIMA time series models from the `forecast` package.
 
 
 ## Breaking Changes

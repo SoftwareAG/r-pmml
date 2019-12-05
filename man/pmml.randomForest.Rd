@@ -5,12 +5,18 @@
 \title{Generate the PMML representation for a randomForest object from the package
 \pkg{randomForest}.}
 \usage{
-\method{pmml}{randomForest}(model, model_name = "randomForest_Model",
+\method{pmml}{randomForest}(
+  model,
+  model_name = "randomForest_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Random Forest Tree Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
+  description = "Random Forest Tree Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
   parent_invalid_value_treatment = "returnInvalid",
-  child_invalid_value_treatment = "asIs", ...)
+  child_invalid_value_treatment = "asIs",
+  ...
+)
 }
 \arguments{
 \item{model}{A randomForest object.}

@@ -5,11 +5,18 @@
 \title{Generate the PMML representation for a kmeans object from
 the package \pkg{stats}.}
 \usage{
-\method{pmml}{kmeans}(model, model_name = "KMeans_Model",
+\method{pmml}{kmeans}(
+  model,
+  model_name = "KMeans_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "KMeans cluster model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  algorithm_name = "KMeans: Hartigan and Wong", algorithm.name, ...)
+  description = "KMeans cluster model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  algorithm_name = "KMeans: Hartigan and Wong",
+  algorithm.name,
+  ...
+)
 }
 \arguments{
 \item{model}{A kmeans object.}

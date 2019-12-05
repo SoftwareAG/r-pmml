@@ -5,11 +5,16 @@
 \title{Generate the PMML representation for a coxph object from the package
 \pkg{survival}.}
 \usage{
-\method{pmml}{coxph}(model,
+\method{pmml}{coxph}(
+  model,
   model_name = "CoxPH_Survival_Regression_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "CoxPH Survival Regression Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL, ...)
+  description = "CoxPH Survival Regression Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A coxph object.}

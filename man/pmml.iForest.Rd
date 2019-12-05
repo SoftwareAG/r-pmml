@@ -4,13 +4,20 @@
 \alias{pmml.iForest}
 \title{Generate PMML for an iForest object from the \bold{isofor} package.}
 \usage{
-\method{pmml}{iForest}(model, model_name = "isolationForest_Model",
+\method{pmml}{iForest}(
+  model,
+  model_name = "isolationForest_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Isolation Forest Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  anomaly_threshold = 0.6, anomalyThreshold,
+  description = "Isolation Forest Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  anomaly_threshold = 0.6,
+  anomalyThreshold,
   parent_invalid_value_treatment = "returnInvalid",
-  child_invalid_value_treatment = "asIs", ...)
+  child_invalid_value_treatment = "asIs",
+  ...
+)
 }
 \arguments{
 \item{model}{An iForest object from package \bold{isofor}.}

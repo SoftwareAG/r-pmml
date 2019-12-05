@@ -5,11 +5,17 @@
 \title{Generate the PMML representation for a ksvm object from the package
 \pkg{kernlab}.}
 \usage{
-\method{pmml}{ksvm}(model, model_name = "SVM_model",
+\method{pmml}{ksvm}(
+  model,
+  model_name = "SVM_model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Support Vector Machine Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  dataset = NULL, ...)
+  description = "Support Vector Machine Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  dataset = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A ksvm object.}

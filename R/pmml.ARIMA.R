@@ -23,17 +23,19 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param exact_least_squares If TRUE, use exact least squares for forecasting.
-#' Otherwise, use conditional least squares.
-#' @param prediction_intervals If TRUE, add prediction intervals as output fields.
+#' @param exact_least_squares If TRUE, use exact least squares for forecasting; 
+#' otherwise, use conditional least squares (for seasonal models only).
 #'
 #' @inheritParams pmml
 #'
 #' @return PMML representation of the \code{ARIMA} object.
 #'
-#' @details The model is represented in the PMML TimeSeriesModel format with conditional
-#' least squares forecasting. Note that ARIMA models in R are
-#' estimated using a state space formulation.
+#' @details The model is represented in the PMML TimeSeriesModel forma.
+#' Non-seasonal models are represented with conditional
+#' least squares. For models with a seasonal component, the PMML can use conditional
+#' least squares or exact least squares. Note that ARIMA models in R are
+#' estimated using a state space formulation. When using conditional least squares with seasonal models,
+#' forecast results between R and PMML may not match.
 #'
 #' Transforms are currently not supported for ARIMA models.
 #'
@@ -64,7 +66,6 @@ pmml.ARIMA <- function(model,
                        transforms = NULL,
                        missing_value_replacement = NULL,
                        exact_least_squares = FALSE,
-                       prediction_intervals = FALSE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
   

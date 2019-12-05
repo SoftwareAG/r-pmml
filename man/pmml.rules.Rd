@@ -6,10 +6,15 @@
 \title{Generate the PMML representation for a rules or an itemset object from
 package \pkg{arules}.}
 \usage{
-\method{pmml}{rules}(model, model_name = "arules_Model",
+\method{pmml}{rules}(
+  model,
+  model_name = "arules_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "Association Rules Model", copyright = NULL,
-  transforms = NULL, ...)
+  description = "Association Rules Model",
+  copyright = NULL,
+  transforms = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{A rules or itemsets object.}

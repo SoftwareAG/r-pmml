@@ -4,8 +4,14 @@
 \alias{xform_norm_discrete}
 \title{Normalize discrete values in accordance with the PMML element \bold{NormDiscrete}.}
 \usage{
-xform_norm_discrete(wrap_object, xform_info = NA, input_var = NA,
-  inputVar, map_missing_to = NA, ...)
+xform_norm_discrete(
+  wrap_object,
+  xform_info = NA,
+  input_var = NA,
+  inputVar,
+  map_missing_to = NA,
+  ...
+)
 }
 \arguments{
 \item{wrap_object}{Output of xform_wrap or another transformation function.}

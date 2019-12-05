@@ -5,8 +5,14 @@
 \title{Implement a map between discrete values in accordance with the PMML element
 \bold{MapValues}.}
 \usage{
-xform_map(wrap_object, xform_info, table = NA, default_value = NA,
-  map_missing_to = NA, ...)
+xform_map(
+  wrap_object,
+  xform_info,
+  table = NA,
+  default_value = NA,
+  map_missing_to = NA,
+  ...
+)
 }
 \arguments{
 \item{wrap_object}{Output of xform_wrap or another transformation function.}

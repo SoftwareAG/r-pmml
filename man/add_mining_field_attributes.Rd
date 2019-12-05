@@ -5,8 +5,12 @@
 \title{Add attribute values to an existing MiningField element in a given PMML
 file.}
 \usage{
-add_mining_field_attributes(xml_model = NULL, attributes = NULL,
-  namespace = "4_4", ...)
+add_mining_field_attributes(
+  xml_model = NULL,
+  attributes = NULL,
+  namespace = "4_4",
+  ...
+)
 }
 \arguments{
 \item{xml_model}{The PMML model in a XML node format. If the model is a text

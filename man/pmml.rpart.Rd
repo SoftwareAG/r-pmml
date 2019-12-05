@@ -4,11 +4,17 @@
 \alias{pmml.rpart}
 \title{Generate the PMML representation for an rpart object from the package \pkg{rpart}.}
 \usage{
-\method{pmml}{rpart}(model, model_name = "RPart_Model",
+\method{pmml}{rpart}(
+  model,
+  model_name = "RPart_Model",
   app_name = "SoftwareAG PMML Generator",
-  description = "RPart Decision Tree Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  dataset = NULL, ...)
+  description = "RPart Decision Tree Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  dataset = NULL,
+  ...
+)
 }
 \arguments{
 \item{model}{An rpart object.}

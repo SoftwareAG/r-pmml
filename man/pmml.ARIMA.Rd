@@ -4,11 +4,17 @@
 \alias{pmml.ARIMA}
 \title{Generate PMML for an ARIMA object the \bold{forecast} package.}
 \usage{
-\method{pmml}{ARIMA}(model, model_name = "ARIMA_model",
+\method{pmml}{ARIMA}(
+  model,
+  model_name = "ARIMA_model",
   app_name = "SoftwareAG PMML Generator",
-  description = "ARIMA Time Series Model", copyright = NULL,
-  transforms = NULL, missing_value_replacement = NULL,
-  exact_least_squares = FALSE, ...)
+  description = "ARIMA Time Series Model",
+  copyright = NULL,
+  transforms = NULL,
+  missing_value_replacement = NULL,
+  exact_least_squares = FALSE,
+  ...
+)
 }
 \arguments{
 \item{model}{An ARIMA object from the package \pkg{forecast}.}
@@ -26,8 +32,8 @@
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
 
-\item{exact_least_squares}{If TRUE, use exact least squares for forecasting.
-Otherwise, use conditional least squares.}
+\item{exact_least_squares}{If TRUE, use exact least squares for forecasting; 
+otherwise, use conditional least squares (for seasonal models only).}
 
 \item{...}{Further arguments passed to or from other methods.}
 }
@@ -38,9 +44,12 @@ PMML representation of the \code{ARIMA} object.
 Generate PMML for an ARIMA object the \bold{forecast} package.
 }
 \details{
-The model is represented in the PMML TimeSeriesModel format with conditional
-least squares forecasting. Note that ARIMA models in R are
-estimated using a state space formulation.
+The model is represented in the PMML TimeSeriesModel forma.
+Non-seasonal models are represented with conditional
+least squares. For models with a seasonal component, the PMML can use conditional
+least squares or exact least squares. Note that ARIMA models in R are
+estimated using a state space formulation. When using conditional least squares with seasonal models,
+forecast results between R and PMML may not match.
 
 Transforms are currently not supported for ARIMA models.
 }
