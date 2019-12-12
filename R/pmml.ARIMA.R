@@ -189,7 +189,7 @@ pmml.ARIMA <- function(model,
   pi_node <- xmlNode("OutputField", attrs = c(name = paste("cpi_", perc, "_", interv, sep = ""),
                                               optype = "continuous",
                                               dataType = "double",
-                                              feature = "transformedValue"))
+                                              feature = "standardError"))
   ext_node <- xmlNode("Extension", attrs = c(extender = "ADAPA", 
                                              name = "cpi", 
                                              value = paste(toupper(interv), perc, sep = "")))
