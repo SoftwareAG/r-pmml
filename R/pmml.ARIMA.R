@@ -23,19 +23,22 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param exact_least_squares If TRUE, use exact least squares for forecasting; 
-#' otherwise, use conditional least squares (for seasonal models only).
+#' @param exact_least_squares If TRUE, export seasonal models with exact least squares; 
+#' otherwise, use conditional least squares.
 #'
 #' @inheritParams pmml
 #'
 #' @return PMML representation of the \code{ARIMA} object.
 #'
-#' @details The model is represented in the PMML TimeSeriesModel forma.
+#' @details The model is represented in the PMML TimeSeriesModel format.
 #' Non-seasonal models are represented with conditional
 #' least squares. For models with a seasonal component, the PMML can use conditional
 #' least squares or exact least squares. Note that ARIMA models in R are
 #' estimated using a state space formulation. When using conditional least squares with seasonal models,
 #' forecast results between R and PMML may not match.
+#' 
+#' Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+#' between R and PMML may not match.
 #'
 #' Transforms are currently not supported for ARIMA models.
 #'
@@ -109,7 +112,7 @@ pmml.ARIMA <- function(model,
   ts_model <- append.XMLNode(
     ts_model,
     # .pmmlOutput(field, target)
-    .make_arima_output_node(target)
+    .make_arima_output_node(target, .has_seasonal_comp(model))
   )
 
 
@@ -167,7 +170,7 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_arima_output_node <- function(target){
+.make_arima_output_node <- function(target, has_seasonal_comp){
   output_node <- xmlNode("Output")
   
   point_forecast_node <- xmlNode("OutputField", attrs = c(name = paste("Predicted_",target, sep = ""),
@@ -176,11 +179,15 @@ pmml.ARIMA <- function(model,
                                                      feature = "predictedValue"))
   
   output_node <- append.XMLNode(output_node, point_forecast_node)
-  output_node <- append.XMLNode(output_node, .make_pi_node("80","lower"))
-  output_node <- append.XMLNode(output_node, .make_pi_node("80","upper"))
-  output_node <- append.XMLNode(output_node, .make_pi_node("95","lower"))
-  output_node <- append.XMLNode(output_node, .make_pi_node("95","upper"))
-    
+  
+  if (!has_seasonal_comp) {
+    # if model has no seasonal component, include prediction intervals in Output
+    output_node <- append.XMLNode(output_node, .make_pi_node("80","lower"))
+    output_node <- append.XMLNode(output_node, .make_pi_node("80","upper"))
+    output_node <- append.XMLNode(output_node, .make_pi_node("95","lower"))
+    output_node <- append.XMLNode(output_node, .make_pi_node("95","upper"))
+  }
+  
   return(output_node)
 }
   
