@@ -72,8 +72,8 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order = c(0, 0, 1))
   p_fit_6 <- pmml(fit_6)
-
-  expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "RMSE"), 3472.72443700833)
+  
+  expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "RMSE"), sqrt(fit_6$sigma2))
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "transformation"), "none")
   expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "constantTerm"), 10327.6226360507)
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
@@ -175,8 +175,6 @@ test_that("seasonal ARIMA model contains correct elements 3", {
   )
 })
 
-
-
 test_that("Seasonal ARIMA without non-seasonal component does not contain NonseasonalComponent", {
   fit_10 <- Arima(AirPassengers, order = c(0, 0, 0), seasonal = c(1, 2, 1))
   p_fit_10 <- pmml(fit_10)
@@ -196,3 +194,6 @@ test_that("Error if exact_least_squares is not logical", {
   expect_error(pmml(fit_13, exact_least_squares = "foo"),
                "exact_least_squares must be logical (TRUE/FALSE).", fixed=TRUE)
 })
+
+
+
