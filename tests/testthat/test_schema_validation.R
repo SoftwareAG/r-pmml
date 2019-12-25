@@ -137,8 +137,8 @@ zmz_transform_audit <- function(box_obj) {
 }
 
 
-schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
-
+# schema <- XML::xmlSchemaParse("pmml-4-4_xslt_20190830_10.5.0.0.xsd")
+schema <- XML::xmlSchemaParse("pmml-4-4.xsd")
 
 test_that("TimeSeries/Arima PMML validates against schema", {
   fit <- Arima(WWWusage, order = c(1, 0, 1))
