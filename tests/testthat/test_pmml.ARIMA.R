@@ -195,5 +195,34 @@ test_that("Error if exact_least_squares is not logical", {
                "exact_least_squares must be logical (TRUE/FALSE).", fixed=TRUE)
 })
 
+test_that("exact_least_squares has no effect if model is non-seasonal", {
+  fit_14 <- Arima(AirPassengers, order = c(2, 2, 1))
+  p_fit_14 <- pmml(fit_14, exact_least_squares = TRUE)
+  expect_equal(xmlGetAttr(p_fit_14[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
+})
 
+test_that("exact_least_squares=TRUE results in exactLeastSquares for seasonal model", {
+  fit_15 <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1,1,1))
+  p_fit_15 <- pmml(fit_15, exact_least_squares = TRUE)
+  expect_equal(xmlGetAttr(p_fit_15[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
+})
+
+test_that("RMSE attribute equals sqrt(sigma2) from R object", {
+  fit_16 <- Arima(WWWusage, order = c(2, 1, 3))
+  p_fit_16 <- pmml(fit_16)
+  expect_equal_num(xmlGetAttr(p_fit_16[[3]][[4]], name = "RMSE"), sqrt(fit_16$sigma2))
+})
+
+test_that("seasonal models do not include CPI in Output", {
+  fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1,1,1))
+  p_fit_17 <- pmml(fit_17)
+  expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n</Output>")
+})
+
+
+test_that("non-seasonal models include CPI in Output", {
+  fit_18 <- Arima(AirPassengers, order = c(2, 2, 2))
+  p_fit_18 <- pmml(fit_18)
+  expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"LOWER80\"/>\n </OutputField>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"UPPER80\"/>\n </OutputField>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"LOWER95\"/>\n </OutputField>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"UPPER95\"/>\n </OutputField>\n</Output>")
+})
 
