@@ -226,3 +226,22 @@ test_that("non-seasonal models include CPI in Output", {
   expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"LOWER80\"/>\n </OutputField>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"UPPER80\"/>\n </OutputField>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"LOWER95\"/>\n </OutputField>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"standardError\">\n  <Extension extender=\"ADAPA\" name=\"cpi\" value=\"UPPER95\"/>\n </OutputField>\n</Output>")
 })
 
+test_that("FinalOmega is 0", {
+  fit_20 <- Arima(AirPassengers, order = c(1,1,0), seasonal = c(0,1,1))
+  p_fit_20 <- pmml(fit_20, exact_least_squares = TRUE)
+  expect_equal(toString(p_fit_20[[3]][[4]][[3]][[1]][[1]]), "<FinalOmega>\n <Matrix kind=\"symmetric\" nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\" n=\"1\">0</Array>\n </Matrix>\n</FinalOmega>")
+})
+
+test_that("seasonal models with ELS contain correct matrices", {
+  fit_21 <- Arima(AirPassengers, order = c(1,2,0), seasonal = c(0,1,1))
+  p_fit_21 <- pmml(fit_21, exact_least_squares = TRUE)
+  
+  # FinalStateVector
+  expect_equal_ttnl(p_fit_21[[3]][[4]][[3]][[1]][[2]][[1]][[1]], c(fit_21$model$T %*% fit_21$model$a))
+  
+  # TransitionMatrix
+  expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[3]][[1]]), "<Matrix nbRows=\"27\" nbCols=\"27\">\n <Array type=\"real\">-0.650958812319475 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0</Array>\n</Matrix>")
+
+  # MeasurementMatrix
+  expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[4]][[1]]), "<Matrix nbRows=\"1\" nbCols=\"27\">\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n</Matrix>")
+})
