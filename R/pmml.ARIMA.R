@@ -32,7 +32,7 @@
 #'
 #' @details The model is represented in the PMML TimeSeriesModel format.
 #' Non-seasonal models are represented with conditional
-#' least squares. For models with a seasonal component, the PMML can use conditional
+#' least squares. For models with a seasonal component, the PMML can be exported with conditional
 #' least squares or exact least squares. Note that ARIMA models in R are
 #' estimated using a state space formulation. When using conditional least squares with seasonal models,
 #' forecast results between R and PMML may not match.
@@ -52,13 +52,13 @@
 #' mod <- Arima(WWWusage, order = c(3, 1, 1))
 #' mod_pmml <- pmml(mod)
 #'
-#' # seasonal model
+#' # seasonal model exported with exact least squares
 #' data("JohnsonJohnson")
 #' mod_02 <- Arima(JohnsonJohnson,
 #'   order = c(1, 1, 1),
 #'   seasonal = c(1, 1, 1)
 #' )
-#' mod_02_pmml <- pmml(mod_02)
+#' mod_02_pmml <- pmml(mod_02, exact_least_squares = TRUE)
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,
