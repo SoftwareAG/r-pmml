@@ -3,7 +3,7 @@ Type: Package
 Title: Generate PMML for Various Models
 Version: 2.1.0.9000
 Authors@R: c(
-    person("Dmitriy", "Bolotov", email = "rpmmlsupport@softwareag.com", role = c("aut", "cre")),
+    person("Dmitriy", "Bolotov", email = "dmitriy.bolotov@softwareag.com", role = c("aut", "cre")),
     person("Tridivesh", "Jena", email = "tridivesh.jena@softwareag.com", role = "aut"),
     person("Graham", "Williams", email = "graham.williams@togaware.net", role = "aut"),
     person("Wen-Ching", "Lin", role = "aut"),
