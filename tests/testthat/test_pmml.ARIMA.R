@@ -72,7 +72,7 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order = c(0, 0, 1))
   p_fit_6 <- pmml(fit_6)
-  
+
   expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "RMSE"), sqrt(fit_6$sigma2))
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "transformation"), "none")
   expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "constantTerm"), 10327.6226360507)
@@ -192,7 +192,9 @@ test_that("ARIMA with both intercept and drift terms throws error", {
 test_that("Error if exact_least_squares is not logical", {
   fit_13 <- auto.arima(WWWusage)
   expect_error(pmml(fit_13, exact_least_squares = "foo"),
-               "exact_least_squares must be logical (TRUE/FALSE).", fixed=TRUE)
+    "exact_least_squares must be logical (TRUE/FALSE).",
+    fixed = TRUE
+  )
 })
 
 test_that("exact_least_squares has no effect if model is non-seasonal", {
@@ -202,7 +204,7 @@ test_that("exact_least_squares has no effect if model is non-seasonal", {
 })
 
 test_that("exact_least_squares=TRUE results in exactLeastSquares for seasonal model", {
-  fit_15 <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1,1,1))
+  fit_15 <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
   p_fit_15 <- pmml(fit_15, exact_least_squares = TRUE)
   expect_equal(xmlGetAttr(p_fit_15[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
 })
@@ -214,7 +216,7 @@ test_that("RMSE attribute equals sqrt(sigma2) from R object", {
 })
 
 test_that("seasonal models do not include CPI in Output", {
-  fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1,1,1))
+  fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1, 1, 1))
   p_fit_17 <- pmml(fit_17)
   expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n</Output>")
 })
@@ -227,18 +229,18 @@ test_that("non-seasonal models include CPI in Output", {
 })
 
 test_that("FinalOmega is 0", {
-  fit_20 <- Arima(AirPassengers, order = c(1,1,0), seasonal = c(0,1,1))
+  fit_20 <- Arima(AirPassengers, order = c(1, 1, 0), seasonal = c(0, 1, 1))
   p_fit_20 <- pmml(fit_20, exact_least_squares = TRUE)
   expect_equal(toString(p_fit_20[[3]][[4]][[3]][[1]][[1]]), "<FinalOmega>\n <Matrix kind=\"symmetric\" nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\" n=\"1\">0</Array>\n </Matrix>\n</FinalOmega>")
 })
 
 test_that("seasonal models with ELS contain correct matrices", {
-  fit_21 <- Arima(AirPassengers, order = c(1,2,0), seasonal = c(0,1,1))
+  fit_21 <- Arima(AirPassengers, order = c(1, 2, 0), seasonal = c(0, 1, 1))
   p_fit_21 <- pmml(fit_21, exact_least_squares = TRUE)
-  
+
   # FinalStateVector
   expect_equal_ttnl(p_fit_21[[3]][[4]][[3]][[1]][[2]][[1]][[1]], c(fit_21$model$T %*% fit_21$model$a))
-  
+
   # TransitionMatrix
   expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[3]][[1]]), "<Matrix nbRows=\"27\" nbCols=\"27\">\n <Array type=\"real\">-0.650958812319475 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0</Array>\n</Matrix>")
 

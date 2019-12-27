@@ -155,16 +155,16 @@ test_that("TimeSeries/Arima PMML validates against schema", {
 
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
-  
+
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
   expect_equal(validate_pmml(pmml(fit, exact_least_squares = TRUE), schema), 0)
-  
+
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   expect_equal(validate_pmml(pmml(fit, exact_least_squares = TRUE), schema), 0)
-  
+
   fit <- Arima(JohnsonJohnson, order = c(2, 1, 3), seasonal = c(0, 1, 2))
   expect_equal(validate_pmml(pmml(fit, exact_least_squares = TRUE), schema), 0)
-  
+
   fit <- Arima(AirPassengers, order = c(4, 2, 1), seasonal = c(1, 1, 1))
   expect_equal(validate_pmml(pmml(fit, exact_least_squares = TRUE), schema), 0)
 })

@@ -341,13 +341,13 @@ pmml.iForest <- function(model,
       }
     } else if (logical)
     # This is always false in this implementation.
-    {
-      bool <- ifelse(tinf[rowid, 4] <= 0.5, FALSE, TRUE)
-      splitNode <- xmlNode("SimplePredicate", attrs = c(
-        field = fname, operator = "equal",
-        value = bool
-      ))
-    } else {
+      {
+        bool <- ifelse(tinf[rowid, 4] <= 0.5, FALSE, TRUE)
+        splitNode <- xmlNode("SimplePredicate", attrs = c(
+          field = fname, operator = "equal",
+          value = bool
+        ))
+      } else {
       if (tinf[rowid, 4] < 0) {
         stop(paste("Unable to determine categorical split."))
       } else {

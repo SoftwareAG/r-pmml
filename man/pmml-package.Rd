@@ -83,7 +83,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Dmitriy Bolotov \email{rpmmlsupport@softwareag.com}
+\strong{Maintainer}: Dmitriy Bolotov \email{dmitriy.bolotov@softwareag.com}
 
 Authors:
 \itemize{

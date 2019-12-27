@@ -231,18 +231,18 @@ pmml.rpart <- function(model,
 
   # Assign the default child for non-leaf nodes.
   if (length(ids) > 1) # Non-leaf node
-  {
-    sons <- 2 * id + c(0, 1)
-    sons.n <- ff$n[match(sons, ids)]
+    {
+      sons <- 2 * id + c(0, 1)
+      sons.n <- ff$n[match(sons, ids)]
 
-    childId <- sons[2]
-    if (sons.n[1] >= sons.n[2]) childId <- sons[1]
+      childId <- sons[2]
+      if (sons.n[1] >= sons.n[2]) childId <- sons[1]
 
-    node <- xmlNode("Node", attrs = c(
-      id = id, score = score, recordCount = count,
-      defaultChild = childId
-    ))
-  }
+      node <- xmlNode("Node", attrs = c(
+        id = id, score = score, recordCount = count,
+        defaultChild = childId
+      ))
+    }
   else # Leaf node
   {
     node <- xmlNode("Node", attrs = c(id = id, score = score, recordCount = count))
@@ -253,15 +253,15 @@ pmml.rpart <- function(model,
     predicate <- xmlNode("True")
   }
   else if (ff$nsurrogate[parent_ii] > 0) # When the node has surrogate predicates.
-  {
-    predicate <- xmlNode("CompoundPredicate", attrs = c(booleanOperator = "surrogate"))
+    {
+      predicate <- xmlNode("CompoundPredicate", attrs = c(booleanOperator = "surrogate"))
 
-    # Add the primary predicate.
-    predicate <- append.XMLNode(predicate, .getPrimaryPredicates(fieldLabel, op, value))
+      # Add the primary predicate.
+      predicate <- append.XMLNode(predicate, .getPrimaryPredicates(fieldLabel, op, value))
 
-    # Add the surrogate predicates.
-    predicate <- .getSurrogatePredicates(predicate, model, parent_ii, position)
-  }
+      # Add the surrogate predicates.
+      predicate <- .getSurrogatePredicates(predicate, model, parent_ii, position)
+    }
   else # When the node does not have surrogate predicates.
   {
     # Add the primary predicate.

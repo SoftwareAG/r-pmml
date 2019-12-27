@@ -32,8 +32,9 @@
 
 
 
-.markupSpecials <- function(x)
+.markupSpecials <- function(x) {
   gsub("<", "&lt;", gsub(">", "&gt;", gsub("&", "&amp;", x)))
+}
 
 
 .generateCopyright <- function() {

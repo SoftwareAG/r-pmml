@@ -260,36 +260,36 @@ pmml.nnet <- function(model,
       for (j in 1:number.of.values)
       {
         if (j > 1) # Skips first category during dummyfication.
-        {
-          neuralInputNode <- xmlNode("NeuralInput",
-            attrs = c(id = as.numeric(input_count))
-          )
-          input_count <- input_count + 1
-
-          fieldName <- paste("derivedNI_", terms$term.labels[i], sep = "")
-          fieldName <- paste(fieldName, usedValues[j], sep = "")
-
-          derivedFieldNode <- xmlNode("DerivedField",
-            attrs = c(
-              name = fieldName,
-              optype = "continuous",
-              dataType = "double"
+          {
+            neuralInputNode <- xmlNode("NeuralInput",
+              attrs = c(id = as.numeric(input_count))
             )
-          )
+            input_count <- input_count + 1
 
-          normDiscreteNode <- xmlNode("NormDiscrete",
-            attrs = c(
-              field = terms$term.labels[i],
-              value = usedValues[j]
+            fieldName <- paste("derivedNI_", terms$term.labels[i], sep = "")
+            fieldName <- paste(fieldName, usedValues[j], sep = "")
+
+            derivedFieldNode <- xmlNode("DerivedField",
+              attrs = c(
+                name = fieldName,
+                optype = "continuous",
+                dataType = "double"
+              )
             )
-          )
 
-          derivedFieldNode <- append.XMLNode(derivedFieldNode, normDiscreteNode)
+            normDiscreteNode <- xmlNode("NormDiscrete",
+              attrs = c(
+                field = terms$term.labels[i],
+                value = usedValues[j]
+              )
+            )
 
-          neuralInputNode <- append.XMLNode(neuralInputNode, derivedFieldNode)
+            derivedFieldNode <- append.XMLNode(derivedFieldNode, normDiscreteNode)
 
-          neuralInputs <- append.XMLNode(neuralInputs, neuralInputNode)
-        }
+            neuralInputNode <- append.XMLNode(neuralInputNode, derivedFieldNode)
+
+            neuralInputs <- append.XMLNode(neuralInputs, neuralInputNode)
+          }
       }
     }
     else {
@@ -335,35 +335,35 @@ pmml.nnet <- function(model,
     number.of.neurons <- model$n[i + 1]
 
     if (i == number.of.neural.layers) # Output layer.
-    {
-      if (number.of.neurons == 1 && field$class[[field$name[1]]] == "factor") {
-        neuralLayerNode <- xmlNode("NeuralLayer",
-          attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
-        )
-      }
-      else if (model$softmax) {
-        neuralLayerNode <- xmlNode("NeuralLayer",
-          attrs = c(
-            numberOfNeurons = as.numeric(number.of.neurons),
-            activationFunction = "identity",
-            normalizationMethod = "softmax"
+      {
+        if (number.of.neurons == 1 && field$class[[field$name[1]]] == "factor") {
+          neuralLayerNode <- xmlNode("NeuralLayer",
+            attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
           )
-        )
-      }
-      else if (linearOutputUnits) {
-        neuralLayerNode <- xmlNode("NeuralLayer",
-          attrs = c(
-            numberOfNeurons = as.numeric(number.of.neurons),
-            activationFunction = "identity"
+        }
+        else if (model$softmax) {
+          neuralLayerNode <- xmlNode("NeuralLayer",
+            attrs = c(
+              numberOfNeurons = as.numeric(number.of.neurons),
+              activationFunction = "identity",
+              normalizationMethod = "softmax"
+            )
           )
-        )
+        }
+        else if (linearOutputUnits) {
+          neuralLayerNode <- xmlNode("NeuralLayer",
+            attrs = c(
+              numberOfNeurons = as.numeric(number.of.neurons),
+              activationFunction = "identity"
+            )
+          )
+        }
+        else {
+          neuralLayerNode <- xmlNode("NeuralLayer",
+            attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
+          )
+        }
       }
-      else {
-        neuralLayerNode <- xmlNode("NeuralLayer",
-          attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
-        )
-      }
-    }
     else # Hidden layer.
     {
       neuralLayerNode <- xmlNode("NeuralLayer",
@@ -384,9 +384,9 @@ pmml.nnet <- function(model,
       wtsID <- wtsID + 1
 
       if (i == number.of.neural.layers && j == 1) # Output layer.
-      {
-        first.outputNeuronID <- neuronID
-      }
+        {
+          first.outputNeuronID <- neuronID
+        }
       if (i == number.of.neural.layers && skipLayers) {
         previous.number.of.neurons <- previous.number.of.neurons + number.of.inputs
       }
