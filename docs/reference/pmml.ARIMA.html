@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0.9000</span>
       </span>
     </div>
 
@@ -133,17 +133,24 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ARIMA</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model</span>, <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"ARIMA_model"</span>,
+<span class='fu'><a href='pmml.html'>pmml</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"ARIMA_model"</span>,
   <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"ARIMA Time Series Model"</span>, <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"ARIMA Time Series Model"</span>,
+  <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>model</th>
-      <td><p>an ARIMA object from the package <span class="pkg">forecast</span>.</p></td>
+      <td><p>An ARIMA object from the package <span class="pkg">forecast</span>.</p></td>
     </tr>
     <tr>
       <th>model_name</th>
@@ -171,6 +178,11 @@
 attribute for all MiningFields.</p></td>
     </tr>
     <tr>
+      <th>exact_least_squares</th>
+      <td><p>If TRUE, export seasonal models with exact least squares;
+otherwise, use conditional least squares.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Further arguments passed to or from other methods.</p></td>
     </tr>
@@ -181,9 +193,14 @@ attribute for all MiningFields.</p></td>
     <p>PMML representation of the <code>ARIMA</code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model is represented in the PMML TimeSeriesModel format with conditional
-least squares forecasting. Note that ARIMA models in R are
-estimated using a state space formulation.</p>
+    <p>The model is represented in the PMML TimeSeriesModel format.
+Non-seasonal models are represented with conditional
+least squares. For models with a seasonal component, the PMML can be exported with conditional
+least squares or exact least squares. Note that ARIMA models in R are
+estimated using a state space formulation. When using conditional least squares with seasonal models,
+forecast results between R and PMML may not match.</p>
+<p>Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+between R and PMML may not match.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -200,13 +217,13 @@ estimated using a state space formulation.</p>
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>)
 
-<span class='co'># seasonal model</span>
+<span class='co'># seasonal model exported with exact least squares</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"JohnsonJohnson"</span>)
 <span class='no'>mod_02</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>JohnsonJohnson</span>,
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
 )
-<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>)</div></pre>
+<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>, <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -229,7 +246,7 @@ estimated using a state space formulation.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

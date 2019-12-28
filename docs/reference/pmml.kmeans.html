@@ -72,7 +72,7 @@ converted into a PMML representation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0.9000</span>
       </span>
     </div>
 
@@ -138,11 +138,17 @@ converted into a PMML representation.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for kmeans</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model</span>, <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"KMeans_Model"</span>,
+<span class='fu'><a href='pmml.html'>pmml</a></span>(
+  <span class='no'>model</span>,
+  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"KMeans_Model"</span>,
   <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"KMeans cluster model"</span>, <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>algorithm_name</span> <span class='kw'>=</span> <span class='st'>"KMeans: Hartigan and Wong"</span>, <span class='no'>algorithm.name</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"KMeans cluster model"</span>,
+  <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>algorithm_name</span> <span class='kw'>=</span> <span class='st'>"KMeans: Hartigan and Wong"</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,10 +185,6 @@ attribute for all MiningFields.</p></td>
     <tr>
       <th>algorithm_name</th>
       <td><p>The variety of kmeans used.</p></td>
-    </tr>
-    <tr>
-      <th>algorithm.name</th>
-      <td><p>Deprecated.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -232,7 +234,7 @@ project: K-Means Clustering</a></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
