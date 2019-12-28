@@ -24,7 +24,6 @@
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
 #' @param anomaly_threshold Double between 0 and 1. Predicted values greater than this are classified as anomalies.
-#' @param anomalyThreshold Deprecated.
 #' @param parent_invalid_value_treatment Invalid value treatment at the top MiningField level.
 #' @param child_invalid_value_treatment Invalid value treatment at the model segment MiningField level.
 #' @param ... Further arguments passed to or from other methods.
@@ -72,20 +71,11 @@ pmml.iForest <- function(model,
                          transforms = NULL,
                          missing_value_replacement = NULL,
                          anomaly_threshold = 0.6,
-                         anomalyThreshold,
                          parent_invalid_value_treatment = "returnInvalid",
                          child_invalid_value_treatment = "asIs",
                          ...) {
   if (!inherits(model, "iForest")) {
     stop("Not a legitimate iForest object")
-  }
-
-  # Deprecated argument.
-  if (!missing(anomalyThreshold)) {
-    warning("argument anomalyThreshold is deprecated; please use anomaly_threshold instead.",
-      call. = FALSE
-    )
-    anomaly_threshold <- anomalyThreshold
   }
 
   field <- list()

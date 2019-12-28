@@ -32,7 +32,7 @@
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
 
-\item{exact_least_squares}{If TRUE, export seasonal models with exact least squares; 
+\item{exact_least_squares}{If TRUE, export seasonal models with exact least squares;
 otherwise, use conditional least squares.}
 
 \item{...}{Further arguments passed to or from other methods.}

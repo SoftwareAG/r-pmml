@@ -13,7 +13,6 @@
   transforms = NULL,
   missing_value_replacement = NULL,
   anomaly_threshold = 0.6,
-  anomalyThreshold,
   parent_invalid_value_treatment = "returnInvalid",
   child_invalid_value_treatment = "asIs",
   ...
@@ -36,8 +35,6 @@
 attribute for all MiningFields.}
 
 \item{anomaly_threshold}{Double between 0 and 1. Predicted values greater than this are classified as anomalies.}
-
-\item{anomalyThreshold}{Deprecated.}
 
 \item{parent_invalid_value_treatment}{Invalid value treatment at the top MiningField level.}
 

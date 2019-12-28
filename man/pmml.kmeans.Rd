@@ -14,7 +14,6 @@ the package \pkg{stats}.}
   transforms = NULL,
   missing_value_replacement = NULL,
   algorithm_name = "KMeans: Hartigan and Wong",
-  algorithm.name,
   ...
 )
 }
@@ -35,8 +34,6 @@ the package \pkg{stats}.}
 attribute for all MiningFields.}
 
 \item{algorithm_name}{The variety of kmeans used.}
-
-\item{algorithm.name}{Deprecated.}
 
 \item{...}{Further arguments passed to or from other methods.}
 }

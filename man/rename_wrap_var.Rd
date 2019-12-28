@@ -4,13 +4,11 @@
 \alias{rename_wrap_var}
 \title{Rename a variable in the xform_wrap transform object.}
 \usage{
-rename_wrap_var(wrap_object, wrap_data, xform_info = NA, ...)
+rename_wrap_var(wrap_object, xform_info = NA, ...)
 }
 \arguments{
 \item{wrap_object}{Wrapper object obtained by using the xform_wrap function on the
 raw data.}
-
-\item{wrap_data}{Deprecated.}
 
 \item{xform_info}{Specification of details of the renaming.}
 
