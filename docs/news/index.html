@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
       </span>
     </div>
 
@@ -125,14 +125,42 @@
       <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pmml-2-1-0-9000" class="section level1">
+    <div id="pmml-2-2-0" class="section level1">
 <h1 class="page-header">
-<a href="#pmml-2-1-0-9000" class="anchor"></a>pmml 2.1.0.9000<small> Unreleased </small>
+<a href="#pmml-2-2-0" class="anchor"></a>pmml 2.2.0<small> Unreleased </small>
 </h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
 <ul>
-<li>pmml.ARIMA() can now export seasonal models with Exact Least Squares formulation.</li>
-<li>pmml.ARIMA() now exports prediction intervals for non-seasonal models.</li>
+<li>Deprecated parameters in the following functions have been removed, and replaced with equivalent in snake case.
+<ul>
+<li>
+<code>pmml.iForest</code>: <code>anomalyThreshold</code> -&gt; <code>anomaly_threshold</code>
+</li>
+<li>
+<code>pmml.kmeans</code>: <code>algorithm.name</code> -&gt; <code>algorithm_name</code>
+</li>
+<li>
+<code>rename_wrap_var</code>: <code>wrap_data</code> -&gt; <code>wrap_object</code>
+</li>
+<li>
+<code>xform_norm_discrete</code>: <code>inputVar</code> -&gt; <code>input_var</code>
+</li>
 </ul>
+</li>
+</ul>
+</div>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New Features</h2>
+<ul>
+<li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> now exports prediction intervals for non-seasonal models.</li>
+<li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> can now export seasonal models with Exact Least Squares formulation.</li>
+</ul>
+</div>
 </div>
     <div id="pmml-2-1-0" class="section level1">
 <h1 class="page-header">
@@ -146,9 +174,9 @@
 <li><p><code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> function added - exports ARIMA time series models from the <code>forecast</code> package.</p></li>
 </ul>
 </div>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li><p><code><a href="../reference/pmml.svm.html">pmml.svm()</a></code> now has a <code>detect_anomaly</code> argument, allowing the user to specify whether the PMML detects anomalies or inliers. The exported PMML now has two OutputField elements: <code>anomalyScore</code> and one of <code>anomaly</code> or <code>inlier</code>.</p></li>
 <li>The following arguments are deprecated. They can still be used, but will produce a warning message and will be removed in a future release.
@@ -188,9 +216,9 @@
 <a href="#pmml-2-0-0" class="anchor"></a>pmml 2.0.0<small> 2019-06-03 </small>
 </h1>
 <p>With this release, <code>pmmlTransformations</code> has been merged into <code>pmml</code> and package development has been moved to GitHub. This was also a good opportunity to apply a style and rename many functions and parameters to make the code more uniform and easier to understand.</p>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <p>We used the tidyverse style guide when renaming functions, parameters, and arguments. In addition, some parameters and arguments have been renamed for clarity, and several functions were removed.</p>
 <p>For functions that use a dots (<code>...</code>) parameter, the old parameters will still be accepted, even though these old parameters will not be used.</p>
 <ul>
@@ -974,7 +1002,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pmml-2-1-0-9000">2.1.0.9000</a></li>
+        <li><a href="#pmml-2-2-0">2.2.0</a></li>
         <li><a href="#pmml-2-1-0">2.1.0</a></li>
         <li><a href="#pmml-2-0-0">2.0.0</a></li>
         <li><a href="#pmml-1-5-7">1.5.7</a></li>
