@@ -1,7 +1,14 @@
-# pmml 2.1.0.9000
-* pmml.ARIMA() can now export seasonal models with Exact Least Squares formulation.
-* pmml.ARIMA() now exports prediction intervals for non-seasonal models.
+# pmml 2.2.0
+## Breaking Changes
+  * Deprecated parameters in the following functions have been removed, and replaced with equivalent in snake case.
+    - `pmml.iForest`: `anomalyThreshold` -> `anomaly_threshold`
+    - `pmml.kmeans`: `algorithm.name` -> `algorithm_name`
+    - `rename_wrap_var`: `wrap_data` -> `wrap_object`
+    - `xform_norm_discrete`: `inputVar` -> `input_var`
 
+## New Features
+* `pmml.ARIMA()` now exports prediction intervals for non-seasonal models.
+* `pmml.ARIMA()` can now export seasonal models with Exact Least Squares formulation.
 
 
 # pmml 2.1.0

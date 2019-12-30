@@ -1,12 +1,23 @@
 ## Test environments
-* Local Linux Mint install, R 3.6.1
-* win-builder (release)
+* Local Linux Mint install, R 3.6.2
+* win-builder (devel and release)
 
 ## R CMD check results
 
-There were no ERRORs, WARNINGs, or NOTEs during local or win-builder checks.
+There were no ERRORs or WARNINGs during local or win-builder checks.
 
-There wsas 1 ERROR on r-patched-solaris-x86 (https://cloud.r-project.org/web/checks/check_results_pmml.html):
+There was 1 NOTE:
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Dmitriy Bolotov <dmitriy.bolotov@softwareag.com>'
+
+New maintainer:
+  Dmitriy Bolotov <dmitriy.bolotov@softwareag.com>
+Old maintainer(s):
+  Dmitriy Bolotov <rpmmlsupport@softwareag.com>
+
+
+There was 1 ERROR on r-patched-solaris-x86 (https://cloud.r-project.org/web/checks/check_results_pmml.html):
 
      > library(testthat)
      > library(pmml, quietly = T)
