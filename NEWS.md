@@ -1,4 +1,4 @@
-# pmml 2.2.0
+# pmml 2.1.0.9000
 ## Breaking Changes
   * Deprecated parameters in the following functions have been removed, and replaced with equivalent in snake case.
     - `pmml.iForest`: `anomalyThreshold` -> `anomaly_threshold`
