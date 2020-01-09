@@ -135,7 +135,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_df(z_pred$outputs, r_pred)
 
   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_02")
+  p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -201,7 +201,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
 
   # seasonal with CLS
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_110011")
+  p_fit <- pmml(fit, model_name = "arima_110011", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -209,7 +209,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_010010")
+  p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -217,7 +217,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
-  p_fit <- pmml(fit, model_name = "arima_010012")
+  p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -225,7 +225,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_011011")
+  p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -233,7 +233,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_111111")
+  p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -241,7 +241,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_001010")
+  p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -249,7 +249,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
 
   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
-  p_fit <- pmml(fit, model_name = "arima_100100")
+  p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -258,7 +258,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
 
   # expect the following test to fail
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-  p_fit <- pmml(fit, model_name = "arima_110001")
+  p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)

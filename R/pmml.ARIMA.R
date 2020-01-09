@@ -52,13 +52,13 @@
 #' mod <- Arima(WWWusage, order = c(3, 1, 1))
 #' mod_pmml <- pmml(mod)
 #'
-#' # seasonal model exported with exact least squares
+#' # seasonal model
 #' data("JohnsonJohnson")
 #' mod_02 <- Arima(JohnsonJohnson,
 #'   order = c(1, 1, 1),
 #'   seasonal = c(1, 1, 1)
 #' )
-#' mod_02_pmml <- pmml(mod_02, exact_least_squares = TRUE)
+#' mod_02_pmml <- pmml(mod_02)
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,
@@ -68,7 +68,7 @@ pmml.ARIMA <- function(model,
                        copyright = NULL,
                        transforms = NULL,
                        missing_value_replacement = NULL,
-                       exact_least_squares = FALSE,
+                       exact_least_squares = TRUE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 

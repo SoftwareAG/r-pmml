@@ -82,7 +82,7 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
 
 test_that("seasonal ARIMA model contains correct elements 1", {
   fit_7 <- Arima(JohnsonJohnson, order = c(0, 0, 2), seasonal = c(0, 0, 1))
-  p_fit_7 <- pmml(fit_7)
+  p_fit_7 <- pmml(fit_7, exact_least_squares = FALSE)
 
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]], name = "p"), 0)
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]], name = "d"), 0)
@@ -107,7 +107,7 @@ test_that("seasonal ARIMA model contains correct elements 1", {
 
 test_that("seasonal ARIMA model contains correct elements 2", {
   fit_8 <- Arima(AirPassengers, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-  p_fit_8 <- pmml(fit_8)
+  p_fit_8 <- pmml(fit_8, exact_least_squares = FALSE)
 
 
   expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[1]], name = "p"), 1)
@@ -135,7 +135,7 @@ test_that("seasonal ARIMA model contains correct elements 2", {
 
 test_that("seasonal ARIMA model contains correct elements 3", {
   fit_9 <- Arima(AirPassengers, order = c(1, 2, 3), seasonal = c(1, 2, 1))
-  p_fit_9 <- pmml(fit_9)
+  p_fit_9 <- pmml(fit_9, exact_least_squares = FALSE)
 
   expect_equal_num(xmlGetAttr(p_fit_9[[3]][[4]], name = "constantTerm"), 0)
 
@@ -177,7 +177,7 @@ test_that("seasonal ARIMA model contains correct elements 3", {
 
 test_that("Seasonal ARIMA without non-seasonal component does not contain NonseasonalComponent", {
   fit_10 <- Arima(AirPassengers, order = c(0, 0, 0), seasonal = c(1, 2, 1))
-  p_fit_10 <- pmml(fit_10)
+  p_fit_10 <- pmml(fit_10, exact_least_squares = FALSE)
   expect_equal(substr(toString(p_fit_10[[3]][[4]][[1]]), 1, 18), "<SeasonalComponent")
 })
 
@@ -209,6 +209,18 @@ test_that("exact_least_squares=TRUE results in exactLeastSquares for seasonal mo
   expect_equal(xmlGetAttr(p_fit_15[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
 })
 
+test_that("default arg for exact_least_squares results in exactLeastSquares for seasonal model", {
+  fit_15b <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
+  p_fit_15b <- pmml(fit_15b)
+  expect_equal(xmlGetAttr(p_fit_15b[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
+})
+
+test_that("exact_least_squares=FALSE results in conditionalLeastSquares for seasonal model", {
+  fit_15c <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
+  p_fit_15c <- pmml(fit_15c, exact_least_squares = FALSE)
+  expect_equal(xmlGetAttr(p_fit_15c[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
+})
+
 test_that("RMSE attribute equals sqrt(sigma2) from R object", {
   fit_16 <- Arima(WWWusage, order = c(2, 1, 3))
   p_fit_16 <- pmml(fit_16)
@@ -217,7 +229,7 @@ test_that("RMSE attribute equals sqrt(sigma2) from R object", {
 
 test_that("seasonal models do not include CPI in Output", {
   fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1, 1, 1))
-  p_fit_17 <- pmml(fit_17)
+  p_fit_17 <- pmml(fit_17, exact_least_squares = FALSE)
   expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n</Output>")
 })
 

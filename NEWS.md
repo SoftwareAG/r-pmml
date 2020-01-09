@@ -8,7 +8,7 @@
 
 ## New Features
 * `pmml.ARIMA()` now exports prediction intervals for non-seasonal models.
-* `pmml.ARIMA()` can now export seasonal models with Exact Least Squares formulation.
+* `pmml.ARIMA()` can now export seasonal models with Exact Least Squares representation, and does so by default.
 
 
 # pmml 2.1.0
