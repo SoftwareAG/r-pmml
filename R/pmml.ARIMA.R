@@ -406,7 +406,7 @@ pmml.ARIMA <- function(model,
 .make_zero_nsc_node <- function(model, exact_least_squares) {
   # Creates a NonSeasonalComponent node with 0 for pdq values
   nsc_node <- xmlNode("NonseasonalComponent",
-                      attrs = c(p = 0, d = 0, q = 0)
+    attrs = c(p = 0, d = 0, q = 0)
   )
   return(nsc_node)
 }

@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0.9000</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
   <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -179,7 +179,7 @@ attribute for all MiningFields.</p></td>
     </tr>
     <tr>
       <th>exact_least_squares</th>
-      <td><p>If TRUE, export seasonal models with exact least squares;
+      <td><p>(seasonal models only) If TRUE, export with exact least squares;
 otherwise, use conditional least squares.</p></td>
     </tr>
     <tr>
@@ -217,13 +217,13 @@ between R and PMML may not match.</p>
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
 <span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>)
 
-<span class='co'># seasonal model exported with exact least squares</span>
+<span class='co'># seasonal model</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"JohnsonJohnson"</span>)
 <span class='no'>mod_02</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>JohnsonJohnson</span>,
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
 )
-<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>, <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

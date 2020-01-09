@@ -321,7 +321,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_ts_value, r_pred)
-  
+
   # seasonal model with (0,0,0) non-seasonal component
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
   p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
