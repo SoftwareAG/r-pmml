@@ -1,6 +1,6 @@
 ## Test environments
 * Local Linux Mint install, R 3.6.2
-* win-builder (devel and release)
+* win-builder (devel)
 
 ## R CMD check results
 
