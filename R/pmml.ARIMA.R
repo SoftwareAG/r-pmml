@@ -23,7 +23,7 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param exact_least_squares If TRUE, export seasonal models with exact least squares;
+#' @param exact_least_squares (seasonal models only) If TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #'
 #' @inheritParams pmml
@@ -155,6 +155,9 @@ pmml.ARIMA <- function(model,
 
   if (.has_nonseasonal_comp(model)) {
     arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
+  } else {
+    # crete a non-seasonal node with all zeros
+    arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
   }
 
   if (.has_seasonal_comp(model)) {
@@ -395,6 +398,15 @@ pmml.ARIMA <- function(model,
     q_val = ns_q, phi_array = phi_array, theta_array = theta_array,
     mod_len = mod_len, mod_resids = mod_resids, seas = FALSE,
     ns_q = NA, seas_period = NA, exact_least_squares = exact_least_squares
+  )
+  return(nsc_node)
+}
+
+
+.make_zero_nsc_node <- function(model, exact_least_squares) {
+  # Creates a NonSeasonalComponent node with 0 for pdq values
+  nsc_node <- xmlNode("NonseasonalComponent",
+                      attrs = c(p = 0, d = 0, q = 0)
   )
   return(nsc_node)
 }

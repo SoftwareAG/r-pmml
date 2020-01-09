@@ -12,7 +12,7 @@
   copyright = NULL,
   transforms = NULL,
   missing_value_replacement = NULL,
-  exact_least_squares = FALSE,
+  exact_least_squares = TRUE,
   ...
 )
 }
@@ -32,7 +32,7 @@
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
 
-\item{exact_least_squares}{If TRUE, export seasonal models with exact least squares;
+\item{exact_least_squares}{(seasonal models only) If TRUE, export with exact least squares;
 otherwise, use conditional least squares.}
 
 \item{...}{Further arguments passed to or from other methods.}
@@ -64,13 +64,13 @@ data("WWWusage")
 mod <- Arima(WWWusage, order = c(3, 1, 1))
 mod_pmml <- pmml(mod)
 
-# seasonal model exported with exact least squares
+# seasonal model
 data("JohnsonJohnson")
 mod_02 <- Arima(JohnsonJohnson,
   order = c(1, 1, 1),
   seasonal = c(1, 1, 1)
 )
-mod_02_pmml <- pmml(mod_02, exact_least_squares = TRUE)
+mod_02_pmml <- pmml(mod_02)
 }
 \author{
 Dmitriy Bolotov

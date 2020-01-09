@@ -175,10 +175,10 @@ test_that("seasonal ARIMA model contains correct elements 3", {
   )
 })
 
-test_that("Seasonal ARIMA without non-seasonal component does not contain NonseasonalComponent", {
+test_that("Seasonal ARIMA with 0,0,0 non-seasonal component contains NonseasonalComponent with zero values", {
   fit_10 <- Arima(AirPassengers, order = c(0, 0, 0), seasonal = c(1, 2, 1))
   p_fit_10 <- pmml(fit_10, exact_least_squares = FALSE)
-  expect_equal(substr(toString(p_fit_10[[3]][[4]][[1]]), 1, 18), "<SeasonalComponent")
+  expect_equal(toString(p_fit_10[[3]][[4]][[1]]), "<NonseasonalComponent p=\"0\" d=\"0\" q=\"0\"/>")
 })
 
 test_that("ARIMA with both intercept and drift terms throws error", {
