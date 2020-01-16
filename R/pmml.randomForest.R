@@ -160,9 +160,9 @@ pmml.randomForest <- function(model,
   }
 
   numTrees <- model$ntree
-  segments <- lapply(1:numTrees, function(x) {
+  segments <- foreach(x=1:numTrees) %dopar% {
     .makeSegment(x, model, model_name, field, target, missing_value_replacement, child_invalid_value_treatment)
-  })
+  }
   segmentation2 <- append.XMLNode(segmentation, segments)
   rm(segmentation)
   rm(segments)
