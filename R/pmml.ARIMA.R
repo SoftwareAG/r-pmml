@@ -137,17 +137,18 @@ pmml.ARIMA <- function(model,
     arima_rmse <- sqrt(model$sigma2) # use the approximation
   
     # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
-    if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
-      if (is.element("intercept", names(model$coef))) {
-        arima_constant <- unname(model$coef["intercept"])
-      } else {
-        arima_constant <- unname(model$coef["drift"])
-      }
-    } else {
-      arima_constant <- 0
-    }
+    # if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
+    #   if (is.element("intercept", names(model$coef))) {
+    #     arima_constant <- unname(model$coef["intercept"])
+    #   } else {
+    #     arima_constant <- unname(model$coef["drift"])
+    #   }
+    # } else {
+    #   arima_constant <- 0
+    # }
   
-  
+    arima_constant <- .get_model_constant(model)
+    
     # exact_least_squares only has an effect if model has seasonal component.
     # if model is non-seasonal and ts_type="arima", always export in conditional least squares format.
     if (!.has_seasonal_comp(model)) { # if model does not have seasonal component, set to FALSE
@@ -180,14 +181,66 @@ pmml.ARIMA <- function(model,
     }
   
     if (exact_least_squares) {
-      arima_node <- append.XMLNode(arima_node, .make_mls_node(model))
+      arima_node <- append.XMLNode(arima_node,
+                                   .make_mls_node(model, ts_type))
     }
   
   
     ts_model <- append.XMLNode(ts_model, arima_node)
   
   } else {
-    stop("ts_type state_space is not yet supported.")
+    # PMML -> TimeSeriesModel
+    ts_model <- xmlNode("TimeSeriesModel",
+                        attrs = c(modelName = model_name,
+                                  functionName = "timeSeries",
+                                  bestFit = "StateSpaceModel")
+    )
+    
+    ts_model <- append.XMLNode(
+      ts_model,
+      .pmmlMiningSchemaARIMA(field, target, transforms, missing_value_replacement)
+    )
+    
+    ts_model <- append.XMLNode(
+      ts_model,
+      .make_arima_output_node(target, .has_seasonal_comp(model))
+    )
+    
+    ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
+    
+    state_space_node <- xmlNode("StateSpaceModel")
+    
+    # state vector
+    state_v_node <- .make_fs_vector_node(model, ts_type = ts_type)
+    
+    # transition matrix
+    trans_m_node <- append.XMLNode(
+      xmlNode("TransitionMatrix"),
+      .make_matrix_node(model$model$T)
+    )
+    
+    # measurement matrix
+    meas_m_node <- append.XMLNode(
+      xmlNode("MeasurementMatrix"),
+      .make_matrix_node(matrix(model$model$Z, nrow = 1))
+    )
+    
+    # intercept vector
+    intercept_v_node <- .make_intercept_v_node(model)
+    
+
+    # psi vector
+    
+    # dynamic regressor
+    
+    state_space_node <- append.XMLNode(state_space_node,
+                                       state_v_node,
+                                       trans_m_node,
+                                       meas_m_node,
+                                       intercept_v_node)
+    
+    ts_model <- append.XMLNode(ts_model, state_space_node)
+      
   }
 
   pmml <- append.XMLNode(pmml, ts_model)
@@ -195,6 +248,28 @@ pmml.ARIMA <- function(model,
   return(pmml)
 }
 
+.get_model_constant <- function(model){
+  # Get the constant term from model.
+  # constantTerm = 0 by default in PMML. Set the constantTerm to 0 when d != 0.
+  if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
+    if (is.element("intercept", names(model$coef))) {
+      arima_constant <- unname(model$coef["intercept"])
+    } else {
+      arima_constant <- unname(model$coef["drift"])
+    }
+  } else {
+    arima_constant <- 0
+  }
+  return(arima_constant)
+}
+
+
+.make_intercept_v_node <- function(model) {
+  iv_node <- xmlNode("InterceptVector")
+  const <- .get_model_constant(model)
+  iv_node <- append.XMLNode(iv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = const))
+  return(iv_node)
+}
 
 .make_arima_output_node <- function(target, has_seasonal_comp) {
   output_node <- xmlNode("Output")
@@ -218,6 +293,7 @@ pmml.ARIMA <- function(model,
 
   return(output_node)
 }
+
 
 .make_pi_node <- function(perc, interv) {
   # create prediction interval output node
@@ -245,7 +321,8 @@ pmml.ARIMA <- function(model,
   return(hv_node)
 }
 
-.make_mls_node <- function(model) {
+
+.make_mls_node <- function(model, ts_type) {
   # Creates MaximumLikelihoodStat node to be used with predictionMethod="exactLeastSquares"
   mls_node <- xmlNode("MaximumLikelihoodStat",
     attrs = c(method = "kalman", periodDeficit = "0")
@@ -261,7 +338,7 @@ pmml.ARIMA <- function(model,
 
   final_omega_node <- .make_final_omega_node(model)
 
-  final_state_vector <- .make_fs_vector_node(model)
+  final_state_vector <- .make_fs_vector_node(model, ts_type = ts_type)
 
   # h_vector <- .make_h_vector_node(model)
 
@@ -357,8 +434,8 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_fs_vector_node <- function(model) {
-  # Create FinalStateVector node
+.make_fs_vector_node <- function(model, ts_type) {
+  # Create FinalStateVector node or StateVector node, depending on type
 
   f_matrix <- model$model$T # transition matrix
   s_t0 <- model$model$a # current state estimate
@@ -371,7 +448,15 @@ pmml.ARIMA <- function(model,
   # final_state_vector <- s_t1[1:max(p,q)]
   final_state_vector <- s_t1
 
-  fsv_node <- xmlNode("FinalStateVector")
+  
+  # fsv_node <- xmlNode("FinalStateVector")
+  
+  if (ts_type == "arima"){
+    fsv_node <- xmlNode("FinalStateVector")
+  } else {
+    fsv_node <- xmlNode("StateVector")
+  }
+  
   fsv_node <- append.XMLNode(
     fsv_node,
     xmlNode("Array",
@@ -530,11 +615,13 @@ pmml.ARIMA <- function(model,
   return(a[3] != 0 | a[4] != 0 | a[7] != 0)
 }
 
+
 .has_nonseasonal_comp <- function(model) {
   # Checks if model has nonseasonal component.
   a <- model$arma
   return(a[1] != 0 | a[2] != 0 | a[6] != 0)
 }
+
 
 .make_ts_node <- function(model) {
   # Creates TimeSeries node. Exports the full time series.

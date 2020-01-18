@@ -261,3 +261,20 @@ test_that("seasonal models with ELS contain correct matrices", {
   # MeasurementMatrix
   expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[4]][[1]]), "<Matrix nbRows=\"1\" nbCols=\"27\">\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n</Matrix>")
 })
+
+
+## Tests for StateSpaceModel
+
+test_that("bestFit TimeSeriesModel node matches ts_type", {
+  fit_22 <- Arima(WWWusage, c(1,1,1))
+  p_fit_22 <- pmml(fit_22, ts_type = "state_space")
+  expect_equal(xmlGetAttr(p_fit_22[[3]], name = "bestFit"), "StateSpaceModel")
+  
+  p_fit_22_a <- pmml(fit_22, ts_type = "arima")
+  expect_equal(xmlGetAttr(p_fit_22_a[[3]], name = "bestFit"), "ARIMA")
+  
+  # test that the default is "arima"
+  p_fit_22_b <- pmml(fit_22)
+  expect_equal(xmlGetAttr(p_fit_22_b[[3]], name = "bestFit"), "ARIMA")
+})
+
