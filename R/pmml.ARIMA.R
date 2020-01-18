@@ -23,7 +23,8 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param exact_least_squares (seasonal models only) If TRUE, export with exact least squares;
+#' @param ts_type The type of type series representation for PMML: "arima" or "state_space".
+#' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #'
 #' @inheritParams pmml
@@ -68,10 +69,22 @@ pmml.ARIMA <- function(model,
                        copyright = NULL,
                        transforms = NULL,
                        missing_value_replacement = NULL,
+                       ts_type = "arima",
                        exact_least_squares = TRUE,
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 
+  # Deprecated argument.
+  if (!missing(exact_least_squares)) {
+    warning("argument exact_least_squares is deprecated.",
+            call. = FALSE
+    )
+  }
+  
+  if (!(ts_type %in% c("arima", "state_space"))){
+    stop('ts_type must be one of "arima" or "state_space".')
+  }
+  
   if (!is.logical(exact_least_squares)) {
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
@@ -99,77 +112,83 @@ pmml.ARIMA <- function(model,
   # PMML -> DataDictionary
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(field, transformed = transforms))
 
-  # PMML -> TimeSeriesModel
-  ts_model <- xmlNode("TimeSeriesModel",
-    attrs = c(modelName = model_name, functionName = "timeSeries", bestFit = "ARIMA")
-  )
-
-  ts_model <- append.XMLNode(
-    ts_model,
-    .pmmlMiningSchemaARIMA(field, target, transforms, missing_value_replacement)
-  )
-
-  ts_model <- append.XMLNode(
-    ts_model,
-    # .pmmlOutput(field, target)
-    .make_arima_output_node(target, .has_seasonal_comp(model))
-  )
-
-
-  ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
-
-  # arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
-  arima_rmse <- sqrt(model$sigma2) # use the approximation
-
-  # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
-  if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
-    if (is.element("intercept", names(model$coef))) {
-      arima_constant <- unname(model$coef["intercept"])
+  if (ts_type == "arima") {
+  
+    # PMML -> TimeSeriesModel
+    ts_model <- xmlNode("TimeSeriesModel",
+      attrs = c(modelName = model_name, functionName = "timeSeries", bestFit = "ARIMA")
+    )
+  
+    ts_model <- append.XMLNode(
+      ts_model,
+      .pmmlMiningSchemaARIMA(field, target, transforms, missing_value_replacement)
+    )
+  
+    ts_model <- append.XMLNode(
+      ts_model,
+      # .pmmlOutput(field, target)
+      .make_arima_output_node(target, .has_seasonal_comp(model))
+    )
+  
+  
+    ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
+  
+    # arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
+    arima_rmse <- sqrt(model$sigma2) # use the approximation
+  
+    # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
+    if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
+      if (is.element("intercept", names(model$coef))) {
+        arima_constant <- unname(model$coef["intercept"])
+      } else {
+        arima_constant <- unname(model$coef["drift"])
+      }
     } else {
-      arima_constant <- unname(model$coef["drift"])
+      arima_constant <- 0
     }
+  
+  
+    # exact_least_squares only has an effect if model has seasonal component.
+    # if model is non-seasonal and ts_type="arima", always export in conditional least squares format.
+    if (!.has_seasonal_comp(model)) { # if model does not have seasonal component, set to FALSE
+      exact_least_squares <- FALSE
+    }
+  
+  
+    prediction_method <- if (exact_least_squares) {
+      "exactLeastSquares"
+    } else {
+      "conditionalLeastSquares"
+    }
+  
+    arima_node <- xmlNode("ARIMA", attrs = c(
+      RMSE = arima_rmse,
+      transformation = "none",
+      constantTerm = arima_constant,
+      predictionMethod = prediction_method
+    ))
+  
+    if (.has_nonseasonal_comp(model)) {
+      arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
+    } else {
+      # crete a non-seasonal node with all zeros
+      arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
+    }
+  
+    if (.has_seasonal_comp(model)) {
+      arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
+    }
+  
+    if (exact_least_squares) {
+      arima_node <- append.XMLNode(arima_node, .make_mls_node(model))
+    }
+  
+  
+    ts_model <- append.XMLNode(ts_model, arima_node)
+  
   } else {
-    arima_constant <- 0
+    stop("ts_type state_space is not yet supported.")
   }
-
-
-  # exact_least_squares only has an effect if model has seasonal component.
-  # if model is non-seasonal, always export in conditional least squares format.
-  if (!.has_seasonal_comp(model)) { # if model does not have seasonal component, set to FALSE
-    exact_least_squares <- FALSE
-  }
-
-
-  prediction_method <- if (exact_least_squares) {
-    "exactLeastSquares"
-  } else {
-    "conditionalLeastSquares"
-  }
-
-  arima_node <- xmlNode("ARIMA", attrs = c(
-    RMSE = arima_rmse,
-    transformation = "none",
-    constantTerm = arima_constant,
-    predictionMethod = prediction_method
-  ))
-
-  if (.has_nonseasonal_comp(model)) {
-    arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
-  } else {
-    # crete a non-seasonal node with all zeros
-    arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
-  }
-
-  if (.has_seasonal_comp(model)) {
-    arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
-  }
-
-  if (exact_least_squares) {
-    arima_node <- append.XMLNode(arima_node, .make_mls_node(model))
-  }
-
-
-  ts_model <- append.XMLNode(ts_model, arima_node)
 
   pmml <- append.XMLNode(pmml, ts_model)
 
