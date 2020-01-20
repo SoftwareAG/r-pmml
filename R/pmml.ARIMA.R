@@ -134,18 +134,7 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
   
     # arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
-    arima_rmse <- sqrt(model$sigma2) # use the approximation
-  
-    # constantTerm = 0 by default. Set the constantTerm to 0 when d != 0.
-    # if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
-    #   if (is.element("intercept", names(model$coef))) {
-    #     arima_constant <- unname(model$coef["intercept"])
-    #   } else {
-    #     arima_constant <- unname(model$coef["drift"])
-    #   }
-    # } else {
-    #   arima_constant <- 0
-    # }
+    arima_rmse <- sqrt(model$sigma2) # use the approximation in ARIMA object
   
     arima_constant <- .get_model_constant(model)
     
@@ -203,7 +192,8 @@ pmml.ARIMA <- function(model,
     
     ts_model <- append.XMLNode(
       ts_model,
-      .make_arima_output_node(target, .has_seasonal_comp(model))
+      .pmmlOutput(field, target)
+      # .make_arima_output_node(target, .has_seasonal_comp(model))
     )
     
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
@@ -228,16 +218,20 @@ pmml.ARIMA <- function(model,
     # intercept vector
     intercept_v_node <- .make_intercept_v_node(model)
     
+    # variance vector
+    variance_v_node <- .make_variance_v_node(model)
 
-    # psi vector
+    # psi vector - not used
     
     # dynamic regressor
     
+    # add elements to state_space_node
     state_space_node <- append.XMLNode(state_space_node,
                                        state_v_node,
                                        trans_m_node,
                                        meas_m_node,
-                                       intercept_v_node)
+                                       intercept_v_node,
+                                       variance_v_node)
     
     ts_model <- append.XMLNode(ts_model, state_space_node)
       
@@ -267,8 +261,18 @@ pmml.ARIMA <- function(model,
 .make_intercept_v_node <- function(model) {
   iv_node <- xmlNode("InterceptVector")
   const <- .get_model_constant(model)
-  iv_node <- append.XMLNode(iv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = const))
+  iv_node <- append.XMLNode(iv_node, xmlNode("Array", 
+                                             attrs = c(type = "real", n = "1"), 
+                                             value = const))
   return(iv_node)
+}
+
+.make_variance_v_node <- function(model) {
+  vv_node <- xmlNode("VarianceVector")
+  vv_node <- append.XMLNode(vv_node, xmlNode("Array", 
+                                             attrs = c(type = "real", n = "1"), 
+                                             value = model$sigma2))
+  return(vv_node)
 }
 
 .make_arima_output_node <- function(target, has_seasonal_comp) {
