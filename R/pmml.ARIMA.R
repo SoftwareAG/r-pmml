@@ -218,8 +218,8 @@ pmml.ARIMA <- function(model,
     # intercept vector
     intercept_v_node <- .make_intercept_v_node(model)
     
-    # variance vector
-    variance_v_node <- .make_variance_v_node(model)
+    # variance vector - not used
+    # variance_v_node <- .make_variance_v_node(model)
 
     # psi vector - not used
     
@@ -230,8 +230,7 @@ pmml.ARIMA <- function(model,
                                        state_v_node,
                                        trans_m_node,
                                        meas_m_node,
-                                       intercept_v_node,
-                                       variance_v_node)
+                                       intercept_v_node)
     
     ts_model <- append.XMLNode(ts_model, state_space_node)
       
