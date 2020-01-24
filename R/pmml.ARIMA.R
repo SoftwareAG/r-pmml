@@ -198,7 +198,9 @@ pmml.ARIMA <- function(model,
     
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
     
-    state_space_node <- xmlNode("StateSpaceModel")
+    state_space_node <- xmlNode("StateSpaceModel",
+                                attrs = c(intercept = toString(.get_model_constant(model))))
+    
     
     # state vector
     state_v_node <- .make_fs_vector_node(model, ts_type = ts_type)
@@ -215,8 +217,8 @@ pmml.ARIMA <- function(model,
       .make_matrix_node(matrix(model$model$Z, nrow = 1))
     )
     
-    # intercept vector
-    intercept_v_node <- .make_intercept_v_node(model)
+    # intercept vector - replaced with intercept attribute
+    # intercept_v_node <- .make_intercept_v_node(model)
     
     # variance vector - not used
     # variance_v_node <- .make_variance_v_node(model)
@@ -229,8 +231,7 @@ pmml.ARIMA <- function(model,
     state_space_node <- append.XMLNode(state_space_node,
                                        state_v_node,
                                        trans_m_node,
-                                       meas_m_node,
-                                       intercept_v_node)
+                                       meas_m_node)
     
     ts_model <- append.XMLNode(ts_model, state_space_node)
       
