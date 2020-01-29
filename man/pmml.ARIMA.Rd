@@ -12,6 +12,7 @@
   copyright = NULL,
   transforms = NULL,
   missing_value_replacement = NULL,
+  ts_type = "arima",
   exact_least_squares = TRUE,
   ...
 )
@@ -32,7 +33,9 @@
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
 
-\item{exact_least_squares}{(seasonal models only) If TRUE, export with exact least squares;
+\item{ts_type}{The type of type series representation for PMML: "arima" or "state_space".}
+
+\item{exact_least_squares}{Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 otherwise, use conditional least squares.}
 
 \item{...}{Further arguments passed to or from other methods.}

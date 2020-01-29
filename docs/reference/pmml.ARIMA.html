@@ -141,6 +141,7 @@
   <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ts_type</span> <span class='kw'>=</span> <span class='st'>"arima"</span>,
   <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -178,8 +179,12 @@
 attribute for all MiningFields.</p></td>
     </tr>
     <tr>
+      <th>ts_type</th>
+      <td><p>The type of type series representation for PMML: "arima" or "state_space".</p></td>
+    </tr>
+    <tr>
       <th>exact_least_squares</th>
-      <td><p>(seasonal models only) If TRUE, export with exact least squares;
+      <td><p>Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 otherwise, use conditional least squares.</p></td>
     </tr>
     <tr>
@@ -204,9 +209,7 @@ between R and PMML may not match.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'xts':</span>
-#&gt; <span class='message'>  method     from</span>
-#&gt; <span class='message'>  as.zoo.xts zoo </span></div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
 #&gt; <span class='message'>  method            from</span>
 #&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'forecast':</span>
 #&gt; <span class='message'>  method             from    </span>
