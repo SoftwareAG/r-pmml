@@ -199,7 +199,9 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
     
     state_space_node <- xmlNode("StateSpaceModel",
-                                attrs = c(intercept = toString(.get_model_constant(model))))
+                                attrs = c(intercept = toString(.get_model_constant(model)),
+                                          variance = model$sigma2,
+                                          observationVariance = toString(model$model$h)))
     
     
     # state vector
@@ -227,11 +229,28 @@ pmml.ARIMA <- function(model,
     
     # dynamic regressor
     
+    # PredictedCovarianceMatrix
+    pscm_node <- append.XMLNode(
+      xmlNode("PredictedStateCovarianceMatrix"),
+      .make_matrix_node(matrix(model$model$P,
+                               nrow = NROW(model$model$P)))
+    )
+    
+    # SelectedCovarianceMatrix
+    sscm_node <- append.XMLNode(
+      xmlNode("SelectedStateCovarianceMatrix"),
+      .make_matrix_node(matrix(model$model$V,
+                               nrow = NROW(model$model$V)))
+    )
+    
+    
     # add elements to state_space_node
     state_space_node <- append.XMLNode(state_space_node,
                                        state_v_node,
                                        trans_m_node,
-                                       meas_m_node)
+                                       meas_m_node,
+                                       pscm_node,
+                                       sscm_node)
     
     ts_model <- append.XMLNode(ts_model, state_space_node)
       
