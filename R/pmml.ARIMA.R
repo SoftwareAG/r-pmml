@@ -23,7 +23,7 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param ts_type The type of type series representation for PMML: "arima" or "state_space".
+#' @param ts_type The type of type series representation for PMML: "arima" or "statespace".
 #' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #'
@@ -35,7 +35,7 @@
 #' Non-seasonal models are represented with conditional
 #' least squares. For models with a seasonal component, the PMML can be exported with conditional
 #' least squares or exact least squares. Note that ARIMA models in R are
-#' estimated using a state space formulation. When using conditional least squares with seasonal models,
+#' estimated using a state space representation. When using conditional least squares with seasonal models,
 #' forecast results between R and PMML may not match.
 #'
 #' Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
@@ -81,8 +81,8 @@ pmml.ARIMA <- function(model,
     )
   }
   
-  if (!(ts_type %in% c("arima", "state_space"))){
-    stop('ts_type must be one of "arima" or "state_space".')
+  if (!(ts_type %in% c("arima", "statespace"))){
+    stop('ts_type must be one of "arima" or "statespace".')
   }
   
   if (!is.logical(exact_least_squares)) {

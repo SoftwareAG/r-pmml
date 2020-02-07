@@ -33,7 +33,7 @@
 \item{missing_value_replacement}{Value to be used as the 'missingValueReplacement'
 attribute for all MiningFields.}
 
-\item{ts_type}{The type of type series representation for PMML: "arima" or "state_space".}
+\item{ts_type}{The type of type series representation for PMML: "arima" or "statespace".}
 
 \item{exact_least_squares}{Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 otherwise, use conditional least squares.}
@@ -51,7 +51,7 @@ The model is represented in the PMML TimeSeriesModel format.
 Non-seasonal models are represented with conditional
 least squares. For models with a seasonal component, the PMML can be exported with conditional
 least squares or exact least squares. Note that ARIMA models in R are
-estimated using a state space formulation. When using conditional least squares with seasonal models,
+estimated using a state space representation. When using conditional least squares with seasonal models,
 forecast results between R and PMML may not match.
 
 Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals

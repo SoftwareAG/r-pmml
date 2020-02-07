@@ -267,7 +267,7 @@ test_that("seasonal models with ELS contain correct matrices", {
 
 test_that("bestFit TimeSeriesModel node matches ts_type", {
   fit_22 <- Arima(WWWusage, c(1,1,1))
-  p_fit_22 <- pmml(fit_22, ts_type = "state_space")
+  p_fit_22 <- pmml(fit_22, ts_type = "statespace")
   expect_equal(xmlGetAttr(p_fit_22[[3]], name = "bestFit"), "StateSpaceModel")
   
   p_fit_22_a <- pmml(fit_22, ts_type = "arima")
