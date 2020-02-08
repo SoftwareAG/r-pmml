@@ -14,6 +14,7 @@
   missing_value_replacement = NULL,
   ts_type = "arima",
   exact_least_squares = TRUE,
+  cpi_levels = c(80, 95),
   ...
 )
 }
@@ -38,6 +39,8 @@ attribute for all MiningFields.}
 \item{exact_least_squares}{Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 otherwise, use conditional least squares.}
 
+\item{cpi_levels}{Vector of confidence levels for prediction intervals.}
+
 \item{...}{Further arguments passed to or from other methods.}
 }
 \value{
@@ -56,6 +59,10 @@ forecast results between R and PMML may not match.
 
 Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 between R and PMML may not match.
+
+`cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
+
 
 Transforms are currently not supported for ARIMA models.
 }

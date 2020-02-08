@@ -26,6 +26,7 @@
 #' @param ts_type The type of type series representation for PMML: "arima" or "statespace".
 #' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
+#' @param cpi_levels Vector of confidence levels for prediction intervals.
 #'
 #' @inheritParams pmml
 #'
@@ -40,6 +41,10 @@
 #'
 #' Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 #' between R and PMML may not match.
+#'
+#' `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+#' non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
+#' 
 #'
 #' Transforms are currently not supported for ARIMA models.
 #'
@@ -71,6 +76,7 @@ pmml.ARIMA <- function(model,
                        missing_value_replacement = NULL,
                        ts_type = "arima",
                        exact_least_squares = TRUE,
+                       cpi_levels = c(80, 95),
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 
@@ -89,6 +95,8 @@ pmml.ARIMA <- function(model,
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
 
+  cpi_levels <- .check_cpi_levels(cpi_levels)
+  
   if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
 
   # Stop if model includes both intercept and drift terms
@@ -127,7 +135,7 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
-      .make_arima_output_node(target, .has_seasonal_comp(model))
+      .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels)
     )
   
   
@@ -192,8 +200,8 @@ pmml.ARIMA <- function(model,
     
     ts_model <- append.XMLNode(
       ts_model,
-      .pmmlOutput(field, target)
-      # .make_arima_output_node(target, .has_seasonal_comp(model))
+      # .pmmlOutput(field, target)
+      .make_arima_output_node(target, FALSE, cpi_levels)
     )
     
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
@@ -261,6 +269,28 @@ pmml.ARIMA <- function(model,
   return(pmml)
 }
 
+
+.check_cpi_levels <- function(cpi_levels) {
+  if (length(cpi_levels) == 0) {
+    stop("length of cpi_levels must be greater than 0.")
+  }
+  
+  if(!is.numeric(cpi_levels)) {
+    stop("cpi_levels must be numeric.")
+  }
+  
+  if (min(cpi_levels) < 0 | max(cpi_levels) > 99.99) {
+    stop("cpi_levels out of range.")
+  }
+  
+  if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
+    cpi_levels <- 100 * cpi_levels
+  }
+  
+  return(cpi_levels)
+}
+
+
 .get_model_constant <- function(model){
   # Get the constant term from model.
   # constantTerm = 0 by default in PMML. Set the constantTerm to 0 when d != 0.
@@ -294,7 +324,7 @@ pmml.ARIMA <- function(model,
   return(vv_node)
 }
 
-.make_arima_output_node <- function(target, has_seasonal_comp) {
+.make_arima_output_node <- function(target, has_seasonal_comp, cpi_levels) {
   output_node <- xmlNode("Output")
 
   point_forecast_node <- xmlNode("OutputField", attrs = c(
@@ -308,17 +338,19 @@ pmml.ARIMA <- function(model,
 
   if (!has_seasonal_comp) {
     # if model has no seasonal component, include prediction intervals in Output
-    output_node <- append.XMLNode(output_node, .make_pi_node("80", "lower"))
-    output_node <- append.XMLNode(output_node, .make_pi_node("80", "upper"))
-    output_node <- append.XMLNode(output_node, .make_pi_node("95", "lower"))
-    output_node <- append.XMLNode(output_node, .make_pi_node("95", "upper"))
+    for (lev in cpi_levels){
+      output_node <- append.XMLNode(output_node,
+                                    .make_pi_node(lev, "Lower"),
+                                    .make_pi_node(lev, "Upper"))
+    }
   }
 
   return(output_node)
 }
 
 
-.make_pi_node <- function(perc, interv) {
+.make_pi_node_0 <- function(perc, interv) {
+  # DEPRECATED
   # create prediction interval output node
   pi_node <- xmlNode("OutputField", attrs = c(
     name = paste("cpi_", perc, "_", interv, sep = ""),
@@ -335,6 +367,20 @@ pmml.ARIMA <- function(model,
   return(pi_node)
 }
 
+
+.make_pi_node <- function(perc, interv) {
+  # create prediction interval output node
+  perc <- toString(perc)
+  pi_node <- xmlNode("OutputField", attrs = c(
+    name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
+    optype = "continuous",
+    dataType = "double",
+    feature = paste("confidenceInterval", interv, sep = ""),
+    value = perc
+  ))
+
+  return(pi_node)
+}
 
 .make_h_vector_node <- function(model) {
   hv_node <- xmlNode("HVector")
