@@ -330,7 +330,7 @@ pmml.ARIMA <- function(model,
   point_forecast_node <- xmlNode("OutputField", attrs = c(
     name = paste("Predicted_", target, sep = ""),
     optype = "continuous",
-    dataType = "double",
+    dataType = "string",
     feature = "predictedValue"
   ))
 
@@ -374,7 +374,7 @@ pmml.ARIMA <- function(model,
   pi_node <- xmlNode("OutputField", attrs = c(
     name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
     optype = "continuous",
-    dataType = "double",
+    dataType = "string",
     feature = paste("confidenceInterval", interv, sep = ""),
     value = perc
   ))
