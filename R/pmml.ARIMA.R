@@ -333,6 +333,8 @@ pmml.ARIMA <- function(model,
     dataType = "string",
     feature = "predictedValue"
   ))
+  
+  point_forecast_node <- append.XMLNode(point_forecast_node, .make_ext_json_node())
 
   output_node <- append.XMLNode(output_node, point_forecast_node)
 
@@ -348,6 +350,12 @@ pmml.ARIMA <- function(model,
   return(output_node)
 }
 
+
+.make_ext_json_node <- function(){
+ return(xmlNode("Extension", attrs = c(extender = "ADAPA",
+                                               name = "dataType",
+                                               value = "json")))
+}
 
 .make_pi_node_0 <- function(perc, interv) {
   # DEPRECATED
@@ -378,6 +386,8 @@ pmml.ARIMA <- function(model,
     feature = paste("confidenceInterval", interv, sep = ""),
     value = perc
   ))
+  
+  pi_node <- append.XMLNode(pi_node, .make_ext_json_node())
 
   return(pi_node)
 }

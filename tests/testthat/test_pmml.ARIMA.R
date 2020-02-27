@@ -37,10 +37,16 @@ test_that("MiningSchema node contains expected elements", {
 test_that("Output node contains expected elements", {
   fit_4 <- auto.arima(WWWusage)
   p_fit_4 <- pmml(fit_4)
+  # expect_equal(
+  #   toString(p_fit_4[[3]][[2]][[1]]),
+  #   "<OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\"/>"
+  # )
+  
   expect_equal(
     toString(p_fit_4[[3]][[2]][[1]]),
-    "<OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\"/>"
+    "<OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n</OutputField>"
   )
+  
 })
 
 test_that("NonseasonalComponent node contains required elements 1", {
@@ -230,14 +236,14 @@ test_that("RMSE attribute equals sqrt(sigma2) from R object", {
 test_that("seasonal models do not include CPI in Output", {
   fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1, 1, 1))
   p_fit_17 <- pmml(fit_17, exact_least_squares = FALSE)
-  expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\"/>\n</Output>")
+  expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n</Output>")
 })
 
 
 test_that("non-seasonal models include CPI in Output", {
   fit_18 <- Arima(AirPassengers, order = c(2, 2, 2))
   p_fit_18 <- pmml(fit_18)
-  expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"80\"/>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"80\"/>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"95\"/>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"95\"/>\n</Output>")
+  expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n</Output>")
 })
 
 test_that("FinalOmega is 0", {
