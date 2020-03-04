@@ -27,12 +27,13 @@
 #' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #' @param cpi_levels Vector of confidence levels for prediction intervals.
+#' @param output_type Output dataType: "string" or "double".
 #'
 #' @inheritParams pmml
 #'
 #' @return PMML representation of the \code{ARIMA} object.
 #'
-#' @details The model is represented in the PMML TimeSeriesModel format.
+#' @details The model is represented as a PMML TimeSeriesModel.
 #' Non-seasonal models are represented with conditional
 #' least squares. For models with a seasonal component, the PMML can be exported with conditional
 #' least squares or exact least squares. Note that ARIMA models in R are
@@ -45,6 +46,11 @@
 #' `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
 #' non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
 #' 
+#' `output_type` controls the output dataType. If set to "double", the forecast and prediction intervals are
+#' single numbers. If set to "string" (default), the forecast and intervals are strings that contain all 
+#' values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
+#' "double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
+#' Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.
 #'
 #' Transforms are currently not supported for ARIMA models.
 #'
@@ -77,6 +83,7 @@ pmml.ARIMA <- function(model,
                        ts_type = "arima",
                        exact_least_squares = TRUE,
                        cpi_levels = c(80, 95),
+                       output_type = "string",
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 
@@ -95,6 +102,10 @@ pmml.ARIMA <- function(model,
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
 
+  if (!(output_type %in% c("string", "double"))){
+    stop('output_type must be one of "string" or "double".')
+  }
+  
   cpi_levels <- .check_cpi_levels(cpi_levels)
   
   if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
@@ -135,7 +146,7 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
-      .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels)
+      .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels, output_type)
     )
   
   
@@ -201,7 +212,7 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
-      .make_arima_output_node(target, FALSE, cpi_levels)
+      .make_arima_output_node(target, FALSE, cpi_levels, output_type)
     )
     
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
@@ -324,28 +335,55 @@ pmml.ARIMA <- function(model,
   return(vv_node)
 }
 
-.make_arima_output_node <- function(target, has_seasonal_comp, cpi_levels) {
+.make_arima_output_node <- function(target,
+                                    has_seasonal_comp,
+                                    cpi_levels,
+                                    output_type) {
   output_node <- xmlNode("Output")
 
-  point_forecast_node <- xmlNode("OutputField", attrs = c(
-    name = paste("Predicted_", target, sep = ""),
-    optype = "continuous",
-    dataType = "string",
-    feature = "predictedValue"
-  ))
-  
-  point_forecast_node <- append.XMLNode(point_forecast_node, .make_ext_json_node())
-
-  output_node <- append.XMLNode(output_node, point_forecast_node)
-
-  if (!has_seasonal_comp) {
-    # if model has no seasonal component, include prediction intervals in Output
-    for (lev in cpi_levels){
-      output_node <- append.XMLNode(output_node,
-                                    .make_pi_node(lev, "Lower"),
-                                    .make_pi_node(lev, "Upper"))
+  if (output_type == "string") {
+    point_forecast_node <- xmlNode("OutputField", attrs = c(
+      name = paste("Predicted_", target, sep = ""),
+      optype = "continuous",
+      dataType = "string",
+      feature = "predictedValue"
+    ))
+    
+    point_forecast_node <- append.XMLNode(point_forecast_node, .make_ext_json_node())
+    
+    output_node <- append.XMLNode(output_node, point_forecast_node)
+    
+    if (!has_seasonal_comp) {
+      # if model has no seasonal component, include prediction intervals in Output
+      for (lev in cpi_levels){
+        output_node <- append.XMLNode(output_node,
+                                      .make_pi_node(lev, "Lower", output_type),
+                                      .make_pi_node(lev, "Upper", output_type))
+      }
     }
+  } else {
+    
+    point_forecast_node <- xmlNode("OutputField", attrs = c(
+      name = paste("Predicted_", target, sep = ""),
+      optype = "continuous",
+      dataType = "double",
+      feature = "predictedValue"
+    ))
+    
+    output_node <- append.XMLNode(output_node, point_forecast_node)
+    
+    if (!has_seasonal_comp) {
+      # if model has no seasonal component, include prediction intervals in Output
+      for (lev in cpi_levels){
+        output_node <- append.XMLNode(output_node,
+                                      .make_pi_node(lev, "Lower", output_type),
+                                      .make_pi_node(lev, "Upper", output_type))
+      }
+    }
+    
   }
+  
+  
 
   return(output_node)
 }
@@ -376,18 +414,31 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_pi_node <- function(perc, interv) {
+.make_pi_node <- function(perc, interv, output_type) {
   # create prediction interval output node
   perc <- toString(perc)
-  pi_node <- xmlNode("OutputField", attrs = c(
-    name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
-    optype = "continuous",
-    dataType = "string",
-    feature = paste("confidenceInterval", interv, sep = ""),
-    value = perc
-  ))
   
-  pi_node <- append.XMLNode(pi_node, .make_ext_json_node())
+  if (output_type == "string"){
+    pi_node <- xmlNode("OutputField", attrs = c(
+      name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
+      optype = "continuous",
+      dataType = "string",
+      feature = paste("confidenceInterval", interv, sep = ""),
+      value = perc
+    ))
+    pi_node <- append.XMLNode(pi_node, .make_ext_json_node())
+  } else {
+    pi_node <- xmlNode("OutputField", attrs = c(
+      name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
+      optype = "continuous",
+      dataType = "double",
+      feature = paste("confidenceInterval", interv, sep = ""),
+      value = perc
+    ))
+  }
+  
+  
+
 
   return(pi_node)
 }

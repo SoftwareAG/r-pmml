@@ -15,6 +15,7 @@
   ts_type = "arima",
   exact_least_squares = TRUE,
   cpi_levels = c(80, 95),
+  output_type = "string",
   ...
 )
 }
@@ -41,6 +42,8 @@ otherwise, use conditional least squares.}
 
 \item{cpi_levels}{Vector of confidence levels for prediction intervals.}
 
+\item{output_type}{Output dataType: "string" or "double".}
+
 \item{...}{Further arguments passed to or from other methods.}
 }
 \value{
@@ -50,7 +53,7 @@ PMML representation of the \code{ARIMA} object.
 Generate PMML for an ARIMA object the \bold{forecast} package.
 }
 \details{
-The model is represented in the PMML TimeSeriesModel format.
+The model is represented as a PMML TimeSeriesModel.
 Non-seasonal models are represented with conditional
 least squares. For models with a seasonal component, the PMML can be exported with conditional
 least squares or exact least squares. Note that ARIMA models in R are
@@ -63,6 +66,11 @@ between R and PMML may not match.
 `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
 non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
 
+`output_type` controls the output dataType. If set to "double", the forecast and prediction intervals are
+single numbers. If set to "string" (default), the forecast and intervals are strings that contain all 
+values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
+"double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
+Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.
 
 Transforms are currently not supported for ARIMA models.
 }

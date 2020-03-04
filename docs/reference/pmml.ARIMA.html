@@ -143,6 +143,8 @@
   <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ts_type</span> <span class='kw'>=</span> <span class='st'>"arima"</span>,
   <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>cpi_levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
+  <span class='kw'>output_type</span> <span class='kw'>=</span> <span class='st'>"string"</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -188,6 +190,14 @@ attribute for all MiningFields.</p></td>
 otherwise, use conditional least squares.</p></td>
     </tr>
     <tr>
+      <th>cpi_levels</th>
+      <td><p>Vector of confidence levels for prediction intervals.</p></td>
+    </tr>
+    <tr>
+      <th>output_type</th>
+      <td><p>Output dataType: "string" or "double".</p></td>
+    </tr>
+    <tr>
       <th>...</th>
       <td><p>Further arguments passed to or from other methods.</p></td>
     </tr>
@@ -198,7 +208,7 @@ otherwise, use conditional least squares.</p></td>
     <p>PMML representation of the <code>ARIMA</code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model is represented in the PMML TimeSeriesModel format.
+    <p>The model is represented as a PMML TimeSeriesModel.
 Non-seasonal models are represented with conditional
 least squares. For models with a seasonal component, the PMML can be exported with conditional
 least squares or exact least squares. Note that ARIMA models in R are
@@ -206,15 +216,19 @@ estimated using a state space representation. When using conditional least squar
 forecast results between R and PMML may not match.</p>
 <p>Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 between R and PMML may not match.</p>
+<p>`cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.</p>
+<p>`output_type` controls the output dataType. If set to "double", the forecast and prediction intervals are
+single numbers. If set to "string" (default), the forecast and intervals are strings that contain all 
+values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
+"double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
+Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
 #&gt; <span class='message'>  method            from</span>
-#&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'forecast':</span>
-#&gt; <span class='message'>  method             from    </span>
-#&gt; <span class='message'>  fitted.fracdiff    fracdiff</span>
-#&gt; <span class='message'>  residuals.fracdiff fracdiff</span></div><div class='input'>
+#&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='input'>
 <span class='co'># non-seasonal model</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"WWWusage"</span>)
 <span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))

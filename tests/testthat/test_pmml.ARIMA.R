@@ -269,6 +269,32 @@ test_that("seasonal models with ELS contain correct matrices", {
 })
 
 
+test_that("output_type only allows 'string' or 'double'", {
+  fit_24 <- Arima(AirPassengers, order = c(1, 2, 0))
+  expect_error(pmml(fit_24, output_type = "not_string"), 'output_type must be one of "string" or "double".')
+})
+
+test_that("output_type controls dataType in OutputFields", {
+  fit_23 <- Arima(AirPassengers, order = c(1, 2, 0))
+  p_fit_23_arima_string <- pmml(fit_23, ts_type = "arima", output_type = "string")
+  p_fit_23_ss_string <- pmml(fit_23, ts_type = "statespace") # "string" is default
+
+  p_fit_23_arima_double <- pmml(fit_23, ts_type = "arima", output_type = "double")
+  p_fit_23_ss_double <- pmml(fit_23, ts_type = "statespace", output_type = "double")
+
+  expect_equal(toString(p_fit_23_arima_string[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n</Output>")
+  expect_equal(toString(p_fit_23_ss_string[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"80\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalLower\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"string\" feature=\"confidenceIntervalUpper\" value=\"95\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n</Output>")
+  
+  expect_equal(toString(p_fit_23_arima_double[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"80\"/>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"80\"/>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"95\"/>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"95\"/>\n</Output>")
+  expect_equal(toString(p_fit_23_ss_double[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"80\"/>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"80\"/>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"95\"/>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"95\"/>\n</Output>")
+  
+})
+
+
+
+
+
+
 ## Tests for StateSpaceModel
 
 test_that("bestFit TimeSeriesModel node matches ts_type", {
