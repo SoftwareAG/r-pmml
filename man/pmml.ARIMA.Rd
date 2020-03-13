@@ -54,14 +54,17 @@ Generate PMML for an ARIMA object the \bold{forecast} package.
 }
 \details{
 The model is represented as a PMML TimeSeriesModel.
+When `ts_type = arima` (deprecated), models are exported as ARIMA elements in PMML. 
 Non-seasonal models are represented with conditional
 least squares. For models with a seasonal component, the PMML can be exported with conditional
 least squares or exact least squares. Note that ARIMA models in R are
 estimated using a state space representation. When using conditional least squares with seasonal models,
-forecast results between R and PMML may not match.
-
-Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+forecast results between R and PMML may not match. Prediction intervals 
+are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 between R and PMML may not match.
+
+When `ts_type = statespace`, models are exported as StateSpaceModel elements in PMML.
+
 
 `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
 non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
@@ -71,6 +74,8 @@ single numbers. If set to "string" (default), the forecast and intervals are str
 values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
 "double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
 Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.
+
+ARIMA models with a drift term will be supported in a future version.
 
 Transforms are currently not supported for ARIMA models.
 }

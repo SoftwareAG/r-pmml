@@ -188,11 +188,16 @@ test_that("Seasonal ARIMA with 0,0,0 non-seasonal component contains Nonseasonal
 })
 
 test_that("ARIMA with both intercept and drift terms throws error", {
+  # drift and intercept
   fit_11 <- Arima(AirPassengers, order = c(1, 0, 1), include.drift = TRUE)
-  expect_error(pmml(fit_11), "ARIMA models with both mean and drift terms not supported.")
+  expect_error(pmml(fit_11), "ARIMA models with a drift term not supported.")
 
   fit_12 <- Arima(AirPassengers, order = c(2, 0, 2), include.drift = TRUE)
-  expect_error(pmml(fit_12), "ARIMA models with both mean and drift terms not supported.")
+  expect_error(pmml(fit_12), "ARIMA models with a drift term not supported.")
+  
+  # drift term only
+  fit_12a <- Arima(AirPassengers, order = c(2,1,2), include.drift = TRUE)
+  expect_error(pmml(fit_12a), "ARIMA models with a drift term not supported.")
 })
 
 test_that("Error if exact_least_squares is not logical", {

@@ -34,14 +34,17 @@
 #' @return PMML representation of the \code{ARIMA} object.
 #'
 #' @details The model is represented as a PMML TimeSeriesModel.
+#' When `ts_type = arima` (deprecated), models are exported as ARIMA elements in PMML. 
 #' Non-seasonal models are represented with conditional
 #' least squares. For models with a seasonal component, the PMML can be exported with conditional
 #' least squares or exact least squares. Note that ARIMA models in R are
 #' estimated using a state space representation. When using conditional least squares with seasonal models,
-#' forecast results between R and PMML may not match.
-#'
-#' Prediction intervals are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+#' forecast results between R and PMML may not match. Prediction intervals 
+#' are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 #' between R and PMML may not match.
+#' 
+#' When `ts_type = statespace`, models are exported as StateSpaceModel elements in PMML.
+#'
 #'
 #' `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
 #' non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
@@ -51,7 +54,9 @@
 #' values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
 #' "double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
 #' Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.
-#'
+#' 
+#' ARIMA models with a drift term will be supported in a future version.
+#' 
 #' Transforms are currently not supported for ARIMA models.
 #'
 #' @author Dmitriy Bolotov
@@ -110,10 +115,15 @@ pmml.ARIMA <- function(model,
   
   if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
 
-  # Stop if model includes both intercept and drift terms
-  if (("intercept" %in% names(model$coef)) & ("drift") %in% names(model$coef)) {
-    stop("ARIMA models with both mean and drift terms not supported.")
+  # Stop if model includes drift term
+  if ("drift" %in% names(model$coef)) {
+    stop("ARIMA models with a drift term not supported.")
   }
+  
+  # # Stop if model includes both intercept and drift terms
+  # if (("intercept" %in% names(model$coef)) & ("drift") %in% names(model$coef)) {
+  #   stop("ARIMA models with both mean and drift terms not supported.")
+  # }
 
   field <- NULL
   field$name <- c("ts_value", "h")
