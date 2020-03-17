@@ -128,7 +128,8 @@
 #' m <- data.frame(
 #'   c("Sex", "string", "Male", "Female"),
 #'   c("Employment", "string", "PSLocal", "PSState"),
-#'   c("d_sex", "integer", 1, 0)
+#'   c("d_sex", "integer", 1, 0),
+#'   stringsAsFactors = TRUE
 #' )
 #' t[[1]] <- m
 #'
@@ -320,7 +321,8 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
       transform, default, missingValue,
       xform_function,
       row.names = derivedFieldName,
-      check.names = FALSE
+      check.names = FALSE,
+      stringsAsFactors = TRUE
     ))
     suppressWarnings(newBoxData$field_data <- rbind(newBoxData$field_data, newrow))
 
@@ -384,7 +386,7 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
     }
 
     col <- as.matrix(newcol)
-    newBoxData$data <- data.frame(newBoxData$data, col, check.names = FALSE)
+    newBoxData$data <- data.frame(newBoxData$data, col, check.names = FALSE, stringsAsFactors = TRUE)
     if (outDat == "string") {
       newBoxData$data[, ncol(newBoxData$data)] <- as.factor(newBoxData$data[, ncol(newBoxData$data)])
     }
@@ -429,7 +431,12 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
         newBoxData$field_data <- newBoxData$field_data[-which(rownames(newBoxData$field_data) == derivedFieldName), ]
       }
 
-      suppressWarnings(newrow <- data.frame("derived", outDat, I(orig_field_name), sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, I(list(as.matrix(xform))), "MapValues", default_value[k], map_missing_to[k], xform_function, row.names = derivedFieldName, check.names = FALSE))
+      suppressWarnings(newrow <- data.frame("derived", outDat, I(orig_field_name),
+                                            sampleMin, sampleMax, xformedMin, xformedMax,
+                                            centers, scales, I(list(as.matrix(xform))),
+                                            "MapValues", default_value[k], map_missing_to[k],
+                                            xform_function, row.names = derivedFieldName,
+                                            check.names = FALSE, stringsAsFactors = TRUE))
       colnames(newrow) <- c("type", "dataType", "orig_field_name", "sampleMin", "sampleMax", "xformedMin", "xformedMax", "centers", "scales", "fieldsMap", "transform", "default", "missingValue", "xform_function")
 
 
@@ -494,7 +501,7 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
       col <- as.matrix(newcol)
       matrixcol <- as.matrix(newmatrixcol)
 
-      newBoxData$data <- data.frame(newBoxData$data, col, check.names = FALSE)
+      newBoxData$data <- data.frame(newBoxData$data, col, check.names = FALSE, stringsAsFactors = TRUE)
       colnames(newBoxData$data)[ncol(newBoxData$data)] <- dataMatrix[1, ncol(dataMatrix)]
       rownames(newBoxData$data) <- NULL
 

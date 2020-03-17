@@ -77,7 +77,7 @@ xform_wrap <- function(data, use_matrix = FALSE) {
     dataBox$matrixData <- NULL
   }
   if (!is.data.frame(data)) {
-    indatafrm <- data.frame(data)
+    indatafrm <- data.frame(data, stringsAsFactors = TRUE)
   } else {
     indatafrm <- data
   }
@@ -120,7 +120,7 @@ xform_wrap <- function(data, use_matrix = FALSE) {
 
   df <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax,
     centers, scales, fieldsMap, transform, default, missingValue, xform_function,
-    row.names = fieldNames
+    row.names = fieldNames, stringsAsFactors = TRUE
   )
 
   dataBox$field_data <- df

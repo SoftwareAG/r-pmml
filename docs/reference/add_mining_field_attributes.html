@@ -206,7 +206,8 @@ impute missing values in a model at different times.</p>
 <span class='no'>attributes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"active"</span>, <span class='fl'>1.1</span>, <span class='st'>"asIs"</span>),
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"active"</span>, <span class='fl'>2.2</span>, <span class='st'>"asIs"</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"active"</span>, <span class='fl'>NA</span>, <span class='st'>"asMissing"</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"active"</span>, <span class='fl'>NA</span>, <span class='st'>"asMissing"</span>),
+  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>attributes</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
   <span class='st'>"usageType"</span>, <span class='st'>"missingValueReplacement"</span>,

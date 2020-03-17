@@ -75,7 +75,7 @@ test_that("xform_discretize produces correct field_data and data values", {
     c(NA, 3, "closed", 2, "Open", 3),
     c(NA, 4, "closed", 3, "Open", 4),
     c("[4", 5, "closed", 4, "Open", NA)
-  ))
+  ), stringsAsFactors = TRUE)
   t[[1]] <- m
   def <- c(11)
   mis <- c(22)

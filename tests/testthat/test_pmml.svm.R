@@ -6,7 +6,7 @@ data("audit")
 set.seed(123)
 ft_1 <- runif(100) * 10
 ft_2 <- runif(100) * 7
-df_1 <- data.frame(ft_1, ft_2)
+df_1 <- data.frame(ft_1, ft_2, stringsAsFactors = TRUE)
 anom_rows <- sample(1:100, 5)
 df_1[anom_rows, 1] <- sample(20:30, 5)
 df_1[anom_rows, 2] <- sample(20:30, 5)

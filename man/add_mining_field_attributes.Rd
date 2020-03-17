@@ -66,7 +66,8 @@ fit_pmml <- pmml(fit)
 attributes <- data.frame(
   c("active", 1.1, "asIs"),
   c("active", 2.2, "asIs"),
-  c("active", NA, "asMissing")
+  c("active", NA, "asMissing"),
+  stringsAsFactors = TRUE
 )
 rownames(attributes) <- c(
   "usageType", "missingValueReplacement",

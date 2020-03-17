@@ -146,7 +146,11 @@ xform_z_score <-
           transform <- "zxform"
           orig_field_name <- names(newBoxData$data)[i]
           derivedFieldName <- paste("derived_", names(newBoxData$data)[i], sep = "")
-          newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, fieldsMap, transform, default, missingValue, xform_function, row.names = derivedFieldName)
+          newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
+                               sampleMax, xformedMin, xformedMax, centers,
+                               scales, fieldsMap, transform, default, missingValue,
+                               xform_function, row.names = derivedFieldName,
+                               stringsAsFactors = TRUE)
 
           newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
         }
@@ -189,7 +193,12 @@ xform_z_score <-
           dataType <- "numeric"
           type <- "derived"
           orig_field_name <- row.names(newBoxData$field_data)[coln2]
-          newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, fieldsMap, transform, default, missingValue, xform_function, row.names = derivedFieldName)
+          newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
+                               sampleMax, xformedMin, xformedMax, centers,
+                               scales, fieldsMap, transform, default,
+                               missingValue, xform_function,
+                               row.names = derivedFieldName,
+                               stringsAsFactors = TRUE)
 
           newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
         }
@@ -209,7 +218,12 @@ xform_z_score <-
           orig_field_name <- row.names(newBoxData$field_data)[i]
 
           transform <- "zxform"
-          newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, fieldsMap, transform, default, missingValue, xform_function, row.names = derivedFieldName)
+          newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
+                               sampleMax, xformedMin, xformedMax, centers,
+                               scales, fieldsMap, transform, default,
+                               missingValue, xform_function,
+                               row.names = derivedFieldName,
+                               stringsAsFactors = TRUE)
 
           newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
         }

@@ -98,7 +98,7 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
 
   # Make new row with "NA" entries.
   temprow <- matrix(c(rep.int("NA", length(wrap_object$field_data))), nrow = 1, ncol = length(wrap_object$field_data))
-  newrow <- data.frame(temprow)
+  newrow <- data.frame(temprow, stringsAsFactors = TRUE)
   colnames(newrow) <- colnames(wrap_object$field_data)
   wrap_object$field_data <- rbind(wrap_object$field_data, newrow)
 

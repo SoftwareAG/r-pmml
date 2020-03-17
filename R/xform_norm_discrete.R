@@ -191,7 +191,12 @@ xform_norm_discrete <- function(wrap_object,
     fieldsMap <- list(as.character(catNames[i]))
 
     transform <- "NormDiscrete"
-    newrow <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax, centers, scales, I(fieldsMap), transform, default, missingValue, xform_function, row.names = derivedFieldName, check.names = FALSE)
+    newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
+                         sampleMax, xformedMin, xformedMax, centers,
+                         scales, I(fieldsMap), transform, default,
+                         missingValue, xform_function,
+                         row.names = derivedFieldName,
+                         check.names = FALSE, stringsAsFactors = TRUE)
     suppressWarnings(newBoxData$field_data <- rbind(newBoxData$field_data, newrow))
 
     newcol <- NULL
@@ -203,7 +208,8 @@ xform_norm_discrete <- function(wrap_object,
     colnames(newmat) <- names
     rownames(newmat) <- NULL
 
-    newBoxData$data <- data.frame(newBoxData$data, newmat, check.names = FALSE)
+    newBoxData$data <- data.frame(newBoxData$data, newmat,
+                                  check.names = FALSE, stringsAsFactors = TRUE)
 
     if (!is.null(newBoxData$matrixData)) {
       newBoxData$matrixData <- cbind(newBoxData$matrixData, newmat)

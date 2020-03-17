@@ -157,7 +157,7 @@ m <- data.frame(rbind(
   c(NA, 3, "closed", 2, "Open", 3),
   c(NA, 4, "closed", 3, "Open", 4),
   c("[4", 5, "closed", 4, "Open", NA)
-))
+), stringsAsFactors = TRUE)
 
 # Give column names to make it look nice; not necessary!
 colnames(m) <- c(

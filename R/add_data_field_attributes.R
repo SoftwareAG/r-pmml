@@ -72,8 +72,7 @@
 #' # Create data frame with attribute information:
 #'
 #' attributes <- data.frame(c("FlowerWidth", 1), c("FlowerLength", 0),
-#'   stringAsFactors = FALSE
-#' )
+#'   stringAsFactors = FALSE)
 #' rownames(attributes) <- c("displayName", "isCyclic")
 #' colnames(attributes) <- c("Sepal.Width", "Petal.Length")
 #'
@@ -123,7 +122,7 @@ add_data_field_attributes <- function(xml_model = NULL, attributes = NULL, field
   formulaString <- lapply(formulaFields, FUN = toString)
 
   if (is.vector(attributes)) {
-    attributes <- data.frame(attributes)
+    attributes <- data.frame(attributes, stringsAsFactors = TRUE)
     colnames(attributes) <- field
     fieldNames <- field
   } else {

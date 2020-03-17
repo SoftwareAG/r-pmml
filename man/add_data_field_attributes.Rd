@@ -68,8 +68,7 @@ fit_pmml <- pmml(fit)
 # Create data frame with attribute information:
 
 attributes <- data.frame(c("FlowerWidth", 1), c("FlowerLength", 0),
-  stringAsFactors = FALSE
-)
+  stringAsFactors = FALSE)
 rownames(attributes) <- c("displayName", "isCyclic")
 colnames(attributes) <- c("Sepal.Width", "Petal.Length")
 

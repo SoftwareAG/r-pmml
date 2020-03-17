@@ -125,7 +125,8 @@ t <- list()
 m <- data.frame(
   c("Sex", "string", "Male", "Female"),
   c("Employment", "string", "PSLocal", "PSState"),
-  c("d_sex", "integer", 1, 0)
+  c("d_sex", "integer", 1, 0),
+  stringsAsFactors = TRUE
 )
 t[[1]] <- m
 

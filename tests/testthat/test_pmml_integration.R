@@ -28,34 +28,34 @@ data("JohnsonJohnson")
 data("sunspots")
 audit_factor <- audit
 audit_factor[, 13] <- as.factor(audit_factor[, 13])
-iris_p <- read.csv("iris.csv")
+iris_p <- read.csv("iris.csv", stringsAsFactors = TRUE)
 audit <- na.omit(audit)
-elnino <- read.csv("elnino.csv")
-heart <- read.csv("heart.csv")
-glm_issue3543_data <- read.csv("glm_issue3543_data.csv")
-credit_class <- read.csv("credit_class.csv")
-covtype2 <- read.csv("covtype2.csv", header = TRUE)
-credit <- read.csv("credit.csv")
-credit_class_01 <- read.csv("credit_class_01.csv")
-audit_nor_logical <- na.omit(read.csv("audit_nor_logical.csv"))
+elnino <- read.csv("elnino.csv", stringsAsFactors = TRUE)
+heart <- read.csv("heart.csv", stringsAsFactors = TRUE)
+glm_issue3543_data <- read.csv("glm_issue3543_data.csv", stringsAsFactors = TRUE)
+credit_class <- read.csv("credit_class.csv", stringsAsFactors = TRUE)
+covtype2 <- read.csv("covtype2.csv", header = TRUE, stringsAsFactors = TRUE)
+credit <- read.csv("credit.csv", stringsAsFactors = TRUE)
+credit_class_01 <- read.csv("credit_class_01.csv", stringsAsFactors = TRUE)
+audit_nor_logical <- na.omit(read.csv("audit_nor_logical.csv", stringsAsFactors = TRUE))
 audit_nor <- na.omit(read.csv("audit_nor.csv"))
-audit_nor_fake_logical <- na.omit(read.csv("audit_nor_fake_logical.csv"))
-random_data_small <- read.csv("random_data_small.csv")
-iris_nor <- read.csv("iris_nor.csv")
-bank <- na.omit(read.csv("bank.csv"))
-audit_r_build_in <- na.omit(read.csv("audit_r_build_in.csv"))
-insurance <- na.omit(read.csv("insurance.csv"))
-iris_bin <- read.csv("iris_bin.csv")
-house_votes <- na.omit(read.csv("house_votes_84.csv"))
-iris_mini_dot <- read.csv("iris_mini_dot.csv")
-petfood <- read.csv("petfood.csv")
-job_cat <- read.csv("job_cat.csv")
-job_cat_index <- read.csv("job_cat_index.csv")
-iris_nor_logical <- read.csv("iris_nor_logical.csv")
-factor_40k <- read.csv("factor_40k.csv")
-numeric_10k <- na.omit(read.csv("numeric_10k.csv"))
-factor_10k <- read.csv("factor_10k.csv")
-numeric_no_na_10k <- read.csv("numeric_no_na_10k.csv")
+audit_nor_fake_logical <- na.omit(read.csv("audit_nor_fake_logical.csv", stringsAsFactors = TRUE))
+random_data_small <- read.csv("random_data_small.csv", stringsAsFactors = TRUE)
+iris_nor <- read.csv("iris_nor.csv", stringsAsFactors = TRUE)
+bank <- na.omit(read.csv("bank.csv", stringsAsFactors = TRUE))
+audit_r_build_in <- na.omit(read.csv("audit_r_build_in.csv", stringsAsFactors = TRUE))
+insurance <- na.omit(read.csv("insurance.csv", stringsAsFactors = TRUE))
+iris_bin <- read.csv("iris_bin.csv", stringsAsFactors = TRUE)
+house_votes <- na.omit(read.csv("house_votes_84.csv", stringsAsFactors = TRUE))
+iris_mini_dot <- read.csv("iris_mini_dot.csv", stringsAsFactors = TRUE)
+petfood <- read.csv("petfood.csv", stringsAsFactors = TRUE)
+job_cat <- read.csv("job_cat.csv", stringsAsFactors = TRUE)
+job_cat_index <- read.csv("job_cat_index.csv", stringsAsFactors = TRUE)
+iris_nor_logical <- read.csv("iris_nor_logical.csv", stringsAsFactors = TRUE)
+factor_40k <- read.csv("factor_40k.csv", stringsAsFactors = TRUE)
+numeric_10k <- na.omit(read.csv("numeric_10k.csv", stringsAsFactors = TRUE))
+factor_10k <- read.csv("factor_10k.csv", stringsAsFactors = TRUE)
+numeric_no_na_10k <- read.csv("numeric_no_na_10k.csv", stringsAsFactors = TRUE)
 
 
 forecast_with_cpi <- function(model, h) {
@@ -93,7 +93,7 @@ expect_equal_df_2 <- function(z_pred_out, r_pred) {
   z_pred_out <- z_pred_out[names(r_pred)]
   
   z_pred_transf <- data.frame(matrix(NA, nrow = NCOL(z_pred_out[[1]]),
-                      ncol = NCOL(r_pred)))
+                      ncol = NCOL(r_pred)), stringsAsFactors = TRUE)
   colnames(z_pred_transf) <- names(r_pred)
   
   for (x in names(r_pred)) {
@@ -125,7 +125,7 @@ svm_ad_predict <- function(fit, newdata) {
 
 single_col_h_df <- function(h) {
   # For ARIMA models, create a data frame with a single column of h (number of steps ahead) values.
-  dframe <- data.frame("h" = c(1:h))
+  dframe <- data.frame("h" = c(1:h), stringsAsFactors = TRUE)
   return(dframe)
 }
 
@@ -641,7 +641,7 @@ test_that("GeneralRegressionModel/glmnet PMML output matches R", {
   p_fit <- pmml(fit, transforms = box_obj)
   r_pred <- as.numeric(predict(fit, as.matrix(box_obj$data)))
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(as.data.frame(x), up_stat$model_name)
+  z_pred <- predict_pmml_batch(as.data.frame(x, stringsAsFactors = TRUE), up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$predictedValue, r_pred)
 
@@ -659,7 +659,7 @@ test_that("GeneralRegressionModel/glmnet PMML output matches R", {
   p_fit <- pmml(fit, transforms = box_obj)
   r_pred <- as.numeric(predict(fit, as.matrix(box_obj$data)))
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(as.data.frame(x), up_stat$model_name)
+  z_pred <- predict_pmml_batch(as.data.frame(x, stringsAsFactors = TRUE), up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$predictedValue, r_pred)
 })
@@ -1287,7 +1287,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     model = fit, input_feature_names = colnames(iris[, 1:4]), output_label_name = "Species",
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
-  r_pred_prob <- as.data.frame(matrix(predict(fit, newdata = as.matrix(iris[, 1:4])), nrow = 150, byrow = T), row.names = F)
+  r_pred_prob <- as.data.frame(matrix(predict(fit, newdata = as.matrix(iris[, 1:4])),
+                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1331,7 +1332,7 @@ test_that("MiningModel/xgboost PMML output matches R", {
   )
   r_pred <- predict(fit, sparse_mat)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(as.data.frame(sparse_mat), up_stat$model_name)
+  z_pred <- predict_pmml_batch(as.data.frame(sparse_mat, stringsAsFactors = TRUE), up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Probability_0, r_pred, tolerance = 1e-7)
 
@@ -1356,7 +1357,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
   )
 
 
-  r_pred <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 100, byrow = T), row.names = F)
+  r_pred <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 100, byrow = T),
+                          row.names = F, stringsAsFactors = TRUE)
   r_pred_prob <- cbind(r_pred, 1 - r_pred)
   r_pred_class <- sapply(1:100, function(i) {
     if (r_pred_prob[i, 1] > 0.5) {
@@ -1384,7 +1386,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     input_feature_names = colnames(as.matrix(iris_string_subsets[, 1:4])), output_label_name = "V1",
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
-  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 150, byrow = T), row.names = F)
+  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
+                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1408,7 +1411,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     input_feature_names = colnames(as.matrix(iris_string_subsets[, 1:4])), output_label_name = "V1",
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
-  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 150, byrow = T), row.names = F)
+  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
+                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1434,7 +1438,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
 
-  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 150, byrow = T), row.names = F)
+  r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
+                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -2184,7 +2189,9 @@ test_that("RegressionModel/stats PMML output matches R", {
 #   skip_on_cran()
 #   skip_on_ci()
 # 
-#   names(iris) <- c("Sepal_Length","Sepal_Width","Petal_Length", "Petal_Width",  "Species" )
+#   # names(iris) <- c("SepalLength","SepalWidth","PetalLength", "PetalWidth",  "Species" )
+# 
+#   # iris <- iris[c(2,1,3,4,5)]
 #   
 #   fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
 #   p_fit <- pmml(fit, dataset = iris[, 1:3])

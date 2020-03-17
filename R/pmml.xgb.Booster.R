@@ -238,7 +238,7 @@ pmml.xgb.Booster <- function(model,
   }
 
   if (maxLevels > 0) {
-    dt <- data.frame(tmp = rep(NA, maxLevels))
+    dt <- data.frame(tmp = rep(NA, maxLevels), stringsAsFactors = TRUE)
     for (fname in field$name) {
       if (fname != output_label_name) {
         l <- rep(field$levels[[fname]][1], maxLevels)
@@ -378,7 +378,7 @@ pmml.xgb.Booster <- function(model,
     Node = dtable[treeBeginRow:treeEndRow, 2], Feature = dtable[treeBeginRow:treeEndRow, 4],
     Split = dtable[treeBeginRow:treeEndRow, 5], Yes = dtable[treeBeginRow:treeEndRow, 6],
     No = dtable[treeBeginRow:treeEndRow, 7], Missing = dtable[treeBeginRow:treeEndRow, 8],
-    prediction = dtable[treeBeginRow:treeEndRow, 11]
+    prediction = dtable[treeBeginRow:treeEndRow, 11], stringsAsFactors = TRUE
   )
   tinf[, "Yes"] <- suppressWarnings(as.numeric(unlist(lapply(
     1:(treeEndRow - treeBeginRow + 1),
