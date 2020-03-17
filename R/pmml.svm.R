@@ -413,7 +413,7 @@ pmml.svm <- function(model,
 
 
   if (is.null(model$x.scale) == FALSE) {
-    # NormContinuous transformform.
+    # NormContinuous transform
 
     num.inputs <- length(model$x.scale[[1]])
     inputNames <- names(model$x.scale[[1]])
