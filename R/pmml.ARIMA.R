@@ -27,7 +27,6 @@
 #' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #' @param cpi_levels Vector of confidence levels for prediction intervals.
-#' @param output_type Output dataType: "string" or "double".
 #'
 #' @inheritParams pmml
 #'
@@ -88,7 +87,6 @@ pmml.ARIMA <- function(model,
                        ts_type = "arima",
                        exact_least_squares = TRUE,
                        cpi_levels = c(80, 95),
-                       output_type = "string",
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
 
@@ -107,8 +105,14 @@ pmml.ARIMA <- function(model,
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
 
-  if (!(output_type %in% c("string", "double"))){
-    stop('output_type must be one of "string" or "double".')
+  # if (!(output_type %in% c("string", "double"))){
+  #   stop('output_type must be one of "string" or "double".')
+  # }
+  
+  if (ts_type == "arima") {
+    output_type <- "double"
+  } else {
+    output_type <- "string"
   }
   
   cpi_levels <- .check_cpi_levels(cpi_levels)

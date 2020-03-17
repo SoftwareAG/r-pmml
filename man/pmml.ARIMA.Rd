@@ -15,7 +15,6 @@
   ts_type = "arima",
   exact_least_squares = TRUE,
   cpi_levels = c(80, 95),
-  output_type = "string",
   ...
 )
 }
@@ -41,8 +40,6 @@ attribute for all MiningFields.}
 otherwise, use conditional least squares.}
 
 \item{cpi_levels}{Vector of confidence levels for prediction intervals.}
-
-\item{output_type}{Output dataType: "string" or "double".}
 
 \item{...}{Further arguments passed to or from other methods.}
 }
