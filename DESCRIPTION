@@ -1,7 +1,7 @@
 Package: pmml
 Type: Package
 Title: Generate PMML for Various Models
-Version: 2.2.0
+Version: 2.2.0.9000
 Authors@R: c(
     person("Dmitriy", "Bolotov", email = "dmitriy.bolotov@softwareag.com", role = c("aut", "cre")),
     person("Tridivesh", "Jena", email = "tridivesh.jena@softwareag.com", role = "aut"),
@@ -48,6 +48,6 @@ Description: The Predictive Model Markup Language (PMML) is an XML-based languag
 URL: https://softwareag.github.io/r-pmml/, https://github.com/SoftwareAG/r-pmml, https://www.softwareag.com/zementis
 BugReports: https://github.com/SoftwareAG/r-pmml/issues
 NeedsCompilation: no
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 VignetteBuilder: knitr
 Encoding: UTF-8

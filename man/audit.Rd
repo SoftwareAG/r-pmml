@@ -4,14 +4,16 @@
 \name{audit}
 \alias{audit}
 \title{Audit: artificially constructed dataset}
-\format{A data frame containing: \tabular{ll}{ Age \tab Numeric \cr
+\format{
+A data frame containing: \tabular{ll}{ Age \tab Numeric \cr
 Employment \tab Categorical string with 7 levels \cr Education \tab
 Categorical string with 16 levels \cr Marital \tab Categorical string with 6
 levels \cr Occupation \tab Categorical string with 14 levels \cr Income \tab
 Numeric \cr Sex \tab Categorical string with 2 levels \cr Deductions \tab
 Numeric \cr Hours \tab Numeric \cr Accounts \tab Categorical string with 32
 levels \cr Adjustment \tab Numeric \cr Adjusted \tab Numeric value 0 or 1
-\cr }}
+\cr }
+}
 \description{
 This is an artificial dataset consisting of fictional clients who have been
 audited, perhaps for tax refund compliance. For each case an outcome is

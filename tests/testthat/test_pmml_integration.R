@@ -86,7 +86,7 @@ expect_equal_df <- function(z_pred, r_pred) {
 expect_equal_df_2 <- function(z_pred_out, r_pred) {
   # expect_equal for data frames with point and CPI where Zementis output is a JSON string.
   
-  z_pred_out <- z_pred_out[NROW(z_pred_out),]
+  z_pred_out <- z_pred_out[NROW(z_pred_out),] # only use the last row
   
   # rearrange z_pred columns into same order as that of r_pred;
   # using names(r_pred) accounts for names with different CPI

@@ -4,14 +4,16 @@
 \name{houseVotes84}
 \alias{houseVotes84}
 \title{Modified 1984 United States Congressional Voting Records Database}
-\format{A data frame containing: \tabular{ll}{ Class \tab Boolean variable
+\format{
+A data frame containing: \tabular{ll}{ Class \tab Boolean variable
 \cr V1 \tab Boolean variable \cr V2 \tab Boolean variable \cr V3 \tab
 Boolean variable \cr V4 \tab Boolean variable \cr V5 \tab Boolean variable
 \cr V6 \tab Boolean variable \cr V7 \tab Boolean variable \cr V8 \tab
 Boolean variable \cr V9 \tab Boolean variable \cr V10 \tab Boolean variable
 \cr V11 \tab Boolean variable \cr V12 \tab Boolean variable \cr V13 \tab
 Boolean variable \cr V14 \tab Boolean variable \cr V15 \tab Boolean variable
-\cr V16 \tab Boolean variable \cr }}
+\cr V16 \tab Boolean variable \cr }
+}
 \description{
 This data set includes votes for each of the U.S. House of Representatives
 Congressmen on the 16 key votes identified by the CQA.  The CQA lists nine
