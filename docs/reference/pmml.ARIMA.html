@@ -181,7 +181,7 @@ attribute for all MiningFields.</p></td>
     </tr>
     <tr>
       <th>ts_type</th>
-      <td><p>The type of type series representation for PMML: "arima" or "statespace".</p></td>
+      <td><p>The type of time series representation for PMML: "arima" or "statespace".</p></td>
     </tr>
     <tr>
       <th>exact_least_squares</th>
@@ -204,26 +204,27 @@ otherwise, use conditional least squares.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The model is represented as a PMML TimeSeriesModel.</p>
-<p>When <code>ts_type = "arima"</code>, models are exported as ARIMA elements in PMML.
+<p>When <code>ts_type = "arima"</code>, the R object is exported as ARIMA in PMML.
 Non-seasonal models are represented with conditional
 least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
 or exact least squares (ELS). Note that ARIMA models in R are
 estimated using a state space representation. Therefore, when using CLS with seasonal models,
 forecast results between R and PMML may not match exactly. Prediction intervals
-are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 between R and PMML may not match.</p>
-<p>When <code>ts_type = "statespace"</code>, the R object is exported as a StateSpaceModel in PMML.</p>
+<p><code>exact_least_squares</code> is deprecated, and will be removed in a future version, at which point
+ELS will be the only representation used when <code>ts_type = "arima"</code>.</p>
+<p>When <code>ts_type = "statespace"</code>, the R object is exported as StateSpaceModel in PMML.</p>
 <p><code>ts_type</code> also affects the dataType of OutputField elements. When <code>ts_type = "arima"</code>,
 the forecast
 and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
-dataType "string", and contain all values up to and including the steps ahead value supplied
-during scoring. For example, with <code>ts_type = "arima"</code> and a steps ahead value of 3, the PMML
-output might be 2.1. For <code>ts_type = "statespace"</code>, the score output would be "1.2, 3, 2.1".
+dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
+during scoring. 
 String output in this form is facilitated by Extension elements in the PMML file,
 and is supported by Zementis Server 10.6.0.0.</p>
 <p><code>cpi_levels</code> behaves similar to <code>levels</code> in <code><a href='https://rdrr.io/pkg/forecast/man/forecast.html'>forecast::forecast</a></code>: values must be
-between 0 and 99.99,
-non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.</p>
+between 0 and 100,
+non-inclusive.</p>
 <p>ARIMA models with a drift term will be supported in a future version.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
 
@@ -242,7 +243,12 @@ non-inclusive. Values can be expressed as percentages or as decimal fractions be
   <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
   <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
 )
-<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>)</div></pre>
+<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>)
+
+<span class='co'># non-seasonal model exported as StateSpaceModel</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"WWWusage"</span>)
+<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
+<span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>, <span class='kw'>ts_type</span> <span class='kw'>=</span> <span class='st'>"statespace"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

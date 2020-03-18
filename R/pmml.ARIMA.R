@@ -23,7 +23,7 @@
 #' @param model An ARIMA object from the package \pkg{forecast}.
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
-#' @param ts_type The type of type series representation for PMML: "arima" or "statespace".
+#' @param ts_type The type of time series representation for PMML: "arima" or "statespace".
 #' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
 #' otherwise, use conditional least squares.
 #' @param cpi_levels Vector of confidence levels for prediction intervals.
@@ -34,29 +34,31 @@
 #'
 #' @details The model is represented as a PMML TimeSeriesModel.
 #'
-#' When \code{ts_type = "arima"}, models are exported as ARIMA elements in PMML.
+#' When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML.
 #' Non-seasonal models are represented with conditional
 #' least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
 #' or exact least squares (ELS). Note that ARIMA models in R are
 #' estimated using a state space representation. Therefore, when using CLS with seasonal models,
 #' forecast results between R and PMML may not match exactly. Prediction intervals
-#' are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
+#' are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 #' between R and PMML may not match.
+#' 
+#' \code{exact_least_squares} is deprecated, and will be removed in a future version, at which point
+#' ELS will be the only representation used when \code{ts_type = "arima"}.
 #'
-#' When \code{ts_type = "statespace"}, the R object is exported as a StateSpaceModel in PMML.
+#' When \code{ts_type = "statespace"}, the R object is exported as StateSpaceModel in PMML.
 #'
 #' \code{ts_type} also affects the dataType of OutputField elements. When \code{ts_type = "arima"},
 #' the forecast
 #' and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
-#' dataType "string", and contain all values up to and including the steps ahead value supplied
-#' during scoring. For example, with \code{ts_type = "arima"} and a steps ahead value of 3, the PMML
-#' output might be 2.1. For \code{ts_type = "statespace"}, the score output would be "1.2, 3, 2.1".
+#' dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
+#' during scoring. 
 #' String output in this form is facilitated by Extension elements in the PMML file,
 #' and is supported by Zementis Server 10.6.0.0.
 #'
 #' \code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
-#' between 0 and 99.99,
-#' non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
+#' between 0 and 100,
+#' non-inclusive.
 #'
 #' ARIMA models with a drift term will be supported in a future version.
 #'
@@ -79,6 +81,12 @@
 #'   seasonal = c(1, 1, 1)
 #' )
 #' mod_02_pmml <- pmml(mod_02)
+#' 
+#' # non-seasonal model exported as StateSpaceModel
+#' data("WWWusage")
+#' mod <- Arima(WWWusage, order = c(3, 1, 1))
+#' mod_pmml <- pmml(mod, ts_type = "statespace")
+#' 
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,

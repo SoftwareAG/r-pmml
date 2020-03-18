@@ -134,15 +134,15 @@
 <a href="#new-features" class="anchor"></a>New Features</h2>
 <ul>
 <li>
-<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> can now export models with StateSpaceModel representation. This is controlled by a new parameter, <code>ts_type</code>. The default option (<code>ts_type = "arima"</code>) is still exports an ARIMA representation as before. When <code>ts_type = "statespace"</code>, the exported PMML uses a StateSpaceModel element.</li>
-<li>The <code>exact_least_squares</code> parameter in <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> is now deprecated. In a future release, all exports where <code>ts_type = "arima"</code> will be exported with Exact Least Squares.</li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> can now export models with StateSpaceModel representation. This is controlled by a new parameter, <code>ts_type</code>. The default option (<code>ts_type = "arima"</code>) still exports an ARIMA representation as before. When <code>ts_type = "statespace"</code>, the exported PMML uses a StateSpaceModel element.</li>
+<li>The <code>exact_least_squares</code> parameter in <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> is now deprecated. In a future release, all exports where <code>ts_type = "arima"</code> will be exported with the Exact Least Squares method.</li>
 </ul>
 </div>
 <div id="other-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#other-changes" class="anchor"></a>Other Changes</h2>
 <ul>
-<li>Package is now compliant with the stringsAsFactors change in R 4.0.0.</li>
+<li>Package is now compliant with the <code>stringsAsFactors</code> change in R 4.0.0.</li>
 </ul>
 </div>
 </div>
