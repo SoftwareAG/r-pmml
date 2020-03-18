@@ -432,11 +432,13 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
       }
 
       suppressWarnings(newrow <- data.frame("derived", outDat, I(orig_field_name),
-                                            sampleMin, sampleMax, xformedMin, xformedMax,
-                                            centers, scales, I(list(as.matrix(xform))),
-                                            "MapValues", default_value[k], map_missing_to[k],
-                                            xform_function, row.names = derivedFieldName,
-                                            check.names = FALSE, stringsAsFactors = TRUE))
+        sampleMin, sampleMax, xformedMin, xformedMax,
+        centers, scales, I(list(as.matrix(xform))),
+        "MapValues", default_value[k], map_missing_to[k],
+        xform_function,
+        row.names = derivedFieldName,
+        check.names = FALSE, stringsAsFactors = TRUE
+      ))
       colnames(newrow) <- c("type", "dataType", "orig_field_name", "sampleMin", "sampleMax", "xformedMin", "xformedMax", "centers", "scales", "fieldsMap", "transform", "default", "missingValue", "xform_function")
 
 

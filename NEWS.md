@@ -1,6 +1,6 @@
 # pmml 2.2.0.9000
 ## New Features
-* `pmml.ARIMA()` can now export models with StateSpaceModel representation. This is controlled by a new parameter, `ts_type`. The default export option (`ts_type = "arima"`) is to still use ARIMA representation. When `ts_type = "statespace"`, the exported PMML uses a StateSpaceModel element.
+* `pmml.ARIMA()` can now export models with StateSpaceModel representation. This is controlled by a new parameter, `ts_type`. The default option (`ts_type = "arima"`) is still exports an ARIMA representation as before. When `ts_type = "statespace"`, the exported PMML uses a StateSpaceModel element.
 * The `exact_least_squares` parameter in `pmml.ARIMA()` is now deprecated. In a future release, all exports where `ts_type = "arima"` will be exported with Exact Least Squares.
 
 ## Other Changes

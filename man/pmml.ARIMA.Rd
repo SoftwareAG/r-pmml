@@ -51,26 +51,29 @@ Generate PMML for an ARIMA object the \bold{forecast} package.
 }
 \details{
 The model is represented as a PMML TimeSeriesModel.
-When `ts_type = "arima"`, models are exported as ARIMA elements in PMML. 
+
+When \code{ts_type = "arima"}, models are exported as ARIMA elements in PMML.
 Non-seasonal models are represented with conditional
 least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
 or exact least squares (ELS). Note that ARIMA models in R are
 estimated using a state space representation. Therefore, when using CLS with seasonal models,
-forecast results between R and PMML may not match exactly. Prediction intervals 
+forecast results between R and PMML may not match exactly. Prediction intervals
 are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 between R and PMML may not match.
 
-When `ts_type = "statespace"`, the R object is exported as a StateSpaceModel in PMML.
+When \code{ts_type = "statespace"}, the R object is exported as a StateSpaceModel in PMML.
 
-`ts_type` also affects the dataType of OutputField elements. When `ts_type = "arima"`, the forecast 
-and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of 
+\code{ts_type} also affects the dataType of OutputField elements. When \code{ts_type = "arima"},
+the forecast
+and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
 dataType "string", and contain all values up to and including the steps ahead value supplied
-during scoring. For example, with `ts_type = "arima"` and a steps ahead value of 3, the PMML 
-output might be 2.1. For `ts_type = "statespace"`, the score output would be "1.2, 3, 2.1".
-String output in this form is facilitated by Extension elements in the PMML file, 
+during scoring. For example, with \code{ts_type = "arima"} and a steps ahead value of 3, the PMML
+output might be 2.1. For \code{ts_type = "statespace"}, the score output would be "1.2, 3, 2.1".
+String output in this form is facilitated by Extension elements in the PMML file,
 and is supported by Zementis Server 10.6.0.0.
 
-`cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+\code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
+between 0 and 99.99,
 non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
 
 ARIMA models with a drift term will be supported in a future version.

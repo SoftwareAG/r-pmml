@@ -85,24 +85,24 @@ expect_equal_df <- function(z_pred, r_pred) {
 
 expect_equal_df_2 <- function(z_pred_out, r_pred) {
   # expect_equal for data frames with point and CPI where Zementis output is a JSON string.
-  
-  z_pred_out <- z_pred_out[NROW(z_pred_out),] # only use the last row
-  
+
+  z_pred_out <- z_pred_out[NROW(z_pred_out), ] # only use the last row
+
   # rearrange z_pred columns into same order as that of r_pred;
   # using names(r_pred) accounts for names with different CPI
   z_pred_out <- z_pred_out[names(r_pred)]
-  
-  z_pred_transf <- data.frame(matrix(NA, nrow = NCOL(z_pred_out[[1]]),
-                      ncol = NCOL(r_pred)), stringsAsFactors = TRUE)
+
+  z_pred_transf <- data.frame(matrix(NA,
+    nrow = NCOL(z_pred_out[[1]]),
+    ncol = NCOL(r_pred)
+  ), stringsAsFactors = TRUE)
   colnames(z_pred_transf) <- names(r_pred)
-  
+
   for (x in names(r_pred)) {
     z_pred_transf[x] <- as.numeric(t(z_pred_out[[x]]))
   }
-  
+
   expect_equal_nn(z_pred_transf, r_pred)
-  
-  
 }
 
 
@@ -165,7 +165,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
 
   fit <- Arima(AirPassengers, order = c(2, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_212")
@@ -231,39 +231,39 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
 
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
@@ -271,16 +271,16 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
   p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   # expect the following test to fail
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
@@ -289,7 +289,8 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_failure(expect_equal_nn(as.numeric(
-    z_pred$outputs$Predicted_ts_value[20,]), r_pred))
+    z_pred$outputs$Predicted_ts_value[20, ]
+  ), r_pred))
 
   # tests with seasonal ELS
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
@@ -298,56 +299,56 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
   p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
   p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
   p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
   p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
-  
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+
   # seasonal model with (0,0,0) non-seasonal component
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
   p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
@@ -355,7 +356,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20,]), r_pred)
+  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
 })
 
 
@@ -1288,7 +1289,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
   r_pred_prob <- as.data.frame(matrix(predict(fit, newdata = as.matrix(iris[, 1:4])),
-                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
+    nrow = 150, byrow = T
+  ), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1358,7 +1360,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
 
 
   r_pred <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])), nrow = 100, byrow = T),
-                          row.names = F, stringsAsFactors = TRUE)
+    row.names = F, stringsAsFactors = TRUE
+  )
   r_pred_prob <- cbind(r_pred, 1 - r_pred)
   r_pred_class <- sapply(1:100, function(i) {
     if (r_pred_prob[i, 1] > 0.5) {
@@ -1387,7 +1390,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
   r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
-                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
+    nrow = 150, byrow = T
+  ), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1412,7 +1416,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
     output_categories = c(1, 2, 3), xgb_dump_file = xgb_tmp_01_dump
   )
   r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
-                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
+    nrow = 150, byrow = T
+  ), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -1439,7 +1444,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
   )
 
   r_pred_prob <- as.data.frame(matrix(predict(fit, as.matrix(iris_string_subsets[, 1:4])),
-                                      nrow = 150, byrow = T), row.names = F, stringsAsFactors = TRUE)
+    nrow = 150, byrow = T
+  ), row.names = F, stringsAsFactors = TRUE)
   r_pred_class <- sapply(1:150, function(i) {
     which(r_pred_prob[i, ] == max(r_pred_prob[i, ]))
   })
@@ -2190,7 +2196,7 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML output matches R"
   skip_on_ci()
 
   # do not run tests where scale=TRUE
-  
+
   # fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
   # p_fit <- pmml(fit, dataset = iris[, 1:3])
   # r_pred <- svm_ad_predict(fit, iris[, 1:3])
@@ -2239,8 +2245,8 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML output matches R"
   # delete_model(up_stat$model_name)
   # expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
   # expect_equal_nn(z_pred$outputs$inlier, r_pred$svm_predict_anomaly)
-  # 
-  # 
+  #
+  #
   # iris_y <- as.numeric(iris$Species == "setosa")
   # fit <- svm(iris[, 1:4], y = iris_y, type = "one-classification", nu = 0.15, kernel = "sigmoid")
   # p_fit <- pmml(fit, dataset = iris[, 1:4], detect_anomaly = FALSE)
@@ -2250,7 +2256,7 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML output matches R"
   # delete_model(up_stat$model_name)
   # expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
   # expect_equal_nn(z_pred$outputs$inlier, r_pred$svm_predict_anomaly)
-  # 
+  #
   # fit <- svm(audit[100:400, c("Income", "Deductions")],
   #   y = NULL, type = "one-classification",
   #   nu = 0.10, scale = TRUE, kernel = "linear"
@@ -2302,8 +2308,8 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML output matches R"
   # delete_model(up_stat$model_name)
   # expect_equal_nn(z_pred$outputs$anomalyScore, r_pred$anomaly_score)
   # expect_equal_nn(z_pred$outputs$inlier, r_pred$svm_predict_anomaly)
-  # 
-  # 
+  #
+  #
   # box_obj <- xform_wrap(iris[, 1:4])
   # box_obj <- xform_z_score(box_obj)
   # fit <- svm(box_obj$data[, 5:8], y = NULL, type = "one-classification")

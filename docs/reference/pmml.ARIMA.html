@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0.9000</span>
       </span>
     </div>
 
@@ -203,24 +203,27 @@ otherwise, use conditional least squares.</p></td>
     <p>PMML representation of the <code>ARIMA</code> object.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The model is represented as a PMML TimeSeriesModel.
-When `ts_type = arima` (deprecated), models are exported as ARIMA elements in PMML. 
+    <p>The model is represented as a PMML TimeSeriesModel.</p>
+<p>When <code>ts_type = "arima"</code>, models are exported as ARIMA elements in PMML.
 Non-seasonal models are represented with conditional
-least squares. For models with a seasonal component, the PMML can be exported with conditional
-least squares or exact least squares. Note that ARIMA models in R are
-estimated using a state space representation. When using conditional least squares with seasonal models,
-forecast results between R and PMML may not match. Prediction intervals 
+least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
+or exact least squares (ELS). Note that ARIMA models in R are
+estimated using a state space representation. Therefore, when using CLS with seasonal models,
+forecast results between R and PMML may not match exactly. Prediction intervals
 are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 between R and PMML may not match.</p>
-<p>When `ts_type = statespace`, models are exported as StateSpaceModel elements in PMML.</p>
-
-<p>`cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+<p>When <code>ts_type = "statespace"</code>, the R object is exported as a StateSpaceModel in PMML.</p>
+<p><code>ts_type</code> also affects the dataType of OutputField elements. When <code>ts_type = "arima"</code>,
+the forecast
+and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
+dataType "string", and contain all values up to and including the steps ahead value supplied
+during scoring. For example, with <code>ts_type = "arima"</code> and a steps ahead value of 3, the PMML
+output might be 2.1. For <code>ts_type = "statespace"</code>, the score output would be "1.2, 3, 2.1".
+String output in this form is facilitated by Extension elements in the PMML file,
+and is supported by Zementis Server 10.6.0.0.</p>
+<p><code>cpi_levels</code> behaves similar to <code>levels</code> in <code><a href='https://rdrr.io/pkg/forecast/man/forecast.html'>forecast::forecast</a></code>: values must be
+between 0 and 99.99,
 non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.</p>
-<p>`output_type` controls the output dataType. If set to "double", the forecast and prediction intervals are
-single numbers. If set to "string" (default), the forecast and intervals are strings that contain all 
-values up to and including the steps ahead value supplied during scoring. For example, with `output_type` 
-"double" and a steps ahead value of 3, the PMML output might be 2.1. For "string", the output would be "1.2, 3, 2.1".
-Note that PMML exported using `output_type = "string"` requires an Extension element only available on Zementis Server.</p>
 <p>ARIMA models with a drift term will be supported in a future version.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
 

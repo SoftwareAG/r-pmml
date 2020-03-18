@@ -166,12 +166,13 @@ xform_min_max <- function(wrap_object, xform_info = NA, map_missing_to = NA, ...
         sampleMin <- minimum
         sampleMax <- maximum
         transform <- "minmax"
-        newrow <- data.frame(type, dataType, orig_field_name, sampleMin, 
-                             sampleMax, xformedMin, xformedMax, centers, 
-                             scales, fieldsMap, transform, default, 
-                             missingValue, xform_function, 
-                             row.names = derivedFieldName,
-                             stringsAsFactors = TRUE)
+        newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
+          sampleMax, xformedMin, xformedMax, centers,
+          scales, fieldsMap, transform, default,
+          missingValue, xform_function,
+          row.names = derivedFieldName,
+          stringsAsFactors = TRUE
+        )
         newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
       }
     }
@@ -267,11 +268,12 @@ xform_min_max <- function(wrap_object, xform_info = NA, map_missing_to = NA, ...
         sampleMax <- maximum
         transform <- "minmax"
         newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
-                             sampleMax, xformedMin, xformedMax, centers,
-                             scales, fieldsMap, transform, default,
-                             missingValue, xform_function,
-                             row.names = derivedFieldName,
-                             stringsAsFactors = TRUE)
+          sampleMax, xformedMin, xformedMax, centers,
+          scales, fieldsMap, transform, default,
+          missingValue, xform_function,
+          row.names = derivedFieldName,
+          stringsAsFactors = TRUE
+        )
         newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
       }
     } else {
@@ -304,11 +306,12 @@ xform_min_max <- function(wrap_object, xform_info = NA, map_missing_to = NA, ...
         sampleMax <- maximum
         transform <- "minmax"
         newrow <- data.frame(type, dataType, orig_field_name, sampleMin,
-                             sampleMax, xformedMin, xformedMax, centers,
-                             scales, fieldsMap, transform, default, 
-                             missingValue, xform_function,
-                             row.names = derivedFieldName,
-                             stringsAsFactors = TRUE)
+          sampleMax, xformedMin, xformedMax, centers,
+          scales, fieldsMap, transform, default,
+          missingValue, xform_function,
+          row.names = derivedFieldName,
+          stringsAsFactors = TRUE
+        )
         newBoxData$field_data <- rbind(newBoxData$field_data, newrow)
       }
     }

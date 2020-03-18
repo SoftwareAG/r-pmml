@@ -432,11 +432,15 @@ pmml.coxph <- function(model,
   }
 
   if (is.null(strata)) {
-    CumHazard <- data.frame(hazard = H, time = sfit$time,
-                            stringsAsFactors = TRUE)
+    CumHazard <- data.frame(
+      hazard = H, time = sfit$time,
+      stringsAsFactors = TRUE
+    )
   } else {
-    CumHazard <- data.frame(hazard = H, time = sfit$time,
-                            strata = strata, stringsAsFactors = TRUE)
+    CumHazard <- data.frame(
+      hazard = H, time = sfit$time,
+      strata = strata, stringsAsFactors = TRUE
+    )
   }
 
   numTime <- length(CumHazard$time)

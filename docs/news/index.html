@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.0.9000</span>
       </span>
     </div>
 
@@ -125,6 +125,27 @@
       <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pmml-2-2-0-9000" class="section level1">
+<h1 class="page-header">
+<a href="#pmml-2-2-0-9000" class="anchor"></a>pmml 2.2.0.9000<small> Unreleased </small>
+</h1>
+<div id="new-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features" class="anchor"></a>New Features</h2>
+<ul>
+<li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> can now export models with StateSpaceModel representation. This is controlled by a new parameter, <code>ts_type</code>. The default option (<code>ts_type = "arima"</code>) is still exports an ARIMA representation as before. When <code>ts_type = "statespace"</code>, the exported PMML uses a StateSpaceModel element.</li>
+<li>The <code>exact_least_squares</code> parameter in <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> is now deprecated. In a future release, all exports where <code>ts_type = "arima"</code> will be exported with Exact Least Squares.</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<ul>
+<li>Package is now compliant with the stringsAsFactors change in R 4.0.0.</li>
+</ul>
+</div>
+</div>
     <div id="pmml-2-2-0" class="section level1">
 <h1 class="page-header">
 <a href="#pmml-2-2-0" class="anchor"></a>pmml 2.2.0<small> 2020-01-10 </small>
@@ -151,9 +172,9 @@
 </li>
 </ul>
 </div>
-<div id="new-features" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>New Features</h2>
+<a href="#new-features-1" class="anchor"></a>New Features</h2>
 <ul>
 <li>
 <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> now exports prediction intervals for non-seasonal models.</li>
@@ -197,9 +218,9 @@
 </li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
 <li><p><code>pmml.iForest</code> now uses attribute <code>sampleDataSize</code> instead of element <code>ParameterList</code> to store the <code>model$phi</code> value.</p></li>
@@ -442,9 +463,9 @@
 <code>Initialize()</code> has been made internal.</li>
 </ul>
 </div>
-<div id="other-changes-1" class="section level2">
+<div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>All documentation is created with roxygen.</p></li>
 <li><p>Documentation is now uniform across different exporters.</p></li>
@@ -1002,6 +1023,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#pmml-2-2-0-9000">2.2.0.9000</a></li>
         <li><a href="#pmml-2-2-0">2.2.0</a></li>
         <li><a href="#pmml-2-1-0">2.1.0</a></li>
         <li><a href="#pmml-2-0-0">2.0.0</a></li>

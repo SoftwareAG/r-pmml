@@ -188,9 +188,9 @@ test_that("ARIMA with both intercept and drift terms throws error", {
 
   fit_12 <- Arima(AirPassengers, order = c(2, 0, 2), include.drift = TRUE)
   expect_error(pmml(fit_12), "ARIMA models with a drift term not supported.")
-  
+
   # drift term only
-  fit_12a <- Arima(AirPassengers, order = c(2,1,2), include.drift = TRUE)
+  fit_12a <- Arima(AirPassengers, order = c(2, 1, 2), include.drift = TRUE)
   expect_error(pmml(fit_12a), "ARIMA models with a drift term not supported.")
 })
 
@@ -282,15 +282,14 @@ test_that("Output dataType changes according to ts_type", {
 ## Tests for StateSpaceModel
 
 test_that("bestFit TimeSeriesModel node matches ts_type", {
-  fit_22 <- Arima(WWWusage, c(1,1,1))
+  fit_22 <- Arima(WWWusage, c(1, 1, 1))
   p_fit_22 <- pmml(fit_22, ts_type = "statespace")
   expect_equal(xmlGetAttr(p_fit_22[[3]], name = "bestFit"), "StateSpaceModel")
-  
+
   p_fit_22_a <- pmml(fit_22, ts_type = "arima")
   expect_equal(xmlGetAttr(p_fit_22_a[[3]], name = "bestFit"), "ARIMA")
-  
+
   # test that the default is "arima"
   p_fit_22_b <- pmml(fit_22)
   expect_equal(xmlGetAttr(p_fit_22_b[[3]], name = "bestFit"), "ARIMA")
 })
-

@@ -33,30 +33,33 @@
 #' @return PMML representation of the \code{ARIMA} object.
 #'
 #' @details The model is represented as a PMML TimeSeriesModel.
-#' When `ts_type = "arima"`, models are exported as ARIMA elements in PMML. 
+#'
+#' When \code{ts_type = "arima"}, models are exported as ARIMA elements in PMML.
 #' Non-seasonal models are represented with conditional
 #' least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
 #' or exact least squares (ELS). Note that ARIMA models in R are
 #' estimated using a state space representation. Therefore, when using CLS with seasonal models,
-#' forecast results between R and PMML may not match exactly. Prediction intervals 
+#' forecast results between R and PMML may not match exactly. Prediction intervals
 #' are exported for non-seasonal models only. For ARIMA models with d=2, the intervals
 #' between R and PMML may not match.
-#' 
-#' When `ts_type = "statespace"`, the R object is exported as a StateSpaceModel in PMML.
 #'
-#' `ts_type` also affects the dataType of OutputField elements. When `ts_type = "arima"`, the forecast 
-#' and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of 
+#' When \code{ts_type = "statespace"}, the R object is exported as a StateSpaceModel in PMML.
+#'
+#' \code{ts_type} also affects the dataType of OutputField elements. When \code{ts_type = "arima"},
+#' the forecast
+#' and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
 #' dataType "string", and contain all values up to and including the steps ahead value supplied
-#' during scoring. For example, with `ts_type = "arima"` and a steps ahead value of 3, the PMML 
-#' output might be 2.1. For `ts_type = "statespace"`, the score output would be "1.2, 3, 2.1".
-#' String output in this form is facilitated by Extension elements in the PMML file, 
+#' during scoring. For example, with \code{ts_type = "arima"} and a steps ahead value of 3, the PMML
+#' output might be 2.1. For \code{ts_type = "statespace"}, the score output would be "1.2, 3, 2.1".
+#' String output in this form is facilitated by Extension elements in the PMML file,
 #' and is supported by Zementis Server 10.6.0.0.
-#' 
-#' `cpi_levels` behaves similar to `levels` in `forecast::forecast`: values must be between 0 and 99.99, 
+#'
+#' \code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
+#' between 0 and 99.99,
 #' non-inclusive. Values can be expressed as percentages or as decimal fractions between 0 and 1.
-#' 
+#'
 #' ARIMA models with a drift term will be supported in a future version.
-#' 
+#'
 #' Transforms are currently not supported for ARIMA models.
 #'
 #' @author Dmitriy Bolotov
@@ -94,14 +97,14 @@ pmml.ARIMA <- function(model,
   # Deprecated argument.
   if (!missing(exact_least_squares)) {
     warning("argument exact_least_squares is deprecated.",
-            call. = FALSE
+      call. = FALSE
     )
   }
-  
-  if (!(ts_type %in% c("arima", "statespace"))){
+
+  if (!(ts_type %in% c("arima", "statespace"))) {
     stop('ts_type must be one of "arima" or "statespace".')
   }
-  
+
   if (!is.logical(exact_least_squares)) {
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
@@ -109,22 +112,22 @@ pmml.ARIMA <- function(model,
   # if (!(output_type %in% c("string", "double"))){
   #   stop('output_type must be one of "string" or "double".')
   # }
-  
+
   if (ts_type == "arima") {
     output_type <- "double"
   } else {
     output_type <- "string"
   }
-  
+
   cpi_levels <- .check_cpi_levels(cpi_levels)
-  
+
   if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
 
   # Stop if model includes drift term
   if ("drift" %in% names(model$coef)) {
     stop("ARIMA models with a drift term not supported.")
   }
-  
+
   # # Stop if model includes both intercept and drift terms
   # if (("intercept" %in% names(model$coef)) & ("drift") %in% names(model$coef)) {
   #   stop("ARIMA models with both mean and drift terms not supported.")
@@ -147,147 +150,156 @@ pmml.ARIMA <- function(model,
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(field, transformed = transforms))
 
   if (ts_type == "arima") {
-  
+
     # PMML -> TimeSeriesModel
     ts_model <- xmlNode("TimeSeriesModel",
       attrs = c(modelName = model_name, functionName = "timeSeries", bestFit = "ARIMA")
     )
-  
+
     ts_model <- append.XMLNode(
       ts_model,
       .pmmlMiningSchemaARIMA(field, target, transforms, missing_value_replacement)
     )
-  
+
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
       .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels, output_type)
     )
-  
-  
+
+
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
-  
+
     # arima_rmse <- sqrt(sum((model$residuals)^2) / length(model$residuals))
     arima_rmse <- sqrt(model$sigma2) # use the approximation in ARIMA object
-  
+
     arima_constant <- .get_model_constant(model)
-    
+
     # exact_least_squares only has an effect if model has seasonal component.
     # if model is non-seasonal and ts_type="arima", always export in conditional least squares format.
     if (!.has_seasonal_comp(model)) { # if model does not have seasonal component, set to FALSE
       exact_least_squares <- FALSE
     }
-  
-  
+
+
     prediction_method <- if (exact_least_squares) {
       "exactLeastSquares"
     } else {
       "conditionalLeastSquares"
     }
-  
+
     arima_node <- xmlNode("ARIMA", attrs = c(
       RMSE = arima_rmse,
       transformation = "none",
       constantTerm = arima_constant,
       predictionMethod = prediction_method
     ))
-  
+
     if (.has_nonseasonal_comp(model)) {
       arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
     } else {
       # crete a non-seasonal node with all zeros
       arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
     }
-  
+
     if (.has_seasonal_comp(model)) {
       arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
     }
-  
+
     if (exact_least_squares) {
-      arima_node <- append.XMLNode(arima_node,
-                                   .make_mls_node(model, ts_type))
+      arima_node <- append.XMLNode(
+        arima_node,
+        .make_mls_node(model, ts_type)
+      )
     }
-  
-  
+
+
     ts_model <- append.XMLNode(ts_model, arima_node)
-  
   } else {
     # PMML -> TimeSeriesModel
     ts_model <- xmlNode("TimeSeriesModel",
-                        attrs = c(modelName = model_name,
-                                  functionName = "timeSeries",
-                                  bestFit = "StateSpaceModel")
+      attrs = c(
+        modelName = model_name,
+        functionName = "timeSeries",
+        bestFit = "StateSpaceModel"
+      )
     )
-    
+
     ts_model <- append.XMLNode(
       ts_model,
       .pmmlMiningSchemaARIMA(field, target, transforms, missing_value_replacement)
     )
-    
+
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
       .make_arima_output_node(target, FALSE, cpi_levels, output_type)
     )
-    
+
     ts_model <- append.XMLNode(ts_model, .make_ts_node(model))
-    
+
     state_space_node <- xmlNode("StateSpaceModel",
-                                attrs = c(intercept = toString(.get_model_constant(model)),
-                                          variance = model$sigma2,
-                                          observationVariance = toString(model$model$h)))
-    
-    
+      attrs = c(
+        intercept = toString(.get_model_constant(model)),
+        variance = model$sigma2,
+        observationVariance = toString(model$model$h)
+      )
+    )
+
+
     # state vector
     state_v_node <- .make_fs_vector_node(model, ts_type = ts_type)
-    
+
     # transition matrix
     trans_m_node <- append.XMLNode(
       xmlNode("TransitionMatrix"),
       .make_matrix_node(model$model$T)
     )
-    
+
     # measurement matrix
     meas_m_node <- append.XMLNode(
       xmlNode("MeasurementMatrix"),
       .make_matrix_node(matrix(model$model$Z, nrow = 1))
     )
-    
+
     # intercept vector - replaced with intercept attribute
     # intercept_v_node <- .make_intercept_v_node(model)
-    
+
     # variance vector - not used
     # variance_v_node <- .make_variance_v_node(model)
 
     # psi vector - not used
-    
+
     # dynamic regressor
-    
+
     # PredictedCovarianceMatrix
     pscm_node <- append.XMLNode(
       xmlNode("PredictedStateCovarianceMatrix"),
       .make_matrix_node(matrix(model$model$P,
-                               nrow = NROW(model$model$P)))
+        nrow = NROW(model$model$P)
+      ))
     )
-    
+
     # SelectedCovarianceMatrix
     sscm_node <- append.XMLNode(
       xmlNode("SelectedStateCovarianceMatrix"),
       .make_matrix_node(matrix(model$model$V,
-                               nrow = NROW(model$model$V)))
+        nrow = NROW(model$model$V)
+      ))
     )
-    
-    
+
+
     # add elements to state_space_node
-    state_space_node <- append.XMLNode(state_space_node,
-                                       state_v_node,
-                                       trans_m_node,
-                                       meas_m_node,
-                                       pscm_node,
-                                       sscm_node)
-    
+    state_space_node <- append.XMLNode(
+      state_space_node,
+      state_v_node,
+      trans_m_node,
+      meas_m_node,
+      pscm_node,
+      sscm_node
+    )
+
     ts_model <- append.XMLNode(ts_model, state_space_node)
-      
   }
 
   pmml <- append.XMLNode(pmml, ts_model)
@@ -300,24 +312,24 @@ pmml.ARIMA <- function(model,
   if (length(cpi_levels) == 0) {
     stop("length of cpi_levels must be greater than 0.")
   }
-  
-  if(!is.numeric(cpi_levels)) {
+
+  if (!is.numeric(cpi_levels)) {
     stop("cpi_levels must be numeric.")
   }
-  
+
   if (min(cpi_levels) < 0 | max(cpi_levels) > 99.99) {
     stop("cpi_levels out of range.")
   }
-  
+
   if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
     cpi_levels <- 100 * cpi_levels
   }
-  
+
   return(cpi_levels)
 }
 
 
-.get_model_constant <- function(model){
+.get_model_constant <- function(model) {
   # Get the constant term from model.
   # constantTerm = 0 by default in PMML. Set the constantTerm to 0 when d != 0.
   if (any(is.element(c("intercept", "drift"), names(model$coef)))) {
@@ -336,17 +348,19 @@ pmml.ARIMA <- function(model,
 .make_intercept_v_node <- function(model) {
   iv_node <- xmlNode("InterceptVector")
   const <- .get_model_constant(model)
-  iv_node <- append.XMLNode(iv_node, xmlNode("Array", 
-                                             attrs = c(type = "real", n = "1"), 
-                                             value = const))
+  iv_node <- append.XMLNode(iv_node, xmlNode("Array",
+    attrs = c(type = "real", n = "1"),
+    value = const
+  ))
   return(iv_node)
 }
 
 .make_variance_v_node <- function(model) {
   vv_node <- xmlNode("VarianceVector")
-  vv_node <- append.XMLNode(vv_node, xmlNode("Array", 
-                                             attrs = c(type = "real", n = "1"), 
-                                             value = model$sigma2))
+  vv_node <- append.XMLNode(vv_node, xmlNode("Array",
+    attrs = c(type = "real", n = "1"),
+    value = model$sigma2
+  ))
   return(vv_node)
 }
 
@@ -363,51 +377,55 @@ pmml.ARIMA <- function(model,
       dataType = "string",
       feature = "predictedValue"
     ))
-    
+
     point_forecast_node <- append.XMLNode(point_forecast_node, .make_ext_json_node())
-    
+
     output_node <- append.XMLNode(output_node, point_forecast_node)
-    
+
     if (!has_seasonal_comp) {
       # if model has no seasonal component, include prediction intervals in Output
-      for (lev in cpi_levels){
-        output_node <- append.XMLNode(output_node,
-                                      .make_pi_node(lev, "Lower", output_type),
-                                      .make_pi_node(lev, "Upper", output_type))
+      for (lev in cpi_levels) {
+        output_node <- append.XMLNode(
+          output_node,
+          .make_pi_node(lev, "Lower", output_type),
+          .make_pi_node(lev, "Upper", output_type)
+        )
       }
     }
   } else {
-    
     point_forecast_node <- xmlNode("OutputField", attrs = c(
       name = paste("Predicted_", target, sep = ""),
       optype = "continuous",
       dataType = "double",
       feature = "predictedValue"
     ))
-    
+
     output_node <- append.XMLNode(output_node, point_forecast_node)
-    
+
     if (!has_seasonal_comp) {
       # if model has no seasonal component, include prediction intervals in Output
-      for (lev in cpi_levels){
-        output_node <- append.XMLNode(output_node,
-                                      .make_pi_node(lev, "Lower", output_type),
-                                      .make_pi_node(lev, "Upper", output_type))
+      for (lev in cpi_levels) {
+        output_node <- append.XMLNode(
+          output_node,
+          .make_pi_node(lev, "Lower", output_type),
+          .make_pi_node(lev, "Upper", output_type)
+        )
       }
     }
-    
   }
-  
-  
+
+
 
   return(output_node)
 }
 
 
-.make_ext_json_node <- function(){
- return(xmlNode("Extension", attrs = c(extender = "ADAPA",
-                                               name = "dataType",
-                                               value = "json")))
+.make_ext_json_node <- function() {
+  return(xmlNode("Extension", attrs = c(
+    extender = "ADAPA",
+    name = "dataType",
+    value = "json"
+  )))
 }
 
 .make_pi_node_0 <- function(perc, interv) {
@@ -432,8 +450,8 @@ pmml.ARIMA <- function(model,
 .make_pi_node <- function(perc, interv, output_type) {
   # create prediction interval output node
   perc <- toString(perc)
-  
-  if (output_type == "string"){
+
+  if (output_type == "string") {
     pi_node <- xmlNode("OutputField", attrs = c(
       name = paste("cpi_", perc, "_", tolower(interv), sep = ""),
       optype = "continuous",
@@ -451,8 +469,8 @@ pmml.ARIMA <- function(model,
       value = perc
     ))
   }
-  
-  
+
+
 
 
   return(pi_node)
@@ -593,15 +611,15 @@ pmml.ARIMA <- function(model,
   # final_state_vector <- s_t1[1:max(p,q)]
   final_state_vector <- s_t1
 
-  
+
   # fsv_node <- xmlNode("FinalStateVector")
-  
-  if (ts_type == "arima"){
+
+  if (ts_type == "arima") {
     fsv_node <- xmlNode("FinalStateVector")
   } else {
     fsv_node <- xmlNode("StateVector")
   }
-  
+
   fsv_node <- append.XMLNode(
     fsv_node,
     xmlNode("Array",
