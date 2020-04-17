@@ -1,5 +1,3 @@
-context("test save_pmml")
-
 tmp_file <- tempfile()
 teardown(unlink(tmp_file))
 

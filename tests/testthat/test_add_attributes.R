@@ -1,5 +1,3 @@
-context("test add_attributes")
-
 test_that("test add_attributes function follows the xml path properly", {
   model0 <- lm(Sepal.Length ~ ., data = iris[, -5])
   model <- pmml(model0)

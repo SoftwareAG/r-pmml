@@ -1,5 +1,3 @@
-context("test add_data_field_children")
-
 test_that("add_data_field_children works correctly", {
   model0 <- lm(Sepal.Length ~ ., data = iris[, -5])
   model <- pmml(model0)

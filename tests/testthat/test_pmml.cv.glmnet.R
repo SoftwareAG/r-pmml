@@ -1,5 +1,3 @@
-context("test pmml.cv.glmnet converter")
-
 # these tests use examples from cv.glmnet documentation
 
 library(glmnet)

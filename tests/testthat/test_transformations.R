@@ -1,5 +1,3 @@
-context("test properties of box objects produced")
-
 data(iris)
 data(audit)
 

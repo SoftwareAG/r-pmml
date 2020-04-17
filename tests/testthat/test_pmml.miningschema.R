@@ -1,5 +1,3 @@
-context("test pmml.miningschema")
-
 library(xgboost)
 library(randomForest)
 data(agaricus.train, package = "xgboost")

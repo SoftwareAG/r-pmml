@@ -1,5 +1,3 @@
-context("test add_mining_field_attributes")
-
 test_that("add_mining_field_attributes writes MiningField attributes properly", {
   model0 <- lm(Sepal.Length ~ ., data = iris[, -5])
   model <- pmml(model0)

@@ -1,6 +1,4 @@
-context("test pmml.xgb.Booster converter")
-
-# note: invisible(capture.output()) is used in catch xgboost's message about train-error
+# invisible(capture.output()) is used in catch xgboost's message about train-error
 
 library(xgboost)
 data(iris)

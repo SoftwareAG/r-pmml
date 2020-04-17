@@ -1,5 +1,3 @@
-context("test pmml.ARIMA converter")
-
 library(forecast)
 data("WWWusage")
 data("AirPassengers")

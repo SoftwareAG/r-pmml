@@ -1,5 +1,3 @@
-context("test integration")
-
 library(zementisr)
 library(amap)
 library(isofor)

@@ -1,5 +1,3 @@
-context("test pmml.svm converter")
-
 library(e1071)
 data("audit")
 

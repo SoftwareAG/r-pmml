@@ -1,5 +1,3 @@
-context("test datadictionary")
-
 test_that("datadictionary error when features with unsupported class are used in tree model", {
   library(rpart)
   data(kyphosis)

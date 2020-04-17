@@ -1,5 +1,3 @@
-context("test pmml.iForest converter")
-
 data(iris)
 
 test_that("confirm non-existent category is still automatically created by iForest function", {

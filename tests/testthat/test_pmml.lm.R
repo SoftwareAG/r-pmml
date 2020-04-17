@@ -1,5 +1,3 @@
-context("test pmml.lm converter")
-
 test_that("pmml.lm error when attempt is made to model with interaction terms", {
   test <- data.frame(x1 = rnorm(100), x2 = sample(c("a", "b"), 100, TRUE), y = rnorm(100), stringsAsFactors = FALSE)
   model <- lm(y ~ x1 * x2, data = test)

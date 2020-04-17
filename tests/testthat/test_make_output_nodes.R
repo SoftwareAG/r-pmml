@@ -1,5 +1,3 @@
-context("test make_output_nodes")
-
 test_that("make_output_nodes works correctly with 1 field", {
   onodes1 <- make_output_nodes(name = list("OutputField"), attributes = list(name = "name3", dataType = "double", optype = "continuous"))
   expect_equal(length(onodes1), 1)

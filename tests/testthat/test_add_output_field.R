@@ -1,5 +1,3 @@
-context("test add_output_field")
-
 data(iris)
 
 test_that("add_output_field works correctly 1", {

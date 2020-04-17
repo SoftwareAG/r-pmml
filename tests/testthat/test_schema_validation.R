@@ -1,5 +1,3 @@
-context("test schema validation")
-
 library(amap)
 library(clue)
 library(data.table)

@@ -1,5 +1,3 @@
-context("test file_to_xml_node")
-
 # Temp files for xgboost
 test_pmml_file <- tempfile()
 

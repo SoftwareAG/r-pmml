@@ -1,5 +1,3 @@
-context("test pmml.ksvm converter")
-
 library(kernlab)
 data(iris)
 

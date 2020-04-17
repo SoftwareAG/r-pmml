@@ -1,5 +1,3 @@
-context("test for presence of specific nodes in pmml produced")
-
 data(iris)
 data(audit)
 

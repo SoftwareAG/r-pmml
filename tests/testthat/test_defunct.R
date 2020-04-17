@@ -1,5 +1,3 @@
-context("test defunct")
-
 dummy_file <- tempfile()
 
 teardown(unlink(c(dummy_file), recursive = TRUE))

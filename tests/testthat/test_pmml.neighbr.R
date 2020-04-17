@@ -1,5 +1,3 @@
-context("test pmml.neighbr converter")
-
 test_that("error when transform argument is not null", {
   set.seed(1131231)
   library(neighbr)

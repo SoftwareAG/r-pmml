@@ -1,5 +1,3 @@
-context("test pmml.gbm converter")
-
 library(gbm)
 data(audit)
 

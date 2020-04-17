@@ -1,5 +1,3 @@
-context("test function_to_pmml")
-
 test_that("function_to_pmml('1+2') outputs correct xml", {
   current <- function_to_pmml("1 + 2")
 
