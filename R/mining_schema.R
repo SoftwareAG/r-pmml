@@ -110,65 +110,65 @@
 
 
 
-.pmmlMiningSchemaRF <- function(field, target = NULL, inactive = NULL, transformed = NULL, missing_value_replacement = NULL) {
-  # Generate the PMML for the MinimgSchema element.
-  number.of.fields <- length(field$name)
-  mining.fields <- list()
-  unknownVal <- NULL
-  invalidVal <- NULL
-  namelist <- list()
-  dnamelist <- list()
-  nmbr <- 1
-  for (i in 1:number.of.fields)
-  {
-    usage <- ifelse(field$name[i] == target, "predicted", "active")
-    if (field$name[i] != target) {
-      unknownVal <- missing_value_replacement
-      invalidVal <- ifelse(is.null(missing_value_replacement), "asIs", "asMissing")
-    }
-
-    if (!is.null(transformed)) {
-      if (transformed$field_data[field$name[i], "type"] == "original") {
-        if (!(.removeAsFactor(field$name[i]) %in% namelist)) {
-          namelist <- c(namelist, .removeAsFactor(field$name[i]))
-          mining.fields[[nmbr]] <- xmlNode("MiningField", attrs = c(
-            name = namelist[nmbr],
-            usageType = usage, missingValueReplacement = unknownVal, invalidValueTreatment = invalidVal
-          ))
-          nmbr <- nmbr + 1
-        }
-      } else {
-        ofnames <- strsplit(transformed$field_data[field$name[i], "orig_field_name"][[1]], ",")[[1]]
-        for (j in 1:length(ofnames))
-        {
-          ofname <- gsub("^\\s+|\\s+$", "", ofnames[j])
-          hname <- transformed$field_data[ofname, "orig_field_name"]
-          ancestorField <- ofname
-          while (!is.na(hname)) {
-            ancestorField <- hname
-            hname <- transformed$field_data[hname, "orig_field_name"]
-          }
-          fname <- .removeAsFactor(ancestorField)
-          if ((!(fname %in% namelist)) && (!(fname %in% dnamelist))) {
-            namelist <- c(namelist, fname)
-            if (!(.removeAsFactor(fname) %in% dnamelist)) {
-              dnamelist <- c(dnamelist, .removeAsFactor(field$name[i]))
-            }
-          }
-        }
-      }
-    } else {
-      fName <- .removeAsFactor(field$name[i])
-      mining.fields[[i]] <- xmlNode("MiningField", attrs = c(
-        name = fName,
-        usageType = usage, missingValueReplacement = unknownVal, invalidValueTreatment = invalidVal
-      ))
-    }
-  }
-  mining.schema <- xmlNode("MiningSchema")
-  mining.schema$children <- mining.fields
-  return(mining.schema)
-}
+# .pmmlMiningSchemaRF <- function(field, target = NULL, inactive = NULL, transformed = NULL, missing_value_replacement = NULL) {
+#   # Generate the PMML for the MinimgSchema element.
+#   number.of.fields <- length(field$name)
+#   mining.fields <- list()
+#   unknownVal <- NULL
+#   invalidVal <- NULL
+#   namelist <- list()
+#   dnamelist <- list()
+#   nmbr <- 1
+#   for (i in 1:number.of.fields)
+#   {
+#     usage <- ifelse(field$name[i] == target, "predicted", "active")
+#     if (field$name[i] != target) {
+#       unknownVal <- missing_value_replacement
+#       invalidVal <- ifelse(is.null(missing_value_replacement), "asIs", "asMissing")
+#     }
+# 
+#     if (!is.null(transformed)) {
+#       if (transformed$field_data[field$name[i], "type"] == "original") {
+#         if (!(.removeAsFactor(field$name[i]) %in% namelist)) {
+#           namelist <- c(namelist, .removeAsFactor(field$name[i]))
+#           mining.fields[[nmbr]] <- xmlNode("MiningField", attrs = c(
+#             name = namelist[nmbr],
+#             usageType = usage, missingValueReplacement = unknownVal, invalidValueTreatment = invalidVal
+#           ))
+#           nmbr <- nmbr + 1
+#         }
+#       } else {
+#         ofnames <- strsplit(transformed$field_data[field$name[i], "orig_field_name"][[1]], ",")[[1]]
+#         for (j in 1:length(ofnames))
+#         {
+#           ofname <- gsub("^\\s+|\\s+$", "", ofnames[j])
+#           hname <- transformed$field_data[ofname, "orig_field_name"]
+#           ancestorField <- ofname
+#           while (!is.na(hname)) {
+#             ancestorField <- hname
+#             hname <- transformed$field_data[hname, "orig_field_name"]
+#           }
+#           fname <- .removeAsFactor(ancestorField)
+#           if ((!(fname %in% namelist)) && (!(fname %in% dnamelist))) {
+#             namelist <- c(namelist, fname)
+#             if (!(.removeAsFactor(fname) %in% dnamelist)) {
+#               dnamelist <- c(dnamelist, .removeAsFactor(field$name[i]))
+#             }
+#           }
+#         }
+#       }
+#     } else {
+#       fName <- .removeAsFactor(field$name[i])
+#       mining.fields[[i]] <- xmlNode("MiningField", attrs = c(
+#         name = fName,
+#         usageType = usage, missingValueReplacement = unknownVal, invalidValueTreatment = invalidVal
+#       ))
+#     }
+#   }
+#   mining.schema <- xmlNode("MiningSchema")
+#   mining.schema$children <- mining.fields
+#   return(mining.schema)
+# }
 
 .pmmlMiningSchemaSurv <- function(field, timeName, statusName, target = NULL, inactive = NULL, transformed = NULL, missing_value_replacement = NULL) {
   # Generate the PMML for the MinimgSchema element for a survival model.

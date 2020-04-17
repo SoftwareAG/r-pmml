@@ -376,219 +376,219 @@ pmml.randomForest <- function(model,
 
 
 
-.getRFTreeNodes2 <- function(recursiveObject, model, side, tinf, rowfrom, rownext, fieldInfo) {
-  if (!((model$type == "regression") || (model$type == "classification"))) {
-    print("Model type not supported")
-  }
-  treeSkip <- FALSE
-
-  # Keep going over nodes; if leaf node, add score, else split and keep going.
-  if ((rowfrom == 1) && (rownext == 1)) {
-    # Handle trees with 1 node only.
-    if (is.null(dim(tinf))) {
-      rfNode <- xmlNode("Node", attrs = c(id = "1", score = tinf[5]))
-      nodeB <- xmlNode("True")
-      rfNode <- append.XMLNode(rfNode, nodeB)
-      recursiveObject$internalNode <- rfNode
-      return(recursiveObject)
-    } else {
-      # Add top node at first loop only.
-      rfNode <- xmlNode("Node", attrs = c(id = "1"))
-      nodeB <- xmlNode("True")
-      rfNode <- append.XMLNode(rfNode, nodeB)
-    }
-  } else {
-    fname <- attributes(model$forest$xlevels[tinf[rowfrom, 3]])[[1]]
-    # Treat left and right leafs separately as their information is stored in separate column in tree.
-    if (side == -1) {
-      if (tinf[rownext, 1] == 0) {
-        # The score for classification must be translated from a number to the category name.
-        if (model$type == "regression") {
-          # The score for regresion can just be read off.
-          rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1], score = tinf[rownext, 5]))
-        } else {
-          rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1], score = model$classes[tinf[rownext, 5]]))
-        }
-      } else {
-        rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1]))
-      }
-      # After the node, add the split info in pmml
-      # left side, regression model, terminal node.
-      logical <- FALSE
-      numeric <- FALSE
-      if (is.numeric(model$forest$xlevels[[tinf[rowfrom, 3]]][1])) {
-        name <- names(model$forest$xlevels[tinf[rowfrom, 3]])
-        if (fieldInfo$class[name] == "logical") {
-          logical <- TRUE
-        } else {
-          numeric <- TRUE
-        }
-      } else {
-        numeric <- FALSE
-      }
-      # Split if var is numeric.
-      if (numeric) {
-        splitNode <- xmlNode("SimplePredicate", attrs = c(
-          field = fname, operator = "lessOrEqual",
-          value = tinf[rowfrom, 4]
-        ))
-      } else if (logical) {
-        bool <- ifelse(tinf[rowfrom, 4] <= 0.5, FALSE, TRUE)
-        splitNode <- xmlNode("SimplePredicate", attrs = c(
-          field = fname, operator = "equal",
-          value = bool
-        ))
-      } else {
-        if (tinf[rowfrom, 4] >= 0) {
-          # Split if var is categorical.
-          binary <- .sdecimal2binary(tinf[rowfrom, 4])
-          ssp <- xmlNode("SimpleSetPredicate", attrs = c(field = fname, booleanOperator = "isIn"))
-          num1 <- 0
-          scat <- NULL
-          holder <- array(0, dim = c(1, model$forest$ncat[fname][[1]]))
-          for (k in 1:length(binary))
-          {
-            holder[k] <- binary[k]
-          }
-
-          # For each category allowed, if value is 1 (from the binary conversion) then go left.
-          options(useFancyQuotes = FALSE)
-          for (k in 1:model$forest$ncat[fname][[1]])
-          {
-            if (holder[k] == 1) {
-              num1 <- num1 + 1
-              catname <- model$forest$xlevels[fname][[1]][k]
-              scat <- paste(scat, " ", dQuote(catname))
-            }
-          }
-
-          # Strip intermediate, leading and trailing spaces.
-          scat <- gsub("^[ ]*", "", scat)
-          ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
-          ssp <- append.XMLNode(ssp, ap)
-          splitNode <- ssp
-        } else {
-          treeSkip <- TRUE
-          sknode <- xmlNode("skip")
-          recursiveObject$internalNode <- "skip"
-          return(recursiveObject)
-        }
-      }
-      if (treeSkip == FALSE) {
-        rfNode <- append.XMLNode(rfNode, splitNode)
-      }
-    } else {
-
-      # Right side, regression, terminal node.
-      # Repeat for right side.
-      if (tinf[rownext, 1] == 0) {
-        if (model$type == "regression") {
-          # The only difference is where to read off the node info from the tree structure.
-          rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2], score = tinf[rownext, 5]))
-        } else {
-          rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2], score = model$classes[tinf[rownext, 5]]))
-        }
-      }
-      else {
-        rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2]))
-      }
-
-      logical <- FALSE
-      numeric <- FALSE
-      if (is.numeric(model$forest$xlevels[[tinf[rowfrom, 3]]][1])) {
-        name <- names(model$forest$xlevels[tinf[rowfrom, 3]])
-        if (fieldInfo$class[name] == "logical") {
-          logical <- TRUE
-        } else {
-          numeric <- TRUE
-        }
-      } else {
-        numeric <- FALSE
-      }
-
-      if (numeric) {
-        splitNode <- xmlNode("SimplePredicate", attrs = c(
-          field = fname, operator = "greaterThan",
-          value = tinf[rowfrom, 4]
-        ))
-      } else if (logical) {
-        bool <- ifelse(tinf[rowfrom, 4] <= 0.5, TRUE, FALSE)
-        splitNode <- xmlNode("SimplePredicate", attrs = c(
-          field = fname, operator = "equal",
-          value = bool
-        ))
-      } else {
-        if (tinf[rowfrom, 4] >= 0) {
-          # Split if var is categorical.
-          binary <- .sdecimal2binary(tinf[rowfrom, 4])
-          ssp <- xmlNode("SimpleSetPredicate", attrs = c(field = fname, booleanOperator = "isIn"))
-          num1 <- 0
-          scat <- NULL
-          holder <- array(0, dim = c(1, model$forest$ncat[fname][[1]]))
-          options(useFancyQuotes = FALSE)
-          for (k in 1:length(binary))
-          {
-            holder[k] <- binary[k]
-          }
-          for (k in 1:model$forest$ncat[fname][[1]])
-          {
-            if (holder[k] == 0) {
-              num1 <- num1 + 1
-              catname <- as.character(unlist(model$forest$xlevels[fname]))[k]
-              scat <- paste(scat, " ", dQuote(catname))
-            }
-          }
-
-          scat <- gsub("^[ ]*", "", scat)
-          ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
-          ssp <- append.XMLNode(ssp, ap)
-          splitNode <- ssp
-        } else {
-          treeSkip <- TRUE
-          sknode <- xmlNode("skip")
-          recursiveObject$internalNode <- "skip"
-          return(recursiveObject)
-        }
-      }
-      if (treeSkip == FALSE) {
-        rfNode <- append.XMLNode(rfNode, splitNode)
-      }
-    }
-  }
-
-  if (tinf[rownext, 5] == -1) {
-    terminalFlag <- TRUE
-  } else {
-    terminalFlag <- FALSE
-  }
-
-  if (terminalFlag == TRUE) {
-    # Only the predicted value for this node is the output.
-  }
-  if (terminalFlag == FALSE) {
-    recursiveObject$internalNode <- NULL
-    recursiveObject <- .getRFTreeNodes2(recursiveObject, model, -1, tinf, rownext, tinf[rownext, 1], fieldInfo)
-    if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
-      return(recursiveObject)
-    } else {
-      rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
-    }
-
-
-
-    recursiveObject$internalNode <- NULL
-    recursiveObject <- .getRFTreeNodes2(recursiveObject, model, 1, tinf, rownext, tinf[rownext, 2], fieldInfo)
-    if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
-      return(recursiveObject)
-    } else {
-      rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
-    }
-  }
-
-  if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
-    return(recursiveObject)
-  } else {
-    recursiveObject$internalNode <- rfNode
-    return(recursiveObject)
-  }
-}
+# .getRFTreeNodes2 <- function(recursiveObject, model, side, tinf, rowfrom, rownext, fieldInfo) {
+#   if (!((model$type == "regression") || (model$type == "classification"))) {
+#     print("Model type not supported")
+#   }
+#   treeSkip <- FALSE
+# 
+#   # Keep going over nodes; if leaf node, add score, else split and keep going.
+#   if ((rowfrom == 1) && (rownext == 1)) {
+#     # Handle trees with 1 node only.
+#     if (is.null(dim(tinf))) {
+#       rfNode <- xmlNode("Node", attrs = c(id = "1", score = tinf[5]))
+#       nodeB <- xmlNode("True")
+#       rfNode <- append.XMLNode(rfNode, nodeB)
+#       recursiveObject$internalNode <- rfNode
+#       return(recursiveObject)
+#     } else {
+#       # Add top node at first loop only.
+#       rfNode <- xmlNode("Node", attrs = c(id = "1"))
+#       nodeB <- xmlNode("True")
+#       rfNode <- append.XMLNode(rfNode, nodeB)
+#     }
+#   } else {
+#     fname <- attributes(model$forest$xlevels[tinf[rowfrom, 3]])[[1]]
+#     # Treat left and right leafs separately as their information is stored in separate column in tree.
+#     if (side == -1) {
+#       if (tinf[rownext, 1] == 0) {
+#         # The score for classification must be translated from a number to the category name.
+#         if (model$type == "regression") {
+#           # The score for regresion can just be read off.
+#           rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1], score = tinf[rownext, 5]))
+#         } else {
+#           rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1], score = model$classes[tinf[rownext, 5]]))
+#         }
+#       } else {
+#         rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 1]))
+#       }
+#       # After the node, add the split info in pmml
+#       # left side, regression model, terminal node.
+#       logical <- FALSE
+#       numeric <- FALSE
+#       if (is.numeric(model$forest$xlevels[[tinf[rowfrom, 3]]][1])) {
+#         name <- names(model$forest$xlevels[tinf[rowfrom, 3]])
+#         if (fieldInfo$class[name] == "logical") {
+#           logical <- TRUE
+#         } else {
+#           numeric <- TRUE
+#         }
+#       } else {
+#         numeric <- FALSE
+#       }
+#       # Split if var is numeric.
+#       if (numeric) {
+#         splitNode <- xmlNode("SimplePredicate", attrs = c(
+#           field = fname, operator = "lessOrEqual",
+#           value = tinf[rowfrom, 4]
+#         ))
+#       } else if (logical) {
+#         bool <- ifelse(tinf[rowfrom, 4] <= 0.5, FALSE, TRUE)
+#         splitNode <- xmlNode("SimplePredicate", attrs = c(
+#           field = fname, operator = "equal",
+#           value = bool
+#         ))
+#       } else {
+#         if (tinf[rowfrom, 4] >= 0) {
+#           # Split if var is categorical.
+#           binary <- .sdecimal2binary(tinf[rowfrom, 4])
+#           ssp <- xmlNode("SimpleSetPredicate", attrs = c(field = fname, booleanOperator = "isIn"))
+#           num1 <- 0
+#           scat <- NULL
+#           holder <- array(0, dim = c(1, model$forest$ncat[fname][[1]]))
+#           for (k in 1:length(binary))
+#           {
+#             holder[k] <- binary[k]
+#           }
+# 
+#           # For each category allowed, if value is 1 (from the binary conversion) then go left.
+#           options(useFancyQuotes = FALSE)
+#           for (k in 1:model$forest$ncat[fname][[1]])
+#           {
+#             if (holder[k] == 1) {
+#               num1 <- num1 + 1
+#               catname <- model$forest$xlevels[fname][[1]][k]
+#               scat <- paste(scat, " ", dQuote(catname))
+#             }
+#           }
+# 
+#           # Strip intermediate, leading and trailing spaces.
+#           scat <- gsub("^[ ]*", "", scat)
+#           ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
+#           ssp <- append.XMLNode(ssp, ap)
+#           splitNode <- ssp
+#         } else {
+#           treeSkip <- TRUE
+#           sknode <- xmlNode("skip")
+#           recursiveObject$internalNode <- "skip"
+#           return(recursiveObject)
+#         }
+#       }
+#       if (treeSkip == FALSE) {
+#         rfNode <- append.XMLNode(rfNode, splitNode)
+#       }
+#     } else {
+# 
+#       # Right side, regression, terminal node.
+#       # Repeat for right side.
+#       if (tinf[rownext, 1] == 0) {
+#         if (model$type == "regression") {
+#           # The only difference is where to read off the node info from the tree structure.
+#           rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2], score = tinf[rownext, 5]))
+#         } else {
+#           rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2], score = model$classes[tinf[rownext, 5]]))
+#         }
+#       }
+#       else {
+#         rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2]))
+#       }
+# 
+#       logical <- FALSE
+#       numeric <- FALSE
+#       if (is.numeric(model$forest$xlevels[[tinf[rowfrom, 3]]][1])) {
+#         name <- names(model$forest$xlevels[tinf[rowfrom, 3]])
+#         if (fieldInfo$class[name] == "logical") {
+#           logical <- TRUE
+#         } else {
+#           numeric <- TRUE
+#         }
+#       } else {
+#         numeric <- FALSE
+#       }
+# 
+#       if (numeric) {
+#         splitNode <- xmlNode("SimplePredicate", attrs = c(
+#           field = fname, operator = "greaterThan",
+#           value = tinf[rowfrom, 4]
+#         ))
+#       } else if (logical) {
+#         bool <- ifelse(tinf[rowfrom, 4] <= 0.5, TRUE, FALSE)
+#         splitNode <- xmlNode("SimplePredicate", attrs = c(
+#           field = fname, operator = "equal",
+#           value = bool
+#         ))
+#       } else {
+#         if (tinf[rowfrom, 4] >= 0) {
+#           # Split if var is categorical.
+#           binary <- .sdecimal2binary(tinf[rowfrom, 4])
+#           ssp <- xmlNode("SimpleSetPredicate", attrs = c(field = fname, booleanOperator = "isIn"))
+#           num1 <- 0
+#           scat <- NULL
+#           holder <- array(0, dim = c(1, model$forest$ncat[fname][[1]]))
+#           options(useFancyQuotes = FALSE)
+#           for (k in 1:length(binary))
+#           {
+#             holder[k] <- binary[k]
+#           }
+#           for (k in 1:model$forest$ncat[fname][[1]])
+#           {
+#             if (holder[k] == 0) {
+#               num1 <- num1 + 1
+#               catname <- as.character(unlist(model$forest$xlevels[fname]))[k]
+#               scat <- paste(scat, " ", dQuote(catname))
+#             }
+#           }
+# 
+#           scat <- gsub("^[ ]*", "", scat)
+#           ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
+#           ssp <- append.XMLNode(ssp, ap)
+#           splitNode <- ssp
+#         } else {
+#           treeSkip <- TRUE
+#           sknode <- xmlNode("skip")
+#           recursiveObject$internalNode <- "skip"
+#           return(recursiveObject)
+#         }
+#       }
+#       if (treeSkip == FALSE) {
+#         rfNode <- append.XMLNode(rfNode, splitNode)
+#       }
+#     }
+#   }
+# 
+#   if (tinf[rownext, 5] == -1) {
+#     terminalFlag <- TRUE
+#   } else {
+#     terminalFlag <- FALSE
+#   }
+# 
+#   if (terminalFlag == TRUE) {
+#     # Only the predicted value for this node is the output.
+#   }
+#   if (terminalFlag == FALSE) {
+#     recursiveObject$internalNode <- NULL
+#     recursiveObject <- .getRFTreeNodes2(recursiveObject, model, -1, tinf, rownext, tinf[rownext, 1], fieldInfo)
+#     if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
+#       return(recursiveObject)
+#     } else {
+#       rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
+#     }
+# 
+# 
+# 
+#     recursiveObject$internalNode <- NULL
+#     recursiveObject <- .getRFTreeNodes2(recursiveObject, model, 1, tinf, rownext, tinf[rownext, 2], fieldInfo)
+#     if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
+#       return(recursiveObject)
+#     } else {
+#       rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
+#     }
+#   }
+# 
+#   if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
+#     return(recursiveObject)
+#   } else {
+#     recursiveObject$internalNode <- rfNode
+#     return(recursiveObject)
+#   }
+# }
