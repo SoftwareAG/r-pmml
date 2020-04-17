@@ -206,7 +206,7 @@ pmml.rfsrc <- function(model,
 
   for (b in 1:numTrees)
   {
-    print(paste("Converting Tree", b, " to PMML", sep = ""))
+    message(paste("Converting Tree", b, " to PMML", sep = ""))
     segmentNode <- xmlNode("Segment", attrs = c(id = b))
     predicateNode <- xmlNode("True")
     segmentNode <- append.XMLNode(segmentNode, predicateNode)
