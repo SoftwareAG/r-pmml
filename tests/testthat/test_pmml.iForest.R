@@ -1,6 +1,10 @@
 library(isofor)
 data(iris)
 
+test_that("error when object is not iForest", {
+  expect_error(pmml.iForest("foo"), "Not a legitimate iForest object")
+})
+
 test_that("confirm non-existent category is still automatically created by iForest function", {
   skip_on_cran()
   # skip_on_ci()
