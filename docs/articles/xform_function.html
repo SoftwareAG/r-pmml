@@ -6,19 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Introduction to xform_function • pmml</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to xform_function">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="pmml">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0.9000</span>
       </span>
     </div>
 
@@ -67,7 +67,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/SoftwareAG/r-pmml">
+  <a href="https://github.com/SoftwareAG/r-pmml/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to xform_function</h1>
+      <h1 data-toc-skip>Introduction to xform_function</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/SoftwareAG/r-pmml/blob/master/vignettes/xform_function.Rmd"><code>vignettes/xform_function.Rmd</code></a></small>
@@ -107,8 +107,8 @@
 <h2 class="hasAnchor">
 <a href="#single-numeric-field" class="anchor"></a>Single numeric field</h2>
 <p>Using the <code>iris</code> dataset as an example, let’s construct a new feature by transforming one variable. Load the dataset and show the first few lines:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(iris)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">iris</span>)
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -142,9 +142,9 @@
 </tbody>
 </table>
 <p>Create the <code>iris_box</code> object with <code>xform_wrap</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)</pre></body></html></div>
 <p><code>iris_box</code> contains the data and transform information that will be used to produce PMML later. The original data is in <code>iris_box$data</code>. Any new features created with a transformation are added as columns to this data frame.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -178,7 +178,7 @@
 </tbody>
 </table>
 <p>Transform and field information is in <code>iris_box$field_data</code>. The field_data data frame contains information on every field in the dataset, as well as every transform used. The <code>xform_function</code> column contains expressions used in the <code>xform_function</code> transform.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu">kable</span>(<span class="no">iris_box</span>$<span class="no">field_data</span>)</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -286,11 +286,11 @@
 </tbody>
 </table>
 <p>Now add a new feature, <code>Sepal.Length.Sqrt</code>, using <code>xform_function</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length"</span>,</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                         <span class="dt">new_field_name=</span><span class="st">"Sepal.Length.Sqrt"</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">                         <span class="dt">expression=</span><span class="st">"sqrt(Sepal.Length)"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length.Sqrt"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"sqrt(Sepal.Length)"</span>)</pre></body></html></div>
 <p>The new feature is calculated and added as a column to the <code>iris_box$data</code> data frame:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -328,7 +328,7 @@
 </tbody>
 </table>
 <p><code>iris_box$field_data</code> now contains a new row with the transformation expression:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span>,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu">kable</span>(<span class="no">iris_box</span>$<span class="no">field_data</span>[<span class="fl">6</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">3</span>,<span class="fl">14</span>)])</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -346,38 +346,38 @@
 </tr></tbody>
 </table>
 <p>Construct a linear model for <code>Petal.Width</code> using this new feature, and convert it to PMML:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Sepal.Length.Sqrt, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Sepal.Length.Sqrt</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)</pre></body></html></div>
 <p>Since the model predicts <code>Petal.Width</code> using a variable based on <code>Sepal.Length</code>, the PMML will contain these two fields in the <code>DataDictionary</code> and <code>MiningSchema</code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; &lt;DataDictionary numberOfFields="2"&gt;</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; &lt;/DataDictionary&gt;</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">1</span>]] <span class="co">#Mining Schema node</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt; &lt;MiningSchema&gt;</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt; &lt;/MiningSchema&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">2</span>]] <span class="co">#Data Dictionary node</span>
+<span class="co">#&gt; &lt;DataDictionary numberOfFields="2"&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt; &lt;/DataDictionary&gt;</span>
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">1</span>]] <span class="co">#Mining Schema node</span>
+<span class="co">#&gt; &lt;MiningSchema&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt; &lt;/MiningSchema&gt;</span></pre></body></html></div>
 <p>The <code>LocalTransformations</code> node contains <code>Sepal.Length.Sqrt</code> as a derived field:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;  &lt;DerivedField name="Sepal.Length.Sqrt" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; &lt;Apply function="sqrt"&gt;</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Sepal.Length.Sqrt" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="sqrt"&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 </div>
 <div id="single-categorical-field" class="section level2">
 <h2 class="hasAnchor">
 <a href="#single-categorical-field" class="anchor"></a>Single categorical field</h2>
 <p><code>xform_function</code> can also operate on categorical data. In this example, let’s create a boolean feature that equals 1 only when <code>Species</code> is <code>setosa</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Species"</span>,</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Species.Setosa"</span>,</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"if (Species == 'setosa') {1} else {0}"</span>)</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Species"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Species.Setosa"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"if (Species == 'setosa') {1} else {0}"</span>)
+<span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -415,32 +415,32 @@
 </tbody>
 </table>
 <p>Create a linear model and check the <code>LocalTransformations</code> node:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt;  &lt;DerivedField name="Species.Setosa" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; &lt;Apply function="if"&gt;</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;   &lt;Apply function="equal"&gt;</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt;     &lt;FieldRef field="Species"/&gt;</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt;     &lt;Constant dataType="string"&gt;setosa&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;0&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Species.Setosa</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Species.Setosa" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="if"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="equal"&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="Species"/&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="string"&gt;setosa&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;0&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 </div>
 <div id="multiple-input-fields" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multiple-input-fields" class="anchor"></a>Multiple input fields</h2>
 <p>It is possible to create new features by combining several fields. Let’s create a new field from the ratio of sepal and petal lengths:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length,Petal.Length"</span>,</a>
-<a class="sourceLine" id="cb13-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Length.Ratio"</span>,</a>
-<a class="sourceLine" id="cb13-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"Sepal.Length / Petal.Length"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length,Petal.Length"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Length.Ratio"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"Sepal.Length / Petal.Length"</span>)</pre></body></html></div>
 <p>As before, the new field is added as a column to the <code>iris_box$data</code> data frame:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -478,45 +478,45 @@
 </tbody>
 </table>
 <p>Fit a linear model using this new feature, and convert it to pmml:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Length.Ratio</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)</pre></body></html></div>
 <p>The pmml will contain <code>Sepal.Length</code> and <code>Petal.Length</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; &lt;DataDictionary numberOfFields="3"&gt;</span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt;  &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt; &lt;/DataDictionary&gt;</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">1</span>]] <span class="co">#Mining Schema node</span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; &lt;MiningSchema&gt;</span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt;  &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; &lt;/MiningSchema&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">2</span>]] <span class="co">#Data Dictionary node</span>
+<span class="co">#&gt; &lt;DataDictionary numberOfFields="3"&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt; &lt;/DataDictionary&gt;</span>
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">1</span>]] <span class="co">#Mining Schema node</span>
+<span class="co">#&gt; &lt;MiningSchema&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt; &lt;/MiningSchema&gt;</span></pre></body></html></div>
 <p>The <code>Local.Transformations</code> node contains <code>Length.Ratio</code> as a derived field:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt;  &lt;DerivedField name="Length.Ratio" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="co">#&gt; &lt;Apply function="/"&gt;</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt;   &lt;FieldRef field="Petal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Length.Ratio" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="/"&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Petal.Length"/&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 </div>
 <div id="using-a-previously-derived-feature" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-a-previously-derived-feature" class="anchor"></a>Using a previously derived feature</h2>
 <p>It is possible to pass a feature derived with <code>xform_function</code> to another <code>xform_function</code> call. To do this, the second call to <code>xform_function</code> must use the original data field names (instead of the derived field) in the <code>orig_field_name</code> argument.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length,Petal.Length"</span>,</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Length.Ratio"</span>,</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"Sepal.Length / Petal.Length"</span>)</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">                         <span class="dt">new_field_name=</span><span class="st">"Length.R.Times.S.Width"</span>,</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">                         <span class="dt">expression=</span><span class="st">"Length.Ratio * Sepal.Width"</span>)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="kw">kable</span>(iris_box<span class="op">$</span>field_data[<span class="dv">6</span><span class="op">:</span><span class="dv">7</span>,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dv">14</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length,Petal.Length"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Length.Ratio"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"Sepal.Length / Petal.Length"</span>)
+
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Length.R.Times.S.Width"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"Length.Ratio * Sepal.Width"</span>)
+<span class="fu">kable</span>(<span class="no">iris_box</span>$<span class="no">field_data</span>[<span class="fl">6</span>:<span class="fl">7</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>:<span class="fl">3</span>,<span class="fl">14</span>)])</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th></th>
@@ -542,39 +542,39 @@
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.R.Times.S.Width, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Length.R.Times.S.Width</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)</pre></body></html></div>
 <p>The pmml will contain <code>Sepal.Length</code>, <code>Petal.Length</code>, and <code>Sepal.Width</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">fit_pmml[[<span class="dv">2</span>]] <span class="co">#Data Dictionary node</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; &lt;DataDictionary numberOfFields="4"&gt;</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt;  &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt;  &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;</span></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt; &lt;/DataDictionary&gt;</span></a>
-<a class="sourceLine" id="cb20-8" data-line-number="8">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">1</span>]] <span class="co">#Mining Schema node</span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt; &lt;MiningSchema&gt;</span></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt;  &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt;  &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span></a>
-<a class="sourceLine" id="cb20-14" data-line-number="14"><span class="co">#&gt; &lt;/MiningSchema&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">2</span>]] <span class="co">#Data Dictionary node</span>
+<span class="co">#&gt; &lt;DataDictionary numberOfFields="4"&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Petal.Width" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Sepal.Length" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Petal.Length" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt;  &lt;DataField name="Sepal.Width" optype="continuous" dataType="double"/&gt;</span>
+<span class="co">#&gt; &lt;/DataDictionary&gt;</span>
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">1</span>]] <span class="co">#Mining Schema node</span>
+<span class="co">#&gt; &lt;MiningSchema&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Petal.Width" usageType="predicted" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Sepal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Petal.Length" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt;  &lt;MiningField name="Sepal.Width" usageType="active" invalidValueTreatment="returnInvalid"/&gt;</span>
+<span class="co">#&gt; &lt;/MiningSchema&gt;</span></pre></body></html></div>
 <p>The <code>Local.Transformations</code> node contains <code>Length.Ratio</code> and <code>Length.R.Times.S.Width</code> as derived fields:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt;  &lt;DerivedField name="Length.Ratio" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; &lt;Apply function="/"&gt;</span></a>
-<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt;   &lt;FieldRef field="Petal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt;  &lt;DerivedField name="Length.R.Times.S.Width" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="co">#&gt; &lt;Apply function="*"&gt;</span></a>
-<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt;   &lt;FieldRef field="Length.Ratio"/&gt;</span></a>
-<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt;   &lt;FieldRef field="Sepal.Width"/&gt;</span></a>
-<a class="sourceLine" id="cb21-13" data-line-number="13"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb21-14" data-line-number="14"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb21-15" data-line-number="15"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Length.Ratio" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="/"&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Sepal.Length"/&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Petal.Length"/&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Length.R.Times.S.Width" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="*"&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Length.Ratio"/&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Sepal.Width"/&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 </div>
 <div id="pmml-functions-supported-by-xform_function" class="section level2">
 <h2 class="hasAnchor">
@@ -638,24 +638,24 @@
 <p>It is still possible to make <code>xform_function</code> work, but the PMML function must be defined in the R environment first.</p>
 <p>Let’s use <code>isIn</code>, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on <a href="http://dmg.org/pmml/v4-3/BuiltinFunctions.html#boolean5">this DMG page</a>.</p>
 <p>One way to implement this in R is by using <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code>, with the list of values being represented by <code>...</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">isIn &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)</a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">  <span class="cf">if</span> (x <span class="op">%in%</span><span class="st"> </span>dots) {</a>
-<a class="sourceLine" id="cb22-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">  } <span class="cf">else</span> {</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">  }</a>
-<a class="sourceLine" id="cb22-8" data-line-number="8">}</a>
-<a class="sourceLine" id="cb22-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="kw">isIn</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">isIn</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>, <span class="no">...</span>) {
+  <span class="no">dots</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">...</span>)
+  <span class="kw">if</span> (<span class="no">x</span> <span class="kw">%in%</span> <span class="no">dots</span>) {
+    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fl">TRUE</span>)
+  } <span class="kw">else</span> {
+    <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fl">FALSE</span>)
+  }
+}
+
+<span class="fu">isIn</span>(<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">4</span>)
+<span class="co">#&gt; [1] TRUE</span></pre></body></html></div>
 <p>This function can now be passed to <code>xform_function</code>. The following code creates a feature that indicates whether <code>Species</code> is either <code>setosa</code> or <code>versicolor</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Species"</span>,</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Species.Setosa.or.Versicolor"</span>,</a>
-<a class="sourceLine" id="cb23-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"isIn(Species,'setosa','versicolor')"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Species"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Species.Setosa.or.Versicolor"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"isIn(Species,'setosa','versicolor')"</span>)</pre></body></html></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -693,34 +693,34 @@
 </tbody>
 </table>
 <p>Create a linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Species.Setosa.or.Versicolor, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="co">#&gt;  &lt;DerivedField name="Species.Setosa.or.Versicolor" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6"><span class="co">#&gt; &lt;Apply function="isIn"&gt;</span></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7"><span class="co">#&gt;   &lt;FieldRef field="Species"/&gt;</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="co">#&gt;   &lt;Constant dataType="string"&gt;setosa&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9"><span class="co">#&gt;   &lt;Constant dataType="string"&gt;versicolor&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Species.Setosa.or.Versicolor</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Species.Setosa.or.Versicolor" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="isIn"&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Species"/&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="string"&gt;setosa&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="string"&gt;versicolor&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 </div>
 <div id="pmml-function-not-supported-by-xform_function---another-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pmml-function-not-supported-by-xform_function---another-example" class="anchor"></a>PMML Function not supported by <code>xform_function</code> - another example</h2>
 <p>As another example, let’s use R’s <code>mean</code> function to create a new feature. PMML has a built-in <code>avg</code>, so we will define an R function with this name.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">avg &lt;-<span class="st"> </span><span class="cf">function</span>(...) {</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">  dots &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(dots))</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">avg</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">...</span>) {
+  <span class="no">dots</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">...</span>)
+  <span class="fu"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">dots</span>))
+}</pre></body></html></div>
 <p>Now use this function to take an average of several other features and combine with another field:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(iris)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">iris_box &lt;-<span class="st"> </span><span class="kw"><a href="../reference/xform_function.html">xform_function</a></span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">                         <span class="dt">new_field_name=</span><span class="st">"Length.Average.Ratio"</span>,</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4">                         <span class="dt">expression=</span><span class="st">"avg(Sepal.Length,Petal.Length)/Sepal.Width"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span>(<span class="no">iris</span>)
+<span class="no">iris_box</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span>(<span class="no">iris_box</span>,<span class="kw">orig_field_name</span><span class="kw">=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,
+                         <span class="kw">new_field_name</span><span class="kw">=</span><span class="st">"Length.Average.Ratio"</span>,
+                         <span class="kw">expression</span><span class="kw">=</span><span class="st">"avg(Sepal.Length,Petal.Length)/Sepal.Width"</span>)</pre></body></html></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">kable</span>(<span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(iris_box<span class="op">$</span>data,<span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="fu">kable</span>(<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">iris_box</span>$<span class="no">data</span>,<span class="fl">3</span>))</pre></body></html></div>
 <table class="table">
 <thead><tr class="header">
 <th align="right">Sepal.Length</th>
@@ -758,20 +758,20 @@
 </tbody>
 </table>
 <p>Create a simple linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(Petal.Width <span class="op">~</span><span class="st"> </span>Length.Average.Ratio, <span class="dt">data=</span>iris_box<span class="op">$</span>data)</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">fit_pmml &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pmml.html">pmml</a></span>(fit, <span class="dt">transform=</span>iris_box)</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">fit_pmml[[<span class="dv">3</span>]][[<span class="dv">3</span>]]</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; &lt;LocalTransformations&gt;</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="co">#&gt;  &lt;DerivedField name="Length.Average.Ratio" dataType="double" optype="continuous"&gt;</span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="co">#&gt; &lt;Apply function="/"&gt;</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="co">#&gt;   &lt;Apply function="avg"&gt;</span></a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="co">#&gt;     &lt;FieldRef field="Sepal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="co">#&gt;     &lt;FieldRef field="Petal.Length"/&gt;</span></a>
-<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="co">#&gt;   &lt;FieldRef field="Sepal.Width"/&gt;</span></a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="co">#&gt; &lt;/Apply&gt; </span></a>
-<a class="sourceLine" id="cb29-13" data-line-number="13"><span class="co">#&gt;  &lt;/DerivedField&gt;</span></a>
-<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">fit</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(<span class="no">Petal.Width</span> ~ <span class="no">Length.Average.Ratio</span>, <span class="kw">data</span><span class="kw">=</span><span class="no">iris_box</span>$<span class="no">data</span>)
+<span class="no">fit_pmml</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span>(<span class="no">fit</span>, <span class="kw">transform</span><span class="kw">=</span><span class="no">iris_box</span>)
+<span class="no">fit_pmml</span><span class="kw">[[</span><span class="fl">3</span>]]<span class="kw">[[</span><span class="fl">3</span>]]
+<span class="co">#&gt; &lt;LocalTransformations&gt;</span>
+<span class="co">#&gt;  &lt;DerivedField name="Length.Average.Ratio" dataType="double" optype="continuous"&gt;</span>
+<span class="co">#&gt; &lt;Apply function="/"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="avg"&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="Sepal.Length"/&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="Petal.Length"/&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt;   &lt;FieldRef field="Sepal.Width"/&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt; </span>
+<span class="co">#&gt;  &lt;/DerivedField&gt;</span>
+<span class="co">#&gt; &lt;/LocalTransformations&gt;</span></pre></body></html></div>
 <p>In the PMML, <code>avg</code> will be recognized as a valid function.</p>
 </div>
 <div id="pmml-for-arbitrary-functions" class="section level2">
@@ -779,22 +779,22 @@
 <a href="#pmml-for-arbitrary-functions" class="anchor"></a>PMML for arbitrary functions</h2>
 <p>The function <code>function_to_pmml</code> (part of the <code>pmml</code> package) makes it possible to convert an R expression into PMML directly, without creating a model or calculating values.</p>
 <p>As long as the expression passed to the function is a valid R expression (e.g., no unbalanced parentheses), it can contain arbitrary function names not defined in R. Variables in the expression passed to <code>xform_function</code> are always assumed to be field names, and not substituted. That is, even if <code>x</code> has a value in the R environment, the resulting expression will still use <code>x</code>.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"1 + 2"</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="+"&gt;</span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="co">#&gt; &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb30-7" data-line-number="7">x &lt;-<span class="st"> </span><span class="dv">3</span></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"foo(bar(x * y))"</span>)</a>
-<a class="sourceLine" id="cb30-9" data-line-number="9"><span class="co">#&gt; &lt;Apply function="foo"&gt;</span></a>
-<a class="sourceLine" id="cb30-10" data-line-number="10"><span class="co">#&gt;   &lt;Apply function="bar"&gt;</span></a>
-<a class="sourceLine" id="cb30-11" data-line-number="11"><span class="co">#&gt;     &lt;Apply function="*"&gt;</span></a>
-<a class="sourceLine" id="cb30-12" data-line-number="12"><span class="co">#&gt;       &lt;FieldRef field="x"/&gt;</span></a>
-<a class="sourceLine" id="cb30-13" data-line-number="13"><span class="co">#&gt;       &lt;FieldRef field="y"/&gt;</span></a>
-<a class="sourceLine" id="cb30-14" data-line-number="14"><span class="co">#&gt;     &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb30-15" data-line-number="15"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb30-16" data-line-number="16"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"1 + 2"</span>)
+<span class="co">#&gt; &lt;Apply function="+"&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span>
+
+<span class="no">x</span> <span class="kw">&lt;-</span> <span class="fl">3</span>
+<span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"foo(bar(x * y))"</span>)
+<span class="co">#&gt; &lt;Apply function="foo"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="bar"&gt;</span>
+<span class="co">#&gt;     &lt;Apply function="*"&gt;</span>
+<span class="co">#&gt;       &lt;FieldRef field="x"/&gt;</span>
+<span class="co">#&gt;       &lt;FieldRef field="y"/&gt;</span>
+<span class="co">#&gt;     &lt;/Apply&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 </div>
 <div id="more-notes-on-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -802,71 +802,71 @@
 <p>There are several limitations to parsing expressions in <code>xform_function</code>.</p>
 <p>Each transformation operates on one data row at a time. For example, it is not possible to compute the mean of an entire feature column in <code>xform_function</code>.</p>
 <p>An expression such as <code>foo(x)</code> is treated as a function <code>foo</code> with argument <code>x</code>. Consequently, passing in an R vector <code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code> will produce PMML where <code>c</code> is a function and <code>1,2,3</code> are the arguments:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"c(1,2,3)"</span>)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="c"&gt;</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"c(1,2,3)"</span>)
+<span class="co">#&gt; &lt;Apply function="c"&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 <p>We can also see what happens when passing an <code>na.rm</code> argument to <code>prod</code>, as mentioned in an above example:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(1,2,na.rm=FALSE)"</span>) <span class="co">#produces incorrect PMML</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="product"&gt;</span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co">#&gt;   &lt;Constant dataType="boolean"&gt;FALSE&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt; &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(1,2)"</span>) <span class="co">#produces correct PMML</span></a>
-<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co">#&gt; &lt;Apply function="product"&gt;</span></a>
-<a class="sourceLine" id="cb32-9" data-line-number="9"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb32-11" data-line-number="11"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(1,2,na.rm=FALSE)"</span>) <span class="co">#produces incorrect PMML</span>
+<span class="co">#&gt; &lt;Apply function="product"&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="boolean"&gt;FALSE&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span>
+<span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(1,2)"</span>) <span class="co">#produces correct PMML</span>
+<span class="co">#&gt; &lt;Apply function="product"&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 <p>Additionally, passing in a vector to <code>prod</code> produces incorrect PMML:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>))</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; [1] 6</span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(c(1,2,3))"</span>)</a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; &lt;Apply function="product"&gt;</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt;   &lt;Apply function="c"&gt;</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>))
+<span class="co">#&gt; [1] 6</span>
+<span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"prod(c(1,2,3))"</span>)
+<span class="co">#&gt; &lt;Apply function="product"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="c"&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 </div>
 <div id="more-examples-of-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#more-examples-of-functions" class="anchor"></a>More examples of functions</h2>
 <p>The following are additional examples of pmml produced from R expressions.</p>
 <p>Extra parentheses:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"pmmlT(((1+2))*(x))"</span>)</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="pmmlT"&gt;</span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co">#&gt;   &lt;Apply function="*"&gt;</span></a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co">#&gt;     &lt;Apply function="+"&gt;</span></a>
-<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="co">#&gt;       &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="co">#&gt;       &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb34-7" data-line-number="7"><span class="co">#&gt;     &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="co">#&gt;     &lt;FieldRef field="x"/&gt;</span></a>
-<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb34-10" data-line-number="10"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"pmmlT(((1+2))*(x))"</span>)
+<span class="co">#&gt; &lt;Apply function="pmmlT"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="*"&gt;</span>
+<span class="co">#&gt;     &lt;Apply function="+"&gt;</span>
+<span class="co">#&gt;       &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
+<span class="co">#&gt;       &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt;     &lt;/Apply&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="x"/&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 <p>If-else expressions:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"if(a&lt;2) {x+3} else if (a&gt;4) {4} else {5}"</span>)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="co">#&gt; &lt;Apply function="if"&gt;</span></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="co">#&gt;   &lt;Apply function="lessThan"&gt;</span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="co">#&gt;     &lt;FieldRef field="a"/&gt;</span></a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="co">#&gt;   &lt;Apply function="+"&gt;</span></a>
-<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="co">#&gt;     &lt;FieldRef field="x"/&gt;</span></a>
-<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb35-10" data-line-number="10"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="co">#&gt;   &lt;Apply function="if"&gt;</span></a>
-<a class="sourceLine" id="cb35-12" data-line-number="12"><span class="co">#&gt;     &lt;Apply function="greaterThan"&gt;</span></a>
-<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="co">#&gt;       &lt;FieldRef field="a"/&gt;</span></a>
-<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="co">#&gt;       &lt;Constant dataType="double"&gt;4&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb35-15" data-line-number="15"><span class="co">#&gt;     &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb35-16" data-line-number="16"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;4&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb35-17" data-line-number="17"><span class="co">#&gt;     &lt;Constant dataType="double"&gt;5&lt;/Constant&gt;</span></a>
-<a class="sourceLine" id="cb35-18" data-line-number="18"><span class="co">#&gt;   &lt;/Apply&gt;</span></a>
-<a class="sourceLine" id="cb35-19" data-line-number="19"><span class="co">#&gt; &lt;/Apply&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span>(<span class="st">"if(a&lt;2) {x+3} else if (a&gt;4) {4} else {5}"</span>)
+<span class="co">#&gt; &lt;Apply function="if"&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="lessThan"&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="a"/&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="+"&gt;</span>
+<span class="co">#&gt;     &lt;FieldRef field="x"/&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt;   &lt;Apply function="if"&gt;</span>
+<span class="co">#&gt;     &lt;Apply function="greaterThan"&gt;</span>
+<span class="co">#&gt;       &lt;FieldRef field="a"/&gt;</span>
+<span class="co">#&gt;       &lt;Constant dataType="double"&gt;4&lt;/Constant&gt;</span>
+<span class="co">#&gt;     &lt;/Apply&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;4&lt;/Constant&gt;</span>
+<span class="co">#&gt;     &lt;Constant dataType="double"&gt;5&lt;/Constant&gt;</span>
+<span class="co">#&gt;   &lt;/Apply&gt;</span>
+<span class="co">#&gt; &lt;/Apply&gt;</span></pre></body></html></div>
 </div>
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
@@ -877,27 +877,11 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#introduction">Introduction</a></li>
-      <li><a href="#single-numeric-field">Single numeric field</a></li>
-      <li><a href="#single-categorical-field">Single categorical field</a></li>
-      <li><a href="#multiple-input-fields">Multiple input fields</a></li>
-      <li><a href="#using-a-previously-derived-feature">Using a previously derived feature</a></li>
-      <li><a href="#pmml-functions-supported-by-xform_function">PMML functions supported by <code>xform_function</code></a></li>
-      <li><a href="#pmml-functions-not-supported-by-xform_function">PMML functions not supported by <code>xform_function</code></a></li>
-      <li><a href="#pmml-function-not-supported-by-xform_function---another-example">PMML Function not supported by <code>xform_function</code> - another example</a></li>
-      <li><a href="#pmml-for-arbitrary-functions">PMML for arbitrary functions</a></li>
-      <li><a href="#more-notes-on-functions">More notes on functions</a></li>
-      <li><a href="#more-examples-of-functions">More examples of functions</a></li>
-      <li><a href="#references">References</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -908,7 +892,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

@@ -25,7 +25,8 @@ schema.}
 when the attributes are a vector of name-value pairs, intended for this one
 field.}
 
-\item{namespace}{The namespace of the PMML model. This is frequently also the PMML version of the model.}
+\item{namespace}{The namespace of the PMML model. This is frequently also the 
+PMML version of the model.}
 
 \item{\dots}{Further arguments passed to or from other methods.}
 }
@@ -38,10 +39,10 @@ type PMML. It can be written to file with \code{saveXML}.
 Add attribute values to an existing DataField element in a given PMML file
 }
 \details{
-The PMML format allows a DataField element to have various attributes,
+The PMML schema allows a DataField element to have various attributes,
 which, although useful, may not always be present in a PMML model. This
-function allows one to take an existing PMML file and add these attributes
-to the DataFields.
+function makes it possible to add such attributes to DataFields of an 
+existing PMML file.
 
 The attribute information can be provided as a dataframe or a vector. Each
 row of the data frame corresponds to an attribute name and each column
@@ -68,7 +69,7 @@ fit_pmml <- pmml(fit)
 # Create data frame with attribute information:
 
 attributes <- data.frame(c("FlowerWidth", 1), c("FlowerLength", 0),
-  stringAsFactors = FALSE
+  stringsAsFactors = FALSE
 )
 rownames(attributes) <- c("displayName", "isCyclic")
 colnames(attributes) <- c("Sepal.Width", "Petal.Length")
@@ -79,14 +80,14 @@ colnames(attributes) <- c("Sepal.Width", "Petal.Length")
 # as invalid.
 attributes[] <- lapply(attributes, as.character)
 
-fit_pmml_2 <- add_data_field_attributes(fit_pmml, attributes, namespace = "4_4")
+fit_pmml_2 <- add_data_field_attributes(fit_pmml,
+attributes, namespace = "4_4")
 
 # Alternative method to add attributes to a single field,
 # "Sepal.Width":
 fit_pmml_3 <- add_data_field_attributes(
   fit_pmml, c(displayName = "FlowerWidth", isCyclic = 1),
-  "Sepal.Width"
-)
+              "Sepal.Width")
 
 
 mi <- make_intervals(
@@ -97,7 +98,9 @@ mv <- make_values(
   list("A", "B", "C"), list(NULL, NULL, NULL),
   list("valid", NULL, "invalid")
 )
-fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length", interval = mi, values = mv)
+fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length",
+                                      interval = mi, values = mv)
+
 }
 \author{
 Tridivesh Jena
