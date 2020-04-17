@@ -5,3 +5,8 @@ test_that("pmml.lm error when attempt is made to model with interaction terms", 
   model <- lm(y ~ x1 * x2, data = test)
   expect_error(pmml(model), "Possible interaction terms detected. Please note that interaction terms for regression models are not presently supported.")
 })
+
+test_that("error when object is not lm", {
+  a <- "foo"
+  expect_error(pmml.lm(a), "Not a legitimate lm object")
+})
