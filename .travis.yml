@@ -3,14 +3,12 @@
 language: R
 cache: packages
 
-
-r_github_packages: Zelazny7/isofor
-
 install:
-  - R -e 'install.packages("devtools")'
-  - R -e 'devtools::install_deps(dependencies = TRUE)'
-  - R -e 'devtools::install_version("randomForestSRC", "2.5.0")'
-  - R -e 'devtools::install_github("alex23lemm/zementisr")'
+  - Rscript -e 'install.packages("devtools")'
+  - Rscript -e 'devtools::install_deps(dependencies = TRUE)'
+  - Rscript -e 'devtools::install_version("randomForestSRC", "2.5.0")'
+  - Rscript -e 'devtools::install_github("alex23lemm/zementisr")'
+  - Rscript -e 'devtools::install_github("Zelazny7/isofor")'
 
 after_success:
   - Rscript -e 'covr::codecov()'
