@@ -1,4 +1,6 @@
 # pmml 2.3.0.9000
+## Bug Fixes
+- Fixed a bug in xgboost export where probability values were switched when objective="binary:logistic".
 
 
 

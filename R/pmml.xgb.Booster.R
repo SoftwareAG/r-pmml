@@ -549,7 +549,8 @@ pmml.xgb.Booster <- function(model,
     tableElement <- append.xmlNode(tableElement, numericElement)
     regrModel <- append.xmlNode(regrModel, tableElement)
     tableElement <- xmlNode("RegressionTable", attrs = c(intercept = "0", targetCategory = output_categories[2]))
-    numericElement <- xmlNode("NumericPredictor", attrs = c(name = paste0("SumCat", output_categories[1]), coefficient = "-1.0"))
+    # numericElement <- xmlNode("NumericPredictor", attrs = c(name = paste0("SumCat", output_categories[1]), coefficient = "-1.0"))
+    numericElement <- xmlNode("NumericPredictor", attrs = c(name = paste0("SumCat", output_categories[1]), coefficient = "1.0"))
     tableElement <- append.xmlNode(tableElement, numericElement)
     regrModel <- append.xmlNode(regrModel, tableElement)
   } else {
