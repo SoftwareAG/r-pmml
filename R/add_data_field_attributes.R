@@ -30,7 +30,8 @@
 #' @param field The field to which the attributes are to be added. This is used
 #' when the attributes are a vector of name-value pairs, intended for this one
 #' field.
-#' @param namespace The namespace of the PMML model. This is frequently also the PMML version of the model.
+#' @param namespace The namespace of the PMML model. This is frequently also the 
+#' PMML version of the model.
 #' @param \dots Further arguments passed to or from other methods.
 #'
 #' @return An object of class \code{XMLNode} as that defined by the \pkg{XML} package.
@@ -38,10 +39,10 @@
 #' type PMML. It can be written to file with \code{saveXML}.
 #'
 #' @details
-#' The PMML format allows a DataField element to have various attributes,
+#' The PMML schema allows a DataField element to have various attributes,
 #' which, although useful, may not always be present in a PMML model. This
-#' function allows one to take an existing PMML file and add these attributes
-#' to the DataFields.
+#' function makes it possible to add such attributes to DataFields of an 
+#' existing PMML file.
 #'
 #' The attribute information can be provided as a dataframe or a vector. Each
 #' row of the data frame corresponds to an attribute name and each column
@@ -72,7 +73,7 @@
 #' # Create data frame with attribute information:
 #'
 #' attributes <- data.frame(c("FlowerWidth", 1), c("FlowerLength", 0),
-#'   stringAsFactors = FALSE
+#'   stringsAsFactors = FALSE
 #' )
 #' rownames(attributes) <- c("displayName", "isCyclic")
 #' colnames(attributes) <- c("Sepal.Width", "Petal.Length")
@@ -83,14 +84,14 @@
 #' # as invalid.
 #' attributes[] <- lapply(attributes, as.character)
 #'
-#' fit_pmml_2 <- add_data_field_attributes(fit_pmml, attributes, namespace = "4_4")
+#' fit_pmml_2 <- add_data_field_attributes(fit_pmml,
+#' attributes, namespace = "4_4")
 #'
 #' # Alternative method to add attributes to a single field,
 #' # "Sepal.Width":
 #' fit_pmml_3 <- add_data_field_attributes(
 #'   fit_pmml, c(displayName = "FlowerWidth", isCyclic = 1),
-#'   "Sepal.Width"
-#' )
+#'               "Sepal.Width")
 #'
 #'
 #' mi <- make_intervals(
@@ -101,7 +102,9 @@
 #'   list("A", "B", "C"), list(NULL, NULL, NULL),
 #'   list("valid", NULL, "invalid")
 #' )
-#' fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length", interval = mi, values = mv)
+#' fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length",
+#'                                       interval = mi, values = mv)
+#' 
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export
@@ -112,7 +115,7 @@ add_data_field_attributes <- function(xml_model = NULL, attributes = NULL, field
   namespace <- .getNamespace(namespace)
 
   if (!is.data.frame(attributes) && !is.vector(attributes)) {
-    print("Please give attribute information in data frame format or as a vector.")
+    stop("attribute must be a data.frame or vector.")
   }
 
   modelstring <- toString.XMLNode(xml_model)
@@ -133,12 +136,19 @@ add_data_field_attributes <- function(xml_model = NULL, attributes = NULL, field
   # Remove levels from data frame (strings stored as factors) so that new values can be added.
   attributes[] <- lapply(attributes, as.character)
 
+  # if (!all(is.element(fieldNames, formulaFields))) {
+  #   print("WARNING: The following field additions will be ignored")
+  #   cat(fieldNames[which(!(is.element(fieldNames, formulaFields)))], "not in model\n")
+  #   attributes[, c(which(!(is.element(fieldNames, formulaFields))))] <- NA
+  # }
+  
   if (!all(is.element(fieldNames, formulaFields))) {
-    print("WARNING: the following field additions will be ignored")
-    cat(fieldNames[which(!(is.element(fieldNames, formulaFields)))], "not in model\n")
-    attributes[, c(which(!(is.element(fieldNames, formulaFields))))] <- NA
-  }
-
+    not_in_model <- fieldNames[which(!(is.element(fieldNames, formulaFields)))]
+    stop(paste("The following field additions are not in the model:",
+         paste(not_in_model, collapse = ", ")))
+    }
+  
+  
   for (i in 1:ncol(attributes))
   {
     if (!all(is.na(attributes[, i]))) {
