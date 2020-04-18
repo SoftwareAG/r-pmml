@@ -149,7 +149,7 @@ pmml.ARIMA <- function(model,
   target <- "ts_value"
 
   # PMML
-  pmml <- .pmmlRootNode("4.4")
+  pmml <- .pmmlRootNode()
 
   # PMML -> Header
   pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, app_name))
