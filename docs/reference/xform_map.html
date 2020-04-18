@@ -288,11 +288,9 @@ are made clearer in the example below.</p>
 <span class='no'>audit_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_map</span>(<span class='no'>audit_box</span>,
   <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='no'>t</span>, <span class='kw'>default_value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>),
   <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='st'>"2"</span>
-)
-
+)</div><div class='output co'>#&gt; <span class='error'>Error in `[.data.frame`(newBoxData$data, , orig[1, i]): undefined columns selected</span></div><div class='input'>
 <span class='co'># check what the pmml looks like</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Adjusted</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>audit_box</span>$<span class='no'>data</span>)
-<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>audit_box</span>)</div></pre>
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Adjusted</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>audit_box</span>$<span class='no'>data</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(predvars, data, env): object 'Adjusted' not found</span></div><div class='input'><span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>audit_box</span>)</div><div class='output co'>#&gt; <span class='error'>Error in pmml(fit, transforms = audit_box): object 'fit' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -1,6 +1,11 @@
 library(randomForestSRC)
 data(veteran)
 
+test_that("error when object is not iForest", {
+  expect_error(pmml.iForest("foo"), "Not a legitimate iForest object")
+})
+
+
 test_that("no error occurs in doc example", {
   
   skip_on_cran() # CRAN only runs test against current version of randomForestSRC

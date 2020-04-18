@@ -213,22 +213,24 @@ converted into a PMML representation for kmeans clusters.</p>
     <p><a href='http://stat.ethz.ch/R-manual/R-devel/library/stats/html/hclust.html'>R project: Hierarchical Clustering</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-
+    <pre class="examples"><div class='input'>
 <span class='co'># Cluster the 4 numeric variables of the iris dataset.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>amap</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rattle</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rattle</span>)</div><div class='output co'>#&gt; <span class='message'>Rattle: A free graphical interface for data science with R.</span>
+#&gt; <span class='message'>Version 5.3.0 Copyright (c) 2006-2018 Togaware Pty Ltd.</span>
+#&gt; <span class='message'>Type 'rattle()' to shake, rattle, and roll your data.</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'rattle'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked _by_ '.GlobalEnv':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    audit</span></div><div class='input'>
 <span class='no'>model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/amap/man/hcluster.html'>hclusterpar</a></span>(<span class='no'>iris</span>[, -<span class='fl'>5</span>])
 
 <span class='co'># Get the information about the cluster centers. The last</span>
 <span class='co'># parameter of the function used is the number of clusters</span>
 <span class='co'># desired.</span>
-<span class='no'>centerInfo</span> <span class='kw'>&lt;-</span> <span class='fu'>centers.hclust</span>(<span class='no'>iris</span>[, -<span class='fl'>5</span>], <span class='no'>model</span>, <span class='fl'>3</span>)
+<span class='no'>centerInfo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/rattle/man/centers.hclust.html'>centers.hclust</a></span>(<span class='no'>iris</span>[, -<span class='fl'>5</span>], <span class='no'>model</span>, <span class='fl'>3</span>)
 
 <span class='co'># Convert to pmml</span>
-<span class='no'>model_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model</span>, <span class='kw'>centers</span> <span class='kw'>=</span> <span class='no'>centerInfo</span>)
-}</div></pre>
+<span class='no'>model_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>model</span>, <span class='kw'>centers</span> <span class='kw'>=</span> <span class='no'>centerInfo</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
