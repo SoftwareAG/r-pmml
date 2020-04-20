@@ -1,5 +1,5 @@
 library(zementisr)
-library(amap)
+# library(amap)
 library(isofor)
 library(clue)
 library(data.table)
