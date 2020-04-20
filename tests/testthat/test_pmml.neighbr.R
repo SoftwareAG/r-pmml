@@ -1,7 +1,10 @@
+library(neighbr)
+data(iris)
+
+teardown({detach("package:neighbr", unload=TRUE)})
+
 test_that("error when transform argument is not null", {
   set.seed(1131231)
-  library(neighbr)
-  data(iris)
   train_set <- iris[1:147, ]
   test_set <- iris[148:150, !names(iris) %in% c("Species")]
 

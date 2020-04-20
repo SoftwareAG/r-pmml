@@ -1,8 +1,9 @@
 library(randomForest)
 
+teardown({detach("package:randomForest", unload=TRUE)})
+
 test_that("error when object is not randomForest", {
-  a <- "foo"
-  expect_error(pmml.randomForest(a), "Not a legitimate randomForest object")
+  expect_error(pmml.randomForest("foo"), "Not a legitimate randomForest object")
 })
 
 test_that("no error occurs in doc example", {

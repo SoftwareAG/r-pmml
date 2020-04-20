@@ -1,10 +1,7 @@
 library(randomForestSRC)
 data(veteran)
 
-test_that("error when object is not iForest", {
-  expect_error(pmml.iForest("foo"), "Not a legitimate iForest object")
-})
-
+teardown({detach("package:randomForestSRC", unload=TRUE)})
 
 test_that("no error occurs in doc example", {
   

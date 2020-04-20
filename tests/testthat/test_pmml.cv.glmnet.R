@@ -2,6 +2,8 @@
 
 library(glmnet)
 
+teardown({detach("package:glmnet", unload=TRUE)})
+
 test_that("pmml.cv.glmnet throws no error when family is gaussian", {
   x <- matrix(rnorm(100 * 20), 100, 20)
   y <- rnorm(100)
