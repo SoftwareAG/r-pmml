@@ -19,6 +19,8 @@ expect_equal_num <- function(target, current) {
 }
 
 
+# teardown({detach("package:forecast", unload=TRUE)})
+
 test_that("DataDictionary node contains expected elements", {
   fit_2 <- auto.arima(WWWusage)
   p_fit_2 <- pmml(fit_2)
