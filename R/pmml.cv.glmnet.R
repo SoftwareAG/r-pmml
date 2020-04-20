@@ -188,32 +188,32 @@ pmml.cv.glmnet <- function(model,
 
   # Not checked; not used in present implementation of regression models.
   # Kept for future use if multinomial models are implemented.
-  if (FALSE) {
-    ylevels <- FALSE
-    numfac <- 0
-    for (i in 1:number.of.fields)
-    {
-      if (field$class[[field$name[i]]] == "factor") {
-        numfac <- numfac + 1
-        if (field$name[i] == target) {
-          if (length(levels(model$data[[field$name[i]]])) != 2) {
-            stop("binomial family with more than two target categories is not
-                currently supported by PMML")
-          }
-          ylevels <- TRUE
-          field$levels[[field$name[i]]] <- levels(model$data[[field$name[i]]])
-        } else {
-          field$levels[[field$name[i]]] <- model$xlevels[[field$name[i]]]
-
-          if (length(grep("^as.factor\\(", field$name[i]))) {
-            field$name[i] <- sub("^as.factor\\((.*)\\)", "\\1", field$name[i])
-            names(field$class)[i] <- sub("^as.factor\\((.*)\\)", "\\1", names(field$class)[i])
-            names(field$levels)[numfac] <- sub("^as.factor\\((.*)\\)", "\\1", names(field$levels)[numfac])
-          }
-        }
-      }
-    }
-  }
+  # if (FALSE) {
+  #   ylevels <- FALSE
+  #   numfac <- 0
+  #   for (i in 1:number.of.fields)
+  #   {
+  #     if (field$class[[field$name[i]]] == "factor") {
+  #       numfac <- numfac + 1
+  #       if (field$name[i] == target) {
+  #         if (length(levels(model$data[[field$name[i]]])) != 2) {
+  #           stop("binomial family with more than two target categories is not
+  #               currently supported by PMML")
+  #         }
+  #         ylevels <- TRUE
+  #         field$levels[[field$name[i]]] <- levels(model$data[[field$name[i]]])
+  #       } else {
+  #         field$levels[[field$name[i]]] <- model$xlevels[[field$name[i]]]
+  # 
+  #         if (length(grep("^as.factor\\(", field$name[i]))) {
+  #           field$name[i] <- sub("^as.factor\\((.*)\\)", "\\1", field$name[i])
+  #           names(field$class)[i] <- sub("^as.factor\\((.*)\\)", "\\1", names(field$class)[i])
+  #           names(field$levels)[numfac] <- sub("^as.factor\\((.*)\\)", "\\1", names(field$levels)[numfac])
+  #         }
+  #       }
+  #     }
+  #   }
+  # }
 
   # PMML
 
@@ -230,138 +230,138 @@ pmml.cv.glmnet <- function(model,
   # Following not used or checked. Not used for present implementation of regression models.
   # Kept for possible future use if multinomial general regression models are implemented.
 
-  if (FALSE) {
-    # Determine the distribution and link function to add. Quasi distributions cannot be
-    # listed. Certain link functions are not supported and an error must be thrown. Certain
-    # link function can be recast as a power link and must be constructed separately.
-    add <- FALSE
-    addl <- FALSE
-    addl2 <- FALSE
-    if (model$call[[1]] == "glm") {
-      model.type <- model$family$family
-      model.link <- model$family$link
-    }
-    else {
-      model.type <- "unknown"
-    }
-
-    # Only binary categorical cases can be handled. For multinomial cases, glm assumes the first
-    # category as one and all the rest together as one. The output then is the probability of the
-    # first category NOT be true. This case is not implemented.
-    categ <- FALSE
-    if (ylevels) {
-      if (model.type == "binomial") {
-        categ <- TRUE
-        add <- TRUE
-      }
-    }
-
-    if (model.type == "binomial") {
-      add <- TRUE
-    }
-    if (model.type == "Gamma") {
-      model.type <- "gamma"
-      add <- TRUE
-    }
-    if (model.type == "inverse.gaussian") {
-      model.type <- "igauss"
-      add <- TRUE
-    }
-    if (model.type == "gaussian") {
-      model.type <- "normal"
-      add <- TRUE
-    }
-    if (model.type == "poisson") {
-      add <- TRUE
-    }
-
-    if (model.link == "cloglog") {
-      addl <- TRUE
-    } else
-    if (model.link == "identity") {
-      addl <- TRUE
-    } else
-    if (model.link == "log") {
-      addl <- TRUE
-    } else
-    if (model.link == "logit") {
-      addl <- TRUE
-    } else
-    if (model.link == "probit") {
-      addl <- TRUE
-    } else
-    if (model.link == "inverse") {
-      addl <- TRUE
-      addl2 <- TRUE
-      d <- "-1"
-    } else
-    if (model.link == "sqrt") {
-      addl <- TRUE
-      addl2 <- TRUE
-      d <- "0.5"
-    } else {
-      stop("link function currently not supported by PMML")
-    }
-
-    if (categ) {
-      the.model <- xmlNode("GeneralRegressionModel",
-        attrs = c(
-          modelName = model_name,
-          modelType = "generalizedLinear",
-          functionName = "classification",
-          algorithmName = "glm",
-          distribution = model.type,
-          linkFunction = model.link
-        )
-      )
-    } else if (add && addl && addl2) {
-      the.model <- xmlNode("GeneralRegressionModel",
-        attrs = c(
-          modelName = model_name,
-          modelType = "generalizedLinear",
-          functionName = "regression",
-          algorithmName = "glm",
-          distribution = model.type,
-          linkFunction = "power",
-          linkParameter = d
-        )
-      )
-    } else if (add && addl && !addl2) {
-      the.model <- xmlNode("GeneralRegressionModel",
-        attrs = c(
-          modelName = model_name,
-          modelType = "generalizedLinear",
-          functionName = "regression",
-          algorithmName = "glm",
-          distribution = model.type,
-          linkFunction = model.link
-        )
-      )
-    } else if (!add && addl && addl2) {
-      the.model <- xmlNode("GeneralRegressionModel",
-        attrs = c(
-          modelName = model_name,
-          modelType = "generalizedLinear",
-          functionName = "regression",
-          algorithmName = "glm",
-          linkFunction = "power",
-          linkParameter = d
-        )
-      )
-    } else if (!add && addl && !addl2) {
-      the.model <- xmlNode("GeneralRegressionModel",
-        attrs = c(
-          modelName = model_name,
-          modelType = "generalizedLinear",
-          functionName = "regression",
-          algorithmName = "glm",
-          linkFunction = model.link
-        )
-      )
-    } else {
-      stop("model type not supported")
-    }
-  }
+  # if (FALSE) {
+  #   # Determine the distribution and link function to add. Quasi distributions cannot be
+  #   # listed. Certain link functions are not supported and an error must be thrown. Certain
+  #   # link function can be recast as a power link and must be constructed separately.
+  #   add <- FALSE
+  #   addl <- FALSE
+  #   addl2 <- FALSE
+  #   if (model$call[[1]] == "glm") {
+  #     model.type <- model$family$family
+  #     model.link <- model$family$link
+  #   }
+  #   else {
+  #     model.type <- "unknown"
+  #   }
+  # 
+  #   # Only binary categorical cases can be handled. For multinomial cases, glm assumes the first
+  #   # category as one and all the rest together as one. The output then is the probability of the
+  #   # first category NOT be true. This case is not implemented.
+  #   categ <- FALSE
+  #   if (ylevels) {
+  #     if (model.type == "binomial") {
+  #       categ <- TRUE
+  #       add <- TRUE
+  #     }
+  #   }
+  # 
+  #   if (model.type == "binomial") {
+  #     add <- TRUE
+  #   }
+  #   if (model.type == "Gamma") {
+  #     model.type <- "gamma"
+  #     add <- TRUE
+  #   }
+  #   if (model.type == "inverse.gaussian") {
+  #     model.type <- "igauss"
+  #     add <- TRUE
+  #   }
+  #   if (model.type == "gaussian") {
+  #     model.type <- "normal"
+  #     add <- TRUE
+  #   }
+  #   if (model.type == "poisson") {
+  #     add <- TRUE
+  #   }
+  # 
+  #   if (model.link == "cloglog") {
+  #     addl <- TRUE
+  #   } else
+  #   if (model.link == "identity") {
+  #     addl <- TRUE
+  #   } else
+  #   if (model.link == "log") {
+  #     addl <- TRUE
+  #   } else
+  #   if (model.link == "logit") {
+  #     addl <- TRUE
+  #   } else
+  #   if (model.link == "probit") {
+  #     addl <- TRUE
+  #   } else
+  #   if (model.link == "inverse") {
+  #     addl <- TRUE
+  #     addl2 <- TRUE
+  #     d <- "-1"
+  #   } else
+  #   if (model.link == "sqrt") {
+  #     addl <- TRUE
+  #     addl2 <- TRUE
+  #     d <- "0.5"
+  #   } else {
+  #     stop("link function currently not supported by PMML")
+  #   }
+  # 
+  #   if (categ) {
+  #     the.model <- xmlNode("GeneralRegressionModel",
+  #       attrs = c(
+  #         modelName = model_name,
+  #         modelType = "generalizedLinear",
+  #         functionName = "classification",
+  #         algorithmName = "glm",
+  #         distribution = model.type,
+  #         linkFunction = model.link
+  #       )
+  #     )
+  #   } else if (add && addl && addl2) {
+  #     the.model <- xmlNode("GeneralRegressionModel",
+  #       attrs = c(
+  #         modelName = model_name,
+  #         modelType = "generalizedLinear",
+  #         functionName = "regression",
+  #         algorithmName = "glm",
+  #         distribution = model.type,
+  #         linkFunction = "power",
+  #         linkParameter = d
+  #       )
+  #     )
+  #   } else if (add && addl && !addl2) {
+  #     the.model <- xmlNode("GeneralRegressionModel",
+  #       attrs = c(
+  #         modelName = model_name,
+  #         modelType = "generalizedLinear",
+  #         functionName = "regression",
+  #         algorithmName = "glm",
+  #         distribution = model.type,
+  #         linkFunction = model.link
+  #       )
+  #     )
+  #   } else if (!add && addl && addl2) {
+  #     the.model <- xmlNode("GeneralRegressionModel",
+  #       attrs = c(
+  #         modelName = model_name,
+  #         modelType = "generalizedLinear",
+  #         functionName = "regression",
+  #         algorithmName = "glm",
+  #         linkFunction = "power",
+  #         linkParameter = d
+  #       )
+  #     )
+  #   } else if (!add && addl && !addl2) {
+  #     the.model <- xmlNode("GeneralRegressionModel",
+  #       attrs = c(
+  #         modelName = model_name,
+  #         modelType = "generalizedLinear",
+  #         functionName = "regression",
+  #         algorithmName = "glm",
+  #         linkFunction = model.link
+  #       )
+  #     )
+  #   } else {
+  #     stop("model type not supported")
+  #   }
+  # }
 
   the.model <- xmlNode("GeneralRegressionModel",
     attrs = c(
