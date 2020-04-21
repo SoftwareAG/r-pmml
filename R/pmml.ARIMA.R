@@ -42,7 +42,7 @@
 #' forecast results between R and PMML may not match exactly. Prediction intervals
 #' are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 #' between R and PMML may not match.
-#' 
+#'
 #' \code{exact_least_squares} is deprecated, and will be removed in a future version, at which point
 #' ELS will be the only representation used when \code{ts_type = "arima"}.
 #'
@@ -52,7 +52,7 @@
 #' the forecast
 #' and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
 #' dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
-#' during scoring. 
+#' during scoring.
 #' String output in this form is facilitated by Extension elements in the PMML file,
 #' and is supported by Zementis Server 10.6.0.0.
 #'
@@ -81,12 +81,11 @@
 #'   seasonal = c(1, 1, 1)
 #' )
 #' mod_02_pmml <- pmml(mod_02)
-#' 
+#'
 #' # non-seasonal model exported as StateSpaceModel
 #' data("WWWusage")
 #' mod <- Arima(WWWusage, order = c(3, 1, 1))
 #' mod_pmml <- pmml(mod, ts_type = "statespace")
-#' 
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,
@@ -317,7 +316,7 @@ pmml.ARIMA <- function(model,
   if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
     cpi_levels <- 100 * cpi_levels
   }
-  
+
   if (length(cpi_levels) == 0) {
     stop("Length of cpi_levels must be greater than 0.")
   }
@@ -483,9 +482,9 @@ pmml.ARIMA <- function(model,
 
 # .make_h_vector_node <- function(model) {
 #   hv_node <- xmlNode("HVector")
-# 
+#
 #   hv_node <- append.XMLNode(hv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
-# 
+#
 #   return(hv_node)
 # }
 
@@ -543,22 +542,22 @@ pmml.ARIMA <- function(model,
 #     value = "r-pmml",
 #     extender = "ADAPA"
 #   ))
-# 
+#
 #   trans_matrix <- model$model$T
 #   meas_matrix <- matrix(model$model$Z, nrow = 1)
-# 
+#
 #   tm_node <- append.XMLNode(
 #     xmlNode("TransitionMatrix"),
 #     .make_matrix_node(trans_matrix)
 #   )
-# 
+#
 #   mm_node <- append.XMLNode(
 #     xmlNode("MeasurementMatrix"),
 #     .make_matrix_node(meas_matrix)
 #   )
-# 
+#
 #   e_node <- append.XMLNode(e_node, tm_node, mm_node)
-# 
+#
 #   return(e_node)
 # }
 

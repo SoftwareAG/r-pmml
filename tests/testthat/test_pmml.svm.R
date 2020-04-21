@@ -15,7 +15,9 @@ svm_model_1 <- svm(df_1,
 )
 
 
-teardown({detach("package:e1071", unload=TRUE)})
+teardown({
+  detach("package:e1071", unload = TRUE)
+})
 
 test_that("error when dataset is null for one-classification", {
   expect_error(

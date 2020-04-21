@@ -8,12 +8,12 @@ test_that("function returns a parsed XML node", {
   iris_box <- xform_wrap(iris)
   iris_box <- xform_z_score(iris_box, xform_info = "column1->d1")
   iris_box <- xform_z_score(iris_box, xform_info = "column2->d2")
-  
+
   # Make a LocalTransformations element and save it to an external file:
   pmml_trans <- pmml(NULL, transforms = iris_box)
   write(toString(pmml_trans), file = test_pmml_file)
   # write(pmml_trans, file = test_pmml_file)
-  
+
   # Later, we may need to read in the PMML model into R
   # 'lt' below is now a XML Node, as opposed to a string:
   lt <- file_to_xml_node(test_pmml_file)

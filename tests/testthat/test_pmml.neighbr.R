@@ -1,7 +1,9 @@
 library(neighbr)
 data(iris)
 
-teardown({detach("package:neighbr", unload=TRUE)})
+teardown({
+  detach("package:neighbr", unload = TRUE)
+})
 
 test_that("error when transform argument is not null", {
   set.seed(1131231)

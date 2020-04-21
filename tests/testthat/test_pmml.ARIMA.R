@@ -38,15 +38,15 @@ test_that("Error when transforms is not NULL", {
 test_that(".check_cpi_levels erros correctly", {
   # Expect no error when cpi_levels is between 0 and 1
   expect_error(pmml(fit_0, cpi_levels = c(0.3, 0.49, 0.9)), NA)
-  
+
   # Expect no error with mixed percent and fraction
   expect_error(pmml(fit_0, cpi_levels = c(86, 0.49, 0.9)), NA)
-  
+
   expect_error(pmml(fit_0, cpi_levels = NULL), "Length of cpi_levels must be greater than 0.")
-  
-  expect_error(pmml(fit_0, cpi_levels = c("a","3")), "cpi_levels must be numeric.")
-  
-  expect_error(pmml(fit_0, cpi_levels = c(-3,101)), "cpi_levels out of range.")
+
+  expect_error(pmml(fit_0, cpi_levels = c("a", "3")), "cpi_levels must be numeric.")
+
+  expect_error(pmml(fit_0, cpi_levels = c(-3, 101)), "cpi_levels out of range.")
 })
 
 

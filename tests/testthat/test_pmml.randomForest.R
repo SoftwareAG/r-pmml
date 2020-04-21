@@ -1,6 +1,8 @@
 library(randomForest)
 
-teardown({detach("package:randomForest", unload=TRUE)})
+teardown({
+  detach("package:randomForest", unload = TRUE)
+})
 
 test_that("error when object is not randomForest", {
   expect_error(pmml.randomForest("foo"), "Not a legitimate randomForest object")

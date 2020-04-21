@@ -1,7 +1,9 @@
 library(kernlab)
 data(iris)
 
-teardown({detach("package:kernlab", unload=TRUE)})
+teardown({
+  detach("package:kernlab", unload = TRUE)
+})
 
 test_that("pmml.ksvm error when a specified kernel is not supported", {
   expect_error(

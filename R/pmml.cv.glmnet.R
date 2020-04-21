@@ -204,7 +204,7 @@ pmml.cv.glmnet <- function(model,
   #         field$levels[[field$name[i]]] <- levels(model$data[[field$name[i]]])
   #       } else {
   #         field$levels[[field$name[i]]] <- model$xlevels[[field$name[i]]]
-  # 
+  #
   #         if (length(grep("^as.factor\\(", field$name[i]))) {
   #           field$name[i] <- sub("^as.factor\\((.*)\\)", "\\1", field$name[i])
   #           names(field$class)[i] <- sub("^as.factor\\((.*)\\)", "\\1", names(field$class)[i])
@@ -244,7 +244,7 @@ pmml.cv.glmnet <- function(model,
   #   else {
   #     model.type <- "unknown"
   #   }
-  # 
+  #
   #   # Only binary categorical cases can be handled. For multinomial cases, glm assumes the first
   #   # category as one and all the rest together as one. The output then is the probability of the
   #   # first category NOT be true. This case is not implemented.
@@ -255,7 +255,7 @@ pmml.cv.glmnet <- function(model,
   #       add <- TRUE
   #     }
   #   }
-  # 
+  #
   #   if (model.type == "binomial") {
   #     add <- TRUE
   #   }
@@ -274,7 +274,7 @@ pmml.cv.glmnet <- function(model,
   #   if (model.type == "poisson") {
   #     add <- TRUE
   #   }
-  # 
+  #
   #   if (model.link == "cloglog") {
   #     addl <- TRUE
   #   } else
@@ -302,7 +302,7 @@ pmml.cv.glmnet <- function(model,
   #   } else {
   #     stop("link function currently not supported by PMML")
   #   }
-  # 
+  #
   #   if (categ) {
   #     the.model <- xmlNode("GeneralRegressionModel",
   #       attrs = c(

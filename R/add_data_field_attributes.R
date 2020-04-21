@@ -30,7 +30,7 @@
 #' @param field The field to which the attributes are to be added. This is used
 #' when the attributes are a vector of name-value pairs, intended for this one
 #' field.
-#' @param namespace The namespace of the PMML model. This is frequently also the 
+#' @param namespace The namespace of the PMML model. This is frequently also the
 #' PMML version of the model.
 #' @param \dots Further arguments passed to or from other methods.
 #'
@@ -41,7 +41,7 @@
 #' @details
 #' The PMML schema allows a DataField element to have various attributes,
 #' which, although useful, may not always be present in a PMML model. This
-#' function makes it possible to add such attributes to DataFields of an 
+#' function makes it possible to add such attributes to DataFields of an
 #' existing PMML file.
 #'
 #' The attribute information can be provided as a dataframe or a vector. Each
@@ -85,13 +85,16 @@
 #' attributes[] <- lapply(attributes, as.character)
 #'
 #' fit_pmml_2 <- add_data_field_attributes(fit_pmml,
-#' attributes, namespace = "4_4")
+#'   attributes,
+#'   namespace = "4_4"
+#' )
 #'
 #' # Alternative method to add attributes to a single field,
 #' # "Sepal.Width":
 #' fit_pmml_3 <- add_data_field_attributes(
 #'   fit_pmml, c(displayName = "FlowerWidth", isCyclic = 1),
-#'               "Sepal.Width")
+#'   "Sepal.Width"
+#' )
 #'
 #'
 #' mi <- make_intervals(
@@ -102,9 +105,10 @@
 #'   list("A", "B", "C"), list(NULL, NULL, NULL),
 #'   list("valid", NULL, "invalid")
 #' )
-#' fit_pmml_4 <- add_data_field_children(fit_pmml, field = "Sepal.Length",
-#'                                       interval = mi, values = mv)
-#' 
+#' fit_pmml_4 <- add_data_field_children(fit_pmml,
+#'   field = "Sepal.Length",
+#'   interval = mi, values = mv
+#' )
 #' @importFrom XML getNodeSet addChildren addAttributes xmlTreeParse toString.XMLNode
 #'
 #' @export
@@ -141,14 +145,16 @@ add_data_field_attributes <- function(xml_model = NULL, attributes = NULL, field
   #   cat(fieldNames[which(!(is.element(fieldNames, formulaFields)))], "not in model\n")
   #   attributes[, c(which(!(is.element(fieldNames, formulaFields))))] <- NA
   # }
-  
+
   if (!all(is.element(fieldNames, formulaFields))) {
     not_in_model <- fieldNames[which(!(is.element(fieldNames, formulaFields)))]
-    stop(paste("The following field additions are not in the model:",
-         paste(not_in_model, collapse = ", ")))
-    }
-  
-  
+    stop(paste(
+      "The following field additions are not in the model:",
+      paste(not_in_model, collapse = ", ")
+    ))
+  }
+
+
   for (i in 1:ncol(attributes))
   {
     if (!all(is.na(attributes[, i]))) {

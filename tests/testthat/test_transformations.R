@@ -190,7 +190,7 @@ test_that("xform_discretize does not give error when 1st column of data matrix i
 
 test_that(".init_wrap_params adds NA columns", {
   iris_box <- xform_wrap(iris)
-  
+
   iris_box$field_data$xformedMax <- NULL
   iris_box$field_data$centers <- NULL
   iris_box$field_data$fieldsMap <- NULL
@@ -199,11 +199,10 @@ test_that(".init_wrap_params adds NA columns", {
   iris_box$field_data$xform_function <- NULL
 
   iris_box_updated <- .init_wrap_params(iris_box)
-  
-  expect_equal(iris_box_updated$field_data$xformedMax, rep(NA,5))
-  
-  
+
+  expect_equal(iris_box_updated$field_data$xformedMax, rep(NA, 5))
+
+
   # iris_box <- rename_wrap_var(wrap_object = iris_box,
   #                             xform_info = "column1->SL")
-  
 })

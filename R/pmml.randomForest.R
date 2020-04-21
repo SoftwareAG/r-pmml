@@ -381,7 +381,7 @@ pmml.randomForest <- function(model,
 #     print("Model type not supported")
 #   }
 #   treeSkip <- FALSE
-# 
+#
 #   # Keep going over nodes; if leaf node, add score, else split and keep going.
 #   if ((rowfrom == 1) && (rownext == 1)) {
 #     # Handle trees with 1 node only.
@@ -450,7 +450,7 @@ pmml.randomForest <- function(model,
 #           {
 #             holder[k] <- binary[k]
 #           }
-# 
+#
 #           # For each category allowed, if value is 1 (from the binary conversion) then go left.
 #           options(useFancyQuotes = FALSE)
 #           for (k in 1:model$forest$ncat[fname][[1]])
@@ -461,7 +461,7 @@ pmml.randomForest <- function(model,
 #               scat <- paste(scat, " ", dQuote(catname))
 #             }
 #           }
-# 
+#
 #           # Strip intermediate, leading and trailing spaces.
 #           scat <- gsub("^[ ]*", "", scat)
 #           ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
@@ -478,7 +478,7 @@ pmml.randomForest <- function(model,
 #         rfNode <- append.XMLNode(rfNode, splitNode)
 #       }
 #     } else {
-# 
+#
 #       # Right side, regression, terminal node.
 #       # Repeat for right side.
 #       if (tinf[rownext, 1] == 0) {
@@ -492,7 +492,7 @@ pmml.randomForest <- function(model,
 #       else {
 #         rfNode <- xmlNode("Node", attrs = c(id = tinf[rowfrom, 2]))
 #       }
-# 
+#
 #       logical <- FALSE
 #       numeric <- FALSE
 #       if (is.numeric(model$forest$xlevels[[tinf[rowfrom, 3]]][1])) {
@@ -505,7 +505,7 @@ pmml.randomForest <- function(model,
 #       } else {
 #         numeric <- FALSE
 #       }
-# 
+#
 #       if (numeric) {
 #         splitNode <- xmlNode("SimplePredicate", attrs = c(
 #           field = fname, operator = "greaterThan",
@@ -538,7 +538,7 @@ pmml.randomForest <- function(model,
 #               scat <- paste(scat, " ", dQuote(catname))
 #             }
 #           }
-# 
+#
 #           scat <- gsub("^[ ]*", "", scat)
 #           ap <- xmlNode("Array", attrs = c(n = num1, type = "string"), scat)
 #           ssp <- append.XMLNode(ssp, ap)
@@ -555,13 +555,13 @@ pmml.randomForest <- function(model,
 #       }
 #     }
 #   }
-# 
+#
 #   if (tinf[rownext, 5] == -1) {
 #     terminalFlag <- TRUE
 #   } else {
 #     terminalFlag <- FALSE
 #   }
-# 
+#
 #   if (terminalFlag == TRUE) {
 #     # Only the predicted value for this node is the output.
 #   }
@@ -573,9 +573,9 @@ pmml.randomForest <- function(model,
 #     } else {
 #       rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
 #     }
-# 
-# 
-# 
+#
+#
+#
 #     recursiveObject$internalNode <- NULL
 #     recursiveObject <- .getRFTreeNodes2(recursiveObject, model, 1, tinf, rownext, tinf[rownext, 2], fieldInfo)
 #     if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
@@ -584,7 +584,7 @@ pmml.randomForest <- function(model,
 #       rfNode <- append.XMLNode(rfNode, recursiveObject$internalNode)
 #     }
 #   }
-# 
+#
 #   if (!is.null(recursiveObject$internalNode) && (recursiveObject$internalNode == "skip")[[1]]) {
 #     return(recursiveObject)
 #   } else {

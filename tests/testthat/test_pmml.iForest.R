@@ -5,7 +5,7 @@ test_that("error when object is not iForest", {
 test_that("confirm non-existent category is still automatically created by iForest function", {
   skip_on_cran()
   skip_on_ci()
-  
+
   library(isofor)
   data(iris)
 

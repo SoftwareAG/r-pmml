@@ -126,7 +126,7 @@
 #       unknownVal <- missing_value_replacement
 #       invalidVal <- ifelse(is.null(missing_value_replacement), "asIs", "asMissing")
 #     }
-# 
+#
 #     if (!is.null(transformed)) {
 #       if (transformed$field_data[field$name[i], "type"] == "original") {
 #         if (!(.removeAsFactor(field$name[i]) %in% namelist)) {

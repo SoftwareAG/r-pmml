@@ -67,7 +67,6 @@
 #'
 #' # Convert to pmml
 #' model_pmml <- pmml(model, centers = centerInfo)
-#'
 #' @export pmml.hclust
 #' @export
 pmml.hclust <- function(model,

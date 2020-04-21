@@ -1313,14 +1313,20 @@ test_that("MiningModel/xgboost PMML output matches R", {
   )
 
   r_pred_prob <- predict(fit, as.matrix(audit_factor[, c(2, 7, 9, 10, 12)]))
-  r_pred_class <- sapply(r_pred_prob, function(x) if (x>.5) {"1"} else {"0"})
+  r_pred_class <- sapply(r_pred_prob, function(x) {
+    if (x > .5) {
+      "1"
+    } else {
+      "0"
+    }
+  })
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(audit_factor[, c(2, 7, 9, 10, 12)], up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Probability_1, r_pred_prob, tolerance = 1e-7)
   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred_class)
-  
-  
+
+
   sparse_mat <- as.matrix(sparse.model.matrix(Adjusted ~ . - 1, data = audit[, c("Marital", "Sex", "Adjusted")]))
   invisible(capture.output(fit <- xgboost(
     data = sparse_mat, label = audit[, c("Adjusted")], max_depth = 2,
@@ -1333,14 +1339,20 @@ test_that("MiningModel/xgboost PMML output matches R", {
     output_categories = c(0, 1), xgb_dump_file = xgb_tmp_01_dump
   )
   r_pred_prob <- predict(fit, sparse_mat)
-  r_pred_class <- sapply(r_pred_prob, function(x) if (x>.5) {"1"} else {"0"})
+  r_pred_class <- sapply(r_pred_prob, function(x) {
+    if (x > .5) {
+      "1"
+    } else {
+      "0"
+    }
+  })
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(as.data.frame(sparse_mat, stringsAsFactors = TRUE), up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Probability_1, r_pred_prob, tolerance = 1e-7)
   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred_class)
 
-  
+
   # The next 5 tests check that the naming convention where field name strings are
   # subsets of each other does not cause issues. E.g., V1 is a subset of V11 and V112.
   iris_string_subsets <- iris[1:100, ]
@@ -1361,15 +1373,21 @@ test_that("MiningModel/xgboost PMML output matches R", {
   )
 
   r_pred <- predict(fit, as.matrix(iris_string_subsets[, 1:4]))
-  r_pred_class <- sapply(r_pred, function(x) {if (x > 0.5) {"2"} else {"1"}})
+  r_pred_class <- sapply(r_pred, function(x) {
+    if (x > 0.5) {
+      "2"
+    } else {
+      "1"
+    }
+  })
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(iris_string_subsets, up_stat$model_name)
   delete_model(up_stat$model_name)
   # Probability_2 is prob of the label having the 2nd value. E.g., 1 in {0,1} or 2 in {1,2}.
   expect_equal_nn(z_pred$outputs$Probability_2, r_pred, tolerance = 1e-7)
   expect_equal_nn(z_pred$outputs$Predicted_V1, r_pred_class)
-  
-  
+
+
   iris_string_subsets <- iris
   colnames(iris_string_subsets) <- c("V11", "V112", "V128", "V1281", "V1")
   invisible(capture.output(fit <- xgboost(
@@ -1492,14 +1510,20 @@ test_that("MiningModel/xgboost PMML output matches R", {
     transform = box_obj
   )
   r_pred_prob <- predict(fit, as.matrix(audit_box_filt))
-  r_pred_class <- sapply(r_pred_prob, function(x) if (x>.5) {"1"} else {"0"})
+  r_pred_class <- sapply(r_pred_prob, function(x) {
+    if (x > .5) {
+      "1"
+    } else {
+      "0"
+    }
+  })
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(audit_factor, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Probability_1, r_pred_prob, tolerance = 1e-7)
   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred_class)
 
-  
+
   box_obj <- xform_wrap(audit_factor[, c("Marital", "Sex", "Adjusted")])
   box_obj <- xform_norm_discrete(box_obj, xform_info = "Marital", levelSeparator = "_")
   box_obj <- xform_norm_discrete(box_obj, xform_info = "Sex", levelSeparator = "_")
@@ -1521,7 +1545,13 @@ test_that("MiningModel/xgboost PMML output matches R", {
     transform = box_obj
   )
   r_pred <- predict(fit, as.matrix(audit_box_filt))
-  r_pred_class <- sapply(r_pred_prob, function(x) if (x>.5) {"1"} else {"0"})
+  r_pred_class <- sapply(r_pred_prob, function(x) {
+    if (x > .5) {
+      "1"
+    } else {
+      "0"
+    }
+  })
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(audit_factor, up_stat$model_name)
   delete_model(up_stat$model_name)
