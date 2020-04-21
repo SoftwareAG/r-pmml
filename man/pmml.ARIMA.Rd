@@ -70,7 +70,7 @@ When \code{ts_type = "statespace"}, the R object is exported as StateSpaceModel 
 the forecast
 and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
 dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
-during scoring. 
+during scoring.
 String output in this form is facilitated by Extension elements in the PMML file,
 and is supported by Zementis Server 10.6.0.0.
 
@@ -102,7 +102,6 @@ mod_02_pmml <- pmml(mod_02)
 data("WWWusage")
 mod <- Arima(WWWusage, order = c(3, 1, 1))
 mod_pmml <- pmml(mod, ts_type = "statespace")
-
 }
 \author{
 Dmitriy Bolotov

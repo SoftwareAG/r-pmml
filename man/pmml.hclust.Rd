@@ -74,7 +74,6 @@ centerInfo <- centers.hclust(iris[, -5], model, 3)
 
 # Convert to pmml
 model_pmml <- pmml(model, centers = centerInfo)
-
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/hclust.html}{R project: Hierarchical Clustering}

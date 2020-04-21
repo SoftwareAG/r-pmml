@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.1</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ field.</p></td>
     </tr>
     <tr>
       <th>namespace</th>
-      <td><p>The namespace of the PMML model. This is frequently also the 
+      <td><p>The namespace of the PMML model. This is frequently also the
 PMML version of the model.</p></td>
     </tr>
     <tr>
@@ -184,7 +184,7 @@ type PMML. It can be written to file with <code>saveXML</code>.</p>
 
     <p>The PMML schema allows a DataField element to have various attributes,
 which, although useful, may not always be present in a PMML model. This
-function makes it possible to add such attributes to DataFields of an 
+function makes it possible to add such attributes to DataFields of an
 existing PMML file.</p>
 <p>The attribute information can be provided as a dataframe or a vector. Each
 row of the data frame corresponds to an attribute name and each column
@@ -223,13 +223,16 @@ the display name of a field at different times.</p>
 <span class='no'>attributes</span>[] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>attributes</span>, <span class='no'>as.character</span>)
 
 <span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(<span class='no'>fit_pmml</span>,
-<span class='no'>attributes</span>, <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>)
+  <span class='no'>attributes</span>,
+  <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>
+)
 
 <span class='co'># Alternative method to add attributes to a single field,</span>
 <span class='co'># "Sepal.Width":</span>
 <span class='no'>fit_pmml_3</span> <span class='kw'>&lt;-</span> <span class='fu'>add_data_field_attributes</span>(
   <span class='no'>fit_pmml</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>displayName</span> <span class='kw'>=</span> <span class='st'>"FlowerWidth"</span>, <span class='kw'>isCyclic</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-              <span class='st'>"Sepal.Width"</span>)
+  <span class='st'>"Sepal.Width"</span>
+)
 
 
 <span class='no'>mi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='make_intervals.html'>make_intervals</a></span>(
@@ -240,8 +243,10 @@ the display name of a field at different times.</p>
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>), <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>NULL</span>, <span class='kw'>NULL</span>, <span class='kw'>NULL</span>),
   <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"valid"</span>, <span class='kw'>NULL</span>, <span class='st'>"invalid"</span>)
 )
-<span class='no'>fit_pmml_4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_data_field_children.html'>add_data_field_children</a></span>(<span class='no'>fit_pmml</span>, <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>,
-                                      <span class='kw'>interval</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>)</div></pre>
+<span class='no'>fit_pmml_4</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_data_field_children.html'>add_data_field_children</a></span>(<span class='no'>fit_pmml</span>,
+  <span class='kw'>field</span> <span class='kw'>=</span> <span class='st'>"Sepal.Length"</span>,
+  <span class='kw'>interval</span> <span class='kw'>=</span> <span class='no'>mi</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>mv</span>
+)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

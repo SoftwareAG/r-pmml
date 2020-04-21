@@ -1,4 +1,4 @@
-# pmml 2.3.0.9000
+# pmml 2.3.1
 ## Bug Fixes
   - pmml.xgb.Booster() no longer switches probabilities for "binary:logistic" objective function.
   - add_data_field_attributes() now throws appropriate errors instead of using print() statements.
