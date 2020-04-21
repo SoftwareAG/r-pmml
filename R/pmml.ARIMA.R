@@ -100,7 +100,7 @@ pmml.ARIMA <- function(model,
                        exact_least_squares = TRUE,
                        cpi_levels = c(80, 95),
                        ...) {
-  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA forecast object.")
+  if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA object.")
 
   # Deprecated argument.
   if (!missing(exact_least_squares)) {
@@ -117,10 +117,6 @@ pmml.ARIMA <- function(model,
     stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
 
-  # if (!(output_type %in% c("string", "double"))){
-  #   stop('output_type must be one of "string" or "double".')
-  # }
-
   if (ts_type == "arima") {
     output_type <- "double"
   } else {
@@ -129,11 +125,11 @@ pmml.ARIMA <- function(model,
 
   cpi_levels <- .check_cpi_levels(cpi_levels)
 
-  if (!is.null(transforms)) stop("Transforms not supported for ARIMA forecast models.")
+  if (!is.null(transforms)) stop("Transforms are not supported for ARIMA forecast models.")
 
   # Stop if model includes drift term
   if ("drift" %in% names(model$coef)) {
-    stop("ARIMA models with a drift term not supported.")
+    stop("ARIMA models with a drift term are not supported.")
   }
 
   # # Stop if model includes both intercept and drift terms
@@ -317,8 +313,13 @@ pmml.ARIMA <- function(model,
 
 
 .check_cpi_levels <- function(cpi_levels) {
+  # If levels are between 0 and 1, they should be converted to percentage first.
+  if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
+    cpi_levels <- 100 * cpi_levels
+  }
+  
   if (length(cpi_levels) == 0) {
-    stop("length of cpi_levels must be greater than 0.")
+    stop("Length of cpi_levels must be greater than 0.")
   }
 
   if (!is.numeric(cpi_levels)) {
@@ -327,10 +328,6 @@ pmml.ARIMA <- function(model,
 
   if (min(cpi_levels) < 0 | max(cpi_levels) > 99.99) {
     stop("cpi_levels out of range.")
-  }
-
-  if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
-    cpi_levels <- 100 * cpi_levels
   }
 
   return(cpi_levels)
@@ -353,24 +350,24 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_intercept_v_node <- function(model) {
-  iv_node <- xmlNode("InterceptVector")
-  const <- .get_model_constant(model)
-  iv_node <- append.XMLNode(iv_node, xmlNode("Array",
-    attrs = c(type = "real", n = "1"),
-    value = const
-  ))
-  return(iv_node)
-}
+# .make_intercept_v_node <- function(model) {
+#   iv_node <- xmlNode("InterceptVector")
+#   const <- .get_model_constant(model)
+#   iv_node <- append.XMLNode(iv_node, xmlNode("Array",
+#     attrs = c(type = "real", n = "1"),
+#     value = const
+#   ))
+#   return(iv_node)
+# }
 
-.make_variance_v_node <- function(model) {
-  vv_node <- xmlNode("VarianceVector")
-  vv_node <- append.XMLNode(vv_node, xmlNode("Array",
-    attrs = c(type = "real", n = "1"),
-    value = model$sigma2
-  ))
-  return(vv_node)
-}
+# .make_variance_v_node <- function(model) {
+#   vv_node <- xmlNode("VarianceVector")
+#   vv_node <- append.XMLNode(vv_node, xmlNode("Array",
+#     attrs = c(type = "real", n = "1"),
+#     value = model$sigma2
+#   ))
+#   return(vv_node)
+# }
 
 .make_arima_output_node <- function(target,
                                     has_seasonal_comp,
@@ -436,23 +433,23 @@ pmml.ARIMA <- function(model,
   )))
 }
 
-.make_pi_node_0 <- function(perc, interv) {
-  # DEPRECATED
-  # create prediction interval output node
-  pi_node <- xmlNode("OutputField", attrs = c(
-    name = paste("cpi_", perc, "_", interv, sep = ""),
-    optype = "continuous",
-    dataType = "double",
-    feature = "standardError"
-  ))
-  ext_node <- xmlNode("Extension", attrs = c(
-    extender = "ADAPA",
-    name = "cpi",
-    value = paste(toupper(interv), perc, sep = "")
-  ))
-  pi_node <- append.XMLNode(pi_node, ext_node)
-  return(pi_node)
-}
+# .make_pi_node_0 <- function(perc, interv) {
+#   # DEPRECATED
+#   # create prediction interval output node
+#   pi_node <- xmlNode("OutputField", attrs = c(
+#     name = paste("cpi_", perc, "_", interv, sep = ""),
+#     optype = "continuous",
+#     dataType = "double",
+#     feature = "standardError"
+#   ))
+#   ext_node <- xmlNode("Extension", attrs = c(
+#     extender = "ADAPA",
+#     name = "cpi",
+#     value = paste(toupper(interv), perc, sep = "")
+#   ))
+#   pi_node <- append.XMLNode(pi_node, ext_node)
+#   return(pi_node)
+# }
 
 
 .make_pi_node <- function(perc, interv, output_type) {
@@ -484,13 +481,13 @@ pmml.ARIMA <- function(model,
   return(pi_node)
 }
 
-.make_h_vector_node <- function(model) {
-  hv_node <- xmlNode("HVector")
-
-  hv_node <- append.XMLNode(hv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
-
-  return(hv_node)
-}
+# .make_h_vector_node <- function(model) {
+#   hv_node <- xmlNode("HVector")
+# 
+#   hv_node <- append.XMLNode(hv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
+# 
+#   return(hv_node)
+# }
 
 
 .make_mls_node <- function(model, ts_type) {
@@ -540,30 +537,30 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_extension_node <- function(model) {
-  e_node <- xmlNode("Extension", attrs = c(
-    name = "KALMAN_STATE_TYPE",
-    value = "r-pmml",
-    extender = "ADAPA"
-  ))
-
-  trans_matrix <- model$model$T
-  meas_matrix <- matrix(model$model$Z, nrow = 1)
-
-  tm_node <- append.XMLNode(
-    xmlNode("TransitionMatrix"),
-    .make_matrix_node(trans_matrix)
-  )
-
-  mm_node <- append.XMLNode(
-    xmlNode("MeasurementMatrix"),
-    .make_matrix_node(meas_matrix)
-  )
-
-  e_node <- append.XMLNode(e_node, tm_node, mm_node)
-
-  return(e_node)
-}
+# .make_extension_node <- function(model) {
+#   e_node <- xmlNode("Extension", attrs = c(
+#     name = "KALMAN_STATE_TYPE",
+#     value = "r-pmml",
+#     extender = "ADAPA"
+#   ))
+# 
+#   trans_matrix <- model$model$T
+#   meas_matrix <- matrix(model$model$Z, nrow = 1)
+# 
+#   tm_node <- append.XMLNode(
+#     xmlNode("TransitionMatrix"),
+#     .make_matrix_node(trans_matrix)
+#   )
+# 
+#   mm_node <- append.XMLNode(
+#     xmlNode("MeasurementMatrix"),
+#     .make_matrix_node(meas_matrix)
+#   )
+# 
+#   e_node <- append.XMLNode(e_node, tm_node, mm_node)
+# 
+#   return(e_node)
+# }
 
 
 .make_matrix_node <- function(the_matrix) {
@@ -813,8 +810,8 @@ pmml.ARIMA <- function(model,
 }
 
 
-.make_time_anchor_node <- function() {
-  # creates TimeAnchor node in TimeSeries
-  time_anchor_node <- xmlNode("TimeAnchor")
-  return(time_anchor_node)
-}
+# .make_time_anchor_node <- function() {
+#   # creates TimeAnchor node in TimeSeries
+#   time_anchor_node <- xmlNode("TimeAnchor")
+#   return(time_anchor_node)
+# }

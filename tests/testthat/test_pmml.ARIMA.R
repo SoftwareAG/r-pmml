@@ -21,6 +21,35 @@ expect_equal_num <- function(target, current) {
 
 # teardown({detach("package:forecast", unload=TRUE)})
 
+fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
+
+test_that("error when object is not ARIMA", {
+  expect_error(pmml.ARIMA("foo"), "Not a legitimate ARIMA object")
+})
+
+test_that("error when ts_type is not in c('arima', 'state_space')", {
+  expect_error(pmml(fit_0, ts_type = "foo"), 'ts_type must be one of "arima" or "statespace".')
+})
+
+test_that("Error when transforms is not NULL", {
+  expect_error(pmml(fit_0, transforms = "foo"), "Transforms are not supported for ARIMA forecast models.")
+})
+
+test_that(".check_cpi_levels erros correctly", {
+  # Expect no error when cpi_levels is between 0 and 1
+  expect_error(pmml(fit_0, cpi_levels = c(0.3, 0.49, 0.9)), NA)
+  
+  # Expect no error with mixed percent and fraction
+  expect_error(pmml(fit_0, cpi_levels = c(86, 0.49, 0.9)), NA)
+  
+  expect_error(pmml(fit_0, cpi_levels = NULL), "Length of cpi_levels must be greater than 0.")
+  
+  expect_error(pmml(fit_0, cpi_levels = c("a","3")), "cpi_levels must be numeric.")
+  
+  expect_error(pmml(fit_0, cpi_levels = c(-3,101)), "cpi_levels out of range.")
+})
+
+
 test_that("DataDictionary node contains expected elements", {
   fit_2 <- auto.arima(WWWusage)
   p_fit_2 <- pmml(fit_2)
@@ -184,14 +213,14 @@ test_that("Seasonal ARIMA with 0,0,0 non-seasonal component contains Nonseasonal
 test_that("ARIMA with both intercept and drift terms throws error", {
   # drift and intercept
   fit_11 <- Arima(AirPassengers, order = c(1, 0, 1), include.drift = TRUE)
-  expect_error(pmml(fit_11), "ARIMA models with a drift term not supported.")
+  expect_error(pmml(fit_11), "ARIMA models with a drift term are not supported.")
 
   fit_12 <- Arima(AirPassengers, order = c(2, 0, 2), include.drift = TRUE)
-  expect_error(pmml(fit_12), "ARIMA models with a drift term not supported.")
+  expect_error(pmml(fit_12), "ARIMA models with a drift term are not supported.")
 
   # drift term only
   fit_12a <- Arima(AirPassengers, order = c(2, 1, 2), include.drift = TRUE)
-  expect_error(pmml(fit_12a), "ARIMA models with a drift term not supported.")
+  expect_error(pmml(fit_12a), "ARIMA models with a drift term are not supported.")
 })
 
 test_that("Error if exact_least_squares is not logical", {
