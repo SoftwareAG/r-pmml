@@ -77,7 +77,7 @@ Useful links:
 \itemize{
   \item \url{https://softwareag.github.io/r-pmml/}
   \item \url{https://github.com/SoftwareAG/r-pmml}
-  \item \url{https://www.softwareag.com/zementis}
+  \item \url{https://www.softwareag.com/corporate/products/az/zementis/default.html}
   \item Report bugs at \url{https://github.com/SoftwareAG/r-pmml/issues}
 }
 
