@@ -5,7 +5,7 @@
 
 ## R CMD check results
 
-There was 1 NOTE:
+There was 1 NOTE on win-release:
 
 Found the following (possibly) invalid URLs:
   URL: https://www.softwareag.com/corporate/products/az/zementis/default.html
