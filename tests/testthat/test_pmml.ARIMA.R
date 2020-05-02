@@ -322,3 +322,44 @@ test_that("bestFit TimeSeriesModel node matches ts_type", {
   p_fit_22_b <- pmml(fit_22)
   expect_equal(xmlGetAttr(p_fit_22_b[[3]], name = "bestFit"), "ARIMA")
 })
+
+test_that("interceptVector is used instead of intercept attribute", {
+  fit_24 <- Arima(WWWusage, c(1, 1, 1))
+  p_fit_24 <- pmml(fit_24, ts_type = "statespace")
+  expect_equal(toString(p_fit_24[[3]][[4]][[1]]),
+               "<InterceptVector type=\"observation\">\n <Array type=\"real\" n=\"1\">0</Array>\n</InterceptVector>")
+  
+  expect_null(xmlGetAttr(p_fit_24[[3]][[4]], name = "intercept"))
+  
+  fit_25 <- Arima(AirPassengers, order = c(2, 0, 2))
+  p_fit_25 <- pmml(fit_25, ts_type = "statespace")
+  expect_equal(toString(p_fit_25[[3]][[4]][[1]]),
+               "<InterceptVector type=\"observation\">\n <Array type=\"real\" n=\"1\">282.02204109846</Array>\n</InterceptVector>")
+  expect_null(xmlGetAttr(p_fit_25[[3]][[4]], name = "intercept"))
+
+})
+
+test_that("ObservationVarianceMatrix replaces observationVariance", {
+  fit_26 <- Arima(WWWusage, c(1, 1, 4), seasonal = c(1,1,1))
+  p_fit_26 <- pmml(fit_26, ts_type = "statespace")
+  expect_equal(toString(p_fit_26[[3]][[4]][[2]]),
+               "<ObservationVarianceMatrix>\n <Matrix nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\">0</Array>\n </Matrix>\n</ObservationVarianceMatrix>")
+  
+  expect_null(xmlGetAttr(p_fit_26[[3]][[4]], name = "observationVariance"))
+  
+  fit_27 <- Arima(JohnsonJohnson, c(2,0,2))
+  p_fit_27 <- pmml(fit_27, ts_type = "statespace")
+  expect_equal(toString(p_fit_27[[3]][[4]][[2]]),
+               "<ObservationVarianceMatrix>\n <Matrix nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\">0</Array>\n </Matrix>\n</ObservationVarianceMatrix>")
+  
+  expect_null(xmlGetAttr(p_fit_27[[3]][[4]], name = "observationVariance"))
+})
+
+
+
+
+
+
+
+
+

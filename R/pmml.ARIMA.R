@@ -243,9 +243,9 @@ pmml.ARIMA <- function(model,
 
     state_space_node <- xmlNode("StateSpaceModel",
       attrs = c(
-        intercept = toString(.get_model_constant(model)),
-        variance = model$sigma2,
-        observationVariance = toString(model$model$h)
+        # intercept = toString(.get_model_constant(model)),
+        variance = model$sigma2
+        # observationVariance = toString(model$model$h)
       )
     )
 
@@ -265,11 +265,14 @@ pmml.ARIMA <- function(model,
       .make_matrix_node(matrix(model$model$Z, nrow = 1))
     )
 
-    # intercept vector - replaced with intercept attribute
-    # intercept_v_node <- .make_intercept_v_node(model)
+    # intercept vector - replaces intercept attribute
+    intercept_v_node <- .make_intercept_v_node(model)
 
-    # variance vector - not used
-    # variance_v_node <- .make_variance_v_node(model)
+    # ObservationVarianceMatrix - replaces observationVariance attribute
+    ovm_node <- append.XMLNode(
+      xmlNode("ObservationVarianceMatrix"),
+      .make_matrix_node(matrix(model$model$h, nrow = 1))
+    )
 
     # psi vector - not used
 
@@ -295,6 +298,8 @@ pmml.ARIMA <- function(model,
     # add elements to state_space_node
     state_space_node <- append.XMLNode(
       state_space_node,
+      intercept_v_node,
+      ovm_node,
       state_v_node,
       trans_m_node,
       meas_m_node,
@@ -349,24 +354,17 @@ pmml.ARIMA <- function(model,
 }
 
 
-# .make_intercept_v_node <- function(model) {
-#   iv_node <- xmlNode("InterceptVector")
-#   const <- .get_model_constant(model)
-#   iv_node <- append.XMLNode(iv_node, xmlNode("Array",
-#     attrs = c(type = "real", n = "1"),
-#     value = const
-#   ))
-#   return(iv_node)
-# }
+.make_intercept_v_node <- function(model) {
+  iv_node <- xmlNode("InterceptVector",
+                     attrs = c(type = "observation"))
+  const <- .get_model_constant(model)
+  iv_node <- append.XMLNode(iv_node, xmlNode("Array",
+    attrs = c(type = "real", n = "1"),
+    value = const
+  ))
+  return(iv_node)
+}
 
-# .make_variance_v_node <- function(model) {
-#   vv_node <- xmlNode("VarianceVector")
-#   vv_node <- append.XMLNode(vv_node, xmlNode("Array",
-#     attrs = c(type = "real", n = "1"),
-#     value = model$sigma2
-#   ))
-#   return(vv_node)
-# }
 
 .make_arima_output_node <- function(target,
                                     has_seasonal_comp,
@@ -418,8 +416,6 @@ pmml.ARIMA <- function(model,
     }
   }
 
-
-
   return(output_node)
 }
 
@@ -431,24 +427,6 @@ pmml.ARIMA <- function(model,
     value = "json"
   )))
 }
-
-# .make_pi_node_0 <- function(perc, interv) {
-#   # DEPRECATED
-#   # create prediction interval output node
-#   pi_node <- xmlNode("OutputField", attrs = c(
-#     name = paste("cpi_", perc, "_", interv, sep = ""),
-#     optype = "continuous",
-#     dataType = "double",
-#     feature = "standardError"
-#   ))
-#   ext_node <- xmlNode("Extension", attrs = c(
-#     extender = "ADAPA",
-#     name = "cpi",
-#     value = paste(toupper(interv), perc, sep = "")
-#   ))
-#   pi_node <- append.XMLNode(pi_node, ext_node)
-#   return(pi_node)
-# }
 
 
 .make_pi_node <- function(perc, interv, output_type) {
@@ -479,14 +457,6 @@ pmml.ARIMA <- function(model,
 
   return(pi_node)
 }
-
-# .make_h_vector_node <- function(model) {
-#   hv_node <- xmlNode("HVector")
-#
-#   hv_node <- append.XMLNode(hv_node, xmlNode("Array", attrs = c(type = "real", n = "1"), value = 0))
-#
-#   return(hv_node)
-# }
 
 
 .make_mls_node <- function(model, ts_type) {
