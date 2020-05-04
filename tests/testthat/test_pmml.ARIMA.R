@@ -333,8 +333,9 @@ test_that("interceptVector is used instead of intercept attribute", {
   
   fit_25 <- Arima(AirPassengers, order = c(2, 0, 2))
   p_fit_25 <- pmml(fit_25, ts_type = "statespace")
-  expect_equal(toString(p_fit_25[[3]][[4]][[1]]),
-               "<InterceptVector type=\"observation\">\n <Array type=\"real\" n=\"1\">282.02204109846</Array>\n</InterceptVector>")
+  expect_equal(as.numeric(xmlValue(p_fit_25[[3]][[4]][[1]][[1]][[1]])),
+               282.02204, tolerance = 1e-4)
+  
   expect_null(xmlGetAttr(p_fit_25[[3]][[4]], name = "intercept"))
 
 })
