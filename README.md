@@ -15,14 +15,12 @@ coverage](https://codecov.io/gh/SoftwareAG/r-pmml/branch/master/graph/badge.svg)
 
 ## Overview
 
-This package contains functions to export various machine learning and
-statistical models to PMML, as well as generate data transformations in
-PMML format.
+Export various machine learning and statistical models to PMML and
+generate data transformations in PMML format.
 
-For a description of the supported packages, see the [Supported Packages
-and Additional
-Functions](https://softwareag.github.io/r-pmml/articles/packages_and_functions.html)
-vignette.
+For a description of the supported packages, see the vignette:
+[Supported Packages and Additional
+Functions](https://softwareag.github.io/r-pmml/articles/packages_and_functions.html).
 
 ## Installation
 

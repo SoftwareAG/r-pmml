@@ -6,8 +6,8 @@
 \alias{_PACKAGE}
 \title{pmml: Generate PMML for R Models}
 \description{
-This package contains functions to export various R models to PMML, as well
-as generate data transformations in PMML format.
+Export various R models to PMML and generate data transformations in PMML 
+format.
 }
 \section{Functions}{
 
