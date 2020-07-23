@@ -1,3 +1,8 @@
+# pmml 2.3.1.9000
+## Bug Fixes
+  - `xform_function()` no longer creates an unnecessary "NA" level in `field_data$dataType`.
+
+
 # pmml 2.3.1
 ## Bug Fixes
   - pmml.xgb.Booster() no longer switches probabilities for "binary:logistic" objective function.

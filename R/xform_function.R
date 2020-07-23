@@ -97,27 +97,53 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
   }
 
   # Make new row with "NA" entries.
-  temprow <- matrix(c(rep.int("NA", length(wrap_object$field_data))), nrow = 1, ncol = length(wrap_object$field_data))
-  newrow <- data.frame(temprow, stringsAsFactors = TRUE)
-  colnames(newrow) <- colnames(wrap_object$field_data)
-  wrap_object$field_data <- rbind(wrap_object$field_data, newrow)
+  temprow <- rep("NA", length(wrap_object$field_data))
+  names(temprow) <- names(wrap_object$field_data)
+  
+  levels(wrap_object$field_data$type)[2] <- "derived" # must create factor level first
+  
+  temprow["type"] <- "derived"
+  temprow["dataType"] <- new_field_data_type # this could be string
+  temprow["xform_function"] <- expression
+  # If orig_field_name contains multiple fields, these will be combined into one string.
+  temprow["orig_field_name"] <- paste(orig_field_name, collapse = ",")
+  if (!is.na(map_missing_to)) {
+    temprow["missingValue"] <- map_missing_to
+  }
+  
+  # 
+  # newrow <- data.frame(temprow, stringsAsFactors = TRUE)
+  # colnames(newrow) <- colnames(wrap_object$field_data)
+  wrap_object$field_data <- rbind(wrap_object$field_data, temprow)
 
-  # Add data to new row.
+  # Add data to new row
   row.names(wrap_object$field_data)[nrow(wrap_object$field_data)] <- new_field_name
 
-  levels(wrap_object$field_data$type)[2] <- "derived" # must create factor level first
-  wrap_object$field_data[new_field_name, "type"] <- "derived"
-  wrap_object$field_data[new_field_name, "dataType"] <- new_field_data_type # this could be string
 
+  
+  # # Make new row with "NA" entries.
+  # temprow <- matrix(c(rep.int("NA", length(wrap_object$field_data))), nrow = 1, ncol = length(wrap_object$field_data))
+  # newrow <- data.frame(temprow, stringsAsFactors = TRUE)
+  # colnames(newrow) <- colnames(wrap_object$field_data)
+  # wrap_object$field_data <- rbind(wrap_object$field_data, newrow)
+  # 
+  # # Add data to new row.
+  # row.names(wrap_object$field_data)[nrow(wrap_object$field_data)] <- new_field_name
+  # 
+  # levels(wrap_object$field_data$type)[2] <- "derived" # must create factor level first
+  # wrap_object$field_data[new_field_name, "type"] <- "derived"
+  # wrap_object$field_data[new_field_name, "dataType"] <- new_field_data_type # this could be string
+  # 
+  # 
+  # wrap_object$field_data[new_field_name, "xform_function"] <- expression
+  # 
+  # # If orig_field_name contains multiple fields, these will be combined into one string.
+  # wrap_object$field_data[new_field_name, "orig_field_name"] <- paste(orig_field_name, collapse = ",")
+  # 
+  # if (!is.na(map_missing_to)) {
+  #   wrap_object$field_data[new_field_name, "missingValue"] <- map_missing_to
+  # }
 
-  wrap_object$field_data[new_field_name, "xform_function"] <- expression
-
-  # If orig_field_name contains multiple fields, these will be combined into one string.
-  wrap_object$field_data[new_field_name, "orig_field_name"] <- paste(orig_field_name, collapse = ",")
-
-  if (!is.na(map_missing_to)) {
-    wrap_object$field_data[new_field_name, "missingValue"] <- map_missing_to
-  }
-
+  
   return(wrap_object)
 }

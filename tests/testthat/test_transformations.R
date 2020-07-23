@@ -159,6 +159,25 @@ test_that("xform_function works correctly", {
   expect_equal(iris_box$data$Sepal.Length.Transformed[[1]], 0.2601)
 })
 
+test_that("xform_function does not create an unnecessary NA factor", {
+  iris_box_xf <- xform_wrap(iris)
+  iris_box_xf <- xform_function(iris_box_xf,
+                             orig_field_name = "Sepal.Width",
+                             new_field_name = "Sepal.Width.sq",
+                             expression = "Sepal.Width^2",
+                             new_field_data_type = "numeric")
+  expect_equal(levels(iris_box_xf$field_data$dataType), c("factor", "numeric"))
+  
+  iris_box_xf_2 <- xform_wrap(iris)
+  iris_box_xf_2 <- xform_function(iris_box_xf_2,orig_field_name="Sepal.Length,Petal.Length",
+                             new_field_name="Length.Ratio",
+                             expression="Sepal.Length / Petal.Length")
+  expect_equal(levels(iris_box_xf_2$field_data$dataType), c("factor", "numeric"))
+  
+})
+
+
+
 test_that("xform_discretize does not give error when 1st column of data matrix is a factor", {
   iris2 <- iris
   iris2[, 6] <- iris2[, 1]
