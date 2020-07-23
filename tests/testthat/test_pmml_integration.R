@@ -355,6 +355,8 @@ test_that("TimeSeriesModel/forecast PMML output matches R", {
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  
+  # state space representation
 })
 
 

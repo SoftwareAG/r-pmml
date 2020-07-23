@@ -35,7 +35,7 @@ test_that("Error when transforms is not NULL", {
   expect_error(pmml(fit_0, transforms = "foo"), "Transforms are not supported for ARIMA forecast models.")
 })
 
-test_that(".check_cpi_levels erros correctly", {
+test_that(".check_cpi_levels errors correctly", {
   # Expect no error when cpi_levels is between 0 and 1
   expect_error(pmml(fit_0, cpi_levels = c(0.3, 0.49, 0.9)), NA)
 

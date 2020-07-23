@@ -143,15 +143,19 @@ schema <- XML::xmlSchemaParse("pmml-4-4_statespace.xsd")
 test_that("TimeSeries/Arima PMML validates against schema", {
   fit <- Arima(WWWusage, order = c(1, 0, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
+  # expect_equal(validate_pmml(pmml(fit, ts_type = "statespace"), schema), 0)
 
   fit <- Arima(WWWusage, order = c(0, 0, 0))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
+  # expect_equal(validate_pmml(pmml(fit, ts_type = "statespace"), schema), 0)
 
   fit <- Arima(WWWusage, order = c(3, 1, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
+  # expect_equal(validate_pmml(pmml(fit, ts_type = "statespace"), schema), 0)
 
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
-  expect_equal(validate_pmml(pmml(fit), schema), 0)
+  expect_equal(validate_pmml(pmml(fit, ts_type = "arima"), schema), 0)
+  # expect_equal(validate_pmml(pmml(fit, ts_type = "statespace"), schema), 0)
 
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
@@ -167,6 +171,7 @@ test_that("TimeSeries/Arima PMML validates against schema", {
 
   fit <- Arima(AirPassengers, order = c(4, 2, 1), seasonal = c(1, 1, 1))
   expect_equal(validate_pmml(pmml(fit, exact_least_squares = TRUE), schema), 0)
+  
 })
 
 
