@@ -1,12 +1,12 @@
 # pmml 2.3.1.9000
 ## Bug Fixes
-  - `xform_function()` no longer creates an unnecessary "NA" level in `field_data$dataType`.
-
+  - `xform_function()` no longer creates an unnecessary `"NA"` level in `field_data$dataType`.
+  - `xform_wrap()` no longer sets `field_data$dataType` to `factor` for all columns of a tibble.
 
 # pmml 2.3.1
 ## Bug Fixes
-  - pmml.xgb.Booster() no longer switches probabilities for "binary:logistic" objective function.
-  - add_data_field_attributes() now throws appropriate errors instead of using print() statements.
+  - `pmml.xgb.Booster()` no longer switches probabilities for `"binary:logistic"` objective function.
+  - `add_data_field_attributes()` now throws appropriate errors instead of using `print()` statements.
 
 
 # pmml 2.3.0

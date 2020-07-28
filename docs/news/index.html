@@ -138,7 +138,9 @@
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
-<code><a href="../reference/xform_function.html">xform_function()</a></code> no longer creates an unnecessary “NA” level in <code>field_data$dataType</code>.</li>
+<code><a href="../reference/xform_function.html">xform_function()</a></code> no longer creates an unnecessary <code>"NA"</code> level in <code>field_data$dataType</code>.</li>
+<li>
+<code><a href="../reference/xform_wrap.html">xform_wrap()</a></code> no longer sets <code>field_data$dataType</code> to <code>factor</code> for all columns of a tibble.</li>
 </ul>
 </div>
 </div>
@@ -150,8 +152,10 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
-<li>pmml.xgb.Booster() no longer switches probabilities for “binary:logistic” objective function.</li>
-<li>add_data_field_attributes() now throws appropriate errors instead of using print() statements.</li>
+<li>
+<code><a href="../reference/pmml.xgb.Booster.html">pmml.xgb.Booster()</a></code> no longer switches probabilities for <code>"binary:logistic"</code> objective function.</li>
+<li>
+<code><a href="../reference/add_data_field_attributes.html">add_data_field_attributes()</a></code> now throws appropriate errors instead of using <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> statements.</li>
 </ul>
 </div>
 </div>

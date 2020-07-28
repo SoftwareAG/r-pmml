@@ -15,6 +15,16 @@ test_that("xform_wrap box$field_data contains specific column names", {
   ))
 })
 
+test_that("xform_wrap does not convert all columns to factors for tibbles", {
+  rtbl <- as_tibble(iris)
+  rtbl_box <- xform_wrap(rtbl)
+  expect_equal(rtbl_box$field_data[,2], 
+               as.factor(c("numeric", "numeric", "numeric", 
+                           "numeric", "factor")))
+})
+
+
+
 test_that("xform_z_score centers and scales for derived fields equal specific values", {
   iris_box <- xform_wrap(iris)
   iris_box <- xform_z_score(iris_box, "1")

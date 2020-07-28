@@ -63,8 +63,8 @@
 #' trans_pmml_2 <- pmml(, transforms = iris_box)
 #' @export
 xform_wrap <- function(data, use_matrix = FALSE) {
-  dataBox <- NULL
-  fieldNames <- NULL
+  data_box <- NULL
+  field_names <- NULL
   nrows <- NULL
   ncols <- NULL
   type <- NULL
@@ -72,19 +72,19 @@ xform_wrap <- function(data, use_matrix = FALSE) {
   orig_field_name <- NULL
 
   if (use_matrix) {
-    dataBox$matrixData <- as.matrix(data)
+    data_box$matrixData <- as.matrix(data)
   } else {
-    dataBox$matrixData <- NULL
+    data_box$matrixData <- NULL
   }
-  if (!is.data.frame(data)) {
+  if ((!is.data.frame(data)) | (inherits(data, "tbl"))) {
     indatafrm <- data.frame(data, stringsAsFactors = TRUE)
   } else {
     indatafrm <- data
   }
 
-  dataBox$data <- indatafrm
-  dataBox$nrows <- nrow(indatafrm)
-  dataBox$ncols <- ncol(indatafrm)
+  data_box$data <- indatafrm
+  data_box$nrows <- nrow(indatafrm)
+  data_box$ncols <- ncol(indatafrm)
 
   if (is.matrix(indatafrm)) {
     if (!is.numeric(indatafrm)) {
@@ -92,14 +92,15 @@ xform_wrap <- function(data, use_matrix = FALSE) {
     }
   }
 
-  fieldNames <- names(indatafrm)
+  field_names <- names(indatafrm)
 
-  for (i in 1:dataBox$ncols)
+  for (i in 1:data_box$ncols)
   {
     orig_field_name <- NA
     type[i] <- "original"
 
-    if (is.numeric(data[, i])) {
+    # if (is.numeric(data[, i])) {
+    if (is.numeric(indatafrm[, i])) {
       dataType[i] <- "numeric"
     } else {
       dataType[i] <- "factor"
@@ -120,10 +121,10 @@ xform_wrap <- function(data, use_matrix = FALSE) {
 
   df <- data.frame(type, dataType, orig_field_name, sampleMin, sampleMax, xformedMin, xformedMax,
     centers, scales, fieldsMap, transform, default, missingValue, xform_function,
-    row.names = fieldNames, stringsAsFactors = TRUE
+    row.names = field_names, stringsAsFactors = TRUE
   )
 
-  dataBox$field_data <- df
+  data_box$field_data <- df
 
-  return(dataBox)
+  return(data_box)
 }
