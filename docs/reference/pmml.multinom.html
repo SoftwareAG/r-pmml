@@ -202,6 +202,22 @@ attribute for all MiningFields.</p></td>
     <p><a href='https://CRAN.R-project.org/package=nnet'>nnet: Feed-forward
 Neural Networks and Multinomial Log-Linear Models (on CRAN)</a></p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>nnet</span>)
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/nnet/man/multinom.html'>multinom</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>)</div><div class='output co'>#&gt; # weights:  18 (10 variable)
+#&gt; initial  value 164.791843 
+#&gt; iter  10 value 16.177348
+#&gt; iter  20 value 7.111438
+#&gt; iter  30 value 6.182999
+#&gt; iter  40 value 5.984028
+#&gt; iter  50 value 5.961278
+#&gt; iter  60 value 5.954900
+#&gt; iter  70 value 5.951851
+#&gt; iter  80 value 5.950343
+#&gt; iter  90 value 5.949904
+#&gt; iter 100 value 5.949867
+#&gt; final  value 5.949867 
+#&gt; stopped after 100 iterations</div><div class='input'><span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -41,6 +41,11 @@
 #' \href{https://CRAN.R-project.org/package=nnet}{nnet: Feed-forward
 #' Neural Networks and Multinomial Log-Linear Models (on CRAN)}
 #'
+#' @examples
+#' library(nnet)
+#' fit <- multinom(Species ~ ., data = iris)
+#' fit_pmml <- pmml(fit)
+#'
 #' @export pmml.multinom
 #' @export
 pmml.multinom <- function(model,
