@@ -42,15 +42,15 @@ formInfo = "InputVar -> OutputVar[low_limit,high_limit]"
 map_missing_to = "missingVal"
 }
 
-There are two methods in which the variables can be referred to. The first
-method is to use its column number; given the \bold{data} attribute of the
+There are two ways to refer to variables. The first way is
+to use the variable's column number; given the \bold{data} attribute of the
 \bold{boxData} object, this would be the order at which the variable
-appears. This can be indicated in the format "column#". The second method is
+appears. This can be indicated in the format "column#". The second way is
 to refer to the variable by its name.
 
 The name of the transformed variable is optional; if the name is not
 provided, the transformed variable is given the name: "derived_" +
-\emph{original_variable_name} \cr Similarly, the low and high limit values
+\emph{original_variable_name}. Similarly, the low and high limit values
 are optional; they have the default values of 0 and 1 respectively.
 \bold{missingValue} is an optional parameter as well. It is the value of the
 derived variable if the input value is missing.
@@ -75,24 +75,24 @@ iris_box <- xform_wrap(iris)
 iris_box_1 <- xform_min_max(iris_box)
 
 # Normalize the 1st column values of the dataset (Sepal.Length) to lie
-# between 0 and 1 and give the derived variable the name "dsl"
+# between 0 and 1 and give the derived variable the name "dsl".
 iris_box_1 <- xform_min_max(iris_box, xform_info = "column1 -> dsl")
 
 # Repeat the above operation; adding the new transformed variable to
-# the iris_box object
+# the iris_box object.
 iris_box <- xform_min_max(iris_box, xform_info = "column1 -> dsl")
 
-# Transform Sepal.Width(the 2nd column)
+# Transform Sepal.Width(the 2nd column).
 # The new transformed variable will be given the default name
-# "derived_Sepal.Width"
+# "derived_Sepal.Width".
 iris_box_3 <- xform_min_max(iris_box, xform_info = "column2")
 
-# Repeat the same operation as above, this time using the variable name
+# Repeat the same operation as above, this time using the variable name.
 iris_box_4 <- xform_min_max(iris_box, xform_info = "Sepal.Width")
 
 # Repeat the same operation as above, assign the transformed variable,
-# "derived_Sepal.Width". the value of 0.5 if the input value of the
-# "Sepal.Width" variable is missing
+# "derived_Sepal.Width", the value of 0.5 if the input value of the
+# "Sepal.Width" variable is missing.
 iris_box_5 <- xform_min_max(iris_box, xform_info = "Sepal.Width", "map_missing_to=0.5")
 
 # Transform Sepal.Width(the 2nd column) to lie between 2 and 3.
@@ -101,7 +101,7 @@ iris_box_5 <- xform_min_max(iris_box, xform_info = "Sepal.Width", "map_missing_t
 iris_box_6 <- xform_min_max(iris_box, xform_info = "column2->[2,3]")
 
 # Repeat the above transformation, this time the transformed variable
-# lies between 0 and 10
+# lies between 0 and 10.
 iris_box_7 <- xform_min_max(iris_box, xform_info = "column2->[,10]")
 }
 \seealso{
