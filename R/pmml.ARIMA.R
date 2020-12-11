@@ -276,7 +276,7 @@ pmml.ARIMA <- function(model,
 
     # psi vector - not used
 
-    # dynamic regressor
+    # dynamic regressor - not used
 
     # PredictedCovarianceMatrix
     pscm_node <- append.XMLNode(
@@ -298,13 +298,13 @@ pmml.ARIMA <- function(model,
     # add elements to state_space_node
     state_space_node <- append.XMLNode(
       state_space_node,
-      intercept_v_node,
-      ovm_node,
       state_v_node,
       trans_m_node,
       meas_m_node,
+      intercept_v_node,
       pscm_node,
-      sscm_node
+      sscm_node,
+      ovm_node
     )
 
     ts_model <- append.XMLNode(ts_model, state_space_node)
