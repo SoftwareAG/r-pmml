@@ -75,7 +75,7 @@
 .pmmlRootNode <- function() {
   node <- xmlNode("PMML",
     attrs = c(
-      version = "4.4",
+      version = "4.4.1",
       xmlns = "http://www.dmg.org/PMML-4_4",
       "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
       "xsi:schemaLocation" = paste(
@@ -87,78 +87,6 @@
   return(node)
 }
 
-# .pmmlRootNode <- function(version = "4.4") {
-#   if (version == "4.4") {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.4",
-#         xmlns = "http://www.dmg.org/PMML-4_4",
-#         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-#         "xsi:schemaLocation" = paste(
-#           "http://www.dmg.org/PMML-4_4",
-#           "http://www.dmg.org/pmml/v4-4/pmml-4-4.xsd"
-#         )
-#       )
-#     )
-#   } else if (version == "4.3") {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.3",
-#         xmlns = "http://www.dmg.org/PMML-4_3",
-#         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-#         "xsi:schemaLocation" = paste(
-#           "http://www.dmg.org/PMML-4_3",
-#           "http://www.dmg.org/pmml/v4-3/pmml-4-3.xsd"
-#         )
-#       )
-#     )
-#   } else if (version == "4.3Ext") {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.3Ext",
-#         xmlns = "http://www.dmg.org/PMML-4_3"
-#       )
-#     )
-#   } else if (version == "4.2") {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.2",
-#         xmlns = "http://www.dmg.org/PMML-4_2",
-#         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-#         "xsi:schemaLocation" = paste(
-#           "http://www.dmg.org/PMML-4_2",
-#           "http://www.dmg.org/v4-2/pmml-4-2.xsd"
-#         )
-#       )
-#     )
-#   } else if (version == "4.1") {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.1",
-#         xmlns = "http://www.dmg.org/PMML-4_1",
-#         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-#         "xsi:schemaLocation" = paste(
-#           "http://www.dmg.org/PMML-4_1",
-#           "http://www.dmg.org/v4-1/pmml-4-1.xsd"
-#         )
-#       )
-#     )
-#   } else {
-#     node <- xmlNode("PMML",
-#       attrs = c(
-#         version = "4.0",
-#         xmlns = "http://www.dmg.org/PMML-4_0",
-#         "xmlns:xsi" = "http://www.w3.org/2001/XMLSchema-instance",
-#         "xsi:schemaLocation" = paste(
-#           "http://www.dmg.org/PMML-4_0",
-#           "http://www.dmg.org/v4-0/pmml-4-0.xsd"
-#         )
-#       )
-#     )
-#   }
-#
-#   return(node)
-# }
 
 
 
