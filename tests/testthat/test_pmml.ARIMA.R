@@ -223,25 +223,7 @@ test_that("ARIMA with both intercept and drift terms throws error", {
   expect_error(pmml(fit_12a), "ARIMA models with a drift term are not supported.")
 })
 
-test_that("Error if exact_least_squares is not logical", {
-  fit_13 <- auto.arima(WWWusage)
-  expect_error(pmml(fit_13, exact_least_squares = "foo"),
-    "exact_least_squares must be logical (TRUE/FALSE).",
-    fixed = TRUE
-  )
-})
 
-test_that("exact_least_squares has no effect if model is non-seasonal", {
-  fit_14 <- Arima(AirPassengers, order = c(2, 2, 1))
-  p_fit_14 <- pmml(fit_14, exact_least_squares = TRUE)
-  expect_equal(xmlGetAttr(p_fit_14[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
-})
-
-test_that("exact_least_squares=TRUE results in exactLeastSquares for seasonal model", {
-  fit_15 <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
-  p_fit_15 <- pmml(fit_15, exact_least_squares = TRUE)
-  expect_equal(xmlGetAttr(p_fit_15[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
-})
 
 test_that("default arg for exact_least_squares results in exactLeastSquares for seasonal model", {
   fit_15b <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
@@ -274,27 +256,7 @@ test_that("non-seasonal models include CPI in Output", {
   expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"80\"/>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"80\"/>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"95\"/>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"95\"/>\n</Output>")
 })
 
-test_that("FinalOmega is 0", {
-  fit_20 <- Arima(AirPassengers, order = c(1, 1, 0), seasonal = c(0, 1, 1))
-  p_fit_20 <- pmml(fit_20, exact_least_squares = TRUE)
-  expect_equal(toString(p_fit_20[[3]][[4]][[3]][[1]][[1]]), "<FinalOmega>\n <Matrix kind=\"symmetric\" nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\" n=\"1\">0</Array>\n </Matrix>\n</FinalOmega>")
-})
 
-test_that("seasonal models with ELS contain correct matrices", {
-  skip_on_cran() # string comparison on CRAN results in failure due to mismatch in some numbers, 8 digits after decimal
-  skip_on_ci()
-  fit_21 <- Arima(AirPassengers, order = c(1, 2, 0), seasonal = c(0, 1, 1))
-  p_fit_21 <- pmml(fit_21, exact_least_squares = TRUE)
-
-  # FinalStateVector
-  expect_equal_ttnl(p_fit_21[[3]][[4]][[3]][[1]][[2]][[1]][[1]], c(fit_21$model$T %*% fit_21$model$a))
-
-  # TransitionMatrix
-  expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[3]][[1]]), "<Matrix nbRows=\"27\" nbCols=\"27\">\n <Array type=\"real\">-0.650958812319475 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0</Array>\n</Matrix>")
-
-  # MeasurementMatrix
-  expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[4]][[1]]), "<Matrix nbRows=\"1\" nbCols=\"27\">\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n</Matrix>")
-})
 
 
 test_that("Output dataType changes according to ts_type", {
@@ -326,14 +288,14 @@ test_that("bestFit TimeSeriesModel node matches ts_type", {
 test_that("interceptVector is used instead of intercept attribute", {
   fit_24 <- Arima(WWWusage, c(1, 1, 1))
   p_fit_24 <- pmml(fit_24, ts_type = "statespace")
-  expect_equal(toString(p_fit_24[[3]][[4]][[1]]),
+  expect_equal(toString(p_fit_24[[3]][[4]][[4]]),
                "<InterceptVector type=\"observation\">\n <Array type=\"real\" n=\"1\">0</Array>\n</InterceptVector>")
   
   expect_null(xmlGetAttr(p_fit_24[[3]][[4]], name = "intercept"))
   
   fit_25 <- Arima(AirPassengers, order = c(2, 0, 2))
   p_fit_25 <- pmml(fit_25, ts_type = "statespace")
-  expect_equal(as.numeric(xmlValue(p_fit_25[[3]][[4]][[1]][[1]][[1]])),
+  expect_equal(as.numeric(xmlValue(p_fit_25[[3]][[4]][[4]][[1]][[1]])),
                282.02204, tolerance = 1e-4)
   
   expect_null(xmlGetAttr(p_fit_25[[3]][[4]], name = "intercept"))
@@ -343,14 +305,14 @@ test_that("interceptVector is used instead of intercept attribute", {
 test_that("ObservationVarianceMatrix replaces observationVariance", {
   fit_26 <- Arima(WWWusage, c(1, 1, 4), seasonal = c(1,1,1))
   p_fit_26 <- pmml(fit_26, ts_type = "statespace")
-  expect_equal(toString(p_fit_26[[3]][[4]][[2]]),
+  expect_equal(toString(p_fit_26[[3]][[4]][[7]]),
                "<ObservationVarianceMatrix>\n <Matrix nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\">0</Array>\n </Matrix>\n</ObservationVarianceMatrix>")
   
   expect_null(xmlGetAttr(p_fit_26[[3]][[4]], name = "observationVariance"))
   
   fit_27 <- Arima(JohnsonJohnson, c(2,0,2))
   p_fit_27 <- pmml(fit_27, ts_type = "statespace")
-  expect_equal(toString(p_fit_27[[3]][[4]][[2]]),
+  expect_equal(toString(p_fit_27[[3]][[4]][[7]]),
                "<ObservationVarianceMatrix>\n <Matrix nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\">0</Array>\n </Matrix>\n</ObservationVarianceMatrix>")
   
   expect_null(xmlGetAttr(p_fit_27[[3]][[4]], name = "observationVariance"))
@@ -359,8 +321,46 @@ test_that("ObservationVarianceMatrix replaces observationVariance", {
 
 
 
-
-
-
-
-
+# # Tests that use exact_least_squares - will be removed
+# 
+# test_that("Error if exact_least_squares is not logical", {
+#   fit_13 <- auto.arima(WWWusage)
+#   expect_error(pmml(fit_13, exact_least_squares = "foo"),
+#                "exact_least_squares must be logical (TRUE/FALSE).",
+#                fixed = TRUE
+#   )
+# })
+# 
+# test_that("exact_least_squares has no effect if model is non-seasonal", {
+#   fit_14 <- Arima(AirPassengers, order = c(2, 2, 1))
+#   p_fit_14 <- pmml(fit_14, exact_least_squares = TRUE)
+#   expect_equal(xmlGetAttr(p_fit_14[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
+# })
+# 
+# test_that("exact_least_squares=TRUE results in exactLeastSquares for seasonal model", {
+#   fit_15 <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
+#   p_fit_15 <- pmml(fit_15, exact_least_squares = TRUE)
+#   expect_equal(xmlGetAttr(p_fit_15[[3]][[4]], name = "predictionMethod"), "exactLeastSquares")
+# })
+# 
+# test_that("FinalOmega is 0", {
+#   fit_20 <- Arima(AirPassengers, order = c(1, 1, 0), seasonal = c(0, 1, 1))
+#   p_fit_20 <- pmml(fit_20, exact_least_squares = TRUE)
+#   expect_equal(toString(p_fit_20[[3]][[4]][[3]][[1]][[1]]), "<FinalOmega>\n <Matrix kind=\"symmetric\" nbRows=\"1\" nbCols=\"1\">\n  <Array type=\"real\" n=\"1\">0</Array>\n </Matrix>\n</FinalOmega>")
+# })
+# 
+# test_that("seasonal models with ELS contain correct matrices", {
+#   skip_on_cran() # string comparison on CRAN results in failure due to mismatch in some numbers, 8 digits after decimal
+#   skip_on_ci()
+#   fit_21 <- Arima(AirPassengers, order = c(1, 2, 0), seasonal = c(0, 1, 1))
+#   p_fit_21 <- pmml(fit_21, exact_least_squares = TRUE)
+#   
+#   # FinalStateVector
+#   expect_equal_ttnl(p_fit_21[[3]][[4]][[3]][[1]][[2]][[1]][[1]], c(fit_21$model$T %*% fit_21$model$a))
+#   
+#   # TransitionMatrix
+#   expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[3]][[1]]), "<Matrix nbRows=\"27\" nbCols=\"27\">\n <Array type=\"real\">-0.650958812319475 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0</Array>\n <Array type=\"real\">0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0</Array>\n</Matrix>")
+#   
+#   # MeasurementMatrix
+#   expect_equal(toString(p_fit_21[[3]][[4]][[3]][[1]][[4]][[1]]), "<Matrix nbRows=\"1\" nbCols=\"27\">\n <Array type=\"real\">1 0 0 0 0 0 0 0 0 0 0 0 0 2 -1 0 0 0 0 0 0 0 0 0 1 -2 1</Array>\n</Matrix>")
+# })
