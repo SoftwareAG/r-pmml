@@ -317,17 +317,17 @@ pmml.ARIMA <- function(model,
 
 
 .check_cpi_levels <- function(cpi_levels) {
-  # If levels are between 0 and 1, they should be converted to percentage first.
-  if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
-    cpi_levels <- 100 * cpi_levels
-  }
-
   if (length(cpi_levels) == 0) {
     stop("Length of cpi_levels must be greater than 0.")
   }
-
+  
   if (!is.numeric(cpi_levels)) {
     stop("cpi_levels must be numeric.")
+  }
+  
+  # If levels are between 0 and 1, they should be converted to percentage first.
+  if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
+    cpi_levels <- 100 * cpi_levels
   }
 
   if (min(cpi_levels) < 0 | max(cpi_levels) > 99.99) {
