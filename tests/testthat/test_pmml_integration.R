@@ -144,220 +144,220 @@ xgb_tmp_01_dump <- tempfile()
 
 teardown(unlink(c(xgb_tmp_01_save, xgb_tmp_01_dump), recursive = TRUE))
 
-test_that("TimeSeriesModel/forecast PMML output matches R", {
-  skip_on_cran()
-  skip_on_ci()
-
-  # non-seasonal tests - with CLS and CPI
-  fit <- auto.arima(sunspots) # creates non-seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_01")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_df_2(z_pred$outputs, r_pred)
-
-  fit <- auto.arima(JohnsonJohnson) # creates seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(AirPassengers, order = c(2, 1, 2))
-  p_fit <- pmml(fit, model_name = "arima_212")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_df_2(z_pred$outputs, r_pred)
-
-  fit <- Arima(AirPassengers, order = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_111")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_df_2(z_pred$outputs, r_pred)
-
-  fit <- Arima(WWWusage, order = c(2, 0, 2))
-  p_fit <- pmml(fit, model_name = "arima_202")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_df_2(z_pred$outputs, r_pred)
-
-  # fit <- Arima(WWWusage, order = c(3, 1, 1), include.drift = TRUE)
-  # p_fit <- pmml(fit, model_name = "arima_311")
-  # r_pred <- forecast_with_cpi(fit, 20)
-  # up_stat <- upload_model(p_fit)
-  # z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  # delete_model(up_stat$model_name)
-  # expect_equal_df(z_pred$outputs, r_pred)
-
-  fit <- Arima(USAccDeaths, order = c(1, 2, 0))
-  p_fit <- pmml(fit, model_name = "arima_120")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_df_2(z_pred$outputs, r_pred)
-
-  # non-seasonal tests with d=2 - expect mismatch
-  fit <- Arima(AirPassengers, order = c(2, 2, 2))
-  p_fit <- pmml(fit, model_name = "arima_222")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
-
-  fit <- Arima(USAccDeaths, order = c(1, 2, 3))
-  p_fit <- pmml(fit, model_name = "arima_123")
-  r_pred <- forecast_with_cpi(fit, 20)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
-
-  # seasonal with CLS
-  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_110011", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
-  p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
-  p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  # expect the following test to fail
-  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-  p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_failure(expect_equal_nn(as.numeric(
-    z_pred$outputs$Predicted_ts_value[20, ]
-  ), r_pred))
-
-  # tests with seasonal ELS
-  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-  p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
-  p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
-  p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
-  p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
-  p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-
-  # seasonal model with (0,0,0) non-seasonal component
-  fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
-  p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  # state space representation
-})
+# test_that("TimeSeriesModel/forecast PMML output matches R", {
+#   skip_on_cran()
+#   skip_on_ci()
+# 
+#   # non-seasonal tests - with CLS and CPI
+#   fit <- auto.arima(sunspots) # creates non-seasonal model
+#   p_fit <- pmml(fit, model_name = "arima_auto_01")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_df_2(z_pred$outputs, r_pred)
+# 
+#   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
+#   p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(AirPassengers, order = c(2, 1, 2))
+#   p_fit <- pmml(fit, model_name = "arima_212")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_df_2(z_pred$outputs, r_pred)
+# 
+#   fit <- Arima(AirPassengers, order = c(1, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_111")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_df_2(z_pred$outputs, r_pred)
+# 
+#   fit <- Arima(WWWusage, order = c(2, 0, 2))
+#   p_fit <- pmml(fit, model_name = "arima_202")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_df_2(z_pred$outputs, r_pred)
+# 
+#   # fit <- Arima(WWWusage, order = c(3, 1, 1), include.drift = TRUE)
+#   # p_fit <- pmml(fit, model_name = "arima_311")
+#   # r_pred <- forecast_with_cpi(fit, 20)
+#   # up_stat <- upload_model(p_fit)
+#   # z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   # delete_model(up_stat$model_name)
+#   # expect_equal_df(z_pred$outputs, r_pred)
+# 
+#   fit <- Arima(USAccDeaths, order = c(1, 2, 0))
+#   p_fit <- pmml(fit, model_name = "arima_120")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_df_2(z_pred$outputs, r_pred)
+# 
+#   # non-seasonal tests with d=2 - expect mismatch
+#   fit <- Arima(AirPassengers, order = c(2, 2, 2))
+#   p_fit <- pmml(fit, model_name = "arima_222")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
+# 
+#   fit <- Arima(USAccDeaths, order = c(1, 2, 3))
+#   p_fit <- pmml(fit, model_name = "arima_123")
+#   r_pred <- forecast_with_cpi(fit, 20)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
+# 
+#   # seasonal with CLS
+#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_110011", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
+#   p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
+#   p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
+#   p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
+#   p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   # expect the following test to fail
+#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
+#   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_failure(expect_equal_nn(as.numeric(
+#     z_pred$outputs$Predicted_ts_value[20, ]
+#   ), r_pred))
+# 
+#   # tests with seasonal ELS
+#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
+#   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
+#   p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
+#   p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
+#   p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
+#   p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   # seasonal model with (0,0,0) non-seasonal component
+#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
+#   p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# 
+#   # state space representation
+# })
 
 
 test_that("AnomalyDetectionModel/iForest PMML output matches R", {
@@ -1818,117 +1818,117 @@ test_that("NaiveBayesModel/e1071 PMML output matches R", {
 })
 
 
-test_that("NearestNeighborModel/neighbr PMML output matches R", {
-  skip_on_cran()
-  skip_on_ci()
-
-  iris_train <- iris[1:140, ]
-  iris_test <- iris[141:150, -c(4, 5)]
-  fit <- knn(
-    train_set = iris_train, test_set = iris_test, k = 3, categorical_target = "Species",
-    continuous_target = "Petal.Width", comparison_measure = "euclidean"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
-  expect_equal_nn(z_pred$outputs$Predicted_Petal.Width, fit$test_set_scores$continuous_target)
-
-
-  iris_with_id <- iris
-  iris_with_id$ID <- c(1:150)
-  iris_train <- iris_with_id[1:130, -c(4, 5)]
-  iris_test <- iris_with_id[132:150, -c(4, 5, 6)]
-  fit <- knn(
-    train_set = iris_train, test_set = iris_test, k = 5, comparison_measure = "euclidean",
-    return_ranked_neighbors = 3, id = "ID"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-  expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-  expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-
-
-  iris_train <- iris_with_id[1:130, ]
-  iris_test <- iris_with_id[132:150, -c(5, 6)]
-  fit <- knn(
-    train_set = iris_train, test_set = iris_test, k = 5, categorical_target = "Species",
-    comparison_measure = "squared_euclidean", return_ranked_neighbors = 4, id = "ID"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
-  expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-  expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-  expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-
-
-  house_votes_nbr <- house_votes
-  feature_names <- names(house_votes_nbr)[!names(house_votes_nbr) %in% c("Class", "ID")]
-  for (n in feature_names) {
-    levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "n"] <- 0
-    levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "y"] <- 1
-  }
-  for (n in feature_names) {
-    house_votes_nbr[, n] <- as.numeric(levels(house_votes_nbr[, n]))[house_votes_nbr[, n]]
-  }
-  house_votes_nbr$ID <- c(1:nrow(house_votes_nbr))
-
-
-  house_votes_train <- house_votes_nbr[1:100, ]
-  house_votes_test <- house_votes_nbr[212:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-  fit <- knn(
-    train_set = house_votes_train, test_set = house_votes_test, k = 7, categorical_target = "Class",
-    comparison_measure = "jaccard", return_ranked_neighbors = 3, id = "ID"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
-  expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-  expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-  expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-
-
-  house_votes_train <- house_votes_nbr[1:30, ]
-  house_votes_test <- house_votes_nbr[105:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-  fit <- knn(
-    train_set = house_votes_train, test_set = house_votes_test, k = 4, categorical_target = "Class",
-    comparison_measure = "simple_matching", return_ranked_neighbors = 4, id = "ID"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
-  expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-  expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-  expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-  expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
-
-
-  house_votes_train <- house_votes_nbr[2:90, !names(house_votes_nbr) %in% c("Class")]
-  house_votes_test <- house_votes_nbr[195:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-  fit <- knn(
-    train_set = house_votes_train, test_set = house_votes_test, k = 4, comparison_measure = "tanimoto",
-    return_ranked_neighbors = 4, id = "ID"
-  )
-  p_fit <- pmml(fit)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-  expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-  expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-  expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
-})
+# test_that("NearestNeighborModel/neighbr PMML output matches R", {
+#   skip_on_cran()
+#   skip_on_ci()
+# 
+#   iris_train <- iris[1:140, ]
+#   iris_test <- iris[141:150, -c(4, 5)]
+#   fit <- knn(
+#     train_set = iris_train, test_set = iris_test, k = 3, categorical_target = "Species",
+#     continuous_target = "Petal.Width", comparison_measure = "euclidean"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
+#   expect_equal_nn(z_pred$outputs$Predicted_Petal.Width, fit$test_set_scores$continuous_target)
+# 
+# 
+#   iris_with_id <- iris
+#   iris_with_id$ID <- c(1:150)
+#   iris_train <- iris_with_id[1:130, -c(4, 5)]
+#   iris_test <- iris_with_id[132:150, -c(4, 5, 6)]
+#   fit <- knn(
+#     train_set = iris_train, test_set = iris_test, k = 5, comparison_measure = "euclidean",
+#     return_ranked_neighbors = 3, id = "ID"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+# 
+# 
+#   iris_train <- iris_with_id[1:130, ]
+#   iris_test <- iris_with_id[132:150, -c(5, 6)]
+#   fit <- knn(
+#     train_set = iris_train, test_set = iris_test, k = 5, categorical_target = "Species",
+#     comparison_measure = "squared_euclidean", return_ranked_neighbors = 4, id = "ID"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
+#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+# 
+# 
+#   house_votes_nbr <- house_votes
+#   feature_names <- names(house_votes_nbr)[!names(house_votes_nbr) %in% c("Class", "ID")]
+#   for (n in feature_names) {
+#     levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "n"] <- 0
+#     levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "y"] <- 1
+#   }
+#   for (n in feature_names) {
+#     house_votes_nbr[, n] <- as.numeric(levels(house_votes_nbr[, n]))[house_votes_nbr[, n]]
+#   }
+#   house_votes_nbr$ID <- c(1:nrow(house_votes_nbr))
+# 
+# 
+#   house_votes_train <- house_votes_nbr[1:100, ]
+#   house_votes_test <- house_votes_nbr[212:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+#   fit <- knn(
+#     train_set = house_votes_train, test_set = house_votes_test, k = 7, categorical_target = "Class",
+#     comparison_measure = "jaccard", return_ranked_neighbors = 3, id = "ID"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
+#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+# 
+# 
+#   house_votes_train <- house_votes_nbr[1:30, ]
+#   house_votes_test <- house_votes_nbr[105:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+#   fit <- knn(
+#     train_set = house_votes_train, test_set = house_votes_test, k = 4, categorical_target = "Class",
+#     comparison_measure = "simple_matching", return_ranked_neighbors = 4, id = "ID"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
+#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+#   expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
+# 
+# 
+#   house_votes_train <- house_votes_nbr[2:90, !names(house_votes_nbr) %in% c("Class")]
+#   house_votes_test <- house_votes_nbr[195:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+#   fit <- knn(
+#     train_set = house_votes_train, test_set = house_votes_test, k = 4, comparison_measure = "tanimoto",
+#     return_ranked_neighbors = 4, id = "ID"
+#   )
+#   p_fit <- pmml(fit)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+#   expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
+# })
 
 
 test_that("NeuralNetwork/nnet PMML output matches R", {
