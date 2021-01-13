@@ -86,6 +86,14 @@ expect_equal_nn <- function(...) {
   expect_equal(..., check.names = FALSE)
 }
 
+expect_equal_sorted <- function(z_pred_val, r_pred) {
+  # expect_equal where z is sorted by numeric names first
+  z_order <- order(as.numeric(names(z_pred_val)))
+  z_pred_val <- z_pred_val[z_order]
+  expect_equal_nn(as.numeric(z_pred_val), r_pred)
+}
+
+
 single_col_h_df <- function(h) {
   # For ARIMA models, create a data frame with a single column of h (number of steps ahead) values.
   dframe <- data.frame("h" = c(1:h), stringsAsFactors = TRUE)
@@ -100,7 +108,7 @@ h_20_one_line <- data.frame("h" = c(20))
 test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and ts_type='arima'", {
   skip_on_cran()
   skip_on_ci()
-  skip("skip non-seasonal ts_type='arima'")
+  # skip("skip non-seasonal ts_type='arima'")
   
   # non-seasonal tests - with CLS and CPI
   fit <- auto.arima(sunspots) # creates non-seasonal model
@@ -110,14 +118,6 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_df_2(z_pred$outputs, r_pred)
-  
-  fit <- auto.arima(JohnsonJohnson) # creates seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
   
   fit <- Arima(AirPassengers, order = c(2, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_212")
@@ -173,154 +173,88 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
 test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='arima', and exact_least_squares = FALSE", {
   skip_on_cran()
   skip_on_ci()
-  skip("skip seasonal CLS")
-  
+  # skip("skip seasonal CLS")
+
   # seasonal with CLS
+  fit <- auto.arima(JohnsonJohnson) # creates seasonal model
+  p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
+  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
+  
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_110011", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
   p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
   p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
   p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
   p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   # expect the following test to fail
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+  z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
   delete_model(up_stat$model_name)
-  expect_failure(expect_equal_nn(as.numeric(
-    z_pred$outputs$Predicted_ts_value[20, ]
-  ), r_pred))
-})
-
-
-test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='arima', and exact_least_squares = TRUE", {
-  skip_on_cran()
-  skip_on_ci()
-  skip("skip seasonal ELS")
-  
-  fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-  p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
-  p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
-  p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
-  p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
-  p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-  
-  # seasonal model with (0,0,0) non-seasonal component
-  fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
-  p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
-  r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-  up_stat <- upload_model(p_fit)
-  z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-  delete_model(up_stat$model_name)
-  expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+  expect_failure(expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred))
 })
 
 
 test_that("TimeSeriesModel/forecast PMML output matches R for statespace representation", {
   skip_on_cran()
   skip_on_ci()
-  skip("skip statespace")
+  # skip("skip statespace")
   
   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
   p_fit <- pmml(fit, model_name = "arima_auto_02_ss",ts_type = "statespace")
@@ -487,3 +421,75 @@ test_that("TimeSeriesModel/forecast PMML output matches R for statespace represe
 # z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
 # delete_model(up_stat$model_name)
 # expect_equal_df(z_pred$outputs, r_pred)
+
+# ExactLeastSquares no longer supported
+# test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='arima', and exact_least_squares = TRUE", {
+#   skip_on_cran()
+#   skip_on_ci()
+#   skip("skip seasonal ELS")
+#   
+#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
+#   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
+#   p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
+#   p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
+#   p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
+#   p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
+#   p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+#   
+#   # seasonal model with (0,0,0) non-seasonal component
+#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
+#   p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
+#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
+# })
