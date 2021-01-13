@@ -167,7 +167,8 @@ pmml.ARIMA <- function(model,
     ts_model <- append.XMLNode(
       ts_model,
       # .pmmlOutput(field, target)
-      .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels, output_type)
+      # .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels, output_type)
+      .make_arima_output_node(target, .has_seasonal_comp(model), cpi_levels, "string") # set output="string"
     )
 
 
