@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate PMML for an ARIMA object the <b>forecast</b> package. — pmml.ARIMA • pmml</title>
+<title>Generate PMML for an ARIMA object the forecast package. — pmml.ARIMA • pmml</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Generate PMML for an ARIMA object the <b>forecast</b> package. — pmml.ARIMA" />
+<meta property="og:title" content="Generate PMML for an ARIMA object the forecast package. — pmml.ARIMA" />
 <meta property="og:description" content="Generate PMML for an ARIMA object the forecast package." />
 
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,19 +136,19 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for ARIMA</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(
-  <span class='no'>model</span>,
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"ARIMA_model"</span>,
-  <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"ARIMA Time Series Model"</span>,
-  <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ts_type</span> <span class='kw'>=</span> <span class='st'>"arima"</span>,
-  <span class='kw'>exact_least_squares</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>cpi_levels</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>80</span>, <span class='fl'>95</span>),
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  model_name <span class='op'>=</span> <span class='st'>"ARIMA_model"</span>,
+  app_name <span class='op'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
+  description <span class='op'>=</span> <span class='st'>"ARIMA Time Series Model"</span>,
+  copyright <span class='op'>=</span> <span class='cn'>NULL</span>,
+  transforms <span class='op'>=</span> <span class='cn'>NULL</span>,
+  missing_value_replacement <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ts_type <span class='op'>=</span> <span class='st'>"arima"</span>,
+  exact_least_squares <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  cpi_levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -225,33 +225,38 @@ dataType "string", and contain a collection of all values up to and including th
 during scoring.
 String output in this form is facilitated by Extension elements in the PMML file,
 and is supported by Zementis Server 10.6.0.0.</p>
-<p><code>cpi_levels</code> behaves similar to <code>levels</code> in <code><a href='https://rdrr.io/pkg/forecast/man/forecast.html'>forecast::forecast</a></code>: values must be
+<p><code>cpi_levels</code> behaves similar to <code>levels</code> in <code><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast::forecast</a></code>: values must be
 between 0 and 100,
 non-inclusive.</p>
 <p>ARIMA models with a drift term will be supported in a future version.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Dmitriy Bolotov</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://pkg.robjhyndman.com/forecast/'>forecast</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
 #&gt; <span class='message'>  method            from</span>
 #&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='input'>
 <span class='co'># non-seasonal model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"WWWusage"</span>)
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
 
 <span class='co'># seasonal model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"JohnsonJohnson"</span>)
-<span class='no'>mod_02</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>JohnsonJohnson</span>,
-  <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>seasonal</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>)
-)
-<span class='no'>mod_02_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod_02</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"JohnsonJohnson"</span><span class='op'>)</span>
+<span class='va'>mod_02</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>JohnsonJohnson</span>,
+  order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='va'>mod_02_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod_02</span><span class='op'>)</span>
 
 <span class='co'># non-seasonal model exported as StateSpaceModel</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"WWWusage"</span>)
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/Arima.html'>Arima</a></span>(<span class='no'>WWWusage</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span>))
-<span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>, <span class='kw'>ts_type</span> <span class='kw'>=</span> <span class='st'>"statespace"</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span>
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span>, ts_type <span class='op'>=</span> <span class='st'>"statespace"</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -267,7 +272,7 @@ non-inclusive.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Generate the PMML representation for a randomForest object from the package
-<span class="pkg">randomForest</span>. — pmml.randomForest • pmml</title>
+randomForest. — pmml.randomForest • pmml</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@
 
 
 <meta property="og:title" content="Generate the PMML representation for a randomForest object from the package
-<span class="pkg">randomForest</span>. — pmml.randomForest" />
+randomForest. — pmml.randomForest" />
 <meta property="og:description" content="Generate the PMML representation for a randomForest object from the package
 randomForest." />
 
@@ -83,7 +83,7 @@ randomForest." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@ randomForest." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -141,18 +141,18 @@ randomForest." />
     </div>
 
     <pre class="usage"><span class='co'># S3 method for randomForest</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(
-  <span class='no'>model</span>,
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"randomForest_Model"</span>,
-  <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Random Forest Tree Model"</span>,
-  <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>parent_invalid_value_treatment</span> <span class='kw'>=</span> <span class='st'>"returnInvalid"</span>,
-  <span class='kw'>child_invalid_value_treatment</span> <span class='kw'>=</span> <span class='st'>"asIs"</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  model_name <span class='op'>=</span> <span class='st'>"randomForest_Model"</span>,
+  app_name <span class='op'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
+  description <span class='op'>=</span> <span class='st'>"Random Forest Tree Model"</span>,
+  copyright <span class='op'>=</span> <span class='cn'>NULL</span>,
+  transforms <span class='op'>=</span> <span class='cn'>NULL</span>,
+  missing_value_replacement <span class='op'>=</span> <span class='cn'>NULL</span>,
+  parent_invalid_value_treatment <span class='op'>=</span> <span class='st'>"returnInvalid"</span>,
+  child_invalid_value_treatment <span class='op'>=</span> <span class='st'>"asIs"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,17 +212,23 @@ segment MiningField level.</p></td>
 
     <p><a href='https://CRAN.R-project.org/package=randomForest'>randomForest:
 Breiman and Cutler's random forests for classification and regression</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Build a randomForest model</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>randomForest</span>)</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='output co'>#&gt; <span class='message'></span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://www.stat.berkeley.edu/~breiman/RandomForests/'>randomForest</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>randomForest 4.6-14</span></div><div class='output co'>#&gt; <span class='message'>Type rfNews() to see new features/changes/bug fixes.</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'randomForest'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:rattle':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    importance</span></div><div class='input'><span class='no'>iris_rf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>ntree</span> <span class='kw'>=</span> <span class='fl'>20</span>)
+#&gt; <span class='message'>    importance</span></div><div class='input'><span class='va'>iris_rf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/randomForest/man/randomForest.html'>randomForest</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span>, ntree <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
 
 <span class='co'># Convert to pmml</span>
-<span class='no'>iris_rf_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>iris_rf</span>)</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  3  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  4  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  5  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  6  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  7  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  8  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  9  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  10  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  11  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  12  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  13  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  14  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  15  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  16  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  17  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  18  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  19  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  20  to PMML</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span>(<span class='no'>iris_rf</span>)</div></pre>
+<span class='va'>iris_rf_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>iris_rf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  3  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  4  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  5  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  6  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  7  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  8  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  9  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  10  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  11  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  12  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  13  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  14  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  15  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  16  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  17  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  18  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  19  to PMML</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  20  to PMML</span></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>iris_rf</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,7 +244,7 @@ Breiman and Cutler's random forests for classification and regression</a></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

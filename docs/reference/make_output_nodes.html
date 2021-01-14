@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,12 +135,12 @@
     <p>Add Output nodes to a PMML object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_output_nodes</span>(
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"OutputField"</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>make_output_nodes</span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='st'>"OutputField"</span>,
+  attributes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  expression <span class='op'>=</span> <span class='cn'>NULL</span>,
+  namespace <span class='op'>=</span> <span class='st'>"4_4"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,14 +175,18 @@ similar to <code>function_to_pmml</code>.</p>
 <p>Meant to create OutputField elements, 'expressions' can be used to add
 post-processing transformations to a model. To create multiple such nodes,
 all the parameters must be given as lists of equal length.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Make two nodes, one with attributes</span>
-<span class='no'>two_nodes</span> <span class='kw'>&lt;-</span> <span class='fu'>make_output_nodes</span>(
-  <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"OutputField"</span>, <span class='st'>"OutputField"</span>),
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"dbl"</span>, <span class='kw'>optype</span> <span class='kw'>=</span> <span class='st'>"continuous"</span>), <span class='kw'>NULL</span>),
-  <span class='kw'>expression</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"ln(x)"</span>, <span class='st'>"ln(x/(1-x))"</span>)
-)</div></pre>
+<span class='va'>two_nodes</span> <span class='op'>&lt;-</span> <span class='fu'>make_output_nodes</span><span class='op'>(</span>
+  name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"OutputField"</span>, <span class='st'>"OutputField"</span><span class='op'>)</span>,
+  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"dbl"</span>, optype <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span>, <span class='cn'>NULL</span><span class='op'>)</span>,
+  expression <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"ln(x)"</span>, <span class='st'>"ln(x/(1-x))"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -198,7 +202,7 @@ all the parameters must be given as lists of equal length.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

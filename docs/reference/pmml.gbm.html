@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate the PMML representation for a gbm object from the package <span class="pkg">gbm</span>. — pmml.gbm • pmml</title>
+<title>Generate the PMML representation for a gbm object from the package gbm. — pmml.gbm • pmml</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Generate the PMML representation for a gbm object from the package <span class="pkg">gbm</span>. — pmml.gbm" />
+<meta property="og:title" content="Generate the PMML representation for a gbm object from the package gbm. — pmml.gbm" />
 <meta property="og:description" content="Generate the PMML representation for a gbm object from the package gbm." />
 
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -136,16 +136,16 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for gbm</span>
-<span class='fu'><a href='pmml.html'>pmml</a></span>(
-  <span class='no'>model</span>,
-  <span class='kw'>model_name</span> <span class='kw'>=</span> <span class='st'>"GBM_Model"</span>,
-  <span class='kw'>app_name</span> <span class='kw'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
-  <span class='kw'>description</span> <span class='kw'>=</span> <span class='st'>"Generalized Boosted Tree Model"</span>,
-  <span class='kw'>copyright</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>missing_value_replacement</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>
+  <span class='va'>model</span>,
+  model_name <span class='op'>=</span> <span class='st'>"GBM_Model"</span>,
+  app_name <span class='op'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
+  description <span class='op'>=</span> <span class='st'>"Generalized Boosted Tree Model"</span>,
+  copyright <span class='op'>=</span> <span class='cn'>NULL</span>,
+  transforms <span class='op'>=</span> <span class='cn'>NULL</span>,
+  missing_value_replacement <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,23 +199,31 @@ supported.</p>
 
     <p><a href='https://CRAN.R-project.org/package=gbm'>gbm: Generalized Boosted
 Regression Models (on CRAN)</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>gbm</span>)</div><div class='output co'>#&gt; <span class='message'>Loaded gbm 2.1.8</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>audit</span>)
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/gbm-developers/gbm'>gbm</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Loaded gbm 2.1.8</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>audit</span><span class='op'>)</span>
 
-<span class='no'>mod</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gbm/man/gbm.html'>gbm</a></span>(<span class='no'>Adjusted</span> ~ <span class='no'>.</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>audit</span>[, -<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span>)],
-  <span class='kw'>n.trees</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>interaction.depth</span> <span class='kw'>=</span> <span class='fl'>4</span>
-)</div><div class='output co'>#&gt; Distribution not specified, assuming bernoulli ...</div><div class='input'>
-<span class='no'>mod_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod</span>)</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  3  to PMML, for category# 1</span></div><div class='input'>
+<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gbm/man/gbm.html'>gbm</a></span><span class='op'>(</span><span class='va'>Adjusted</span> <span class='op'>~</span> <span class='va'>.</span>,
+  data <span class='op'>=</span> <span class='va'>audit</span><span class='op'>[</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>9</span>, <span class='fl'>10</span>, <span class='fl'>11</span>, <span class='fl'>12</span><span class='op'>)</span><span class='op'>]</span>,
+  n.trees <span class='op'>=</span> <span class='fl'>3</span>, interaction.depth <span class='op'>=</span> <span class='fl'>4</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; Distribution not specified, assuming bernoulli ...</div><div class='input'>
+<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  3  to PMML, for category# 1</span></div><div class='input'>
 <span class='co'># Classification example:</span>
-<span class='no'>mod2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gbm/man/gbm.html'>gbm</a></span>(<span class='no'>Species</span> ~ <span class='no'>.</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>, <span class='kw'>n.trees</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>interaction.depth</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>distribution</span> <span class='kw'>=</span> <span class='st'>"multinomial"</span>
-)</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting `distribution = "multinomial"` is ill-advised as it is currently broken. It exists only for backwards compatibility. Use at your own risk.</span></div><div class='input'>
+<span class='va'>mod2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/gbm/man/gbm.html'>gbm</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>,
+  data <span class='op'>=</span> <span class='va'>iris</span>, n.trees <span class='op'>=</span> <span class='fl'>2</span>,
+  interaction.depth <span class='op'>=</span> <span class='fl'>3</span>, distribution <span class='op'>=</span> <span class='st'>"multinomial"</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Setting `distribution = "multinomial"` is ill-advised as it is currently broken. It exists only for backwards compatibility. Use at your own risk.</span></div><div class='input'>
 <span class='co'># The PMML will include a regression model to read the gbm object outputs</span>
 <span class='co'># and convert to a "response" prediction type.</span>
-<span class='no'>mod2_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>mod2</span>)</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 2</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 2</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 3</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 3</span></div></pre>
+<span class='va'>mod2_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 1</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 2</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 2</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  1  to PMML, for category# 3</span></div><div class='output co'>#&gt; <span class='message'>Now converting tree  2  to PMML, for category# 3</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -231,7 +239,7 @@ Regression Models (on CRAN)</a></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

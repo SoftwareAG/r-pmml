@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,13 +135,13 @@
     <p>Add attribute values to an existing element in a given PMML file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_attributes</span>(
-  <span class='kw'>xml_model</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xpath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>namespace</span> <span class='kw'>=</span> <span class='st'>"4_4"</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>add_attributes</span><span class='op'>(</span>
+  xml_model <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xpath <span class='op'>=</span> <span class='cn'>NULL</span>,
+  attributes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  namespace <span class='op'>=</span> <span class='st'>"4_4"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,39 +191,43 @@ attribute values, so it must be used with care. This behavior is by design
 as this feature is meant to help an user add new defined attribute values at
 different times. The XPath has to include the namespace as shown in the
 examples.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Make a sample model:</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Sepal.Length</span> ~ <span class='no'>.</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>[, -<span class='fl'>5</span>])
-<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>)
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
 
 <span class='co'># Add arbitrary attributes to the 1st 'NumericPredictor' element. The</span>
 <span class='co'># attributes are for demostration only (they are not allowed under</span>
 <span class='co'># the PMML schema). The command assumes the default namespace.</span>
-<span class='no'>fit_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'>add_attributes</span>(<span class='no'>fit_pmml</span>, <span class='st'>"/p:PMML/descendant::p:NumericPredictor[1]"</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"b"</span>)
-)
+<span class='va'>fit_pmml_2</span> <span class='op'>&lt;-</span> <span class='fu'>add_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>, <span class='st'>"/p:PMML/descendant::p:NumericPredictor[1]"</span>,
+  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Add attributes to the NumericPredictor element which has</span>
 <span class='co'># 'Petal.Length' as the 'name' attribute:</span>
-<span class='no'>fit_pmml_3</span> <span class='kw'>&lt;-</span> <span class='fu'>add_attributes</span>(<span class='no'>fit_pmml</span>,
+<span class='va'>fit_pmml_3</span> <span class='op'>&lt;-</span> <span class='fu'>add_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>,
   <span class='st'>"/p:PMML/descendant::p:NumericPredictor[@name='Petal.Length']"</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"b"</span>)
-)
+  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># 3 NumericElements exist which have '1' as the 'exponent' attribute.</span>
 <span class='co'># Add new attributes to the 3rd one:</span>
-<span class='no'>fit_pmml_4</span> <span class='kw'>&lt;-</span> <span class='fu'>add_attributes</span>(<span class='no'>fit_pmml</span>,
+<span class='va'>fit_pmml_4</span> <span class='op'>&lt;-</span> <span class='fu'>add_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>,
   <span class='st'>"/p:PMML/descendant::p:NumericPredictor[@exponent='1'][3]"</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"b"</span>)
-)
+  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># Add attributes to the 1st element whose 'name' attribute contains</span>
 <span class='co'># 'Length':</span>
-<span class='no'>fit_pmml_5</span> <span class='kw'>&lt;-</span> <span class='fu'>add_attributes</span>(<span class='no'>fit_pmml</span>,
+<span class='va'>fit_pmml_5</span> <span class='op'>&lt;-</span> <span class='fu'>add_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>,
   <span class='st'>"/p:PMML/descendant::p:NumericPredictor[contains(@name,'Length')]"</span>,
-  <span class='kw'>attributes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"b"</span>)
-)</div></pre>
+  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -239,7 +243,7 @@ examples.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

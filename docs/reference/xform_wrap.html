@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -109,7 +109,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@
     <p>Wrap data in a data transformations object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xform_wrap</span>(<span class='no'>data</span>, <span class='kw'>use_matrix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>xform_wrap</span><span class='op'>(</span><span class='va'>data</span>, use_matrix <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,22 +171,26 @@ values.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='pmml.html'>pmml</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Load the standard iris dataset</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 
 <span class='co'># Make a object for the iris dataset to use with</span>
 <span class='co'># transformation functions</span>
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_wrap</span>(<span class='no'>iris</span>)
+<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_wrap</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 
 <span class='co'># Output only the transformations in PMML format.</span>
 <span class='co'># This example will output just an empty "LocalTransformations"</span>
 <span class='co'># element as no transformations were performed.</span>
-<span class='no'>trans_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='kw'>NULL</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)
+<span class='va'>trans_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='cn'>NULL</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
 
 <span class='co'># The following will also work</span>
-<span class='no'>trans_pmml_2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div></pre>
+<span class='va'>trans_pmml_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -202,7 +206,7 @@ values.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

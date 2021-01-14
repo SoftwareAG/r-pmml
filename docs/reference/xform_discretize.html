@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Discretize a continuous variable as indicated by interval mappings in
-accordance with the PMML element <b>Discretize</b>. — xform_discretize • pmml</title>
+accordance with the PMML element Discretize. — xform_discretize • pmml</title>
 
 
 <!-- jquery -->
@@ -41,7 +41,7 @@ accordance with the PMML element <b>Discretize</b>. — xform_discretize • pmm
 
 
 <meta property="og:title" content="Discretize a continuous variable as indicated by interval mappings in
-accordance with the PMML element <b>Discretize</b>. — xform_discretize" />
+accordance with the PMML element Discretize. — xform_discretize" />
 <meta property="og:description" content="Discretize a continuous variable as indicated by interval mappings in
 accordance with the PMML element Discretize." />
 
@@ -83,7 +83,7 @@ accordance with the PMML element Discretize." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -112,7 +112,7 @@ accordance with the PMML element Discretize." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/SoftwareAG/r-pmml/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -140,14 +140,14 @@ accordance with the PMML element <b>Discretize</b>.</h1>
 accordance with the PMML element <b>Discretize</b>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xform_discretize</span>(
-  <span class='no'>wrap_object</span>,
-  <span class='no'>xform_info</span>,
-  <span class='no'>table</span>,
-  <span class='kw'>default_value</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>xform_discretize</span><span class='op'>(</span>
+  <span class='va'>wrap_object</span>,
+  <span class='va'>xform_info</span>,
+  <span class='va'>table</span>,
+  default_value <span class='op'>=</span> <span class='cn'>NA</span>,
+  map_missing_to <span class='op'>=</span> <span class='cn'>NA</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -232,11 +232,11 @@ rightVal2],outVal2
 <p>which, given an input value <b>inVal</b> and the output value to be
 calculated <b>out</b>, means that:</p>
 <pre>
-if(inVal &amp;lt; rightVal1) out=outVal1
-f(inVal &amp;lt;= rightVal2) out=outVal2
-if( (inVal &amp;gt;= leftVal1) and (inVal &amp;lt; rightVal3) ) out=outVal3
-if( (inVal &amp;gt; leftVal2) and (inVal &amp;lt;= rightVal4) ) out=outVal4
-if(inVal &amp;gt; leftVal) out=outVal5
+if(inVal &lt; rightVal1) out=outVal1
+f(inVal &lt;= rightVal2) out=outVal2
+if( (inVal &gt;= leftVal1) and (inVal &lt; rightVal3) ) out=outVal3
+if( (inVal &gt; leftVal2) and (inVal &lt;= rightVal4) ) out=outVal4
+if(inVal &gt; leftVal) out=outVal5
 </pre>
 
 <p>It is also possible to give the information about the transforms without an
@@ -258,11 +258,14 @@ below.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='xform_wrap.html'>xform_wrap</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># First wrap the data</span>
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='xform_wrap.html'>xform_wrap</a></span>(<span class='no'>iris</span>)
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xform_wrap.html'>xform_wrap</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Convert the continuous variable "Sepal.Length" to a discrete</span>
 <span class='co'># variable "dsl". The intervals to be used for this transformation is</span>
 <span class='co'># given in a file, "intervals.csv", whose content is, for example,:</span>
@@ -278,36 +281,36 @@ below.</p>
 <span class='co'>#    if(Sepal.Length &gt; 6) then dsl = "val2"</span>
 <span class='co'>#</span>
 <span class='co'># Give "dsl" the value 0 if the input variable value is missing.</span>
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_discretize</span>(<span class='no'>iris_box</span>,
-  <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='st'>"[Sepal.Length -&gt; dsl][double -&gt; string]"</span>,
-  <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"intervals.csv"</span>, <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='st'>"0"</span>
-)
-}
+<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,
+  xform_info <span class='op'>=</span> <span class='st'>"[Sepal.Length -&gt; dsl][double -&gt; string]"</span>,
+  table <span class='op'>=</span> <span class='st'>"intervals.csv"</span>, map_missing_to <span class='op'>=</span> <span class='st'>"0"</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># A different transformation using a list of data frames, of size 1:</span>
-<span class='no'>t</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
-<span class='no'>m</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
     <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,
     <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span>
-  ),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+  <span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
     <span class='st'>"double"</span>, <span class='st'>"integer"</span>, <span class='st'>"string"</span>, <span class='st'>"double"</span>, <span class='st'>"string"</span>,
     <span class='st'>"double"</span>
-  ),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"0)"</span>, <span class='fl'>0</span>, <span class='st'>"open"</span>, <span class='fl'>NA</span>, <span class='st'>"Open"</span>, <span class='fl'>0</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>1</span>, <span class='st'>"closed"</span>, <span class='fl'>0</span>, <span class='st'>"Open"</span>, <span class='fl'>1</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>2</span>, <span class='st'>"closed"</span>, <span class='fl'>1</span>, <span class='st'>"Open"</span>, <span class='fl'>2</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>3</span>, <span class='st'>"closed"</span>, <span class='fl'>2</span>, <span class='st'>"Open"</span>, <span class='fl'>3</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>NA</span>, <span class='fl'>4</span>, <span class='st'>"closed"</span>, <span class='fl'>3</span>, <span class='st'>"Open"</span>, <span class='fl'>4</span>),
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"[4"</span>, <span class='fl'>5</span>, <span class='st'>"closed"</span>, <span class='fl'>4</span>, <span class='st'>"Open"</span>, <span class='fl'>NA</span>)
-), <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"0)"</span>, <span class='fl'>0</span>, <span class='st'>"open"</span>, <span class='cn'>NA</span>, <span class='st'>"Open"</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='st'>"closed"</span>, <span class='fl'>0</span>, <span class='st'>"Open"</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span>, <span class='st'>"closed"</span>, <span class='fl'>1</span>, <span class='st'>"Open"</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='st'>"closed"</span>, <span class='fl'>2</span>, <span class='st'>"Open"</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>4</span>, <span class='st'>"closed"</span>, <span class='fl'>3</span>, <span class='st'>"Open"</span>, <span class='fl'>4</span><span class='op'>)</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"[4"</span>, <span class='fl'>5</span>, <span class='st'>"closed"</span>, <span class='fl'>4</span>, <span class='st'>"Open"</span>, <span class='cn'>NA</span><span class='op'>)</span>
+<span class='op'>)</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Give column names to make it look nice; not necessary!</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>m</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
   <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,
   <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span>
-)
+<span class='op'>)</span>
 
 <span class='co'># A textual representation of the data frame is:</span>
 <span class='co'>#   Petal.Length  dis_pl leftInterval leftValue rightInterval rightValue</span>
@@ -335,17 +338,18 @@ below.</p>
 <span class='co'># corresponding to the element at the same index in the list. If</span>
 <span class='co'># these values are not given as a vector, they will be used for the</span>
 <span class='co'># first list element only.</span>
-<span class='no'>t</span><span class='kw'>[[</span><span class='fl'>1</span>]] <span class='kw'>&lt;-</span> <span class='no'>m</span>
-<span class='no'>def</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>11</span>)
-<span class='no'>mis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>22</span>)
-<span class='no'>iris_box</span> <span class='kw'>&lt;-</span> <span class='fu'>xform_discretize</span>(<span class='no'>iris_box</span>,
-  <span class='kw'>xform_info</span> <span class='kw'>=</span> <span class='no'>t</span>, <span class='kw'>default_value</span> <span class='kw'>=</span> <span class='no'>def</span>,
-  <span class='kw'>map_missing_to</span> <span class='kw'>=</span> <span class='no'>mis</span>
-)
+<span class='va'>t</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>m</span>
+<span class='va'>def</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span><span class='op'>)</span>
+<span class='va'>mis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>22</span><span class='op'>)</span>
+<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,
+  xform_info <span class='op'>=</span> <span class='va'>t</span>, default_value <span class='op'>=</span> <span class='va'>def</span>,
+  map_missing_to <span class='op'>=</span> <span class='va'>mis</span>
+<span class='op'>)</span>
 
 <span class='co'># Make a simple model to see the effect.</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>Petal.Width</span> ~ <span class='no'>.</span>, <span class='no'>iris_box</span>$<span class='no'>data</span>[, -<span class='fl'>5</span>])
-<span class='no'>fit_pmml</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span>(<span class='no'>fit</span>, <span class='kw'>transforms</span> <span class='kw'>=</span> <span class='no'>iris_box</span>)</div></pre>
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Width</span> <span class='op'>~</span> <span class='va'>.</span>, <span class='va'>iris_box</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -361,7 +365,7 @@ below.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
