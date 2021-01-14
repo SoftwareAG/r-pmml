@@ -57,8 +57,8 @@ forecast results between R and PMML may not match exactly. Additionally, when ts
 are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 between R and PMML may not match.
 
-OutputField elements are of
-dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
+OutputField elements are exported with
+dataType "string", and contain a collection of all values up to and including the steps-ahead value supplied
 during scoring.
 String output in this form is facilitated by Extension elements in the PMML file,
 and is supported by Zementis Server since version 10.6.0.0.
@@ -66,7 +66,7 @@ and is supported by Zementis Server since version 10.6.0.0.
 \code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
 between 0 and 100, non-inclusive.
 
-ARIMA models with a drift term will be supported in a future version.
+Models with a drift term will be supported in a future version.
 
 Transforms are currently not supported for ARIMA models.
 }

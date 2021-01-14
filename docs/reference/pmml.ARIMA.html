@@ -144,8 +144,7 @@
   copyright <span class='op'>=</span> <span class='cn'>NULL</span>,
   transforms <span class='op'>=</span> <span class='cn'>NULL</span>,
   missing_value_replacement <span class='op'>=</span> <span class='cn'>NULL</span>,
-  ts_type <span class='op'>=</span> <span class='st'>"arima"</span>,
-  exact_least_squares <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ts_type <span class='op'>=</span> <span class='st'>"statespace"</span>,
   cpi_levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>80</span>, <span class='fl'>95</span><span class='op'>)</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -187,11 +186,6 @@ attribute for all MiningFields.</p></td>
       <td><p>The type of time series representation for PMML: "arima" or "statespace".</p></td>
     </tr>
     <tr>
-      <th>exact_least_squares</th>
-      <td><p>Deprecated. For seasonal models only, if TRUE, export with exact least squares;
-otherwise, use conditional least squares.</p></td>
-    </tr>
-    <tr>
       <th>cpi_levels</th>
       <td><p>Vector of confidence levels for prediction intervals.</p></td>
     </tr>
@@ -207,28 +201,21 @@ otherwise, use conditional least squares.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The model is represented as a PMML TimeSeriesModel.</p>
-<p>When <code>ts_type = "arima"</code>, the R object is exported as ARIMA in PMML.
-Non-seasonal models are represented with conditional
-least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
-or exact least squares (ELS). Note that ARIMA models in R are
+<p>When <code>ts_type = "statespace"</code> (by default), the R object is exported as StateSpaceModel in PMML.</p>
+<p>When <code>ts_type = "arima"</code>, the R object is exported as ARIMA in PMML with conditional 
+least squares (CLS). Note that ARIMA models in R are
 estimated using a state space representation. Therefore, when using CLS with seasonal models,
-forecast results between R and PMML may not match exactly. Prediction intervals
+forecast results between R and PMML may not match exactly. Additionally, when ts_type="arima", prediction intervals
 are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 between R and PMML may not match.</p>
-<p><code>exact_least_squares</code> is deprecated, and will be removed in a future version, at which point
-ELS will be the only representation used when <code>ts_type = "arima"</code>.</p>
-<p>When <code>ts_type = "statespace"</code>, the R object is exported as StateSpaceModel in PMML.</p>
-<p><code>ts_type</code> also affects the dataType of OutputField elements. When <code>ts_type = "arima"</code>,
-the forecast
-and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
-dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
+<p>OutputField elements are exported with
+dataType "string", and contain a collection of all values up to and including the steps-ahead value supplied
 during scoring.
 String output in this form is facilitated by Extension elements in the PMML file,
-and is supported by Zementis Server 10.6.0.0.</p>
+and is supported by Zementis Server since version 10.6.0.0.</p>
 <p><code>cpi_levels</code> behaves similar to <code>levels</code> in <code><a href='https://pkg.robjhyndman.com/forecast/reference/forecast.html'>forecast::forecast</a></code>: values must be
-between 0 and 100,
-non-inclusive.</p>
-<p>ARIMA models with a drift term will be supported in a future version.</p>
+between 0 and 100, non-inclusive.</p>
+<p>Models with a drift term will be supported in a future version.</p>
 <p>Transforms are currently not supported for ARIMA models.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -252,10 +239,10 @@ non-inclusive.</p>
 <span class='op'>)</span>
 <span class='va'>mod_02_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod_02</span><span class='op'>)</span>
 
-<span class='co'># non-seasonal model exported as StateSpaceModel</span>
+<span class='co'># non-seasonal model exported with Conditional Least Squares</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span>
 <span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span>, ts_type <span class='op'>=</span> <span class='st'>"statespace"</span><span class='op'>)</span>
+<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span>, ts_type <span class='op'>=</span> <span class='st'>"arima"</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
