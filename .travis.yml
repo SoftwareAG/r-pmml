@@ -4,6 +4,7 @@ language: R
 cache: packages
 
 install:
+  - R -e 'install.packages("remotes")'
   - R -e 'remotes::install_deps(dependencies = TRUE, upgrade = "always")'
   - R -e 'remotes::install_version("randomForestSRC", "2.5.0")'
   - R -e 'remotes::install_github("alex23lemm/zementisr")'
