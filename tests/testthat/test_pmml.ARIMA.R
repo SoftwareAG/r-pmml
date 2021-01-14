@@ -82,7 +82,7 @@ test_that("Output node contains expected elements", {
 test_that("NonseasonalComponent node contains required elements 1", {
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_5 <- Arima(s, order = c(3, 1, 1))
-  p_fit_5 <- pmml(fit_5)
+  p_fit_5 <- pmml(fit_5, ts_type = "arima")
 
   # NonseasonalComponent attributes
   expect_equal(xmlGetAttr(p_fit_5[[3]][[4]][[1]], name = "p"), 3)
@@ -107,7 +107,7 @@ test_that("NonseasonalComponent node contains required elements 1", {
 test_that("non-seasonal ARIMA node contains correct attributes", {
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order = c(0, 0, 1))
-  p_fit_6 <- pmml(fit_6)
+  p_fit_6 <- pmml(fit_6, ts_type = "arima")
 
   expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "RMSE"), sqrt(fit_6$sigma2))
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "transformation"), "none")
@@ -118,7 +118,7 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
 
 test_that("seasonal ARIMA model contains correct elements 1", {
   fit_7 <- Arima(JohnsonJohnson, order = c(0, 0, 2), seasonal = c(0, 0, 1))
-  p_fit_7 <- pmml(fit_7)
+  p_fit_7 <- pmml(fit_7, ts_type = "arima")
 
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]], name = "p"), 0)
   expect_equal(xmlGetAttr(p_fit_7[[3]][[4]][[1]], name = "d"), 0)
@@ -143,7 +143,7 @@ test_that("seasonal ARIMA model contains correct elements 1", {
 
 test_that("seasonal ARIMA model contains correct elements 2", {
   fit_8 <- Arima(AirPassengers, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-  p_fit_8 <- pmml(fit_8)
+  p_fit_8 <- pmml(fit_8, ts_type = "arima")
 
 
   expect_equal(xmlGetAttr(p_fit_8[[3]][[4]][[1]], name = "p"), 1)
@@ -168,10 +168,9 @@ test_that("seasonal ARIMA model contains correct elements 2", {
   )
 })
 
-
 test_that("seasonal ARIMA model contains correct elements 3", {
   fit_9 <- Arima(AirPassengers, order = c(1, 2, 3), seasonal = c(1, 2, 1))
-  p_fit_9 <- pmml(fit_9)
+  p_fit_9 <- pmml(fit_9, ts_type = "arima")
 
   expect_equal_num(xmlGetAttr(p_fit_9[[3]][[4]], name = "constantTerm"), 0)
 
@@ -213,7 +212,7 @@ test_that("seasonal ARIMA model contains correct elements 3", {
 
 test_that("Seasonal ARIMA with 0,0,0 non-seasonal component contains NonseasonalComponent with zero values", {
   fit_10 <- Arima(AirPassengers, order = c(0, 0, 0), seasonal = c(1, 2, 1))
-  p_fit_10 <- pmml(fit_10)
+  p_fit_10 <- pmml(fit_10, ts_type = "arima")
   expect_equal(toString(p_fit_10[[3]][[4]][[1]]), "<NonseasonalComponent p=\"0\" d=\"0\" q=\"0\"/>")
 })
 
@@ -235,13 +234,13 @@ test_that("ARIMA with both intercept and drift terms throws error", {
 
 test_that("RMSE attribute equals sqrt(sigma2) from R object", {
   fit_16 <- Arima(WWWusage, order = c(2, 1, 3))
-  p_fit_16 <- pmml(fit_16)
+  p_fit_16 <- pmml(fit_16, ts_type = "arima")
   expect_equal_num(xmlGetAttr(p_fit_16[[3]][[4]], name = "RMSE"), sqrt(fit_16$sigma2))
 })
 
 test_that("seasonal models do not include CPI in Output", {
   fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1, 1, 1))
-  p_fit_17 <- pmml(fit_17)
+  p_fit_17 <- pmml(fit_17, ts_type = "arima")
   
   # expect extensions
   expect_equal(toString(p_fit_17[[3]][[2]]),"<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"string\" feature=\"predictedValue\">\n  <Extension extender=\"ADAPA\" name=\"dataType\" value=\"json\"/>\n </OutputField>\n</Output>")
@@ -287,9 +286,9 @@ test_that("bestFit TimeSeriesModel node matches ts_type", {
   p_fit_22_a <- pmml(fit_22, ts_type = "arima")
   expect_equal(xmlGetAttr(p_fit_22_a[[3]], name = "bestFit"), "ARIMA")
 
-  # test that the default is "arima"
+  # test that the default is "statespace"
   p_fit_22_b <- pmml(fit_22)
-  expect_equal(xmlGetAttr(p_fit_22_b[[3]], name = "bestFit"), "ARIMA")
+  expect_equal(xmlGetAttr(p_fit_22_b[[3]], name = "bestFit"), "StateSpaceModel")
 })
 
 test_that("interceptVector is used instead of intercept attribute", {

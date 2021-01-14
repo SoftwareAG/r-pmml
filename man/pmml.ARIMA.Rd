@@ -12,7 +12,7 @@
   copyright = NULL,
   transforms = NULL,
   missing_value_replacement = NULL,
-  ts_type = "arima",
+  ts_type = "statespace",
   cpi_levels = c(80, 95),
   ...
 )
@@ -48,31 +48,23 @@ Generate PMML for an ARIMA object the \bold{forecast} package.
 \details{
 The model is represented as a PMML TimeSeriesModel.
 
-When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML.
-Non-seasonal models are represented with conditional
-least squares (CLS). For models with a seasonal component, the PMML can be exported with CLS
-or exact least squares (ELS). Note that ARIMA models in R are
+When \code{ts_type = "statespace"} (by default), the R object is exported as StateSpaceModel in PMML.
+
+When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML with conditional 
+least squares (CLS). Note that ARIMA models in R are
 estimated using a state space representation. Therefore, when using CLS with seasonal models,
-forecast results between R and PMML may not match exactly. Prediction intervals
+forecast results between R and PMML may not match exactly. Additionally, when ts_type="arima", prediction intervals
 are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 between R and PMML may not match.
 
-\code{exact_least_squares} is deprecated, and will be removed in a future version, at which point
-ELS will be the only representation used when \code{ts_type = "arima"}.
-
-When \code{ts_type = "statespace"}, the R object is exported as StateSpaceModel in PMML.
-
-\code{ts_type} also affects the dataType of OutputField elements. When \code{ts_type = "arima"},
-the forecast
-and prediction interval OutputFields are of dataType "double". Otherwise, these fields are of
+OutputField elements are of
 dataType "string", and contain a collection of all values up to and including the steps ahead value supplied
 during scoring.
 String output in this form is facilitated by Extension elements in the PMML file,
-and is supported by Zementis Server 10.6.0.0.
+and is supported by Zementis Server since version 10.6.0.0.
 
 \code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
-between 0 and 100,
-non-inclusive.
+between 0 and 100, non-inclusive.
 
 ARIMA models with a drift term will be supported in a future version.
 
@@ -94,10 +86,10 @@ mod_02 <- Arima(JohnsonJohnson,
 )
 mod_02_pmml <- pmml(mod_02)
 
-# non-seasonal model exported as StateSpaceModel
+# non-seasonal model exported with Conditional Least Squares
 data("WWWusage")
 mod <- Arima(WWWusage, order = c(3, 1, 1))
-mod_pmml <- pmml(mod, ts_type = "statespace")
+mod_pmml <- pmml(mod, ts_type = "arima")
 }
 \author{
 Dmitriy Bolotov

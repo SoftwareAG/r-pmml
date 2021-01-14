@@ -170,7 +170,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
 })
 
 
-test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='arima', and exact_least_squares = FALSE", {
+test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='arima'", {
   skip_on_cran()
   skip_on_ci()
   # skip("skip seasonal CLS")
