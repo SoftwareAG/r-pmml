@@ -1,4 +1,6 @@
 # pmml 2.3.1.9000
+## Changes
+
 ## Bug Fixes
   - `xform_function()` no longer creates an unnecessary `"NA"` level in `field_data$dataType`.
   - `xform_wrap()` no longer sets `field_data$dataType` to `factor` for all columns of a tibble.

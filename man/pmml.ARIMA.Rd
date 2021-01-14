@@ -13,7 +13,6 @@
   transforms = NULL,
   missing_value_replacement = NULL,
   ts_type = "arima",
-  exact_least_squares = TRUE,
   cpi_levels = c(80, 95),
   ...
 )
@@ -35,9 +34,6 @@
 attribute for all MiningFields.}
 
 \item{ts_type}{The type of time series representation for PMML: "arima" or "statespace".}
-
-\item{exact_least_squares}{Deprecated. For seasonal models only, if TRUE, export with exact least squares;
-otherwise, use conditional least squares.}
 
 \item{cpi_levels}{Vector of confidence levels for prediction intervals.}
 

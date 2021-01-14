@@ -24,8 +24,6 @@
 #' @param missing_value_replacement Value to be used as the 'missingValueReplacement'
 #' attribute for all MiningFields.
 #' @param ts_type The type of time series representation for PMML: "arima" or "statespace".
-#' @param exact_least_squares Deprecated. For seasonal models only, if TRUE, export with exact least squares;
-#' otherwise, use conditional least squares.
 #' @param cpi_levels Vector of confidence levels for prediction intervals.
 #'
 #' @inheritParams pmml
@@ -96,24 +94,12 @@ pmml.ARIMA <- function(model,
                        transforms = NULL,
                        missing_value_replacement = NULL,
                        ts_type = "arima",
-                       exact_least_squares = TRUE,
                        cpi_levels = c(80, 95),
                        ...) {
   if (!inherits(model, "ARIMA")) stop("Not a legitimate ARIMA object.")
 
-  # Deprecated argument.
-  if (!missing(exact_least_squares)) {
-    warning("argument exact_least_squares is deprecated.",
-      call. = FALSE
-    )
-  }
-
   if (!(ts_type %in% c("arima", "statespace"))) {
     stop('ts_type must be one of "arima" or "statespace".')
-  }
-
-  if (!is.logical(exact_least_squares)) {
-    stop("exact_least_squares must be logical (TRUE/FALSE).")
   }
 
   if (ts_type == "arima") {
@@ -179,18 +165,7 @@ pmml.ARIMA <- function(model,
 
     arima_constant <- .get_model_constant(model)
 
-    # exact_least_squares only has an effect if model has seasonal component.
-    # if model is non-seasonal and ts_type="arima", always export in conditional least squares format.
-    if (!.has_seasonal_comp(model)) { # if model does not have seasonal component, set to FALSE
-      exact_least_squares <- FALSE
-    }
-
-
-    prediction_method <- if (exact_least_squares) {
-      "exactLeastSquares"
-    } else {
-      "conditionalLeastSquares"
-    }
+    prediction_method <- "conditionalLeastSquares"
 
     arima_node <- xmlNode("ARIMA", attrs = c(
       RMSE = arima_rmse,
@@ -200,22 +175,26 @@ pmml.ARIMA <- function(model,
     ))
 
     if (.has_nonseasonal_comp(model)) {
-      arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
+      # arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
+      arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, FALSE))
+      
     } else {
       # crete a non-seasonal node with all zeros
-      arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
+      # arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
+      arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, FALSE))
     }
 
     if (.has_seasonal_comp(model)) {
-      arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
+      # arima_node <- append.XMLNode(arima_node, .make_sc_node(model, exact_least_squares))
+      arima_node <- append.XMLNode(arima_node, .make_sc_node(model, FALSE))
     }
 
-    if (exact_least_squares) {
-      arima_node <- append.XMLNode(
-        arima_node,
-        .make_mls_node(model, ts_type)
-      )
-    }
+    # if (exact_least_squares) {
+    #   arima_node <- append.XMLNode(
+    #     arima_node,
+    #     .make_mls_node(model, ts_type)
+    #   )
+    # }
 
 
     ts_model <- append.XMLNode(ts_model, arima_node)
