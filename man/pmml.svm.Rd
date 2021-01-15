@@ -152,5 +152,5 @@ Probability Theory Group (Formerly: E1071), TU Wien} \url{https://CRAN.R-project
 }
 \seealso{
 \code{\link[pmml]{pmml}},
-\href{http://dmg.org/pmml/v4-3/SupportVectorMachine.html}{PMML SVM specification}
+\href{http://dmg.org/pmml/v4-4-1/SupportVectorMachine.html}{PMML SVM specification}
 }

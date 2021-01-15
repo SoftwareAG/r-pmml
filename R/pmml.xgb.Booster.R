@@ -54,7 +54,7 @@
 #' @author Tridivesh Jena
 #'
 #' @seealso \code{\link[pmml]{pmml}},
-#' \href{http://dmg.org/pmml/v4-3/GeneralStructure.html}{PMML schema}
+#' \href{http://dmg.org/pmml/v4-4-1/GeneralStructure.html}{PMML schema}
 #'
 #' @references
 #' \href{https://CRAN.R-project.org/package=xgboost}{xgboost: Extreme Gradient Boosting}

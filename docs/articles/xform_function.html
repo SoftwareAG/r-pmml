@@ -706,7 +706,7 @@
 <p>There are built-in functions defined in PMML that cannot be directly translated to PMML using <code>xform_function</code> as described above.</p>
 <p>In this case, an error will be thrown when R tries to calculate a new feature using the function passed to <code>xform_function</code>, but does not see that function in the environment.</p>
 <p>It is still possible to make <code>xform_function</code> work, but the PMML function must be defined in the R environment first.</p>
-<p>Let’s use <code>isIn</code>, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on <a href="http://dmg.org/pmml/v4-3/BuiltinFunctions.html#boolean5">this DMG page</a>.</p>
+<p>Let’s use <code>isIn</code>, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on <a href="http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html#boolean5">this DMG page</a>.</p>
 <p>One way to implement this in R is by using <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code>, with the list of values being represented by <code>...</code>:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">isIn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
@@ -972,7 +972,7 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <ul>
-<li><a href="http://dmg.org/pmml/v4-4/GeneralStructure.html">DMG PMML 4.4 specification</a></li>
+<li><a href="http://dmg.org/pmml/v4-4-1/GeneralStructure.html">DMG PMML 4.4 specification</a></li>
 </ul>
 </div>
   </div>

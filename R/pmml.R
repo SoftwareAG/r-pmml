@@ -95,9 +95,9 @@
 #'
 #' \itemize{
 #'
-#' \item \href{http://dmg.org/pmml/v4-3/GeneralStructure.html}{PMML home page}
+#' \item \href{http://dmg.org/pmml/v4-4-1/GeneralStructure.html}{PMML home page}
 #'
-#' \item \href{http://dmg.org/pmml/v4-3/Transformations.html}{PMML transformations}
+#' \item \href{http://dmg.org/pmml/v4-4-1/Transformations.html}{PMML transformations}
 #'
 #' }
 #' @examples

@@ -197,7 +197,7 @@ In this case, an error will be thrown when R tries to calculate a new feature us
 
 It is still possible to make `xform_function` work, but the PMML function must be defined in the R environment first.
 
-Let's use `isIn`, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on [this DMG page](http://dmg.org/pmml/v4-3/BuiltinFunctions.html#boolean5). 
+Let's use `isIn`, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on [this DMG page](http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html#boolean5). 
 
 One way to implement this in R is by using `%in%`, with the list of values being represented by `...`:
 ```{r}
@@ -315,4 +315,4 @@ function_to_pmml("if(a<2) {x+3} else if (a>4) {4} else {5}")
 
 
 ## References
-- [DMG PMML 4.4 specification](http://dmg.org/pmml/v4-4/GeneralStructure.html)
+- [DMG PMML 4.4 specification](http://dmg.org/pmml/v4-4-1/GeneralStructure.html)

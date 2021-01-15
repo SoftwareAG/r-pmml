@@ -59,9 +59,9 @@
 #'
 #' @section References:
 #' \itemize{
-#' \item \href{http://dmg.org/pmml/v4-3/GeneralStructure.html}{PMML home page}
+#' \item \href{http://dmg.org/pmml/v4-4-1/GeneralStructure.html}{PMML home page}
 #'
-#' \item \href{http://dmg.org/pmml/v4-3/Transformations.html}{PMML transformations}
+#' \item \href{http://dmg.org/pmml/v4-4-1/Transformations.html}{PMML transformations}
 #'
 #' \item A. Guazzelli, W. Lin, T. Jena (2012), \emph{PMML in Action: Unleashing
 #' the Power of Open Standards for Data Mining and Predictive Analytics}.
