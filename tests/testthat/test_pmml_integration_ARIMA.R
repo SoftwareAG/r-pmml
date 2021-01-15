@@ -114,7 +114,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   
   # non-seasonal tests - with CLS and CPI
   fit <- auto.arima(sunspots) # creates non-seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_01")
+  p_fit <- pmml(fit, model_name = "arima_auto_01", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -122,7 +122,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_equal_df_2(z_pred$outputs, r_pred)
   
   fit <- Arima(AirPassengers, order = c(2, 1, 2))
-  p_fit <- pmml(fit, model_name = "arima_212")
+  p_fit <- pmml(fit, model_name = "arima_212", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -130,7 +130,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_equal_df_2(z_pred$outputs, r_pred)
   
   fit <- Arima(AirPassengers, order = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_111")
+  p_fit <- pmml(fit, model_name = "arima_111", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -138,7 +138,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_equal_df_2(z_pred$outputs, r_pred)
   
   fit <- Arima(WWWusage, order = c(2, 0, 2))
-  p_fit <- pmml(fit, model_name = "arima_202")
+  p_fit <- pmml(fit, model_name = "arima_202", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -146,7 +146,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_equal_df_2(z_pred$outputs, r_pred)
   
   fit <- Arima(USAccDeaths, order = c(1, 2, 0))
-  p_fit <- pmml(fit, model_name = "arima_120")
+  p_fit <- pmml(fit, model_name = "arima_120", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -155,7 +155,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   
   # non-seasonal tests with d=2 - expect mismatch
   fit <- Arima(AirPassengers, order = c(2, 2, 2))
-  p_fit <- pmml(fit, model_name = "arima_222")
+  p_fit <- pmml(fit, model_name = "arima_222", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -163,7 +163,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
   
   fit <- Arima(USAccDeaths, order = c(1, 2, 3))
-  p_fit <- pmml(fit, model_name = "arima_123")
+  p_fit <- pmml(fit, model_name = "arima_123", ts_type = "arima")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -183,7 +183,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   
   # seasonal with CLS
   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
-  p_fit <- pmml(fit, model_name = "arima_auto_02")
+  p_fit <- pmml(fit, model_name = "arima_auto_02", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -191,7 +191,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_110011")
+  p_fit <- pmml(fit, model_name = "arima_110011", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -199,7 +199,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_010010")
+  p_fit <- pmml(fit, model_name = "arima_010010", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -207,7 +207,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
-  p_fit <- pmml(fit, model_name = "arima_010012")
+  p_fit <- pmml(fit, model_name = "arima_010012", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -215,7 +215,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_011011")
+  p_fit <- pmml(fit, model_name = "arima_011011", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -223,7 +223,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-  p_fit <- pmml(fit, model_name = "arima_111111")
+  p_fit <- pmml(fit, model_name = "arima_111111", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -231,7 +231,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
-  p_fit <- pmml(fit, model_name = "arima_001010")
+  p_fit <- pmml(fit, model_name = "arima_001010", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -239,7 +239,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   expect_equal_sorted(z_pred$outputs$Predicted_ts_value, r_pred)
   
   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
-  p_fit <- pmml(fit, model_name = "arima_100100")
+  p_fit <- pmml(fit, model_name = "arima_100100", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
@@ -248,7 +248,7 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   
   # expect the following test to fail
   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-  p_fit <- pmml(fit, model_name = "arima_110001")
+  p_fit <- pmml(fit, model_name = "arima_110001", ts_type = "arima")
   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)
