@@ -6,7 +6,7 @@ library(ada)
 library(gbm)
 library(caret)
 library(randomForest)
-library(xgboost)
+# library(xgboost)
 library(Matrix)
 library(e1071)
 library(neighbr)
@@ -593,6 +593,9 @@ test_that("MiningModel/randomForest PMML validates against schema", {
 
 
 test_that("MiningModel/xgboost PMML validates against schema", {
+  skip_if_not_installed("xgboost")
+  library(xgboost)
+
   invisible(capture.output(fit <- xgboost(
     data = as.matrix(iris[, 1:4]), label = as.numeric(iris[, 5]) - 1,
     max_depth = 2, eta = 1, nthread = 2, nrounds = 2, objective = "multi:softprob", num_class = 3,

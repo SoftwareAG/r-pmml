@@ -1,6 +1,6 @@
 # invisible(capture.output()) is used in catch xgboost's message about train-error
 
-library(xgboost)
+# library(xgboost)
 data(iris)
 
 tmp_01_save <- tempfile()
@@ -10,6 +10,9 @@ teardown(unlink(c(tmp_01_save, tmp_01_dump), recursive = TRUE))
 
 
 test_that("discrete variables are one-hot-encoded", {
+  skip_if_not_installed("xgboost")
+  library(xgboost)
+  data(agaricus.train, package = "xgboost")
   data(agaricus.train, package = "xgboost")
   train <- agaricus.train
 
@@ -33,8 +36,9 @@ test_that("discrete variables are one-hot-encoded", {
   expect_equal(names(model_pmml)[[3]], "TransformationDictionary")
 })
 
-
 test_that("error is thrown when objective = reg:linear", {
+  skip_if_not_installed("xgboost")
+  library(xgboost)
   modX <- xgboost(
     data = as.matrix(iris[, 1:3]), label = iris[, 4],
     max_depth = 2, eta = 1, nthread = 2, nrounds = 2,
@@ -54,9 +58,10 @@ test_that("error is thrown when objective = reg:linear", {
   )
 })
 
-
 test_that("error is thrown when objective = reg:logistic", {
-  data(iris)
+  skip_if_not_installed("xgboost")
+  library(xgboost)
+  data(agaricus.train, package = "xgboost")
 
   dat_07 <- as.matrix(iris[1:100, 1:4])
   label_07 <- as.numeric(iris[1:100, 5]) - 1
@@ -80,7 +85,10 @@ test_that("error is thrown when objective = reg:logistic", {
 })
 
 test_that("error is thrown when objective = binary:logitraw", {
-  data(iris)
+  skip_if_not_installed("xgboost")
+  library(xgboost)
+  data(agaricus.train, package = "xgboost")
+  
   ir <- iris[1:100, ]
   ir[, 5] <- as.character(ir[, 5])
   ir[, 5] <- as.factor(ir[, 5])

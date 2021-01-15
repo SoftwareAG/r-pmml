@@ -1,6 +1,6 @@
-library(xgboost)
-library(randomForest)
-data(agaricus.train, package = "xgboost")
+# library(xgboost)
+# library(randomForest)
+# data(agaricus.train, package = "xgboost")
 
 tmp_02_save <- tempfile()
 tmp_02_dump <- tempfile()
@@ -22,7 +22,11 @@ test_that("default invalidValueTreatment attribute is exported correctly for lin
   ))
 })
 
+
 test_that("invalidValueTreatment attribute is exported correctly for xgboost models", {
+  skip_if_not_installed("xgboost")
+  library(xgboost)
+  data(agaricus.train, package = "xgboost")
   train <- agaricus.train
   invisible(capture.output(model_fit <- xgboost(
     data = train$data, label = train$label,
@@ -134,6 +138,9 @@ test_that("invalidValueTreatment attribute is exported correctly for xgboost mod
 
 
 test_that("invalidValueTreatment attribute is exported correctly for randomForest models", {
+  skip_if_not_installed("randomForest")
+  require("randomForest")
+  
   rf_fit <- randomForest(Species ~ ., data = iris, ntree = 3)
 
   # default invalidValueTreatment arguments
@@ -274,6 +281,8 @@ test_that("invalidValueTreatment attribute is exported correctly for randomFores
 
 
 test_that("error is thrown if invalidValueTreatment argument is incorrect", {
+  skip_if_not_installed("xgboost")
+  library(xgboost)
   data(agaricus.train, package = "xgboost")
   train <- agaricus.train
   invisible(capture.output(model_fit_2 <- xgboost(
