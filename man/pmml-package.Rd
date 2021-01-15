@@ -6,7 +6,7 @@
 \alias{_PACKAGE}
 \title{pmml: Generate PMML for R Models}
 \description{
-Export various R models to PMML and generate data transformations in PMML 
+Export various R models to PMML and generate data transformations in PMML
 format.
 }
 \section{Functions}{
@@ -65,7 +65,7 @@ CreativeSpace (Second Edition) -
 Standard for Sharing Models. \emph{The R journal}, Volume 1/1, 60-65
 
 \item T. Jena, A. Guazzelli, W. Lin, M. Zeller (2013).
-\href{http://kdd13pmml.files.wordpress.com/2013/07/jena_et_al.pdf}{The R
+\href{https://kdd13pmml.files.wordpress.com/2013/07/jena_et_al.pdf}{The R
 pmmlTransformations Package.} In \emph{Proceedings of the 19th ACM SIGKDD
 Conference on Knowledge Discovery and Data Mining}
 

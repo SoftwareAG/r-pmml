@@ -98,7 +98,7 @@
 #' Probability Theory Group (Formerly: E1071), TU Wien} \url{https://CRAN.R-project.org/package=e1071}
 #'
 #' * Chang, Chih-Chung and Lin, Chih-Jen, \emph{LIBSVM: a library for Support Vector Machines}
-#'   \url{http://www.csie.ntu.edu.tw/~cjlin/libsvm}
+#'   \url{https://www.csie.ntu.edu.tw/~cjlin/libsvm}
 #'
 #' @examples
 #'

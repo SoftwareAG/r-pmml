@@ -129,13 +129,26 @@
       <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pmml-2319000" class="section level1">
-<h1 class="page-header" data-toc-text="2.3.1.9000">
-<a href="#pmml-2319000" class="anchor"></a>pmml 2.3.1.9000<small> Unreleased </small>
+    <div id="pmml-240" class="section level1">
+<h1 class="page-header" data-toc-text="2.4.0">
+<a href="#pmml-240" class="anchor"></a>pmml 2.4.0<small> Unreleased </small>
 </h1>
-<div id="changes" class="section level2">
+<div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes" class="anchor"></a>Changes</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<ul>
+<li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> no longer exports models with the Exact Least Squares method. Exports where <code>ts_type = "arima"</code> produce PMML with Conditional Least Squares representation only. The deprecated <code>exact_least_squares</code> parameter has been removed.</li>
+<li>
+<code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> now exports models with StateSpaceModel representation by default.</li>
+</ul>
+</div>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<ul>
+<li>Package now exports PMML with schema version 4.4.1.</li>
+</ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -188,9 +201,9 @@
 <h1 class="page-header" data-toc-text="2.2.0">
 <a href="#pmml-220" class="anchor"></a>pmml 2.2.0<small> 2020-01-10 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li>Deprecated parameters in the following functions have been removed, and replaced with equivalent in snake case.
 <ul>
@@ -225,17 +238,17 @@
 <h1 class="page-header" data-toc-text="2.1.0">
 <a href="#pmml-210" class="anchor"></a>pmml 2.1.0<small> 2019-09-13 </small>
 </h1>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
 <ul>
 <li><p>Package now exports PMML with schema version 4.4.</p></li>
 <li><p><code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> function added - exports ARIMA time series models from the <code>forecast</code> package.</p></li>
 </ul>
 </div>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
 <ul>
 <li><p><code><a href="../reference/pmml.svm.html">pmml.svm()</a></code> now has a <code>detect_anomaly</code> argument, allowing the user to specify whether the PMML detects anomalies or inliers. The exported PMML now has two OutputField elements: <code>anomalyScore</code> and one of <code>anomaly</code> or <code>inlier</code>.</p></li>
 <li>
@@ -276,9 +289,9 @@
 <a href="#pmml-200" class="anchor"></a>pmml 2.0.0<small> 2019-06-03 </small>
 </h1>
 <p>With this release, <code>pmmlTransformations</code> has been merged into <code>pmml</code> and package development has been moved to GitHub. This was also a good opportunity to apply a style and rename many functions and parameters to make the code more uniform and easier to understand.</p>
-<div id="breaking-changes-2" class="section level2">
+<div id="breaking-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-2" class="anchor"></a>Breaking Changes</h2>
+<a href="#breaking-changes-3" class="anchor"></a>Breaking Changes</h2>
 <p>We used the tidyverse style guide when renaming functions, parameters, and arguments. In addition, some parameters and arguments have been renamed for clarity, and several functions were removed.</p>
 <p>For functions that use a dots (<code>...</code>) parameter, the old parameters will still be accepted, even though these old parameters will not be used.</p>
 <ul>

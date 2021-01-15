@@ -50,7 +50,7 @@ The model is represented as a PMML TimeSeriesModel.
 
 When \code{ts_type = "statespace"} (by default), the R object is exported as StateSpaceModel in PMML.
 
-When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML with conditional 
+When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML with conditional
 least squares (CLS). Note that ARIMA models in R are
 estimated using a state space representation. Therefore, when using CLS with seasonal models,
 forecast results between R and PMML may not match exactly. Additionally, when ts_type="arima", prediction intervals
