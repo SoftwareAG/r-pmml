@@ -102,15 +102,15 @@ h_20 <- single_col_h_df(20)
 h_20_one_line <- data.frame("h" = c(20))
 
 
-
 test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and ts_type='arima'", {
   skip_on_cran()
   skip_on_ci()
   # skip("skip non-seasonal ts_type='arima'")
   
+  skip_if_not_installed("zementisr")
+  skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)
-  
   
   # non-seasonal tests - with CLS and CPI
   fit <- auto.arima(sunspots) # creates non-seasonal model
@@ -177,9 +177,10 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   skip_on_ci()
   # skip("skip seasonal CLS")
 
+  skip_if_not_installed("zementisr")
+  skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)
-  
   
   # seasonal with CLS
   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
@@ -262,9 +263,10 @@ test_that("TimeSeriesModel/forecast PMML output matches R for statespace represe
   skip_on_ci()
   # skip("skip statespace")
   
+  skip_if_not_installed("zementisr")
+  skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)
-  
   
   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
   p_fit <- pmml(fit, model_name = "arima_auto_02_ss",ts_type = "statespace")

@@ -1,4 +1,4 @@
-library(forecast)
+
 data("WWWusage")
 data("AirPassengers")
 data("JohnsonJohnson")
@@ -21,21 +21,33 @@ expect_equal_num <- function(target, current) {
 
 # teardown({detach("package:forecast", unload=TRUE)})
 
-fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
+
 
 test_that("error when object is not ARIMA", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
   expect_error(pmml.ARIMA("foo"), "Not a legitimate ARIMA object")
 })
 
 test_that("error when ts_type is not in c('arima', 'state_space')", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
   expect_error(pmml(fit_0, ts_type = "foo"), 'ts_type must be one of "arima" or "statespace".')
 })
 
 test_that("Error when transforms is not NULL", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
   expect_error(pmml(fit_0, transforms = "foo"), "Transforms are not supported for ARIMA forecast models.")
 })
 
 test_that(".check_cpi_levels errors correctly", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  fit_0 <- Arima(WWWusage, order = c(3, 1, 1))
   # Expect no error when cpi_levels is between 0 and 1
   expect_error(pmml(fit_0, cpi_levels = c(0.3, 0.49, 0.9)), NA)
 
@@ -49,21 +61,28 @@ test_that(".check_cpi_levels errors correctly", {
   expect_error(pmml(fit_0, cpi_levels = c(-3, 101)), "cpi_levels out of range.")
 })
 
-
 test_that("DataDictionary node contains expected elements", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+
   fit_2 <- auto.arima(WWWusage)
   p_fit_2 <- pmml(fit_2)
   expect_equal(toString(p_fit_2[[2]]), "<DataDictionary numberOfFields=\"2\">\n <DataField name=\"ts_value\" optype=\"continuous\" dataType=\"double\"/>\n <DataField name=\"h\" optype=\"continuous\" dataType=\"double\"/>\n</DataDictionary>")
 })
 
 test_that("MiningSchema node contains expected elements", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_3 <- auto.arima(WWWusage)
   p_fit_3 <- pmml(fit_3)
   expect_equal(toString(p_fit_3[[3]][[1]]), "<MiningSchema>\n <MiningField name=\"ts_value\" usageType=\"predicted\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"h\" usageType=\"supplementary\" invalidValueTreatment=\"returnInvalid\"/>\n</MiningSchema>")
 })
 
-
 test_that("Output node contains expected elements", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_4 <- auto.arima(WWWusage)
   p_fit_4 <- pmml(fit_4)
   
@@ -80,6 +99,9 @@ test_that("Output node contains expected elements", {
 })
 
 test_that("NonseasonalComponent node contains required elements 1", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_5 <- Arima(s, order = c(3, 1, 1))
   p_fit_5 <- pmml(fit_5, ts_type = "arima")
@@ -105,6 +127,9 @@ test_that("NonseasonalComponent node contains required elements 1", {
 })
 
 test_that("non-seasonal ARIMA node contains correct attributes", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order = c(0, 0, 1))
   p_fit_6 <- pmml(fit_6, ts_type = "arima")
@@ -115,8 +140,10 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "predictionMethod"), "conditionalLeastSquares")
 })
 
-
 test_that("seasonal ARIMA model contains correct elements 1", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_7 <- Arima(JohnsonJohnson, order = c(0, 0, 2), seasonal = c(0, 0, 1))
   p_fit_7 <- pmml(fit_7, ts_type = "arima")
 
@@ -142,6 +169,9 @@ test_that("seasonal ARIMA model contains correct elements 1", {
 })
 
 test_that("seasonal ARIMA model contains correct elements 2", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_8 <- Arima(AirPassengers, order = c(1, 1, 1), seasonal = c(1, 1, 1))
   p_fit_8 <- pmml(fit_8, ts_type = "arima")
 
@@ -169,6 +199,9 @@ test_that("seasonal ARIMA model contains correct elements 2", {
 })
 
 test_that("seasonal ARIMA model contains correct elements 3", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_9 <- Arima(AirPassengers, order = c(1, 2, 3), seasonal = c(1, 2, 1))
   p_fit_9 <- pmml(fit_9, ts_type = "arima")
 
@@ -211,12 +244,18 @@ test_that("seasonal ARIMA model contains correct elements 3", {
 })
 
 test_that("Seasonal ARIMA with 0,0,0 non-seasonal component contains NonseasonalComponent with zero values", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_10 <- Arima(AirPassengers, order = c(0, 0, 0), seasonal = c(1, 2, 1))
   p_fit_10 <- pmml(fit_10, ts_type = "arima")
   expect_equal(toString(p_fit_10[[3]][[4]][[1]]), "<NonseasonalComponent p=\"0\" d=\"0\" q=\"0\"/>")
 })
 
 test_that("ARIMA with both intercept and drift terms throws error", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   # drift and intercept
   fit_11 <- Arima(AirPassengers, order = c(1, 0, 1), include.drift = TRUE)
   expect_error(pmml(fit_11), "ARIMA models with a drift term are not supported.")
@@ -229,16 +268,19 @@ test_that("ARIMA with both intercept and drift terms throws error", {
   expect_error(pmml(fit_12a), "ARIMA models with a drift term are not supported.")
 })
 
-
-
-
 test_that("RMSE attribute equals sqrt(sigma2) from R object", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_16 <- Arima(WWWusage, order = c(2, 1, 3))
   p_fit_16 <- pmml(fit_16, ts_type = "arima")
   expect_equal_num(xmlGetAttr(p_fit_16[[3]][[4]], name = "RMSE"), sqrt(fit_16$sigma2))
 })
 
 test_that("seasonal models do not include CPI in Output", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_17 <- Arima(AirPassengers, order = c(2, 2, 2), seasonal = c(1, 1, 1))
   p_fit_17 <- pmml(fit_17, ts_type = "arima")
   
@@ -248,8 +290,10 @@ test_that("seasonal models do not include CPI in Output", {
   # expect_equal(toString(p_fit_17[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n</Output>")
 })
 
-
 test_that("non-seasonal models include CPI in Output", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_18 <- Arima(AirPassengers, order = c(2, 2, 2))
   p_fit_18 <- pmml(fit_18)
   
@@ -259,10 +303,10 @@ test_that("non-seasonal models include CPI in Output", {
   # expect_equal(toString(p_fit_18[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_ts_value\" optype=\"continuous\" dataType=\"double\" feature=\"predictedValue\"/>\n <OutputField name=\"cpi_80_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"80\"/>\n <OutputField name=\"cpi_80_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"80\"/>\n <OutputField name=\"cpi_95_lower\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalLower\" value=\"95\"/>\n <OutputField name=\"cpi_95_upper\" optype=\"continuous\" dataType=\"double\" feature=\"confidenceIntervalUpper\" value=\"95\"/>\n</Output>")
 })
 
-
-
-
 test_that("Output dataType changes according to ts_type", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_23 <- Arima(AirPassengers, order = c(1, 2, 0))
   p_fit_23_arima <- pmml(fit_23, ts_type = "arima")
   p_fit_23_ss <- pmml(fit_23, ts_type = "statespace")
@@ -279,6 +323,9 @@ test_that("Output dataType changes according to ts_type", {
 ## Tests for StateSpaceModel
 
 test_that("bestFit TimeSeriesModel node matches ts_type", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_22 <- Arima(WWWusage, c(1, 1, 1))
   p_fit_22 <- pmml(fit_22, ts_type = "statespace")
   expect_equal(xmlGetAttr(p_fit_22[[3]], name = "bestFit"), "StateSpaceModel")
@@ -292,6 +339,9 @@ test_that("bestFit TimeSeriesModel node matches ts_type", {
 })
 
 test_that("interceptVector is used instead of intercept attribute", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_24 <- Arima(WWWusage, c(1, 1, 1))
   p_fit_24 <- pmml(fit_24, ts_type = "statespace")
   expect_equal(toString(p_fit_24[[3]][[4]][[4]]),
@@ -309,6 +359,9 @@ test_that("interceptVector is used instead of intercept attribute", {
 })
 
 test_that("ObservationVarianceMatrix replaces observationVariance", {
+  skip_if_not_installed("forecast")
+  library(forecast)
+  
   fit_26 <- Arima(WWWusage, c(1, 1, 4), seasonal = c(1,1,1))
   p_fit_26 <- pmml(fit_26, ts_type = "statespace")
   expect_equal(toString(p_fit_26[[3]][[4]][[7]]),
@@ -327,8 +380,7 @@ test_that("ObservationVarianceMatrix replaces observationVariance", {
 
 
 
-# # Tests that use exact_least_squares - will be removed
-
+# # Tests that use exact_least_squares 
 # test_that("default arg for exact_least_squares results in exactLeastSquares for seasonal model", {
 #   fit_15b <- Arima(AirPassengers, order = c(2, 2, 1), seasonal = c(1, 1, 1))
 #   p_fit_15b <- pmml(fit_15b)
