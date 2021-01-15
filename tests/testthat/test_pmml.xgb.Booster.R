@@ -88,7 +88,7 @@ test_that("error is thrown when objective = binary:logitraw", {
   skip_if_not_installed("xgboost")
   library(xgboost)
   data(agaricus.train, package = "xgboost")
-  
+
   ir <- iris[1:100, ]
   ir[, 5] <- as.character(ir[, 5])
   ir[, 5] <- as.factor(ir[, 5])

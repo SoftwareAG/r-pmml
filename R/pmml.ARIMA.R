@@ -31,22 +31,22 @@
 #' @return PMML representation of the \code{ARIMA} object.
 #'
 #' @details The model is represented as a PMML TimeSeriesModel.
-#' 
+#'
 #' When \code{ts_type = "statespace"} (by default), the R object is exported as StateSpaceModel in PMML.
 #'
-#' When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML with conditional 
+#' When \code{ts_type = "arima"}, the R object is exported as ARIMA in PMML with conditional
 #' least squares (CLS). Note that ARIMA models in R are
 #' estimated using a state space representation. Therefore, when using CLS with seasonal models,
 #' forecast results between R and PMML may not match exactly. Additionally, when ts_type="arima", prediction intervals
 #' are exported for non-seasonal models only. For ARIMA models with d=2, the prediction intervals
 #' between R and PMML may not match.
-#' 
+#'
 #' OutputField elements are exported with
 #' dataType "string", and contain a collection of all values up to and including the steps-ahead value supplied
 #' during scoring.
 #' String output in this form is facilitated by Extension elements in the PMML file,
 #' and is supported by Zementis Server since version 10.6.0.0.
-#' 
+#'
 #' \code{cpi_levels} behaves similar to \code{levels} in \code{forecast::forecast}: values must be
 #' between 0 and 100, non-inclusive.
 #'
@@ -169,7 +169,6 @@ pmml.ARIMA <- function(model,
     if (.has_nonseasonal_comp(model)) {
       # arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, exact_least_squares))
       arima_node <- append.XMLNode(arima_node, .make_nsc_node(model, FALSE))
-      
     } else {
       # crete a non-seasonal node with all zeros
       # arima_node <- append.XMLNode(arima_node, .make_zero_nsc_node(model, exact_least_squares))
@@ -292,11 +291,11 @@ pmml.ARIMA <- function(model,
   if (length(cpi_levels) == 0) {
     stop("Length of cpi_levels must be greater than 0.")
   }
-  
+
   if (!is.numeric(cpi_levels)) {
     stop("cpi_levels must be numeric.")
   }
-  
+
   # If levels are between 0 and 1, they should be converted to percentage first.
   if (min(cpi_levels) > 0 & max(cpi_levels) < 1) {
     cpi_levels <- 100 * cpi_levels
@@ -328,7 +327,8 @@ pmml.ARIMA <- function(model,
 
 .make_intercept_v_node <- function(model) {
   iv_node <- xmlNode("InterceptVector",
-                     attrs = c(type = "observation"))
+    attrs = c(type = "observation")
+  )
   const <- .get_model_constant(model)
   iv_node <- append.XMLNode(iv_node, xmlNode("Array",
     attrs = c(type = "real", n = "1"),

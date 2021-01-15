@@ -20,7 +20,7 @@
 
 #' pmml: Generate PMML for R Models
 #'
-#' Export various R models to PMML and generate data transformations in PMML 
+#' Export various R models to PMML and generate data transformations in PMML
 #' format.
 #'
 #' @section Functions:

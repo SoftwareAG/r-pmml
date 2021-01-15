@@ -45,7 +45,6 @@
 #' library(nnet)
 #' fit <- multinom(Species ~ ., data = iris)
 #' fit_pmml <- pmml(fit)
-#'
 #' @export pmml.multinom
 #' @export
 pmml.multinom <- function(model,

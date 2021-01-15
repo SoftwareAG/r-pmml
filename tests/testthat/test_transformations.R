@@ -18,9 +18,13 @@ test_that("xform_wrap box$field_data contains specific column names", {
 test_that("xform_wrap does not convert all columns to factors for tibbles", {
   rtbl <- as_tibble(iris)
   rtbl_box <- xform_wrap(rtbl)
-  expect_equal(rtbl_box$field_data[,2], 
-               as.factor(c("numeric", "numeric", "numeric", 
-                           "numeric", "factor")))
+  expect_equal(
+    rtbl_box$field_data[, 2],
+    as.factor(c(
+      "numeric", "numeric", "numeric",
+      "numeric", "factor"
+    ))
+  )
 })
 
 
@@ -172,18 +176,20 @@ test_that("xform_function works correctly", {
 test_that("xform_function does not create an unnecessary NA factor", {
   iris_box_xf <- xform_wrap(iris)
   iris_box_xf <- xform_function(iris_box_xf,
-                             orig_field_name = "Sepal.Width",
-                             new_field_name = "Sepal.Width.sq",
-                             expression = "Sepal.Width^2",
-                             new_field_data_type = "numeric")
+    orig_field_name = "Sepal.Width",
+    new_field_name = "Sepal.Width.sq",
+    expression = "Sepal.Width^2",
+    new_field_data_type = "numeric"
+  )
   expect_equal(levels(iris_box_xf$field_data$dataType), c("factor", "numeric"))
-  
+
   iris_box_xf_2 <- xform_wrap(iris)
-  iris_box_xf_2 <- xform_function(iris_box_xf_2,orig_field_name="Sepal.Length,Petal.Length",
-                             new_field_name="Length.Ratio",
-                             expression="Sepal.Length / Petal.Length")
+  iris_box_xf_2 <- xform_function(iris_box_xf_2,
+    orig_field_name = "Sepal.Length,Petal.Length",
+    new_field_name = "Length.Ratio",
+    expression = "Sepal.Length / Petal.Length"
+  )
   expect_equal(levels(iris_box_xf_2$field_data$dataType), c("factor", "numeric"))
-  
 })
 
 

@@ -140,7 +140,7 @@ test_that("invalidValueTreatment attribute is exported correctly for xgboost mod
 test_that("invalidValueTreatment attribute is exported correctly for randomForest models", {
   skip_if_not_installed("randomForest")
   require("randomForest")
-  
+
   rf_fit <- randomForest(Species ~ ., data = iris, ntree = 3)
 
   # default invalidValueTreatment arguments
