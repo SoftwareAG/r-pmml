@@ -1,17 +1,17 @@
 # library(amap)
 library(clue)
 library(data.table)
-library(glmnet)
-library(ada)
-library(gbm)
+# library(glmnet)
+# library(ada)
+# library(gbm)
 library(caret)
-library(randomForest)
+# library(randomForest)
 # library(xgboost)
 library(Matrix)
-library(e1071)
+# library(e1071)
 library(neighbr)
-library(nnet)
-library(kernlab)
+# library(nnet)
+# library(kernlab)
 library(forecast)
 
 data(iris)
@@ -143,6 +143,12 @@ schema <- XML::xmlSchemaParse("pmml-4-4.xsd") # updated schema includes Observat
 
 
 test_that("TimeSeries/Arima PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("forecast")
+  library()
+  
   fit <- Arima(WWWusage, order = c(1, 0, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
   expect_equal(validate_pmml(pmml(fit, ts_type = "statespace"), schema), 0)
@@ -206,10 +212,11 @@ test_that("TimeSeries/Arima PMML validates against schema", {
 })
 
 
-test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
+test_that("AnomalyDetectionModel/iForest PMML validates against schema", {
   skip_on_cran()
   skip_on_ci()
 
+  skip_if_not_installed("isofor")
   library(isofor)
 
   fit <- iForest(iris, nt = 10, phi = 30)
@@ -227,6 +234,9 @@ test_that("AnomalyDetectioneModel/iForest PMML validates against schema", {
 
 
 test_that("ClusteringModel/stats kmeans PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
   fit <- kmeans(audit[, c(2, 7, 9, 10, 12)], 2)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
@@ -265,6 +275,12 @@ test_that("ClusteringModel/stats kmeans PMML validates against schema", {
 
 
 test_that("GeneralRegressionModel/glmnet PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("glmnet")
+  library(glmnet)
+  
   x <- data.matrix(audit[, c(2, 7, 9:10)])
   y <- data.matrix(audit[, 13])
   fit <- cv.glmnet(x, y)
@@ -354,6 +370,9 @@ test_that("GeneralRegressionModel/glmnet PMML validates against schema", {
 
 
 test_that("GeneralRegressionModel/stats PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
   # Suppress warning: "glm.fit: fitted probabilities numerically 0 or 1 occurred"
   suppressWarnings(fit <- glm(
     formula = as.factor(Adjusted) ~ Age + Employment + Education + Marital + Occupation + Income + Sex + Deductions + Hours,
@@ -434,6 +453,12 @@ test_that("GeneralRegressionModel/stats PMML validates against schema", {
 
 
 test_that("MiningModel/ada PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("ada")
+  library(ada)
+  
   fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
@@ -460,6 +485,12 @@ test_that("MiningModel/ada PMML validates against schema", {
 
 
 test_that("MiningModel/gbm PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("gbm")
+  library(gbm)
+  
   audit_dat <- audit[, -c(1, 4, 6, 9, 10, 11, 12)]
 
   fit <- gbm(Adjusted ~ ., data = audit_dat, n.trees = 3, interaction.depth = 4, distribution = "bernoulli")
@@ -496,6 +527,12 @@ test_that("MiningModel/gbm PMML validates against schema", {
 
 
 test_that("MiningModel/randomForest PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("randomForest")
+  library(randomForest)
+  
   audit_nor_logical[, "Sex"] <- as.factor(audit_nor_logical[, "Sex"])
   suppressWarnings(fit <- randomForest(Adjusted ~ ., audit_nor_logical[, -1], ntree = 8))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
@@ -593,6 +630,9 @@ test_that("MiningModel/randomForest PMML validates against schema", {
 
 
 test_that("MiningModel/xgboost PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
   skip_if_not_installed("xgboost")
   library(xgboost)
 
@@ -782,6 +822,12 @@ test_that("MiningModel/xgboost PMML validates against schema", {
 
 
 test_that("NaiveBayesModel/e1071 PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("e1071")
+  library(e1071)
+  
   fit <- naiveBayes(as.factor(Adjusted) ~ Employment + Education + Marital + Occupation + Sex, data = audit_nor)
   expect_equal(validate_pmml(pmml(fit, predicted_field = "Adjusted"), schema), 0)
 
@@ -914,6 +960,12 @@ test_that("NaiveBayesModel/e1071 PMML validates against schema", {
 
 
 test_that("NearestNeighborModel/neighbr PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("neighbr")
+  library(neighbr)
+  
   iris_train <- iris[1:140, ]
   iris_test <- iris[141:150, -c(4, 5)]
   fit <- knn(
@@ -983,6 +1035,12 @@ test_that("NearestNeighborModel/neighbr PMML validates against schema", {
 
 
 test_that("NeuralNetwork/nnet PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   audit_nor_factor <- audit_nor
   audit_nor_factor[, 13] <- as.factor(audit_nor[, 13])
   invisible(capture.output(fit <- nnet(Marital ~ ., data = audit_nor_factor[, c(2, 5, 7, 8, 10, 13)], size = 4)))
@@ -1014,6 +1072,12 @@ test_that("NeuralNetwork/nnet PMML validates against schema", {
 
 
 test_that("RegressionModel/nnet PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   fit <- multinom(as.factor(Adjusted) ~ ., data = audit_nor, trace = F)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
@@ -1040,6 +1104,9 @@ test_that("RegressionModel/nnet PMML validates against schema", {
 
 
 test_that("RegressionModel/stats PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
   fit <- lm(Sepal.Length ~ ., data = iris)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
@@ -1105,8 +1172,13 @@ test_that("RegressionModel/stats PMML validates against schema", {
 })
 
 
-
 test_that("AnomalyDetectionModel/e1071 one-classification PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("e1071")
+  library(e1071)
+  
   fit <- svm(iris[, 1:3], y = NULL, type = "one-classification", scale = TRUE)
   expect_equal(validate_pmml(pmml(fit, dataset = iris[, 1:3], model_name = "radial_iris_ocsvm"), schema), 0)
 
@@ -1148,6 +1220,12 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML validates against
 
 
 test_that("SupportVectorMachineModel/e1071 PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("e1071")
+  library(e1071)
+  
   fit <- svm(Petal.Width ~ ., data = iris[, 1:4], kernel = "linear")
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
@@ -1378,6 +1456,12 @@ test_that("SupportVectorMachineModel/e1071 PMML validates against schema", {
 
 
 test_that("SupportVectorMachineModel/kernlab PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("kernlab")
+  library(kernlab)
+  
   fit <- ksvm(target ~ ., data = credit, kernel = "rbfdot")
   expect_equal(validate_pmml(pmml(fit, data = credit), schema), 0)
 
@@ -1453,6 +1537,12 @@ test_that("SupportVectorMachineModel/kernlab PMML validates against schema", {
 
 
 test_that("TreeModel/rpart PMML validates against schema", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  skip_if_not_installed("rpart")
+  library(rpart)
+  
   fit <- rpart(as.factor(Adjusted) ~ Employment + Education + Marital + Occupation + Sex, data = audit_nor)
   expect_equal(validate_pmml(pmml(fit), schema), 0)
 
