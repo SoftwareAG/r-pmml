@@ -339,8 +339,24 @@
           } else if (!is.na(inputs[fname, "xform_function"])) {
             origName <- inputs[fname, "orig_field_name"]
             missing <- inputs[fname, "missingValue"]
-
-            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
+            
+            xform_dataType_r <- as.character(inputs[fname, "dataType"])
+            
+            if(xform_dataType_r == "numeric") {
+              xform_dataType <- "double"
+              xform_optype <- "continuous"
+            } else {
+              xform_dataType <- "string"
+              xform_optype <- "categorical"
+            }
+            
+            
+            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, 
+                                                        dataType = xform_dataType,
+                                                        optype = xform_optype))
+            
+            # # previous call that always sets dataType to "double"
+            # dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
 
             funcNode <- .pmmlU(inputs[fname, "xform_function"])
 
@@ -588,7 +604,23 @@
             origName <- inputs[fname, "orig_field_name"]
             missing <- inputs[fname, "missingValue"]
 
-            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
+            xform_dataType_r <- as.character(inputs[fname, "dataType"])
+            
+            if(xform_dataType_r == "numeric") {
+              xform_dataType <- "double"
+              xform_optype <- "continuous"
+            } else {
+              xform_dataType <- "string"
+              xform_optype <- "categorical"
+            }
+            
+            
+            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, 
+                                                        dataType = xform_dataType,
+                                                        optype = xform_optype))
+            
+            # # previous call that always sets dataType to "double"
+            # dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
 
             funcNode <- .pmmlU(inputs[fname, "xform_function"])
 
