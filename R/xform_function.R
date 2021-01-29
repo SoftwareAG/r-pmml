@@ -78,19 +78,33 @@
 #' @export
 xform_function <- function(wrap_object, orig_field_name, new_field_name = "newField",
                            new_field_data_type = "numeric", expression, map_missing_to = NA) {
+  
+  if (!(new_field_data_type %in% c("numeric", "character"))){
+    stop('new_field_data_type must be "numeric" or "character".')
+  }
+  
   wrap_object$data$new_field_name <- NA
 
   parsed_text <- parse(text = expression)
 
-  ## Apply an if-else formula to the new data column.
+  # Calculate the expression for each row in the new data column
   for (n in 1:length(wrap_object$data$new_field_name)) {
     boxrow <- wrap_object$data[n, ]
     wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
   }
+  
+  # Change class of new column to match new_field_data_type
+  if(!(class(wrap_object$data$new_field_name) == new_field_data_type)) {
+    if (new_field_data_type == "numeric") {
+      wrap_object$data$new_field_name <- as.numeric(wrap_object$data$new_field_name)
+    } else { # else convert to character
+      wrap_object$data$new_field_name <- as.character(wrap_object$data$new_field_name)
+    }
+  }
 
   names(wrap_object$data)[names(wrap_object$data) == "new_field_name"] <- new_field_name
 
-  # New column for formula; only create if doesn't already exist;.
+  # New column for formula; only create if doesn't already exist.
   # This is unnecessary if xform_function is already added by xform_wrap().
   if (!("xform_function" %in% colnames(wrap_object$field_data))) {
     wrap_object$field_data$xform_function <- "NA"
@@ -114,6 +128,12 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
   #
   # newrow <- data.frame(temprow, stringsAsFactors = TRUE)
   # colnames(newrow) <- colnames(wrap_object$field_data)
+  
+  # if temprow's dataType is not a factor level in wrap_object$field_data$dataType, add it
+  if (!(unname(temprow['dataType']) %in% levels(wrap_object$field_data$dataType))) {
+    num_dataType_levels <- length(levels(wrap_object$field_data$dataType))
+    levels(wrap_object$field_data$dataType)[num_dataType_levels+1] <- unname(temprow['dataType'])
+  }
   wrap_object$field_data <- rbind(wrap_object$field_data, temprow)
 
   # Add data to new row
