@@ -29,14 +29,14 @@ test_that("xform_function does not create an unnecessary NA factor", {
   expect_equal(levels(iris_box_xf_2$field_data$dataType), c("factor", "numeric"))
 })
 
-test_that("Error when new_field_data_type is not numeric or character", {
+test_that("Error when new_field_data_type is not numeric or factor", {
   iris_box_2 <- xform_wrap(iris)
   expect_error(xform_function(wrap_object = iris_box_2,
                                orig_field_name = "Sepal.Length",
                                new_field_name = "Sepal.Length.Transformed",
                                new_field_data_type = "foo",
                                expression = "(Sepal.Length^2)/100"),
-               'new_field_data_type must be "numeric" or "character".')
+               'new_field_data_type must be "numeric" or "factor".')
 })
 
 test_that("field_data$dataType and class of new data column match new_field_data_type", {
@@ -49,15 +49,15 @@ test_that("field_data$dataType and class of new data column match new_field_data
   
   iris_box_3 <- xform_function(wrap_object = iris_box_3,
                                orig_field_name = "Sepal.Width",
-                               new_field_name = "Sepal.Width.Char",
-                               new_field_data_type = "character",
+                               new_field_name = "Sepal.Width.Factor",
+                               new_field_data_type = "factor",
                                expression = "Sepal.Width")
   
   expect_equal(class(iris_box_3$data$Sepal.Length.Transformed), "numeric")
-  expect_equal(class(iris_box_3$data$Sepal.Width.Char), "character")
+  expect_equal(class(iris_box_3$data$Sepal.Width.Factor), "factor")
   
   expect_equal(as.character(iris_box_3$field_data['Sepal.Length.Transformed','dataType']), "numeric")
-  expect_equal(as.character(iris_box_3$field_data['Sepal.Width.Char','dataType']), "character")
+  expect_equal(as.character(iris_box_3$field_data['Sepal.Width.Factor','dataType']), "factor")
   
 })
 

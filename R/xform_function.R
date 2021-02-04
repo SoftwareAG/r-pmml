@@ -79,8 +79,8 @@
 xform_function <- function(wrap_object, orig_field_name, new_field_name = "newField",
                            new_field_data_type = "numeric", expression, map_missing_to = NA) {
   
-  if (!(new_field_data_type %in% c("numeric", "character"))){
-    stop('new_field_data_type must be "numeric" or "character".')
+  if (!(new_field_data_type %in% c("numeric", "factor"))){
+    stop('new_field_data_type must be "numeric" or "factor".')
   }
   
   wrap_object$data$new_field_name <- NA
@@ -97,8 +97,8 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
   if(!(class(wrap_object$data$new_field_name) == new_field_data_type)) {
     if (new_field_data_type == "numeric") {
       wrap_object$data$new_field_name <- as.numeric(wrap_object$data$new_field_name)
-    } else { # else convert to character
-      wrap_object$data$new_field_name <- as.character(wrap_object$data$new_field_name)
+    } else { # else convert to factor
+      wrap_object$data$new_field_name <- as.factor(wrap_object$data$new_field_name)
     }
   }
 
