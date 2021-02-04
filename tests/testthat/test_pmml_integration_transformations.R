@@ -1,73 +1,28 @@
 # Additional tests with transformations
 
 library(rpart)
-library(zementisr)
-# # library(amap)
-# library(isofor)
-# library(clue)
-# library(data.table)
-# library(glmnet)
-# library(ada)
-# library(gbm)
-# library(caret)
-# library(randomForest)
-# library(xgboost)
-# library(Matrix)
-# library(e1071)
-# library(neighbr)
-# library(nnet)
-# library(kernlab)
-# library(forecast)
-
+# library(zementisr)
 
 data(iris)
 data(audit)
-# data("WWWusage")
-# data("AirPassengers")
-# data("USAccDeaths")
-# data("JohnsonJohnson")
-# data("sunspots")
 audit_factor <- audit
 audit_factor[, 13] <- as.factor(audit_factor[, 13])
 iris_p <- read.csv("iris.csv", stringsAsFactors = TRUE)
-# audit <- na.omit(audit)
-# elnino <- read.csv("elnino.csv", stringsAsFactors = TRUE)
-# heart <- read.csv("heart.csv", stringsAsFactors = TRUE)
-# glm_issue3543_data <- read.csv("glm_issue3543_data.csv", stringsAsFactors = TRUE)
-# credit_class <- read.csv("credit_class.csv", stringsAsFactors = TRUE)
-# covtype2 <- read.csv("covtype2.csv", header = TRUE, stringsAsFactors = TRUE)
-# credit <- read.csv("credit.csv", stringsAsFactors = TRUE)
-# credit_class_01 <- read.csv("credit_class_01.csv", stringsAsFactors = TRUE)
-# audit_nor_logical <- na.omit(read.csv("audit_nor_logical.csv", stringsAsFactors = TRUE))
-# audit_nor <- na.omit(read.csv("audit_nor.csv", stringsAsFactors = TRUE))
-# audit_nor_fake_logical <- na.omit(read.csv("audit_nor_fake_logical.csv", stringsAsFactors = TRUE))
-# random_data_small <- read.csv("random_data_small.csv", stringsAsFactors = TRUE)
-# iris_nor <- read.csv("iris_nor.csv", stringsAsFactors = TRUE)
-# bank <- na.omit(read.csv("bank.csv", stringsAsFactors = TRUE))
-# audit_r_build_in <- na.omit(read.csv("audit_r_build_in.csv", stringsAsFactors = TRUE))
-# insurance <- na.omit(read.csv("insurance.csv", stringsAsFactors = TRUE))
-# iris_bin <- read.csv("iris_bin.csv", stringsAsFactors = TRUE)
-# house_votes <- na.omit(read.csv("house_votes_84.csv", stringsAsFactors = TRUE))
-# iris_mini_dot <- read.csv("iris_mini_dot.csv", stringsAsFactors = TRUE)
-# petfood <- read.csv("petfood.csv", stringsAsFactors = TRUE)
-# job_cat <- read.csv("job_cat.csv", stringsAsFactors = TRUE)
-# job_cat_index <- read.csv("job_cat_index.csv", stringsAsFactors = TRUE)
-# iris_nor_logical <- read.csv("iris_nor_logical.csv", stringsAsFactors = TRUE)
 factor_40k <- read.csv("factor_40k.csv", stringsAsFactors = TRUE)
 numeric_10k <- na.omit(read.csv("numeric_10k.csv", stringsAsFactors = TRUE))
 factor_10k <- read.csv("factor_10k.csv", stringsAsFactors = TRUE)
 numeric_no_na_10k <- read.csv("numeric_no_na_10k.csv", stringsAsFactors = TRUE)
-
 
 expect_equal_nn <- function(...) {
   # expect_equal without name checking
   expect_equal(..., check.names = FALSE)
 }
 
-
 test_that("Transformations PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
   
   box_obj <- xform_wrap(iris_p)
   box_obj <- xform_function(box_obj,
@@ -359,4 +314,99 @@ test_that("Transformations PMML output matches R", {
   z_pred <- predict_pmml_batch(numeric_10k[501:994, ], up_stat$model_name)
   delete_model(up_stat$model_name)
   expect_equal_nn(z_pred$outputs$Predicted_var_14, r_pred, tolerance = 1e-4)
+})
+
+# test_that("Transformations PMML matches R 2", {
+#   skip_on_cran()
+#   skip_on_ci()
+#   
+#   library(randomForest)
+#   
+#   iris_box_1 <- xform_wrap(iris)
+#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
+#                                orig_field_name = "Sepal.Length",
+#                                new_field_name = "Sepal.Length.Transformed",
+#                                new_field_data_type = "factor",
+#                                expression = "Sepal.Length * 0.1"
+#   )
+#   
+#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
+#                                orig_field_name = "Sepal.Width",
+#                                new_field_name = "Sepal.Width.Transformed",
+#                                new_field_data_type = "numeric",
+#                                expression = "Sepal.Width + 3.5"
+#   )
+#   
+#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
+#                                orig_field_name = "Sepal.Length",
+#                                new_field_name = "Sepal.Length.Transformed_num",
+#                                new_field_data_type = "numeric",
+#                                expression = "Sepal.Length * 0.1"
+#   )
+#   
+#   set.seed(321)
+#   fit <- randomForest(Petal.Length ~ Sepal.Length.Transformed + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 1)
+#   # fit <- randomForest(Petal.Length ~ Sepal.Length.Transformed_num + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 1)
+#   # fit <- randomForest(Petal.Length ~ Sepal.Length + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 3)
+#   p_fit <- pmml(fit, transforms = iris_box_1)
+#   r_pred <- predict(fit, newdata = iris_box_1$data)
+#   up_stat <- upload_model(p_fit)
+#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+#   delete_model(up_stat$model_name)
+#   expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+#   
+#   # save_pmml(p_fit, "../../../temp/iris_rf.pmml")
+#   # pred_df <- iris
+#   # pred_df$Predicted_Petal.Length <- r_pred
+#   # write.csv(pred_df, "../../../temp/iris_rf.csv", row.names = FALSE)
+#   
+#   
+#   
+# 
+# })
+
+
+test_that("Transformations PMML matches R 1", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+
+  iris_box_1 <- xform_wrap(iris)
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length.Transformed",
+                               new_field_data_type = "factor",
+                               expression = "Sepal.Length"
+  )
+  
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length.T2",
+                               new_field_data_type = "factor",
+                               expression = "if(Sepal.Length < 5){'less'} else {'more'}"
+  )
+
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Width",
+                               new_field_name = "Sepal.Width.Transformed",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Width + 3.5"
+  )
+
+  fit <- lm(Petal.Length ~ Sepal.Length.Transformed + Sepal.Width.Transformed, data = iris_box_1$data)
+  # fit <- lm(Petal.Length ~ Sepal.Length.T2 + Sepal.Width.Transformed, data = iris_box_1$data)
+  # fit <- lm(Petal.Length ~ Species + Sepal.Width.Transformed, data = iris_box_1$data)
+  p_fit <- pmml(fit, transforms = iris_box_1)
+  r_pred <- as.numeric(predict(fit, iris_box_1$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+  
+  # save_pmml(p_fit, "../../../temp/iris_lm.pmml")
+  # pred_df <- iris
+  # pred_df$Predicted_Petal.Length <- r_pred
+  # write.csv(pred_df, "../../../temp/iris_lm.csv", row.names = FALSE)
+  
 })
