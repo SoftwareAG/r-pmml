@@ -16,7 +16,7 @@ test_that(".pmmlLocalTransformations sets dataType and optype provided in transf
   iris_box_1 <- xform_function(wrap_object = iris_box_1,
                                orig_field_name = "Sepal.Length",
                                new_field_name = "Sepal.Length.Transformed",
-                               new_field_data_type = "character",
+                               new_field_data_type = "factor",
                                expression = "Sepal.Length * 0.1"
   )
   
@@ -37,36 +37,3 @@ test_that(".pmmlLocalTransformations sets dataType and optype provided in transf
   expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[2]], name = "optype"), "continuous")
   
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
