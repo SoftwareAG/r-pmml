@@ -67,6 +67,7 @@ pmml.ada <- function(model,
                      app_name = "SoftwareAG PMML Generator",
                      description = "AdaBoost Model",
                      copyright = NULL,
+                     model_version = NULL,
                      transforms = NULL,
                      missing_value_replacement = NULL,
                      ...) {
@@ -94,7 +95,7 @@ pmml.ada <- function(model,
   #----------------------------------------------------------
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version, app_name))
 
   #-----------------------------------------------------------
   # PMML -> DataDictionary

@@ -32,6 +32,7 @@
 #' @param app_name The name of the application that generated the PMML.
 #' @param description A descriptive text for the Header element of the PMML.
 #' @param copyright The copyright notice for the model.
+#' @param model_version A string specifying the model version.
 #' @param transforms Data transformations.
 #' @param \dots Further arguments passed to or from other methods.
 #'
@@ -127,6 +128,7 @@ pmml <- function(model = NULL,
                  app_name = "SoftwareAG PMML Generator",
                  description = NULL,
                  copyright = NULL,
+                 model_version = NULL,
                  transforms = NULL,
                  ...) {
   dots <- list(...)
