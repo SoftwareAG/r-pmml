@@ -2119,7 +2119,7 @@ test_that("RegressionModel/stats PMML output matches R", {
   skip_on_ci()
 
   fit <- lm(Sepal.Length ~ ., data = iris)
-  p_fit <- pmml(fit)
+  p_fit <- pmml(fit, model_version = "version_001")
   r_pred <- predict(fit, iris)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
@@ -2128,7 +2128,7 @@ test_that("RegressionModel/stats PMML output matches R", {
 
 
   fit <- lm(temp ~ ., data = elnino)
-  p_fit <- pmml(fit)
+  p_fit <- pmml(fit, model_version = NULL)
   r_pred <- predict(fit, elnino)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(elnino, up_stat$model_name)
