@@ -1,4 +1,5 @@
 # pmml 2.4.0.9000
+* `pmml()` now has a `model_version` parameter that can be used to a `modelVersion` attribute to the PMML Header.
 
 
 # pmml 2.4.0
