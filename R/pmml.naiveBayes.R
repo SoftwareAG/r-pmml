@@ -67,6 +67,7 @@ pmml.naiveBayes <- function(model,
                             app_name = "SoftwareAG PMML Generator",
                             description = "NaiveBayes Model",
                             copyright = NULL,
+                            model_version = NULL,
                             transforms = NULL,
                             missing_value_replacement = NULL,
                             predicted_field,
@@ -138,7 +139,8 @@ pmml.naiveBayes <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
+                                           app_name))
 
   # PMML -> DataDictionary
 

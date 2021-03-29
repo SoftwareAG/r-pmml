@@ -149,7 +149,8 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   expect_equal_df_2(z_pred$outputs, r_pred)
 
   fit <- Arima(USAccDeaths, order = c(1, 2, 0))
-  p_fit <- pmml(fit, model_name = "arima_120", ts_type = "arima")
+  p_fit <- pmml(fit, model_name = "arima_120", ts_type = "arima",
+                model_version = "arima_120_v1")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -158,7 +159,8 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
 
   # non-seasonal tests with d=2 - expect mismatch
   fit <- Arima(AirPassengers, order = c(2, 2, 2))
-  p_fit <- pmml(fit, model_name = "arima_222", ts_type = "arima")
+  p_fit <- pmml(fit, model_name = "arima_222", ts_type = "arima",
+                model_version = NULL)
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
@@ -296,7 +298,8 @@ test_that("TimeSeriesModel/forecast PMML output matches R for statespace represe
   expect_equal_df_3(z_pred$outputs, r_pred)
 
   fit <- Arima(AirPassengers, order = c(2, 2, 2))
-  p_fit <- pmml(fit, model_name = "arima_222_ss", ts_type = "statespace")
+  p_fit <- pmml(fit, model_name = "arima_222_ss", ts_type = "statespace",
+                model_version = "arima_222_ss_0001")
   r_pred <- forecast_with_cpi(fit, 20)
   up_stat <- upload_model(p_fit)
   z_pred <- predict_pmml_batch(h_20_one_line, up_stat$model_name)

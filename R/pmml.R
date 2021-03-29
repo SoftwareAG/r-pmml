@@ -32,6 +32,7 @@
 #' @param app_name The name of the application that generated the PMML.
 #' @param description A descriptive text for the Header element of the PMML.
 #' @param copyright The copyright notice for the model.
+#' @param model_version A string specifying the model version.
 #' @param transforms Data transformations.
 #' @param \dots Further arguments passed to or from other methods.
 #'
@@ -65,7 +66,7 @@
 #' fields derived from a chain of transformations starting from an original
 #' field and multiple fields derived from the same original field.
 #'
-#' This package exports models to PMML version 4.4.
+#' This package exports models to PMML version 4.4.1.
 #'
 #' Please note that package \pkg{XML_3.95-0.1} or later is required to perform
 #' the full and correct functionality of \pkg{pmml}.
@@ -127,6 +128,7 @@ pmml <- function(model = NULL,
                  app_name = "SoftwareAG PMML Generator",
                  description = NULL,
                  copyright = NULL,
+                 model_version = NULL,
                  transforms = NULL,
                  ...) {
   dots <- list(...)

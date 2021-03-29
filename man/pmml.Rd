@@ -10,6 +10,7 @@ pmml(
   app_name = "SoftwareAG PMML Generator",
   description = NULL,
   copyright = NULL,
+  model_version = NULL,
   transforms = NULL,
   ...
 )
@@ -24,6 +25,8 @@ pmml(
 \item{description}{A descriptive text for the Header element of the PMML.}
 
 \item{copyright}{The copyright notice for the model.}
+
+\item{model_version}{A string specifying the model version.}
 
 \item{transforms}{Data transformations.}
 
@@ -66,7 +69,7 @@ The covered cases include model fields derived from an original field, model
 fields derived from a chain of transformations starting from an original
 field and multiple fields derived from the same original field.
 
-This package exports models to PMML version 4.4.
+This package exports models to PMML version 4.4.1.
 
 Please note that package \pkg{XML_3.95-0.1} or later is required to perform
 the full and correct functionality of \pkg{pmml}.

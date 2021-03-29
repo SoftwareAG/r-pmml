@@ -115,6 +115,7 @@ pmml.neighbr <- function(model,
                          app_name = "SoftwareAG PMML Generator",
                          description = "K Nearest Neighbors Model",
                          copyright = NULL,
+                         model_version = NULL,
                          transforms = NULL,
                          missing_value_replacement = NULL,
                          ...) {
@@ -164,7 +165,8 @@ pmml.neighbr <- function(model,
   pmml <- .pmmlRootNode()
 
   # PMML -> Header
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright,
+                                           model_version, app_name))
 
   # PMML -> DataDictionary
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(field, transformed = transforms))

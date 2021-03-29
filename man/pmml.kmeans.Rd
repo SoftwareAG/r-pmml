@@ -11,6 +11,7 @@ the package \pkg{stats}.}
   app_name = "SoftwareAG PMML Generator",
   description = "KMeans cluster model",
   copyright = NULL,
+  model_version = NULL,
   transforms = NULL,
   missing_value_replacement = NULL,
   algorithm_name = "KMeans: Hartigan and Wong",
@@ -27,6 +28,8 @@ the package \pkg{stats}.}
 \item{description}{A descriptive text for the Header element of the PMML.}
 
 \item{copyright}{The copyright notice for the model.}
+
+\item{model_version}{A string specifying the model version.}
 
 \item{transforms}{Data transformations.}
 

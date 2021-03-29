@@ -11,6 +11,7 @@ test_that("xsi:schemaLocation in PMML root node points to pmml-4-4", {
   )
 })
 
+# <<<<<<< HEAD
 test_that(".pmmlLocalTransformations sets dataType and optype provided in transforms", {
   iris_box_1 <- xform_wrap(iris)
   iris_box_1 <- xform_function(wrap_object = iris_box_1,
@@ -35,5 +36,43 @@ test_that(".pmmlLocalTransformations sets dataType and optype provided in transf
   expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[1]], name = "optype"), "categorical")
   expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[2]], name = "dataType"), "double")
   expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[2]], name = "optype"), "continuous")
+  
+})
+# =======
+
+test_that(".pmmlHeader() adds modelVersion attribute when model_version is not NULL", {
+  header <- .pmmlHeader(description = "Test model", copyright = NULL, 
+                        model_version = "someVersion", app_name = "App Name")
+  expect_equal(xmlGetAttr(header, name = "modelVersion"), "someVersion")
+  
+  header2 <- .pmmlHeader(description = "Test model", copyright = NULL, 
+                        model_version = c("someVersion"), app_name = "App Name")
+  expect_equal(xmlGetAttr(header2, name = "modelVersion"), "someVersion")
+})
+
+test_that(".pmmlHeader() does not add modelVersion attribute when model_version is NULL", {
+  header <- .pmmlHeader(description = "Test model", copyright = NULL, 
+                        model_version = NULL, app_name = "App Name")
+  # XML::xmlNode does not add an attribute if its value is NULL
+  expect_equal(xmlGetAttr(header, name = "modelVersion"), NULL)
+})
+
+test_that(".pmmlHeader() errors if model_version is not a character vector of length 1", {
+  expect_error(.pmmlHeader(description = "Test model", copyright = NULL, 
+                        model_version = 123, app_name = "App Name"),
+               'model_version must be of type "character" and of length 1.')
+  
+  expect_error(.pmmlHeader(description = "Test model", copyright = NULL, 
+                           model_version = c(1,2,3), app_name = "App Name"),
+               'model_version must be of type "character" and of length 1.')  
+  
+  expect_error(.pmmlHeader(description = "Test model", copyright = NULL, 
+                           model_version = c("adf",1), app_name = "App Name"),
+               'model_version must be of type "character" and of length 1.')
+
+  expect_error(.pmmlHeader(description = "Test model", copyright = NULL, 
+                           model_version = c("adf","asdf"), app_name = "App Name"),
+               'model_version must be of type "character" and of length 1.')
+# >>>>>>> master
   
 })

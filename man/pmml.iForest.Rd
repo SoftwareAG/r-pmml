@@ -10,6 +10,7 @@
   app_name = "SoftwareAG PMML Generator",
   description = "Isolation Forest Model",
   copyright = NULL,
+  model_version = NULL,
   transforms = NULL,
   missing_value_replacement = NULL,
   anomaly_threshold = 0.6,
@@ -28,6 +29,8 @@
 \item{description}{A descriptive text for the Header element of the PMML.}
 
 \item{copyright}{The copyright notice for the model.}
+
+\item{model_version}{A string specifying the model version.}
 
 \item{transforms}{Data transformations.}
 

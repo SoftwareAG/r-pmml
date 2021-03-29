@@ -89,38 +89,80 @@
 
 
 
+.pmmlHeader <- function(description, copyright, model_version, app_name) {
+  
+  if (!is.null(model_version)){
+    if ((!(is.character(model_version))) || !(length(model_version) == 1)){
+      stop('model_version must be of type "character" and of length 1.')
+    }
+  }
 
-.pmmlHeader <- function(description, copyright, app_name) {
+  
   if (is.null(copyright)) copyright <- .generateCopyright()
-
+  
   # Header Node
-  header <- xmlNode("Header", attrs = c(copyright = copyright, description = description))
-
+  header <- xmlNode("Header", attrs = c(copyright = copyright,
+                                        description = description,
+                                        modelVersion = model_version))
+  
   # Header -> Extension for user info
   header <- append.XMLNode(
     header,
     xmlNode("Extension",
-      attrs = c(
-        name = "user",
-        value = sprintf("%s", Sys.info()["user"]),
-        extender = app_name
-      )
+            attrs = c(
+              name = "user",
+              value = sprintf("%s", Sys.info()["user"]),
+              extender = app_name
+            )
     )
   )
-
+  
   # Header -> Application
   header <- append.XMLNode(header, xmlNode("Application",
-    attrs = c(
-      name = app_name,
-      version = toString(packageVersion("pmml"))
-    )
+                                           attrs = c(
+                                             name = app_name,
+                                             version = toString(packageVersion("pmml"))
+                                           )
   ))
-
+  
   # Header -> Timestamp
   header <- append.XMLNode(header, xmlNode("Timestamp", sprintf("%s", Sys.time())))
-
+  
   return(header)
 }
+
+
+# .pmmlHeader <- function(description, copyright, app_name) {
+#   if (is.null(copyright)) copyright <- .generateCopyright()
+# 
+#   # Header Node
+#   header <- xmlNode("Header", attrs = c(copyright = copyright, description = description))
+# 
+#   # Header -> Extension for user info
+#   header <- append.XMLNode(
+#     header,
+#     xmlNode("Extension",
+#       attrs = c(
+#         name = "user",
+#         value = sprintf("%s", Sys.info()["user"]),
+#         extender = app_name
+#       )
+#     )
+#   )
+# 
+#   # Header -> Application
+#   header <- append.XMLNode(header, xmlNode("Application",
+#     attrs = c(
+#       name = app_name,
+#       version = toString(packageVersion("pmml"))
+#     )
+#   ))
+# 
+#   # Header -> Timestamp
+#   header <- append.XMLNode(header, xmlNode("Timestamp", sprintf("%s", Sys.time())))
+# 
+#   return(header)
+# }
 
 
 .pmmlLocalTransformations <- function(field, transforms = NULL, LTelement = NULL, target = NULL, ...) {

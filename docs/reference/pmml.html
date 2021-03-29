@@ -75,7 +75,7 @@ PMML." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0.9000</span>
       </span>
     </div>
 
@@ -147,6 +147,7 @@ PMML.</p>
   app_name <span class='op'>=</span> <span class='st'>"SoftwareAG PMML Generator"</span>,
   description <span class='op'>=</span> <span class='cn'>NULL</span>,
   copyright <span class='op'>=</span> <span class='cn'>NULL</span>,
+  model_version <span class='op'>=</span> <span class='cn'>NULL</span>,
   transforms <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -173,6 +174,10 @@ PMML.</p>
     <tr>
       <th>copyright</th>
       <td><p>The copyright notice for the model.</p></td>
+    </tr>
+    <tr>
+      <th>model_version</th>
+      <td><p>A string specifying the model version.</p></td>
     </tr>
     <tr>
       <th>transforms</th>
@@ -213,7 +218,7 @@ original field names with the correct data types to make a consistent model.
 The covered cases include model fields derived from an original field, model
 fields derived from a chain of transformations starting from an original
 field and multiple fields derived from the same original field.</p>
-<p>This package exports models to PMML version 4.4.</p>
+<p>This package exports models to PMML version 4.4.1.</p>
 <p>Please note that package <span class="pkg">XML_3.95-0.1</span> or later is required to perform
 the full and correct functionality of <span class="pkg">pmml</span>.</p>
 <p>If data used for an R model contains features of type <code>character</code>,

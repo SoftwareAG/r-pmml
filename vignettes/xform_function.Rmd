@@ -171,14 +171,14 @@ fit_pmml[[3]][[3]]
 
 ## PMML functions supported by `xform_function`
 
-The following R functions and operators are directly supported by `xform_function`. Their PMML equivalents are listed on the second line:
+The following R functions and operators are directly supported by `xform_function`. Their PMML equivalents are listed in the second column:
 ```{r,echo=FALSE}
-funcs <- rbind(c("+","-","/","*","^","<","<=",">",">=","&&","&","|","||","==","!=","!","ceiling","prod","log"),
-c("+","-","/","*","pow","lessThan","lessOrEqual","greaterThan","greaterOrEqual","and","and","or","or","equal","notEqual","not","ceil","product","ln"))
+R <- c("+","-","/","*","^","<","<=",">",">=","&&","&","|","||","==","!=","!","ceiling","prod","log")
+PMML <- c("+","-","/","*","pow","lessThan","lessOrEqual","greaterThan","greaterOrEqual","and","and","or","or","equal","notEqual","not","ceil","product","ln")
 
-kable(funcs)
+funcs_df <- data.frame(R, PMML)
+knitr::kable(funcs_df)
 ```
-
 
 
 

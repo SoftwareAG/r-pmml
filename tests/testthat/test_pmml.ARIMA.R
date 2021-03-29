@@ -84,7 +84,7 @@ test_that("Output node contains expected elements", {
   library(forecast)
 
   fit_4 <- auto.arima(WWWusage)
-  p_fit_4 <- pmml(fit_4)
+  p_fit_4 <- pmml(fit_4, model_version = "model_1")
 
   # expect extensions
   expect_equal(
@@ -132,7 +132,7 @@ test_that("non-seasonal ARIMA node contains correct attributes", {
 
   s <- ts(data = c(11357.92, 10605.95, 16998.57, 6563.75, 6607.69, 9839.0))
   fit_6 <- Arima(s, order = c(0, 0, 1))
-  p_fit_6 <- pmml(fit_6, ts_type = "arima")
+  p_fit_6 <- pmml(fit_6, ts_type = "arima", model_version = "123")
 
   expect_equal_num(xmlGetAttr(p_fit_6[[3]][[4]], name = "RMSE"), sqrt(fit_6$sigma2))
   expect_equal(xmlGetAttr(p_fit_6[[3]][[4]], name = "transformation"), "none")
@@ -273,7 +273,7 @@ test_that("RMSE attribute equals sqrt(sigma2) from R object", {
   library(forecast)
 
   fit_16 <- Arima(WWWusage, order = c(2, 1, 3))
-  p_fit_16 <- pmml(fit_16, ts_type = "arima")
+  p_fit_16 <- pmml(fit_16, ts_type = "arima", model_version = NULL)
   expect_equal_num(xmlGetAttr(p_fit_16[[3]][[4]], name = "RMSE"), sqrt(fit_16$sigma2))
 })
 
