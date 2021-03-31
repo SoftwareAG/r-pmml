@@ -84,15 +84,31 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
   }
   
   wrap_object$data$new_field_name <- NA
+  
 
   parsed_text <- parse(text = expression)
 
-  # Calculate the expression for each row in the new data column
-  for (n in 1:length(wrap_object$data$new_field_name)) {
-    boxrow <- wrap_object$data[n, ]
-    wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
+  # Calculate the expression for each row in the new data column. For factors,
+  # convert to character to avoid assigning integers to new_field_name. This
+  # check is only necessary for when eval() is applied to a factor input.
+  if (new_field_data_type == "numeric") {
+    for (n in 1:length(wrap_object$data$new_field_name)) {
+      boxrow <- wrap_object$data[n, ]
+      wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
+    } 
+  } else { # new_field_data_type == "factor"
+    for (n in 1:length(wrap_object$data$new_field_name)) {
+      boxrow <- wrap_object$data[n, ]
+      wrap_object$data$new_field_name[n] <- toString(eval(parsed_text, boxrow))
+    } 
   }
-  
+    
+    
+  # for (n in 1:length(wrap_object$data$new_field_name)) {
+  #   boxrow <- wrap_object$data[n, ]
+  #   wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
+  # }
+
   # Change class of new column to match new_field_data_type
   if(!(class(wrap_object$data$new_field_name) == new_field_data_type)) {
     if (new_field_data_type == "numeric") {

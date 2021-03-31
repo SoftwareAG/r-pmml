@@ -316,70 +316,165 @@ test_that("Transformations PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_var_14, r_pred, tolerance = 1e-4)
 })
 
-# test_that("Transformations PMML matches R 2", {
-#   skip_on_cran()
-#   skip_on_ci()
-#   
-#   library(randomForest)
-#   
-#   iris_box_1 <- xform_wrap(iris)
-#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
-#                                orig_field_name = "Sepal.Length",
-#                                new_field_name = "Sepal.Length.Transformed",
-#                                new_field_data_type = "factor",
-#                                expression = "Sepal.Length * 0.1"
-#   )
-#   
-#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
-#                                orig_field_name = "Sepal.Width",
-#                                new_field_name = "Sepal.Width.Transformed",
-#                                new_field_data_type = "numeric",
-#                                expression = "Sepal.Width + 3.5"
-#   )
-#   
-#   iris_box_1 <- xform_function(wrap_object = iris_box_1,
-#                                orig_field_name = "Sepal.Length",
-#                                new_field_name = "Sepal.Length.Transformed_num",
-#                                new_field_data_type = "numeric",
-#                                expression = "Sepal.Length * 0.1"
-#   )
-#   
-#   set.seed(321)
-#   fit <- randomForest(Petal.Length ~ Sepal.Length.Transformed + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 1)
-#   # fit <- randomForest(Petal.Length ~ Sepal.Length.Transformed_num + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 1)
-#   # fit <- randomForest(Petal.Length ~ Sepal.Length + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 3)
-#   p_fit <- pmml(fit, transforms = iris_box_1)
-#   r_pred <- predict(fit, newdata = iris_box_1$data)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
-#   
-#   # save_pmml(p_fit, "../../../temp/iris_rf.pmml")
-#   # pred_df <- iris
-#   # pred_df$Predicted_Petal.Length <- r_pred
-#   # write.csv(pred_df, "../../../temp/iris_rf.csv", row.names = FALSE)
-#   
-#   
-#   
-# 
-# })
+test_that("Transformations PMML matches R 2", {
+  skip_on_cran()
+  skip_on_ci()
+
+  library(randomForest)
+  library(zementisr)
+  iris_box_1 <- xform_wrap(iris)
+
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Width",
+                               new_field_name = "Sepal.Width.Transformed",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Width + 3.5"
+  )
+
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length.Transformed_num",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Length * 0.1"
+  )
+
+  set.seed(321)
+  fit <- randomForest(Petal.Length ~ Sepal.Length.Transformed_num + Sepal.Width.Transformed, data = iris_box_1$data, ntree = 1)
+  p_fit <- pmml(fit, transforms = iris_box_1)
+  r_pred <- as.numeric(predict(fit, newdata = iris_box_1$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+
+})
+
+test_that("Using box data with no transforms matches", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  
+  iris_box_1 <- xform_wrap(iris)
+  fit <- lm(Petal.Length ~ Species, data = iris_box_1$data)
+  
+  p_fit <- pmml(fit, transforms = iris_box_1)
+  r_pred <- as.numeric(predict(fit, iris_box_1$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+  
+  # save_pmml(p_fit, "../../../temp/iris_lm_empty_transf.pmml")
+  # pred_df <- iris
+  # pred_df$Predicted_Petal.Length <- r_pred
+  # write.csv(pred_df, "../../../temp/iris_empty_transf.csv", row.names = FALSE)
+})
 
 
-test_that("Transformations PMML matches R 1", {
+
+
+test_that("Transformation preserves numeric when input is unchanged", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  
+  iris_box_1 <- xform_wrap(iris)
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length_transf",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Length"
+  )
+  
+  fit <- lm(Petal.Length ~ Sepal.Length_transf, data = iris_box_1$data)
+  
+  p_fit <- pmml(fit, transforms = iris_box_1)
+  r_pred <- as.numeric(predict(fit, iris_box_1$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+  
+  # save_pmml(p_fit, "../../../temp/iris_lm_numeric.pmml")
+  # pred_df <- iris
+  # pred_df$Predicted_Petal.Length <- r_pred
+  # write.csv(pred_df, "../../../temp/iris_lm_numeric.csv", row.names = FALSE)
+})
+
+test_that("Transformation preserves factor when input is unchanged", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  
+  iris_box_1 <- xform_wrap(iris)
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Species",
+                               new_field_name = "Species_transf",
+                               new_field_data_type = "factor",
+                               expression = "Species"
+  )
+  
+  fit <- lm(Petal.Length ~ Species_transf, data = iris_box_1$data)
+  
+  p_fit <- pmml(fit, transforms = iris_box_1)
+  r_pred <- as.numeric(predict(fit, iris_box_1$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+
+  # save_pmml(p_fit, "../../../temp/iris_lm_factor.pmml")
+  # pred_df <- iris
+  # pred_df$Predicted_Petal.Length <- r_pred
+  # write.csv(pred_df, "../../../temp/iris_lm_factor.csv", row.names = FALSE)
+})
+
+test_that("Transformation preserves factor names when input is numeric", {
+  # Skip - this test fails because R removes trailing zeroes when converting
+  # numeric to factor.
+  skip("skip")
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  iris_box_5 <- xform_wrap(iris)
+  iris_box_5 <- xform_function(wrap_object = iris_box_5,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length_transf",
+                               new_field_data_type = "factor",
+                               expression = "Sepal.Length")
+  
+  fit <- lm(Petal.Length ~ Sepal.Length_transf, data = iris_box_5$data)
+  
+  p_fit <- pmml(fit, transforms = iris_box_5)
+  r_pred <- as.numeric(predict(fit, iris_box_5$data))
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Length, r_pred, tolerance = 1e-4)
+  
+  # save_pmml(p_fit, "../../../temp/iris_lm_num_to_factor.pmml")
+  # pred_df <- iris
+  # pred_df$Predicted_Petal.Length <- r_pred
+  # write.csv(pred_df, "../../../temp/iris_lm_num_to_factor.csv", row.names = FALSE)
+  
+})
+
+
+
+
+
+test_that("PMML matches R with multiple xform_function transformations - 1", {
   skip_on_cran()
   skip_on_ci()
   
   library(zementisr)
 
   iris_box_1 <- xform_wrap(iris)
-  iris_box_1 <- xform_function(wrap_object = iris_box_1,
-                               orig_field_name = "Sepal.Length",
-                               new_field_name = "Sepal.Length.Transformed",
-                               new_field_data_type = "factor",
-                               expression = "Sepal.Length"
-  )
-  
+
   iris_box_1 <- xform_function(wrap_object = iris_box_1,
                                orig_field_name = "Sepal.Length",
                                new_field_name = "Sepal.Length.T2",
@@ -394,9 +489,8 @@ test_that("Transformations PMML matches R 1", {
                                expression = "Sepal.Width + 3.5"
   )
 
-  fit <- lm(Petal.Length ~ Sepal.Length.Transformed + Sepal.Width.Transformed, data = iris_box_1$data)
-  # fit <- lm(Petal.Length ~ Sepal.Length.T2 + Sepal.Width.Transformed, data = iris_box_1$data)
-  # fit <- lm(Petal.Length ~ Species + Sepal.Width.Transformed, data = iris_box_1$data)
+  fit <- lm(Petal.Length ~ Species + Sepal.Length.T2 + Sepal.Width.Transformed, data = iris_box_1$data)
+  
   p_fit <- pmml(fit, transforms = iris_box_1)
   r_pred <- as.numeric(predict(fit, iris_box_1$data))
   up_stat <- upload_model(p_fit)

@@ -61,4 +61,46 @@ test_that("field_data$dataType and class of new data column match new_field_data
   
 })
 
+test_that("xform_function preserves factor names factor input is unchanged", {
+  iris_box_4 <- xform_wrap(iris)
+
+  iris_box_4 <- xform_function(wrap_object = iris_box_4,
+                               orig_field_name = "Species",
+                               new_field_name = "Species_transf",
+                               new_field_data_type = "factor",
+                               expression = "Species")
+  
+  expect_equal(levels(iris_box_4$data$Species_transf), levels(iris_box_4$data$Species))
+  
+})
+
+test_that("xform_function preserves factor names when output is a factor", {
+  iris_box_4a <- xform_wrap(iris)
+  
+  iris_box_4a <- xform_function(wrap_object = iris_box_4a,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length_transf",
+                               new_field_data_type = "factor",
+                               expression = "if(Sepal.Length<5.1) {'level_A'} else if (Sepal.Length>6.6) {'level_B'} else {'level_C'}")
+  
+  expect_equal(levels(iris_box_4a$data$Sepal.Length_transf), c("level_A", "level_B", "level_C"))
+  
+})
+
+
+test_that("xform_function preserves R factor names when input is numeric", {
+  # The unique values in the original Sepal.Length field are sorted and converted
+  # to character before comparing with the levels in Sepal.Length_transf
+  
+  iris_box_5 <- xform_wrap(iris)
+  iris_box_5 <- xform_function(wrap_object = iris_box_5,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length_transf",
+                               new_field_data_type = "factor",
+                               expression = "Sepal.Length")
+  
+  char_array <- as.character(sort(unique(iris_box_5$data$Sepal.Length)))
+  expect_equal(levels(iris_box_5$data$Sepal.Length_transf), char_array)
+  
+})
 
