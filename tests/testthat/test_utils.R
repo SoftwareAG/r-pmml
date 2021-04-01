@@ -11,7 +11,6 @@ test_that("xsi:schemaLocation in PMML root node points to pmml-4-4", {
   )
 })
 
-# <<<<<<< HEAD
 test_that(".pmmlLocalTransformations sets dataType and optype provided in transforms", {
   iris_box_1 <- xform_wrap(iris)
   iris_box_1 <- xform_function(wrap_object = iris_box_1,
@@ -38,7 +37,38 @@ test_that(".pmmlLocalTransformations sets dataType and optype provided in transf
   expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[2]], name = "optype"), "continuous")
   
 })
-# =======
+
+test_that(".pmmlLocalTransformationsAD sets dataType and optype provided in transforms", {
+  # .pmmlLocalTransformationsAD is only used by pmml.svm(). e1071::svm() 
+  # requires training data to be numeric.
+  
+  library(e1071)
+  iris_box_1 <- xform_wrap(iris[,1:4])
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Length",
+                               new_field_name = "Sepal.Length.Transformed",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Length * 0.1"
+  )
+  
+  iris_box_1 <- xform_function(wrap_object = iris_box_1,
+                               orig_field_name = "Sepal.Width",
+                               new_field_name = "Sepal.Width.Transformed",
+                               new_field_data_type = "numeric",
+                               expression = "Sepal.Width + 3.5"
+  )
+  
+  fit_1 <- svm(x = iris_box_1$data[, 5:6], y = NULL, type = "one-classification")
+  
+  fit_pmml_1 <- pmml(fit_1, dataset = iris_box_1$data[, 5:6], transforms = iris_box_1)
+  
+  expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[3]][[1]], name = "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[3]][[1]], name = "optype"), "continuous")
+  expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[3]][[2]], name = "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml_1[[3]][[3]][[3]][[2]], name = "optype"), "continuous")
+  
+})
+
 
 test_that(".pmmlHeader() adds modelVersion attribute when model_version is not NULL", {
   header <- .pmmlHeader(description = "Test model", copyright = NULL, 

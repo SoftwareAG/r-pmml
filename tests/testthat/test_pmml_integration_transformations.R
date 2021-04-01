@@ -372,8 +372,6 @@ test_that("Using box data with no transforms matches", {
 })
 
 
-
-
 test_that("Transformation preserves numeric when input is unchanged", {
   skip_on_cran()
   skip_on_ci()
@@ -462,10 +460,6 @@ test_that("Transformation preserves factor names when input is numeric", {
   # write.csv(pred_df, "../../../temp/iris_lm_num_to_factor.csv", row.names = FALSE)
   
 })
-
-
-
-
 
 test_that("PMML matches R with multiple xform_function transformations - 1", {
   skip_on_cran()
