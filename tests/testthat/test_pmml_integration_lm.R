@@ -9,8 +9,6 @@ expect_equal_nn <- function(...) {
   expect_equal(..., check.names = FALSE)
 }
 
-
-
 test_that("RegressionModel/stats PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
@@ -119,9 +117,14 @@ test_that("RegressionModel/stats PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Predicted_sepal_width, r_pred)
 })
 
-
 test_that("lm model with integer feature - output matches R", {
   # Integer feature is exported with dataType="double" and optype="continuous"
+  
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  
   dat <- iris
   dat$SL_int <- as.integer(iris$Sepal.Length)
   
@@ -142,6 +145,8 @@ test_that("lm model with integer feature - output matches R", {
 test_that("lm model with logical feature - output matches R", {
   # Logical feature is exported with dataType="boolean" and optype="categorical
   skip("skip")
+
+  library(zementisr)
   dat <- iris
   dat$SL_logi <- unlist(lapply(dat$Sepal.Length, function(x) if (x < 6) {TRUE} else {FALSE}))
   
@@ -159,9 +164,13 @@ test_that("lm model with logical feature - output matches R", {
   # write.csv(pred_df, "../../../temp/iris_logi_feature.csv", row.names = FALSE)
 })
 
-
 test_that("lm model with factor feature - output matches R", {
   # Logical feature is exported with dataType="boolean" and optype="categorical"
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+  
   dat <- iris
   dat$SL_factor <- unlist(lapply(dat$Sepal.Length, function(x) if (x < 6) {TRUE} else {FALSE}))
   dat$SL_factor <- as.factor(dat$SL_factor)

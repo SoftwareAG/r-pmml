@@ -1,20 +1,20 @@
-library(zementisr)
+# library(zementisr)
 # library(amap)
-library(isofor)
+# library(isofor)
 library(clue)
 library(data.table)
 library(glmnet)
 library(ada)
 library(gbm)
 library(caret)
-library(randomForest)
+# library(randomForest)
 library(xgboost)
 library(Matrix)
 library(e1071)
 library(neighbr)
 library(nnet)
 library(kernlab)
-library(forecast)
+# library(forecast)
 
 
 data(iris)
@@ -363,6 +363,9 @@ teardown(unlink(c(xgb_tmp_01_save, xgb_tmp_01_dump), recursive = TRUE))
 test_that("AnomalyDetectionModel/iForest PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
+  library(isofor)
 
   anomaly_threshold <- 0.6
   fit <- iForest(iris, nt = 7, phi = 30)
@@ -407,6 +410,8 @@ test_that("ClusteringModel/stats kmeans PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
+  library(zementisr)
+  
   fit <- kmeans(audit[, c(2, 7, 9, 10, 12)], 2)
   p_fit <- pmml(fit)
   r_pred <- sprintf("%.0f", cl_predict(fit, audit[, c(2, 7, 9, 10, 12)]))
@@ -500,6 +505,8 @@ test_that("GeneralRegressionModel/glmnet PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
+  library(zementisr)
+  
   fit <- cv.glmnet(data.matrix(audit[, c(2, 7, 9:10)]), data.matrix(audit[, 13]))
   p_fit <- pmml(fit)
   r_pred <- as.vector(predict(fit, data.matrix(audit[, c(2, 7, 9:10)])))
@@ -669,6 +676,8 @@ test_that("GeneralRegressionModel/glmnet PMML output matches R", {
 test_that("GeneralRegressionModel/stats PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   # suppress warning: "glm.fit: fitted probabilities numerically 0 or 1 occurred"
   suppressWarnings(fit <- glm(
@@ -835,6 +844,8 @@ test_that("GeneralRegressionModel/stats PMML output matches R", {
 test_that("MiningModel/ada PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   set.seed(1234)
   fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
@@ -916,6 +927,8 @@ test_that("MiningModel/ada PMML output matches R", {
 test_that("MiningModel/gbm PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   set.seed(2112)
   audit_dat <- audit[, -c(1, 4, 6, 9, 10, 11, 12)]
@@ -1067,6 +1080,9 @@ test_that("MiningModel/gbm PMML output matches R", {
 test_that("MiningModel/randomForest PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
+  library(randomForest)
 
   audit_nor_logical[, "Sex"] <- as.factor(audit_nor_logical[, "Sex"])
   suppressWarnings(fit <- randomForest(Adjusted ~ ., audit_nor_logical[, -1], ntree = 8))
@@ -1276,6 +1292,8 @@ test_that("MiningModel/randomForest PMML output matches R", {
 test_that("MiningModel/xgboost PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   invisible(capture.output(fit <- xgboost(
     data = as.matrix(iris[, 1:4]), label = as.numeric(iris[, 5]) - 1,
@@ -1565,6 +1583,8 @@ test_that("MiningModel/xgboost PMML output matches R", {
 test_that("NaiveBayesModel/e1071 PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   fit <- naiveBayes(as.factor(Adjusted) ~ Employment + Education + Marital + Occupation + Sex, data = audit_nor)
   p_fit <- pmml(fit, predicted_field = "Adjusted")
@@ -1934,6 +1954,8 @@ test_that("NaiveBayesModel/e1071 PMML output matches R", {
 test_that("NeuralNetwork/nnet PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   audit_nor_factor <- audit_nor
   audit_nor_factor[, 13] <- as.factor(audit_nor[, 13])
@@ -2035,6 +2057,8 @@ test_that("NeuralNetwork/nnet PMML output matches R", {
 test_that("RegressionModel/nnet PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   fit <- multinom(as.factor(Adjusted) ~ ., data = audit_nor, trace = F)
   p_fit <- pmml(fit)
@@ -2451,6 +2475,8 @@ test_that("RegressionModel/nnet PMML output matches R", {
 test_that("SupportVectorMachineModel/kernlab PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   fit <- ksvm(target ~ ., data = credit, kernel = "rbfdot", model_name = "ksvm")
   p_fit <- pmml(fit, data = credit)
@@ -2636,6 +2662,8 @@ test_that("SupportVectorMachineModel/kernlab PMML output matches R", {
 test_that("TreeModel/rpart PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  
+  library(zementisr)
 
   fit <- rpart(as.factor(Adjusted) ~ Employment + Education + Marital + Occupation + Sex, data = audit_nor)
   p_fit <- pmml(fit)

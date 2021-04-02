@@ -1,6 +1,5 @@
 # invisible(capture.output()) is used in catch xgboost's message about train-error
 
-# library(xgboost)
 data(iris)
 
 tmp_01_save <- tempfile()
