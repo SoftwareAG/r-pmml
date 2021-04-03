@@ -340,11 +340,11 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Introduction</h2>
 <p>This vignette provides examples of how to use the <code>xform_function</code> transformation to create new data features for PMML models.</p>
 <p>Given a <code>xform_wrap</code> object and a transformation expression, <code>xform_function</code> calculates data for a new feature and creates a new <code>xform_wrap</code> object. When PMML is produced with <code>pmml::pmml()</code>, the transformation is inserted into the <code>LocalTransformations</code> node as a <code>DerivedField</code>.</p>
-<p><code>xform_function</code> makes it possible to use multiple data fields and functions to produce a new feature.</p>
-<p>The <code>kable</code> function is part of <code>knitr</code>, and is used to make tables more readable.</p>
+<p>Multiple data fields and functions can be combined to produce a new feature.</p>
+<p>The code below uses <code>knitr::kable()</code> to make tables more readable.</p>
 </div>
-<div id="single-numeric-field" class="section level2">
-<h2>Single numeric field</h2>
+<div id="single-numeric-input" class="section level2">
+<h2>Single numeric input</h2>
 <p>Using the <code>iris</code> dataset as an example, let’s construct a new feature by transforming one variable. Load the dataset and show the first few lines:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">data</span>(iris)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw">kable</span>(<span class="kw">head</span>(iris,<span class="dv">3</span>))</span></code></pre></div>
@@ -637,9 +637,9 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb10-7"><a href="#cb10-7"></a><span class="co">#&gt;  &lt;/DerivedField&gt;</span></span>
 <span id="cb10-8"><a href="#cb10-8"></a><span class="co">#&gt; &lt;/LocalTransformations&gt;</span></span></code></pre></div>
 </div>
-<div id="single-categorical-field" class="section level2">
-<h2>Single categorical field</h2>
-<p><code>xform_function</code> can also operate on categorical data. In this example, let’s create a boolean feature that equals 1 only when <code>Species</code> is <code>setosa</code>:</p>
+<div id="single-categorical-input" class="section level2">
+<h2>Single categorical input</h2>
+<p><code>xform_function</code> can also operate on categorical data. In this example, let’s create a numeric feature that equals 1 when <code>Species</code> is <code>setosa</code>, and 0 otherwise:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>iris_box &lt;-<span class="st"> </span><span class="kw">xform_wrap</span>(iris)</span>
 <span id="cb11-2"><a href="#cb11-2"></a>iris_box &lt;-<span class="st"> </span><span class="kw">xform_function</span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">&quot;Species&quot;</span>,</span>
 <span id="cb11-3"><a href="#cb11-3"></a>                         <span class="dt">new_field_name=</span><span class="st">&quot;Species.Setosa&quot;</span>,</span>
@@ -702,7 +702,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="multiple-input-fields" class="section level2">
 <h2>Multiple input fields</h2>
-<p>It is possible to create new features by combining several fields. Let’s create a new field from the ratio of sepal and petal lengths:</p>
+<p>Several fields can be combined to create new features. Let’s make a new field from the ratio of sepal and petal lengths:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>iris_box &lt;-<span class="st"> </span><span class="kw">xform_wrap</span>(iris)</span>
 <span id="cb13-2"><a href="#cb13-2"></a>iris_box &lt;-<span class="st"> </span><span class="kw">xform_function</span>(iris_box,<span class="dt">orig_field_name=</span><span class="st">&quot;Sepal.Length,Petal.Length&quot;</span>,</span>
 <span id="cb13-3"><a href="#cb13-3"></a>                         <span class="dt">new_field_name=</span><span class="st">&quot;Length.Ratio&quot;</span>,</span>
@@ -988,7 +988,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <th align="right">Petal.Length</th>
 <th align="right">Petal.Width</th>
 <th align="left">Species</th>
-<th align="left">Species.Setosa.or.Versicolor</th>
+<th align="right">Species.Setosa.or.Versicolor</th>
 </tr>
 </thead>
 <tbody>
@@ -998,7 +998,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td align="right">1.4</td>
 <td align="right">0.2</td>
 <td align="left">setosa</td>
-<td align="left">TRUE</td>
+<td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="right">4.9</td>
@@ -1006,7 +1006,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td align="right">1.4</td>
 <td align="right">0.2</td>
 <td align="left">setosa</td>
-<td align="left">TRUE</td>
+<td align="right">1</td>
 </tr>
 <tr class="odd">
 <td align="right">4.7</td>
@@ -1014,7 +1014,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <td align="right">1.3</td>
 <td align="right">0.2</td>
 <td align="left">setosa</td>
-<td align="left">TRUE</td>
+<td align="right">1</td>
 </tr>
 </tbody>
 </table>

@@ -14,17 +14,17 @@ xform_function(
 )
 }
 \arguments{
-\item{wrap_object}{Output of xform_wrap or another transformation function}
+\item{wrap_object}{Output of xform_wrap or another transformation function.}
 
-\item{orig_field_name}{String specifying name(s) of the original data field(s) being used in the transformation}
+\item{orig_field_name}{String specifying name(s) of the original data field(s) being used in the transformation.}
 
-\item{new_field_name}{Name of the new field created by the transformation}
+\item{new_field_name}{Name of the new field created by the transformation.}
 
-\item{new_field_data_type}{Data type of the new field created by the transformation}
+\item{new_field_data_type}{R data type of the new field created by the transformation ("numeric" or "factor").}
 
-\item{expression}{String expression specifying the transformation}
+\item{expression}{String expression specifying the transformation.}
 
-\item{map_missing_to}{Value to be given to the transformed variable if the value of any input variable is missing}
+\item{map_missing_to}{Value to be given to the transformed variable if the value of any input variable is missing.}
 }
 \value{
 R object containing the raw data, the transformed data and data statistics.
@@ -45,6 +45,11 @@ environment.
 The name of the new field is optional (a default name is provided), but an error
 will be thrown if attempting to create a field with a name that already exists in
 the xform_wrap object.
+
+When \code{new_field_data_type = "numeric"}, the \code{DerivedField} attributes
+in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}. 
+When \code{new_field_data_type = "factor"}, these attributes will be
+\code{dataType = "string"} and \code{optype = "categorical"}.
 }
 \examples{
 # Load the standard iris dataset:

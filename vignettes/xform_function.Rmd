@@ -17,16 +17,16 @@ This vignette provides examples of how to use the `xform_function` transformatio
 
 Given a `xform_wrap` object and a transformation expression, `xform_function` calculates data for a new feature and creates a new `xform_wrap` object. When PMML is produced with `pmml::pmml()`, the transformation is inserted into the `LocalTransformations` node as a `DerivedField`.
 
-`xform_function` makes it possible to use multiple data fields and functions to produce a new feature.
+Multiple data fields and functions can be combined to produce a new feature.
 
-The `kable` function is part of `knitr`, and is used to make tables more readable.
+The code below uses `knitr::kable()` to make tables more readable.
 
 ```{r, echo=FALSE,warning=FALSE,message=FALSE,results="hide"}
 library(pmml)
 library(knitr)
 ```
 
-## Single numeric field
+## Single numeric input
 Using the `iris` dataset as an example, let's construct a new feature by transforming one variable. Load the dataset and show the first few lines:
 ```{r}
 data(iris)
@@ -87,8 +87,8 @@ The `LocalTransformations` node contains `Sepal.Length.Sqrt` as a derived field:
 fit_pmml[[3]][[3]]
 ```
 
-## Single categorical field
-`xform_function` can also operate on categorical data. In this example, let's create a boolean feature that equals 1 only when `Species` is `setosa`:
+## Single categorical input
+`xform_function` can also operate on categorical data. In this example, let's create a numeric feature that equals 1 when `Species` is `setosa`, and 0 otherwise:
 ```{r}
 iris_box <- xform_wrap(iris)
 iris_box <- xform_function(iris_box,orig_field_name="Species",
@@ -106,7 +106,7 @@ fit_pmml[[3]][[3]]
 
 ## Multiple input fields
 
-It is possible to create new features by combining several fields. Let's create a new field from the ratio of sepal and petal lengths:
+Several fields can be combined to create new features. Let's make a new field from the ratio of sepal and petal lengths:
 ```{r}
 iris_box <- xform_wrap(iris)
 iris_box <- xform_function(iris_box,orig_field_name="Sepal.Length,Petal.Length",

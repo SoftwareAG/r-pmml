@@ -20,12 +20,12 @@
 
 #' Add a function transformation to a xform_wrap object.
 #'
-#' @param wrap_object Output of xform_wrap or another transformation function
-#' @param orig_field_name String specifying name(s) of the original data field(s) being used in the transformation
-#' @param new_field_name Name of the new field created by the transformation
-#' @param new_field_data_type Data type of the new field created by the transformation
-#' @param expression String expression specifying the transformation
-#' @param map_missing_to Value to be given to the transformed variable if the value of any input variable is missing
+#' @param wrap_object Output of xform_wrap or another transformation function.
+#' @param orig_field_name String specifying name(s) of the original data field(s) being used in the transformation.
+#' @param new_field_name Name of the new field created by the transformation.
+#' @param new_field_data_type R data type of the new field created by the transformation ("numeric" or "factor").
+#' @param expression String expression specifying the transformation.
+#' @param map_missing_to Value to be given to the transformed variable if the value of any input variable is missing.
 #'
 #' @details
 #'
@@ -39,6 +39,11 @@
 #' The name of the new field is optional (a default name is provided), but an error
 #' will be thrown if attempting to create a field with a name that already exists in
 #' the xform_wrap object.
+#' 
+#' When \code{new_field_data_type = "numeric"}, the \code{DerivedField} attributes
+#' in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}. 
+#' When \code{new_field_data_type = "factor"}, these attributes will be
+#' \code{dataType = "string"} and \code{optype = "categorical"}.
 #'
 #'
 #' @return R object containing the raw data, the transformed data and data statistics.
