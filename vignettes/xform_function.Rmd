@@ -125,7 +125,7 @@ fit <- lm(Petal.Width ~ Length.Ratio, data=iris_box$data)
 fit_pmml <- pmml(fit, transform=iris_box)
 ```
 
-The pmml will contain `Sepal.Length` and `Petal.Length` in the `DataDictionary` and `MiningSchema`, since these were used in `FormulaXform`:
+The pmml will contain `Sepal.Length` and `Petal.Length` in the `DataDictionary` and `MiningSchema`:
 ```{r}
 fit_pmml[[2]] #Data Dictionary node
 fit_pmml[[3]][[1]] #Mining Schema node
@@ -157,7 +157,7 @@ fit_pmml <- pmml(fit, transform=iris_box)
 
 ```
 
-The pmml will contain `Sepal.Length`, `Petal.Length`, and `Sepal.Width` in the `DataDictionary` and `MiningSchema`, since these were used in `FormulaXform`:
+The pmml will contain `Sepal.Length`, `Petal.Length`, and `Sepal.Width` in the `DataDictionary` and `MiningSchema`:
 ```{r}
 fit_pmml[[2]] #Data Dictionary node
 fit_pmml[[3]][[1]] #Mining Schema node
@@ -166,6 +166,27 @@ fit_pmml[[3]][[1]] #Mining Schema node
 The `Local.Transformations` node contains `Length.Ratio` and `Length.R.Times.S.Width` as derived fields:
 ```{r}
 fit_pmml[[3]][[3]]
+```
+
+
+## Factor output
+The resulting field can be numeric or factor. Note that factors are exported with `dataType = "string"` and `optype = "categorical"` in PMML. The following code creates a factor with 3 levels from `Sepal.Length`:
+```{r}
+iris_box <- xform_wrap(iris)
+
+iris_box <- xform_function(wrap_object = iris_box,
+                              orig_field_name = "Sepal.Length",
+                              new_field_name = "SL_factor",
+                              new_field_data_type = "factor",
+                              expression = "if(Sepal.Length<5.1) {'level_A'} else if (Sepal.Length>6.6) {'level_B'} else {'level_C'}")
+
+kable(head(iris_box$data, 3))
+```
+
+The feature can then be used to create a model as usual:
+```{r}
+fit <- lm(Petal.Width ~ SL_factor, data=iris_box$data)
+fit_pmml <- pmml(fit, transform=iris_box)
 ```
 
 
@@ -234,7 +255,7 @@ fit_pmml <- pmml(fit, transform=iris_box)
 fit_pmml[[3]][[3]]
 ```
 
-## PMML Function not supported by `xform_function` - another example
+## PMML function not supported by `xform_function` - another example
 As another example, let's use R's `mean` function to create a new feature. PMML has a built-in `avg`, so we will define an R function with this name.
 ```{r}
 avg <- function(...) {

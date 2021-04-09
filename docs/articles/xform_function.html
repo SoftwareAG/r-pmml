@@ -100,12 +100,12 @@
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>This vignette provides examples of how to use the <code>xform_function</code> transformation to create new data features for PMML models.</p>
 <p>Given a <code>xform_wrap</code> object and a transformation expression, <code>xform_function</code> calculates data for a new feature and creates a new <code>xform_wrap</code> object. When PMML is produced with <code><a href="../reference/pmml.html">pmml::pmml()</a></code>, the transformation is inserted into the <code>LocalTransformations</code> node as a <code>DerivedField</code>.</p>
-<p><code>xform_function</code> makes it possible to use multiple data fields and functions to produce a new feature.</p>
-<p>The <code>kable</code> function is part of <code>knitr</code>, and is used to make tables more readable.</p>
+<p>Multiple data fields and functions can be combined to produce a new feature.</p>
+<p>The code below uses <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code> to make tables more readable.</p>
 </div>
-<div id="single-numeric-field" class="section level2">
+<div id="single-numeric-input" class="section level2">
 <h2 class="hasAnchor">
-<a href="#single-numeric-field" class="anchor"></a>Single numeric field</h2>
+<a href="#single-numeric-input" class="anchor"></a>Single numeric input</h2>
 <p>Using the <code>iris</code> dataset as an example, let’s construct a new feature by transforming one variable. Load the dataset and show the first few lines:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
@@ -396,10 +396,10 @@
 <span class="co">#&gt;  &lt;/DerivedField&gt;</span>
 <span class="co">#&gt; &lt;/LocalTransformations&gt;</span></code></pre></div>
 </div>
-<div id="single-categorical-field" class="section level2">
+<div id="single-categorical-input" class="section level2">
 <h2 class="hasAnchor">
-<a href="#single-categorical-field" class="anchor"></a>Single categorical field</h2>
-<p><code>xform_function</code> can also operate on categorical data. In this example, let’s create a boolean feature that equals 1 only when <code>Species</code> is <code>setosa</code>:</p>
+<a href="#single-categorical-input" class="anchor"></a>Single categorical input</h2>
+<p><code>xform_function</code> can also operate on categorical data. In this example, let’s create a numeric feature that equals 1 when <code>Species</code> is <code>setosa</code>, and 0 otherwise:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span><span class="op">(</span><span class="va">iris_box</span>,orig_field_name<span class="op">=</span><span class="st">"Species"</span>,
@@ -463,7 +463,7 @@
 <div id="multiple-input-fields" class="section level2">
 <h2 class="hasAnchor">
 <a href="#multiple-input-fields" class="anchor"></a>Multiple input fields</h2>
-<p>It is possible to create new features by combining several fields. Let’s create a new field from the ratio of sepal and petal lengths:</p>
+<p>Several fields can be combined to create new features. Let’s make a new field from the ratio of sepal and petal lengths:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span><span class="op">(</span><span class="va">iris_box</span>,orig_field_name<span class="op">=</span><span class="st">"Sepal.Length,Petal.Length"</span>,
@@ -512,7 +512,7 @@
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Width</span> <span class="op">~</span> <span class="va">Length.Ratio</span>, data<span class="op">=</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span>, transform<span class="op">=</span><span class="va">iris_box</span><span class="op">)</span></code></pre></div>
-<p>The pmml will contain <code>Sepal.Length</code> and <code>Petal.Length</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
+<p>The pmml will contain <code>Sepal.Length</code> and <code>Petal.Length</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_pmml</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="co">#Data Dictionary node</span>
 <span class="co">#&gt; &lt;DataDictionary numberOfFields="3"&gt;</span>
@@ -587,7 +587,7 @@
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Width</span> <span class="op">~</span> <span class="va">Length.R.Times.S.Width</span>, data<span class="op">=</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span>, transform<span class="op">=</span><span class="va">iris_box</span><span class="op">)</span></code></pre></div>
-<p>The pmml will contain <code>Sepal.Length</code>, <code>Petal.Length</code>, and <code>Sepal.Width</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>, since these were used in <code>FormulaXform</code>:</p>
+<p>The pmml will contain <code>Sepal.Length</code>, <code>Petal.Length</code>, and <code>Sepal.Width</code> in the <code>DataDictionary</code> and <code>MiningSchema</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit_pmml</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="co">#Data Dictionary node</span>
 <span class="co">#&gt; &lt;DataDictionary numberOfFields="4"&gt;</span>
@@ -620,6 +620,61 @@
 <span class="co">#&gt; &lt;/Apply&gt; </span>
 <span class="co">#&gt;  &lt;/DerivedField&gt;</span>
 <span class="co">#&gt; &lt;/LocalTransformations&gt;</span></code></pre></div>
+</div>
+<div id="factor-output" class="section level2">
+<h2 class="hasAnchor">
+<a href="#factor-output" class="anchor"></a>Factor output</h2>
+<p>The resulting field can be numeric or factor. Note that factors are exported with <code>dataType = "string"</code> and <code>optype = "categorical"</code> in PMML. The following code creates a factor with 3 levels from <code>Sepal.Length</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
+
+<span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span><span class="op">(</span>wrap_object <span class="op">=</span> <span class="va">iris_box</span>,
+                              orig_field_name <span class="op">=</span> <span class="st">"Sepal.Length"</span>,
+                              new_field_name <span class="op">=</span> <span class="st">"SL_factor"</span>,
+                              new_field_data_type <span class="op">=</span> <span class="st">"factor"</span>,
+                              expression <span class="op">=</span> <span class="st">"if(Sepal.Length&lt;5.1) {'level_A'} else if (Sepal.Length&gt;6.6) {'level_B'} else {'level_C'}"</span><span class="op">)</span>
+
+<span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr class="header">
+<th align="right">Sepal.Length</th>
+<th align="right">Sepal.Width</th>
+<th align="right">Petal.Length</th>
+<th align="right">Petal.Width</th>
+<th align="left">Species</th>
+<th align="left">SL_factor</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">5.1</td>
+<td align="right">3.5</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+<td align="left">level_C</td>
+</tr>
+<tr class="even">
+<td align="right">4.9</td>
+<td align="right">3.0</td>
+<td align="right">1.4</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+<td align="left">level_A</td>
+</tr>
+<tr class="odd">
+<td align="right">4.7</td>
+<td align="right">3.2</td>
+<td align="right">1.3</td>
+<td align="right">0.2</td>
+<td align="left">setosa</td>
+<td align="left">level_A</td>
+</tr>
+</tbody>
+</table>
+<p>The feature can then be used to create a model as usual:</p>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Width</span> <span class="op">~</span> <span class="va">SL_factor</span>, data<span class="op">=</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
+<span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span>, transform<span class="op">=</span><span class="va">iris_box</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="pmml-functions-supported-by-xform_function" class="section level2">
 <h2 class="hasAnchor">
@@ -723,7 +778,7 @@
 <p>It is still possible to make <code>xform_function</code> work, but the PMML function must be defined in the R environment first.</p>
 <p>Let’s use <code>isIn</code>, a PMML function, as an example. The function returns a boolean indicating whether the first argument is contained in a list of values. Detailed specification for this function is available on <a href="http://dmg.org/pmml/v4-4-1/BuiltinFunctions.html#boolean5">this DMG page</a>.</p>
 <p>One way to implement this in R is by using <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code>, with the list of values being represented by <code>...</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">isIn</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
   <span class="kw">if</span> <span class="op">(</span><span class="va">x</span> <span class="op">%in%</span> <span class="va">dots</span><span class="op">)</span> <span class="op">{</span>
@@ -736,13 +791,13 @@
 <span class="fu">isIn</span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">4</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p>This function can now be passed to <code>xform_function</code>. The following code creates a feature that indicates whether <code>Species</code> is either <code>setosa</code> or <code>versicolor</code>:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span><span class="op">(</span><span class="va">iris_box</span>,orig_field_name<span class="op">=</span><span class="st">"Species"</span>,
                          new_field_name<span class="op">=</span><span class="st">"Species.Setosa.or.Versicolor"</span>,
                          expression<span class="op">=</span><span class="st">"isIn(Species,'setosa','versicolor')"</span><span class="op">)</span></code></pre></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -789,7 +844,7 @@
 </tbody>
 </table>
 <p>Create a linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Width</span> <span class="op">~</span> <span class="va">Species.Setosa.or.Versicolor</span>, data<span class="op">=</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span>, transform<span class="op">=</span><span class="va">iris_box</span><span class="op">)</span>
 <span class="va">fit_pmml</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>
@@ -805,21 +860,21 @@
 </div>
 <div id="pmml-function-not-supported-by-xform_function---another-example" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pmml-function-not-supported-by-xform_function---another-example" class="anchor"></a>PMML Function not supported by <code>xform_function</code> - another example</h2>
+<a href="#pmml-function-not-supported-by-xform_function---another-example" class="anchor"></a>PMML function not supported by <code>xform_function</code> - another example</h2>
 <p>As another example, let’s use R’s <code>mean</code> function to create a new feature. PMML has a built-in <code>avg</code>, so we will define an R function with this name.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">dots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
   <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dots</span><span class="op">)</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Now use this function to take an average of several other features and combine with another field:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_wrap.html">xform_wrap</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">iris_box</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/xform_function.html">xform_function</a></span><span class="op">(</span><span class="va">iris_box</span>,orig_field_name<span class="op">=</span><span class="st">"Sepal.Length,Petal.Length,Sepal.Width"</span>,
                          new_field_name<span class="op">=</span><span class="st">"Length.Average.Ratio"</span>,
                          expression<span class="op">=</span><span class="st">"avg(Sepal.Length,Petal.Length)/Sepal.Width"</span><span class="op">)</span></code></pre></div>
 <p>The <code>data</code> data frame now contains the new feature:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">kable</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup>
@@ -866,7 +921,7 @@
 </tbody>
 </table>
 <p>Create a simple linear model and view the corresponding PMML for the function:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Petal.Width</span> <span class="op">~</span> <span class="va">Length.Average.Ratio</span>, data<span class="op">=</span><span class="va">iris_box</span><span class="op">$</span><span class="va">data</span><span class="op">)</span>
 <span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span>, transform<span class="op">=</span><span class="va">iris_box</span><span class="op">)</span>
 <span class="va">fit_pmml</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>
@@ -888,7 +943,7 @@
 <a href="#pmml-for-arbitrary-functions" class="anchor"></a>PMML for arbitrary functions</h2>
 <p>The function <code>function_to_pmml</code> (part of the <code>pmml</code> package) makes it possible to convert an R expression into PMML directly, without creating a model or calculating values.</p>
 <p>As long as the expression passed to the function is a valid R expression (e.g., no unbalanced parentheses), it can contain arbitrary function names not defined in R. Variables in the expression passed to <code>xform_function</code> are always assumed to be field names, and not substituted. That is, even if <code>x</code> has a value in the R environment, the resulting expression will still use <code>x</code>.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"1 + 2"</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Apply function="+"&gt;</span>
 <span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
@@ -912,7 +967,7 @@
 <p>There are several limitations to parsing expressions in <code>xform_function</code>.</p>
 <p>Each transformation operates on one data row at a time. For example, it is not possible to compute the mean of an entire feature column in <code>xform_function</code>.</p>
 <p>An expression such as <code>foo(x)</code> is treated as a function <code>foo</code> with argument <code>x</code>. Consequently, passing in an R vector <code><a href="https://rdrr.io/r/base/c.html">c(1,2,3)</a></code> will produce PMML where <code>c</code> is a function and <code>1,2,3</code> are the arguments:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"c(1,2,3)"</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Apply function="c"&gt;</span>
 <span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
@@ -920,7 +975,7 @@
 <span class="co">#&gt;   &lt;Constant dataType="double"&gt;3&lt;/Constant&gt;</span>
 <span class="co">#&gt; &lt;/Apply&gt;</span></code></pre></div>
 <p>We can also see what happens when passing an <code>na.rm</code> argument to <code>prod</code>, as mentioned in an above example:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"prod(1,2,na.rm=FALSE)"</span><span class="op">)</span> <span class="co">#produces incorrect PMML</span>
 <span class="co">#&gt; &lt;Apply function="product"&gt;</span>
 <span class="co">#&gt;   &lt;Constant dataType="double"&gt;1&lt;/Constant&gt;</span>
@@ -933,7 +988,7 @@
 <span class="co">#&gt;   &lt;Constant dataType="double"&gt;2&lt;/Constant&gt;</span>
 <span class="co">#&gt; &lt;/Apply&gt;</span></code></pre></div>
 <p>Additionally, passing in a vector to <code>prod</code> produces incorrect PMML:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 6</span>
 <span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"prod(c(1,2,3))"</span><span class="op">)</span>
@@ -950,7 +1005,7 @@
 <a href="#more-examples-of-functions" class="anchor"></a>More examples of functions</h2>
 <p>The following are additional examples of pmml produced from R expressions.</p>
 <p>Extra parentheses:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"pmmlT(((1+2))*(x))"</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Apply function="pmmlT"&gt;</span>
 <span class="co">#&gt;   &lt;Apply function="*"&gt;</span>
@@ -962,7 +1017,7 @@
 <span class="co">#&gt;   &lt;/Apply&gt;</span>
 <span class="co">#&gt; &lt;/Apply&gt;</span></code></pre></div>
 <p>If-else expressions:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/function_to_pmml.html">function_to_pmml</a></span><span class="op">(</span><span class="st">"if(a&lt;2) {x+3} else if (a&gt;4) {4} else {5}"</span><span class="op">)</span>
 <span class="co">#&gt; &lt;Apply function="if"&gt;</span>
 <span class="co">#&gt;   &lt;Apply function="lessThan"&gt;</span>

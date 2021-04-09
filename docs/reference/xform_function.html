@@ -149,27 +149,27 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>wrap_object</th>
-      <td><p>Output of xform_wrap or another transformation function</p></td>
+      <td><p>Output of xform_wrap or another transformation function.</p></td>
     </tr>
     <tr>
       <th>orig_field_name</th>
-      <td><p>String specifying name(s) of the original data field(s) being used in the transformation</p></td>
+      <td><p>String specifying name(s) of the original data field(s) being used in the transformation.</p></td>
     </tr>
     <tr>
       <th>new_field_name</th>
-      <td><p>Name of the new field created by the transformation</p></td>
+      <td><p>Name of the new field created by the transformation.</p></td>
     </tr>
     <tr>
       <th>new_field_data_type</th>
-      <td><p>Data type of the new field created by the transformation</p></td>
+      <td><p>R data type of the new field created by the transformation ("numeric" or "factor").</p></td>
     </tr>
     <tr>
       <th>expression</th>
-      <td><p>String expression specifying the transformation</p></td>
+      <td><p>String expression specifying the transformation.</p></td>
     </tr>
     <tr>
       <th>map_missing_to</th>
-      <td><p>Value to be given to the transformed variable if the value of any input variable is missing</p></td>
+      <td><p>Value to be given to the transformed variable if the value of any input variable is missing.</p></td>
     </tr>
     </table>
 
@@ -189,6 +189,10 @@ environment.</p>
 <p>The name of the new field is optional (a default name is provided), but an error
 will be thrown if attempting to create a field with a name that already exists in
 the xform_wrap object.</p>
+<p>When <code>new_field_data_type = "numeric"</code>, the <code>DerivedField</code> attributes
+in PMML will be <code>dataType = "double"</code> and <code>optype = "continuous"</code>. 
+When <code>new_field_data_type = "factor"</code>, these attributes will be
+<code>dataType = "string"</code> and <code>optype = "categorical"</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='xform_wrap.html'>xform_wrap</a></code></p></div>
