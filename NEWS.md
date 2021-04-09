@@ -1,5 +1,6 @@
 # pmml 2.4.0.9000
 * `pmml()` now has a `model_version` parameter that can be used to add a `modelVersion` attribute to the PMML Header.
+* `xform_function()` now supports `"numeric"` and `"factor"` `new_field_data_type`.
 
 
 # pmml 2.4.0
