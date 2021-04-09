@@ -72,6 +72,14 @@ test_that("xform_function preserves factor names factor input is unchanged", {
   
   expect_equal(levels(iris_box_4$data$Species_transf), levels(iris_box_4$data$Species))
   
+  fit <- lm(Sepal.Width ~ Species_transf, data = iris_box_4$data)
+  p_fit <- pmml(fit, transforms = iris_box_4)
+  
+  # The value attribute in RegressionTable should have proper level names, not integers
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[1]], "value"), "setosa")
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[2]], "value"), "versicolor")
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[3]], "value"), "virginica")
+  
 })
 
 test_that("xform_function preserves factor names when output is a factor", {
@@ -85,6 +93,13 @@ test_that("xform_function preserves factor names when output is a factor", {
   
   expect_equal(levels(iris_box_4a$data$Sepal.Length_transf), c("level_A", "level_B", "level_C"))
   
+  fit <- lm(Sepal.Width ~ Sepal.Length_transf, data = iris_box_4a$data)
+  p_fit <- pmml(fit, transforms = iris_box_4a)
+  
+  # The value attribute in RegressionTable should have proper level names, not integers
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[1]], "value"), "level_A")
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[2]], "value"), "level_B")
+  expect_equal(xmlGetAttr(p_fit[[3]][[4]][[3]], "value"), "level_C")
 })
 
 
