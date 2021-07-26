@@ -1,0 +1,8 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  packages_and_functions: packages_and_functions.html
+  xform_function: xform_function.html
+last_built: 2021-07-26T23:34Z
+
