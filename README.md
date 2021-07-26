@@ -7,6 +7,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pmml)](https://cran.r-project.org/package=pmml)
+[![R-CMD-check](https://github.com/SoftwareAG/r-pmml/workflows/R-CMD-check/badge.svg)](https://github.com/SoftwareAG/r-pmml/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/SoftwareAG/r-pmml/branch/master/graph/badge.svg)](https://codecov.io/gh/SoftwareAG/r-pmml?branch=master)
 <!-- badges: end -->
