@@ -67,3 +67,13 @@ test_that("xform_discretize produces correct discretization for a closed right i
   f <- iris_box$data$dis_pl[iris_box$data$Petal.Length == 4]
   expect_equal(as.numeric(levels(f))[f], c(4, 4, 4, 4, 4)) # test that value 4 is transformed to 4
 })
+
+test_that("xform_discretize works with table from .csv file", {
+  # Example from documentation
+  iris_box <- xform_wrap(iris)
+  
+  expect_error(xform_discretize(iris_box,
+                                xform_info = "[Sepal.Length -> dsl][double -> string]",
+                                table = "intervals.csv", map_missing_to = "0"),
+               NA)
+})
