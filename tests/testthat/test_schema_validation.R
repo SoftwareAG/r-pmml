@@ -147,7 +147,7 @@ test_that("TimeSeries/Arima PMML validates against schema", {
   skip_on_ci()
 
   skip_if_not_installed("forecast")
-  library()
+  # library()
 
   fit <- Arima(WWWusage, order = c(1, 0, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
