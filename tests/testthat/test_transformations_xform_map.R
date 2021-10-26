@@ -41,7 +41,7 @@ test_that("xform_map uses file with xform_info correctly", {
   
   audit_box <- xform_map(audit_box,
                          xform_info = "[Sex -> d_sex][string->integer]",
-                         table = "map_gender.csv", map_missing_to = "0")
+                         table = "map_audit.csv", map_missing_to = "0")
   
   expect_equal(audit_box$data$d_sex[1:5], c(2,1,1,1,1))
   

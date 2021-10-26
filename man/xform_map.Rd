@@ -96,7 +96,7 @@ audit_box <- xform_wrap(audit)
 \dontrun{
 # One of the variables, "Sex", has 2 possible values: "Male"
 # and "Female". If these string values have to be mapped to a
-# numeric value, a file has to becreated, say "MapGender.csv"
+# numeric value, a file has to be created, say "map_audit.csv",
 # whose content is, for example:
 #
 #  Male,1
@@ -105,18 +105,18 @@ audit_box <- xform_wrap(audit)
 # Transform the variable "Gender" to a variable "d_gender"
 # such that:
 #    if Sex = "Male" then d_sex = "1"
-#    if Sex = "Female" then d_sex = "0"
+#    if Sex = "Female" then d_sex = "2"
 #
 # Give "d_sex" the value 0 if the input variable value is
 # missing.
 audit_box <- xform_map(audit_box,
   xform_info = "[Sex -> d_sex][string->integer]",
-  table = "MapGender.csv", map_missing_to = "0"
+  table = "map_audit.csv", map_missing_to = "0"
 )
 }
 # Same as above, with an extra variable, but using data frames.
-# The top 2 rows gives the variable names and their data types.
-# The rest represent the map. So for example, the third row
+# The top 2 rows give the variable names and their data types.
+# The rest represent the map. For example, the third row
 # indicates that when the input variable "Sex" has the value
 # "Male" and the input variable "Employment" has
 # the value "PSLocal", the output variable "d_sex" should have
