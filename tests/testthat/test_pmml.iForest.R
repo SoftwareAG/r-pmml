@@ -6,7 +6,7 @@ test_that("confirm non-existent category is still automatically created by iFore
   skip_on_cran()
   # skip_on_ci()
 
-  # skip_if_not_installed("isofor")
+  skip_if_not_installed("isofor")
   library(isofor)
 
   data(iris)
