@@ -24,6 +24,32 @@ test_that("xform_discretize produces correct field_data and data values", {
   expect_true(iris_box$data$dis_pl[[1]] == 2)
 })
 
+
+
+test_that("PMML with xform_discretize has correct localTransformations", {
+  iris_box <- xform_wrap(iris)
+  t <- list()
+  m <- data.frame(rbind(
+    c("Petal.Length", "dis_pl", "leftInterval", "leftValue", "rightInterval", "rightValue"),
+    c("double", "integer", "string", "double", "string", "double"),
+    c("0)", 0, "open", NA, "Open", 0),
+    c(NA, 1, "closed", 0, "Open", 1),
+    c(NA, 2, "closed", 1, "Open", 2),
+    c(NA, 3, "closed", 2, "Open", 3),
+    c(NA, 4, "closed", 3, "Open", 4),
+    c("[4", 5, "closed", 4, "Open", NA)
+  ), stringsAsFactors = TRUE)
+  t[[1]] <- m
+  def <- c(11)
+  mis <- c(22)
+  iris_box <- xform_discretize(iris_box, xform_info = t, default_value = def, map_missing_to = mis)
+  
+  fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
+  fit_pmml <- pmml(fit, transforms = iris_box)
+  expect_equal(toString(fit_pmml[[3]][[3]]), "<LocalTransformations>\n <DerivedField name=\"dis_pl\" dataType=\"double\" optype=\"continuous\">\n  <Discretize field=\"Petal.Length\" mapMissingTo=\"22\" defaultValue=\"11\">\n   <DiscretizeBin binValue=\"0\">\n    <Interval closure=\"openOpen\" rightMargin=\"0\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"1\">\n    <Interval closure=\"closedOpen\" leftMargin=\"0\" rightMargin=\"1\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"2\">\n    <Interval closure=\"closedOpen\" leftMargin=\"1\" rightMargin=\"2\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"3\">\n    <Interval closure=\"closedOpen\" leftMargin=\"2\" rightMargin=\"3\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"4\">\n    <Interval closure=\"closedOpen\" leftMargin=\"3\" rightMargin=\"4\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"5\">\n    <Interval closure=\"closedOpen\" leftMargin=\"4\"/>\n   </DiscretizeBin>\n  </Discretize>\n </DerivedField>\n</LocalTransformations>")
+
+})
+
 test_that("xform_discretize produces correct discretization for a closed left interval", {
   iris_box <- xform_wrap(iris)
   t <- list()
