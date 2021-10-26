@@ -41,7 +41,7 @@ If no input variable name is provided, the original object is returned with
 no renaming performed.
 }
 \examples{
-# Load the standard iris dataset, already built into R
+# Load the standard iris dataset
 data(iris)
 
 # First wrap the data

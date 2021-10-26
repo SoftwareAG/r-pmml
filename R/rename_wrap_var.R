@@ -55,7 +55,7 @@
 #' @keywords manip utilities methods
 #'
 #' @examples
-#' # Load the standard iris dataset, already built into R
+#' # Load the standard iris dataset
 #' data(iris)
 #'
 #' # First wrap the data
