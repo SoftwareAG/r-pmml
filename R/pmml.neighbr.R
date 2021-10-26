@@ -48,7 +48,7 @@
 #' # Train set contains all predicted variables, features, and ID column:
 #' train_set <- iris[1:140, ]
 #'
-#' # Omit predicted variables or ID column from test set:
+#' # Omit predicted variables and ID column from test set:
 #' test_set <- iris[141:150, -c(4, 5, 6)]
 #'
 #' fit <- knn(
