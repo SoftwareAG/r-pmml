@@ -246,7 +246,7 @@ are made clearer in the example below.</p>
 <span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># One of the variables, "Sex", has 2 possible values: "Male"</span>
 <span class='co'># and "Female". If these string values have to be mapped to a</span>
-<span class='co'># numeric value, a file has to becreated, say "MapGender.csv"</span>
+<span class='co'># numeric value, a file has to be created, say "map_audit.csv",</span>
 <span class='co'># whose content is, for example:</span>
 <span class='co'>#</span>
 <span class='co'>#  Male,1</span>
@@ -255,18 +255,18 @@ are made clearer in the example below.</p>
 <span class='co'># Transform the variable "Gender" to a variable "d_gender"</span>
 <span class='co'># such that:</span>
 <span class='co'>#    if Sex = "Male" then d_sex = "1"</span>
-<span class='co'>#    if Sex = "Female" then d_sex = "0"</span>
+<span class='co'>#    if Sex = "Female" then d_sex = "2"</span>
 <span class='co'>#</span>
 <span class='co'># Give "d_sex" the value 0 if the input variable value is</span>
 <span class='co'># missing.</span>
 <span class='va'>audit_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_map</span><span class='op'>(</span><span class='va'>audit_box</span>,
   xform_info <span class='op'>=</span> <span class='st'>"[Sex -&gt; d_sex][string-&gt;integer]"</span>,
-  table <span class='op'>=</span> <span class='st'>"MapGender.csv"</span>, map_missing_to <span class='op'>=</span> <span class='st'>"0"</span>
+  table <span class='op'>=</span> <span class='st'>"map_audit.csv"</span>, map_missing_to <span class='op'>=</span> <span class='st'>"0"</span>
 <span class='op'>)</span>
 <span class='op'>}</span>
 <span class='co'># Same as above, with an extra variable, but using data frames.</span>
-<span class='co'># The top 2 rows gives the variable names and their data types.</span>
-<span class='co'># The rest represent the map. So for example, the third row</span>
+<span class='co'># The top 2 rows give the variable names and their data types.</span>
+<span class='co'># The rest represent the map. For example, the third row</span>
 <span class='co'># indicates that when the input variable "Sex" has the value</span>
 <span class='co'># "Male" and the input variable "Employment" has</span>
 <span class='co'># the value "PSLocal", the output variable "d_sex" should have</span>

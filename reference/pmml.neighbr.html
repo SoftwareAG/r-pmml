@@ -218,7 +218,7 @@ must be left as <code>NULL</code>), sets <code>categoricalScoringMethod</code> t
 <span class='co'># Train set contains all predicted variables, features, and ID column:</span>
 <span class='va'>train_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span>, <span class='op'>]</span>
 
-<span class='co'># Omit predicted variables or ID column from test set:</span>
+<span class='co'># Omit predicted variables and ID column from test set:</span>
 <span class='va'>test_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>141</span><span class='op'>:</span><span class='fl'>150</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
 
 <span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/neighbr/man/knn.html'>knn</a></span><span class='op'>(</span>
