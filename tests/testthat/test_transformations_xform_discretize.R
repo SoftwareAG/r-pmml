@@ -77,3 +77,31 @@ test_that("xform_discretize works with table from .csv file", {
                                 table = "intervals.csv", map_missing_to = "0"),
                NA)
 })
+
+test_that("xform_discretize does not give error when 1st column of data matrix is a factor", {
+  iris2 <- iris
+  iris2[, 6] <- iris2[, 1]
+  colnames(iris2)[6] <- "Sepal.Length"
+  iris2[, 1] <- iris2[, 5]
+  iris2[, 5] <- NULL
+  colnames(iris2)[1] <- "Species"
+  iris_box <- xform_wrap(iris2)
+  
+  t <- list()
+  m <- data.frame(rbind(
+    c("Petal.Length", "dis_pl", "leftInterval", "leftValue", "rightInterval", "rightValue"),
+    c("double", "integer", "string", "double", "string", "double"),
+    c(NA, 0, "open", NA, "Open", 0),
+    c(NA, 1, "closed", 0, "Closed", 1),
+    c(NA, 2, "open", 1, "Closed", 2),
+    c(NA, 3, "open", 2, "Open", 3),
+    c(NA, 4, "closed", 3, "Open", 4),
+    c(NA, 5, "closed", 4, "Open", NA)
+  ))
+  t[[1]] <- m
+  def <- c(11)
+  mis <- c(22)
+  
+  iris_box <- xform_discretize(iris_box, xform_info = t, default_value = def, map_missing_to = mis)
+  expect_equal(iris_box$field_data[6, 11], "discretize")
+})
