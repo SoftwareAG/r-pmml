@@ -1,20 +1,15 @@
-# library(zementisr)
-# library(amap)
-# library(isofor)
 library(clue)
 library(data.table)
 library(glmnet)
 library(ada)
 library(gbm)
 library(caret)
-# library(randomForest)
 library(xgboost)
 library(Matrix)
 library(e1071)
 library(neighbr)
 library(nnet)
 library(kernlab)
-# library(forecast)
 
 
 data(iris)
@@ -135,230 +130,7 @@ xgb_tmp_01_save <- tempfile()
 xgb_tmp_01_dump <- tempfile()
 
 
-# setup({
-#   # Delete any PMML files on Zementis Server
-#   mods <- get_models()
-#   lapply(mods, delete_model)
-# })
-
-
 teardown(unlink(c(xgb_tmp_01_save, xgb_tmp_01_dump), recursive = TRUE))
-
-# test_that("TimeSeriesModel/forecast PMML output matches R", {
-#   skip_on_cran()
-#   skip_on_ci()
-#
-#   # non-seasonal tests - with CLS and CPI
-#   fit <- auto.arima(sunspots) # creates non-seasonal model
-#   p_fit <- pmml(fit, model_name = "arima_auto_01")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_df_2(z_pred$outputs, r_pred)
-#
-#   fit <- auto.arima(JohnsonJohnson) # creates seasonal model
-#   p_fit <- pmml(fit, model_name = "arima_auto_02", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(AirPassengers, order = c(2, 1, 2))
-#   p_fit <- pmml(fit, model_name = "arima_212")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_df_2(z_pred$outputs, r_pred)
-#
-#   fit <- Arima(AirPassengers, order = c(1, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_111")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_df_2(z_pred$outputs, r_pred)
-#
-#   fit <- Arima(WWWusage, order = c(2, 0, 2))
-#   p_fit <- pmml(fit, model_name = "arima_202")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_df_2(z_pred$outputs, r_pred)
-#
-#   # fit <- Arima(WWWusage, order = c(3, 1, 1), include.drift = TRUE)
-#   # p_fit <- pmml(fit, model_name = "arima_311")
-#   # r_pred <- forecast_with_cpi(fit, 20)
-#   # up_stat <- upload_model(p_fit)
-#   # z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   # delete_model(up_stat$model_name)
-#   # expect_equal_df(z_pred$outputs, r_pred)
-#
-#   fit <- Arima(USAccDeaths, order = c(1, 2, 0))
-#   p_fit <- pmml(fit, model_name = "arima_120")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_df_2(z_pred$outputs, r_pred)
-#
-#   # non-seasonal tests with d=2 - expect mismatch
-#   fit <- Arima(AirPassengers, order = c(2, 2, 2))
-#   p_fit <- pmml(fit, model_name = "arima_222")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
-#
-#   fit <- Arima(USAccDeaths, order = c(1, 2, 3))
-#   p_fit <- pmml(fit, model_name = "arima_123")
-#   r_pred <- forecast_with_cpi(fit, 20)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_failure(expect_equal_df_2(z_pred$outputs, r_pred))
-#
-#   # seasonal with CLS
-#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_110011", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 0))
-#   p_fit <- pmml(fit, model_name = "arima_010010", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(0, 1, 0), seasonal = c(0, 1, 2))
-#   p_fit <- pmml(fit, model_name = "arima_010012", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(AirPassengers, order = c(0, 1, 1), seasonal = c(0, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_011011", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 1), seasonal = c(1, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_111111", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 1), seasonal = c(0, 1, 0))
-#   p_fit <- pmml(fit, model_name = "arima_001010", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(sunspots, order = c(1, 0, 0), seasonal = c(1, 0, 0))
-#   p_fit <- pmml(fit, model_name = "arima_100100", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   # expect the following test to fail
-#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-#   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_failure(expect_equal_nn(as.numeric(
-#     z_pred$outputs$Predicted_ts_value[20, ]
-#   ), r_pred))
-#
-#   # tests with seasonal ELS
-#   fit <- Arima(JohnsonJohnson, order = c(1, 1, 0), seasonal = c(0, 0, 1))
-#   p_fit <- pmml(fit, model_name = "arima_110001", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(4, 1, 4), seasonal = c(1, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_414111", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(USAccDeaths, order = c(2, 1, 1), seasonal = c(2, 1, 4))
-#   p_fit <- pmml(fit, model_name = "arima_211214", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(USAccDeaths, order = c(2, 2, 3), seasonal = c(0, 1, 1))
-#   p_fit <- pmml(fit, model_name = "arima_223011", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(USAccDeaths, order = c(2, 0, 0), seasonal = c(2, 0, 0))
-#   p_fit <- pmml(fit, model_name = "arima_200200", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(WWWusage, order = c(3, 0, 3), seasonal = c(3, 0, 3))
-#   p_fit <- pmml(fit, model_name = "arima_303303", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 4), seasonal = c(0, 2, 4))
-#   p_fit <- pmml(fit, model_name = "arima_004024", exact_least_squares = TRUE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   # seasonal model with (0,0,0) non-seasonal component
-#   fit <- Arima(JohnsonJohnson, order = c(0, 0, 0), seasonal = c(0, 2, 4))
-#   p_fit <- pmml(fit, model_name = "arima_000024", exact_least_squares = FALSE)
-#   r_pred <- as.numeric(forecast(fit, h = 20)$mean)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(h_20, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(as.numeric(z_pred$outputs$Predicted_ts_value[20, ]), r_pred)
-#
-#   # state space representation
-# })
-
 
 test_that("AnomalyDetectionModel/iForest PMML output matches R", {
   skip_on_cran()
@@ -1838,24 +1610,29 @@ test_that("NaiveBayesModel/e1071 PMML output matches R", {
 })
 
 
-# test_that("NearestNeighborModel/neighbr PMML output matches R", {
-#   skip_on_cran()
-#   skip_on_ci()
-#
-#   iris_train <- iris[1:140, ]
-#   iris_test <- iris[141:150, -c(4, 5)]
-#   fit <- knn(
-#     train_set = iris_train, test_set = iris_test, k = 3, categorical_target = "Species",
-#     continuous_target = "Petal.Width", comparison_measure = "euclidean"
-#   )
-#   p_fit <- pmml(fit)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
-#   expect_equal_nn(z_pred$outputs$Predicted_Petal.Width, fit$test_set_scores$continuous_target)
-#
-#
+test_that("NearestNeighborModel/neighbr PMML output matches R", {
+  skip_on_cran()
+  skip_on_ci()
+  
+  library(zementisr)
+
+  iris_with_id <- iris
+  iris_with_id$ID <- c(1:150)
+  
+  iris_train <- iris[1:140, ]
+  iris_test <- iris[141:150, -c(4, 5)]
+  fit <- knn(
+    train_set = iris_train, test_set = iris_test, k = 3, categorical_target = "Species",
+    continuous_target = "Petal.Width", comparison_measure = "euclidean"
+  )
+  p_fit <- pmml(fit)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
+  expect_equal_nn(z_pred$outputs$Predicted_Petal.Width, fit$test_set_scores$continuous_target)
+
+# 
 #   iris_with_id <- iris
 #   iris_with_id$ID <- c(1:150)
 #   iris_train <- iris_with_id[1:130, -c(4, 5)]
@@ -1871,84 +1648,83 @@ test_that("NaiveBayesModel/e1071 PMML output matches R", {
 #   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
 #   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
 #   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-#
-#
-#   iris_train <- iris_with_id[1:130, ]
-#   iris_test <- iris_with_id[132:150, -c(5, 6)]
-#   fit <- knn(
-#     train_set = iris_train, test_set = iris_test, k = 5, categorical_target = "Species",
-#     comparison_measure = "squared_euclidean", return_ranked_neighbors = 4, id = "ID"
-#   )
-#   p_fit <- pmml(fit)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
-#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-#
-#
-#   house_votes_nbr <- house_votes
-#   feature_names <- names(house_votes_nbr)[!names(house_votes_nbr) %in% c("Class", "ID")]
-#   for (n in feature_names) {
-#     levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "n"] <- 0
-#     levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "y"] <- 1
-#   }
-#   for (n in feature_names) {
-#     house_votes_nbr[, n] <- as.numeric(levels(house_votes_nbr[, n]))[house_votes_nbr[, n]]
-#   }
-#   house_votes_nbr$ID <- c(1:nrow(house_votes_nbr))
-#
-#
-#   house_votes_train <- house_votes_nbr[1:100, ]
-#   house_votes_test <- house_votes_nbr[212:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-#   fit <- knn(
-#     train_set = house_votes_train, test_set = house_votes_test, k = 7, categorical_target = "Class",
-#     comparison_measure = "jaccard", return_ranked_neighbors = 3, id = "ID"
-#   )
-#   p_fit <- pmml(fit)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
-#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-#
-#
-#   house_votes_train <- house_votes_nbr[1:30, ]
-#   house_votes_test <- house_votes_nbr[105:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-#   fit <- knn(
-#     train_set = house_votes_train, test_set = house_votes_test, k = 4, categorical_target = "Class",
-#     comparison_measure = "simple_matching", return_ranked_neighbors = 4, id = "ID"
-#   )
-#   p_fit <- pmml(fit)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
-#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-#   expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
-#
-#
-#   house_votes_train <- house_votes_nbr[2:90, !names(house_votes_nbr) %in% c("Class")]
-#   house_votes_test <- house_votes_nbr[195:232, !names(house_votes_nbr) %in% c("Class", "ID")]
-#   fit <- knn(
-#     train_set = house_votes_train, test_set = house_votes_test, k = 4, comparison_measure = "tanimoto",
-#     return_ranked_neighbors = 4, id = "ID"
-#   )
-#   p_fit <- pmml(fit)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
-#   expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
-#   expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
-#   expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
-# })
+
+
+  iris_train <- iris_with_id[1:130, ]
+  iris_test <- iris_with_id[132:150, -c(5, 6)]
+  fit <- knn(
+    train_set = iris_train, test_set = iris_test, k = 5, categorical_target = "Species",
+    comparison_measure = "squared_euclidean", return_ranked_neighbors = 4, id = "ID"
+  )
+  p_fit <- pmml(fit)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(iris_test, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Species, fit$test_set_scores$categorical_target)
+  # expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+  # expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+  # expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+
+
+  house_votes_nbr <- house_votes
+  feature_names <- names(house_votes_nbr)[!names(house_votes_nbr) %in% c("Class", "ID")]
+  for (n in feature_names) {
+    levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "n"] <- 0
+    levels(house_votes_nbr[, n])[levels(house_votes_nbr[, n]) == "y"] <- 1
+  }
+  for (n in feature_names) {
+    house_votes_nbr[, n] <- as.numeric(levels(house_votes_nbr[, n]))[house_votes_nbr[, n]]
+  }
+  house_votes_nbr$ID <- c(1:nrow(house_votes_nbr))
+
+  house_votes_train <- house_votes_nbr[1:100, ]
+  house_votes_test <- house_votes_nbr[212:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+  fit <- knn(
+    train_set = house_votes_train, test_set = house_votes_test, k = 7, categorical_target = "Class",
+    comparison_measure = "jaccard", return_ranked_neighbors = 3, id = "ID"
+  )
+  p_fit <- pmml(fit)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
+  # expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+  # expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+  # expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+
+
+  house_votes_train <- house_votes_nbr[1:30, ]
+  house_votes_test <- house_votes_nbr[105:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+  fit <- knn(
+    train_set = house_votes_train, test_set = house_votes_test, k = 4, categorical_target = "Class",
+    comparison_measure = "simple_matching", return_ranked_neighbors = 4, id = "ID"
+  )
+  p_fit <- pmml(fit)
+  up_stat <- upload_model(p_fit)
+  z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+  delete_model(up_stat$model_name)
+  expect_equal_nn(z_pred$outputs$Predicted_Class, fit$test_set_scores$categorical_target)
+  # expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+  # expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+  # expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+  # expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
+
+
+  # house_votes_train <- house_votes_nbr[2:90, !names(house_votes_nbr) %in% c("Class")]
+  # house_votes_test <- house_votes_nbr[195:232, !names(house_votes_nbr) %in% c("Class", "ID")]
+  # fit <- knn(
+  #   train_set = house_votes_train, test_set = house_votes_test, k = 4, comparison_measure = "tanimoto",
+  #   return_ranked_neighbors = 4, id = "ID"
+  # )
+  # p_fit <- pmml(fit)
+  # up_stat <- upload_model(p_fit)
+  # z_pred <- predict_pmml_batch(house_votes_test, up_stat$model_name)
+  # delete_model(up_stat$model_name)
+  # expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
+  # expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
+  # expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+  # expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
+})
 
 
 test_that("NeuralNetwork/nnet PMML output matches R", {
@@ -2136,340 +1912,6 @@ test_that("RegressionModel/nnet PMML output matches R", {
   expect_equal_nn(z_pred$outputs$Probability_setosa, r_pred_prob[, 1], tolerance = 1e-4)
   expect_equal_nn(z_pred$outputs$Probability_versicolor, r_pred_prob[, 2], tolerance = 1e-4)
 })
-
-
-# test_that("SupportVectorMachineModel/e1071 PMML output matches R", {
-#   skip_on_cran()
-#   skip_on_ci()
-# 
-#   fit <- svm(Petal.Width ~ ., data = iris[, 1:4], kernel = "linear")
-#   p_fit <- pmml(fit)
-#   r_pred <- predict(fit, iris[, 1:4])
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris[, 1:4], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$svm_predict_function, r_pred)
-# 
-# 
-#   fit <- svm(Adjusted ~ Age + Income + Hours, data = audit[1:900, ])
-#   p_fit <- pmml(fit)
-#   r_pred <- predict(fit, audit[1:900, ])
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit[1:900, ], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$svm_predict_function, r_pred)
-# 
-# 
-#   fit <- svm(Sex ~ ., data = audit[200:700, 2:9], scale = FALSE)
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, audit[200:700, 2:9]))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit[200:700, 2:9], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Sex, r_pred)
-# 
-# 
-#   audit_logical <- audit[1:800, c(2, 8, 13)]
-#   audit_logical$Adjusted <- as.logical(audit_logical$Adjusted)
-#   fit <- svm(Sex ~ ., data = audit_logical, scale = FALSE)
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, audit_logical))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit_logical, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Sex, r_pred)
-# 
-# 
-#   fit <- svm(as.factor(Adjusted) ~ Age + Income + Deductions + Hours, data = audit[1:800, ])
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, audit[1:800, ]))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit[1:800, ], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred)
-# 
-# 
-#   fit <- svm(as.factor(Adjusted) ~ ., data = audit[1:700, ])
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, audit[1:700, ]))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit[1:700, ], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred)
-# 
-# 
-#   fit <- svm(Marital ~ Income + Deductions, data = audit[1:700, ], kernel = "polynomial")
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, audit[1:700, ]))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit[1:700, ], up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Marital, r_pred)
-# 
-# 
-#   fit <- svm(Species ~ ., data = iris)
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, iris))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, r_pred)
-# 
-# 
-#   fit <- svm(sepal_length ~ ., data = iris_mini_dot)
-#   p_fit <- pmml(fit)
-#   r_pred <- predict(fit, iris_mini_dot)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_mini_dot, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$svm_predict_function, r_pred)
-# 
-# 
-#   fit <- svm(Species ~ ., data = iris, scale = FALSE, probability = TRUE)
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, iris))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, r_pred)
-# 
-# 
-#   fit <- svm(Species ~ ., data = iris, kernel = "linear")
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, iris))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, r_pred)
-# 
-# 
-#   fit <- svm(Species ~ ., data = iris, kernel = "polynomial")
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, iris))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, r_pred)
-# 
-# 
-#   fit <- svm(Species ~ ., data = iris, kernel = "sigmoid")
-#   p_fit <- pmml(fit)
-#   r_pred <- as.character(predict(fit, iris))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Species, r_pred)
-# 
-# 
-# 
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_length->dis_pl][double->integer]",
-#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_width->dis_pw][double->integer]",
-#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_length->dis_sl][double->integer]",
-#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_width->dis_sw][double->integer]",
-#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# 
-# 
-#   box_obj <- xform_wrap(audit)
-#   box_obj <- xform_z_score(box_obj, xform_info = "column2->d_Age")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column7->d_Income")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column9->d_Deductions")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column10->d_Hours")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Age->dd_Age")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Income->dd_Income")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Deductions->dd_Deductions")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Hours->dd_Hours")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Age->ddd_Age")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Income->ddd_Income")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Deductions->ddd_Deductions")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Hours->ddd_Hours")
-#   box_obj <- xform_norm_discrete(box_obj, input_var = "Employment")
-#   box_obj <- xform_map(box_obj,
-#     xform_info = "[Marital-> d_Marital][string->double]",
-#     table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
-#   )
-#   fit <- svm(Adjusted ~ ddd_Age + ddd_Income + ddd_Hours, data = box_obj$data)
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- predict(fit, box_obj$data)
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$svm_predict_function, r_pred)
-# 
-# 
-# 
-#   box_obj <- xform_wrap(audit_factor)
-#   box_obj <- xform_z_score(box_obj, xform_info = "column2->d_Age")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column7->d_Income")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column9->d_Deductions")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column10->d_Hours")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Age->dd_Age")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Income->dd_Income")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Deductions->dd_Deductions")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d_Hours->dd_Hours")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Age->ddd_Age")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Income->ddd_Income")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Deductions->ddd_Deductions")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd_Hours->ddd_Hours")
-#   box_obj <- xform_norm_discrete(box_obj, input_var = "Employment")
-#   box_obj <- xform_map(box_obj,
-#     xform_info = "[Marital-> d_Marital][string->double]",
-#     table = "audit_marital_table.csv", default_value = "-1", map_missing_to = "1"
-#   )
-#   fit <- svm(Adjusted ~ ., data = box_obj$data[, -c(1, 2, 7, 9, 10, 3, 5)])
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred)
-# 
-# 
-#   fit <- svm(as.factor(Adjusted) ~ ddd_Age + ddd_Income + ddd_Deductions + ddd_Hours, data = box_obj$data)
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(audit, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_Adjusted, r_pred)
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_length->dis_pl][double->integer]",
-#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_width->dis_pw][double->integer]",
-#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_length->dis_sl][double->integer]",
-#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_width->dis_sw][double->integer]",
-#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_z_score(box_obj, xform_info = "column1->d1")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column2->d2")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column3->d3")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column4->d4")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d1->dd1")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d2->dd2")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d3->dd3")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d4->dd4")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd1->ddd1")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd2->ddd2")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd3->ddd3")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd4->ddd4")
-#   fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# 
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_z_score(box_obj)
-#   fit <- svm(class ~ derived_petal_length + derived_petal_width + derived_sepal_length + derived_sepal_width,
-#     data = box_obj$data
-#   )
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# 
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_z_score(box_obj, xform_info = "column1->d1")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column2->d2")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column3->d3")
-#   box_obj <- xform_z_score(box_obj, xform_info = "column4->d4")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d1->dd1")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d2->dd2")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d3->dd3")
-#   box_obj <- xform_min_max(box_obj, xform_info = "d4->dd4")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd1->ddd1")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd2->ddd2")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd3->ddd3")
-#   box_obj <- xform_z_score(box_obj, xform_info = "dd4->ddd4")
-#   box_obj <- xform_map(box_obj,
-#     xform_info = "[class->d_class][string->double]",
-#     table = "iris_p_class_table.csv", default_value = "-1", map_missing_to = "1"
-#   )
-#   box_obj <- xform_norm_discrete(box_obj, input_var = "class")
-#   fit <- svm(class ~ ddd1 + ddd2 + ddd3 + ddd4, data = box_obj$data)
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# 
-# 
-# 
-#   box_obj <- xform_wrap(iris_p)
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_length->dis_pl][double->integer]",
-#     table = "iris_discretize_pl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[petal_width->dis_pw][double->integer]",
-#     table = "iris_discretize_pw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_length->dis_sl][double->integer]",
-#     table = "iris_discretize_sl.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   box_obj <- xform_discretize(box_obj,
-#     xform_info = "[sepal_width->dis_sw][double->integer]",
-#     table = "iris_discretize_sw.csv", map_missing_to = "0", default_value = "1"
-#   )
-#   suppressWarnings(fit <- svm(class ~ dis_pl + dis_pw + dis_sl + dis_sw, data = box_obj$data))
-#   p_fit <- pmml(fit, transforms = box_obj)
-#   r_pred <- as.character(predict(fit, box_obj$data))
-#   up_stat <- upload_model(p_fit)
-#   z_pred <- predict_pmml_batch(iris_p, up_stat$model_name)
-#   delete_model(up_stat$model_name)
-#   expect_equal_nn(z_pred$outputs$Predicted_class, r_pred)
-# })
 
 
 test_that("SupportVectorMachineModel/kernlab PMML output matches R", {
