@@ -1664,6 +1664,7 @@ test_that("NearestNeighborModel/neighbr PMML output matches R", {
   # expect_equal_nn(z_pred$outputs$neighbor1, as.character(fit$test_set_scores$neighbor1))
   # expect_equal_nn(z_pred$outputs$neighbor2, as.character(fit$test_set_scores$neighbor2))
   # expect_equal_nn(z_pred$outputs$neighbor3, as.character(fit$test_set_scores$neighbor3))
+  # expect_equal_nn(z_pred$outputs$neighbor4, as.character(fit$test_set_scores$neighbor4))
 
 
   house_votes_nbr <- house_votes
