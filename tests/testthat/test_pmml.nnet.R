@@ -51,19 +51,32 @@ test_that("PMML is exported correctly when input to nnet() is not a formula", {
   data(audit)
   skip("skip until export issue is resolved")
 
-  x <- dat[1:200,c(7,9)] # dat[1:200,c(2,3,4,7)]
-  y <- dat$Adjusted[1:200] #as.data.frame(dat$Adjusted[1:200]) # dat$Adjusted
+  x <- dat[1:200,c(7,9)]
+  y <- dat$Adjusted[1:200]
   fit <- nnet(x = x, y = y, size = 3)
-  pmml_fit <- pmml(fit)
+  pmml_fit <- pmml(fit, trace = FALSE)
 })
 
 test_that("PMML is exported correctly when training data has factors", {
   data(audit)
-  fit <- nnet(Adjusted ~ ., data = audit, size = 3)
+  fit <- nnet(Adjusted ~ ., data = audit, size = 3, trace = FALSE)
   pmml_fit <- pmml(fit)
   
   expect_equal(toString(pmml_fit[[2]][[4]]), "<DataField name=\"Employment\" optype=\"categorical\" dataType=\"string\">\n <Value value=\"Consultant\"/>\n <Value value=\"Private\"/>\n <Value value=\"PSFederal\"/>\n <Value value=\"PSLocal\"/>\n <Value value=\"PSState\"/>\n <Value value=\"SelfEmp\"/>\n <Value value=\"Volunteer\"/>\n</DataField>")
   expect_equal(toString(pmml_fit[[3]][[1]]), "<MiningSchema>\n <MiningField name=\"Adjusted\" usageType=\"predicted\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"ID\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Age\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Employment\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Education\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Marital\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Occupation\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Income\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Sex\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Deductions\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Hours\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Accounts\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n <MiningField name=\"Adjustment\" usageType=\"active\" invalidValueTreatment=\"returnInvalid\"/>\n</MiningSchema>")
+})
+
+test_that("PMML with 1 output neuron for classification is exported correctly", {
+  data(audit)
+  audit_factor <- audit
+  audit_factor$Adjusted <- as.factor(audit_factor$Adjusted)
+  fit <- nnet(Adjusted ~ ., data = audit_factor, size = 3, trace = FALSE)
+  pmml_fit <- pmml(fit)
+  
+  # expect Output element to contain two probability OutputFields
+  expect_equal(toString(pmml_fit[[3]][[2]]), "<Output>\n <OutputField name=\"Predicted_Adjusted\" optype=\"categorical\" dataType=\"string\" feature=\"predictedValue\"/>\n <OutputField name=\"Probability_0\" optype=\"continuous\" dataType=\"double\" feature=\"probability\" value=\"0\"/>\n <OutputField name=\"Probability_1\" optype=\"continuous\" dataType=\"double\" feature=\"probability\" value=\"1\"/>\n</Output>")
+  # expect that the special-case neural layer is created
+  expect_equal(toString(pmml_fit[[3]][[6]]), "<NeuralLayer numberOfNeurons=\"2\" activationFunction=\"threshold\" threshold=\"0.5\">\n <Neuron id=\"82\" bias=\"1.0\">\n  <Con from=\"81\" weight=\"-1.0\"/>\n </Neuron>\n <Neuron id=\"83\" bias=\"0.0\">\n  <Con from=\"81\" weight=\"1.0\"/>\n </Neuron>\n</NeuralLayer>")
 })
 
 
