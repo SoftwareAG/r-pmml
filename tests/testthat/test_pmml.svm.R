@@ -81,7 +81,7 @@ test_that("pmml.svm error when model is one-class svm and formula interface is u
   )
 })
 
-test_that("Output node is formatted correctly for regression", {
+test_that("Output node is formatted correctly for SV regression", {
   data(iris)
   fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
   fit_pmml <- pmml(fit)
