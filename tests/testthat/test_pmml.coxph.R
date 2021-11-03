@@ -33,7 +33,7 @@ test_that("no error for stratified model", {
 
 test_that("Error for multiplicative strata variables", {
   # stratified model clustered on patients
-  data(bladder)
+  # data(bladder)
   bladder1 <- bladder[bladder$enum < 5, ]
   fit3 <- coxph(Surv(stop, event) ~ (rx + size + number) * strata(enum) +
     cluster(id), bladder1)
