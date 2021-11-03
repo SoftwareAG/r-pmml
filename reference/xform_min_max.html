@@ -236,14 +236,14 @@ and <b>high_limit</b> parameters.</p>
 <span class='co'># Repeat the same operation as above, this time using the variable name.</span>
 <span class='va'>iris_box_4</span> <span class='op'>&lt;-</span> <span class='fu'>xform_min_max</span><span class='op'>(</span><span class='va'>iris_box</span>, xform_info <span class='op'>=</span> <span class='st'>"Sepal.Width"</span><span class='op'>)</span>
 
-<span class='co'># Repeat the same operation as above, assign the transformed variable,</span>
+<span class='co'># Repeat the same operation as above, now assigning the transformed variable,</span>
 <span class='co'># "derived_Sepal.Width", the value of 0.5 if the input value of the</span>
 <span class='co'># "Sepal.Width" variable is missing.</span>
 <span class='va'>iris_box_5</span> <span class='op'>&lt;-</span> <span class='fu'>xform_min_max</span><span class='op'>(</span><span class='va'>iris_box</span>, xform_info <span class='op'>=</span> <span class='st'>"Sepal.Width"</span>, <span class='st'>"map_missing_to=0.5"</span><span class='op'>)</span>
 
 <span class='co'># Transform Sepal.Width(the 2nd column) to lie between 2 and 3.</span>
 <span class='co'># The new transformed variable will be given the default name</span>
-<span class='co'># "derived_Sepal.Width"</span>
+<span class='co'># "derived_Sepal.Width".</span>
 <span class='va'>iris_box_6</span> <span class='op'>&lt;-</span> <span class='fu'>xform_min_max</span><span class='op'>(</span><span class='va'>iris_box</span>, xform_info <span class='op'>=</span> <span class='st'>"column2-&gt;[2,3]"</span><span class='op'>)</span>
 
 <span class='co'># Repeat the above transformation, this time the transformed variable</span>
