@@ -1,6 +1,9 @@
-# pmml 2.4.0.9000
+# pmml 2.5.0
+## New Features
 * `pmml()` now has a `model_version` parameter that can be used to add a `modelVersion` attribute to the PMML Header.
 * `xform_function()` now supports `"numeric"` and `"factor"` `new_field_data_type`.
+
+## Bug Fixes
 * `save_pmml()` no longer has the `version` parameter, since `r-pmml` exports PMML compliant with only the latest schema.
 
 

@@ -59,7 +59,7 @@
 #' @seealso \code{\link[pmml]{pmml}}
 #'
 #' @references
-#' \href{https://github.com/Zelazny7/isofor}{isofor package on GitHub}
+#' \href{https://github.com/gravesee/isofor}{isofor package on GitHub}
 #'
 #' @export pmml.iForest
 #' @export

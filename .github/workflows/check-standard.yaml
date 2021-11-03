@@ -69,7 +69,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           remotes::install_version("randomForestSRC", "2.5.0")
           remotes::install_github("alex23lemm/zementisr")
-          remotes::install_github("Zelazny7/isofor")
+          remotes::install_github("gravesee/isofor")
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 

@@ -22,7 +22,7 @@ This vignette lists the packages and model types exported by **pmml**, as well a
 This package supports the following packages and model types:
 
 - Anomaly Detection
-    - [isofor](https://github.com/Zelazny7/isofor): `iForest`
+    - [isofor](https://github.com/gravesee/isofor): `iForest`
     - [e1071](https://CRAN.R-project.org/package=e1071): `svm` with "one-classification" type
 - Clustering
     - [amap](https://CRAN.R-project.org/package=amap): `hclust`

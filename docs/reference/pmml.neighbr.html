@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
       </span>
     </div>
 
@@ -204,78 +204,78 @@ must be left as <code>NULL</code>), sets <code>categoricalScoringMethod</code> t
 <a href='http://dmg.org/pmml/v4-4-1/KNN.html'>PMML KNN specification</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Continuous features with continuous target, categorical target,</span>
-<span class='co'># and neighbor ranking:</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>neighbr</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-
-<span class='co'># Add an ID column to the data for neighbor ranking:</span>
-<span class='va'>iris</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span>
-
-<span class='co'># Train set contains all predicted variables, features, and ID column:</span>
-<span class='va'>train_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span>, <span class='op'>]</span>
-
-<span class='co'># Omit predicted variables and ID column from test set:</span>
-<span class='va'>test_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>141</span><span class='op'>:</span><span class='fl'>150</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span>
-
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/neighbr/man/knn.html'>knn</a></span><span class='op'>(</span>
-  train_set <span class='op'>=</span> <span class='va'>train_set</span>, test_set <span class='op'>=</span> <span class='va'>test_set</span>,
-  k <span class='op'>=</span> <span class='fl'>3</span>,
-  categorical_target <span class='op'>=</span> <span class='st'>"Species"</span>,
-  continuous_target <span class='op'>=</span> <span class='st'>"Petal.Width"</span>,
-  comparison_measure <span class='op'>=</span> <span class='st'>"squared_euclidean"</span>,
-  return_ranked_neighbors <span class='op'>=</span> <span class='fl'>3</span>,
-  id <span class='op'>=</span> <span class='st'>"ID"</span>
-<span class='op'>)</span>
-
-<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-
-
-<span class='co'># Logical features with categorical target and neighbor ranking:</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>neighbr</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"houseVotes84"</span><span class='op'>)</span>
-
-<span class='co'># Remove any rows with N/A elements:</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>houseVotes84</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span><span class='op'>(</span><span class='va'>houseVotes84</span><span class='op'>)</span>, <span class='op'>]</span>
-
-<span class='co'># Change all {yes,no} factors to {0,1}:</span>
-<span class='va'>feature_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Class"</span>, <span class='st'>"ID"</span><span class='op'>)</span><span class='op'>]</span>
-<span class='kw'>for</span> <span class='op'>(</span><span class='va'>n</span> <span class='kw'>in</span> <span class='va'>feature_names</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"n"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-<span class='op'>}</span>
-
-<span class='co'># Change factors to numeric:</span>
-<span class='kw'>for</span> <span class='op'>(</span><span class='va'>n</span> <span class='kw'>in</span> <span class='va'>feature_names</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>]</span>
-<span class='op'>}</span>
-
-<span class='co'># Add an ID column for neighbor ranking:</span>
-<span class='va'>dat</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>)</span>
-
-<span class='co'># Train set contains features, predicted variable, and ID:</span>
-<span class='va'>train_set</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>225</span>, <span class='op'>]</span>
-
-<span class='co'># Test set contains features only:</span>
-<span class='va'>test_set</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>226</span><span class='op'>:</span><span class='fl'>232</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'>%in%</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Class"</span>, <span class='st'>"ID"</span><span class='op'>)</span><span class='op'>]</span>
-
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/neighbr/man/knn.html'>knn</a></span><span class='op'>(</span>
-  train_set <span class='op'>=</span> <span class='va'>train_set</span>, test_set <span class='op'>=</span> <span class='va'>test_set</span>,
-  k <span class='op'>=</span> <span class='fl'>5</span>,
-  categorical_target <span class='op'>=</span> <span class='st'>"Class"</span>,
-  comparison_measure <span class='op'>=</span> <span class='st'>"jaccard"</span>,
-  return_ranked_neighbors <span class='op'>=</span> <span class='fl'>3</span>,
-  id <span class='op'>=</span> <span class='st'>"ID"</span>
-<span class='op'>)</span>
-
-<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Continuous features with continuous target, categorical target,</span></span>
+<span class='r-in'><span class='co'># and neighbor ranking:</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>neighbr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add an ID column to the data for neighbor ranking:</span></span>
+<span class='r-in'><span class='va'>iris</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>150</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Train set contains all predicted variables, features, and ID column:</span></span>
+<span class='r-in'><span class='va'>train_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>140</span>, <span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Omit predicted variables and ID column from test set:</span></span>
+<span class='r-in'><span class='va'>test_set</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span><span class='fl'>141</span><span class='op'>:</span><span class='fl'>150</span>, <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/neighbr/man/knn.html'>knn</a></span><span class='op'>(</span></span>
+<span class='r-in'>  train_set <span class='op'>=</span> <span class='va'>train_set</span>, test_set <span class='op'>=</span> <span class='va'>test_set</span>,</span>
+<span class='r-in'>  k <span class='op'>=</span> <span class='fl'>3</span>,</span>
+<span class='r-in'>  categorical_target <span class='op'>=</span> <span class='st'>"Species"</span>,</span>
+<span class='r-in'>  continuous_target <span class='op'>=</span> <span class='st'>"Petal.Width"</span>,</span>
+<span class='r-in'>  comparison_measure <span class='op'>=</span> <span class='st'>"squared_euclidean"</span>,</span>
+<span class='r-in'>  return_ranked_neighbors <span class='op'>=</span> <span class='fl'>3</span>,</span>
+<span class='r-in'>  id <span class='op'>=</span> <span class='st'>"ID"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Logical features with categorical target and neighbor ranking:</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>neighbr</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"houseVotes84"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Remove any rows with N/A elements:</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>houseVotes84</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/stats/complete.cases.html'>complete.cases</a></span><span class='op'>(</span><span class='va'>houseVotes84</span><span class='op'>)</span>, <span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Change all {yes,no} factors to {0,1}:</span></span>
+<span class='r-in'><span class='va'>feature_names</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>[</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Class"</span>, <span class='st'>"ID"</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='kw'>for</span> <span class='op'>(</span><span class='va'>n</span> <span class='kw'>in</span> <span class='va'>feature_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"n"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>0</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>==</span> <span class='st'>"y"</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Change factors to numeric:</span></span>
+<span class='r-in'><span class='kw'>for</span> <span class='op'>(</span><span class='va'>n</span> <span class='kw'>in</span> <span class='va'>feature_names</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='va'>dat</span><span class='op'>[</span>, <span class='va'>n</span><span class='op'>]</span><span class='op'>]</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add an ID column for neighbor ranking:</span></span>
+<span class='r-in'><span class='va'>dat</span><span class='op'>$</span><span class='va'>ID</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Train set contains features, predicted variable, and ID:</span></span>
+<span class='r-in'><span class='va'>train_set</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>225</span>, <span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Test set contains features only:</span></span>
+<span class='r-in'><span class='va'>test_set</span> <span class='op'>&lt;-</span> <span class='va'>dat</span><span class='op'>[</span><span class='fl'>226</span><span class='op'>:</span><span class='fl'>232</span>, <span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Class"</span>, <span class='st'>"ID"</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/neighbr/man/knn.html'>knn</a></span><span class='op'>(</span></span>
+<span class='r-in'>  train_set <span class='op'>=</span> <span class='va'>train_set</span>, test_set <span class='op'>=</span> <span class='va'>test_set</span>,</span>
+<span class='r-in'>  k <span class='op'>=</span> <span class='fl'>5</span>,</span>
+<span class='r-in'>  categorical_target <span class='op'>=</span> <span class='st'>"Class"</span>,</span>
+<span class='r-in'>  comparison_measure <span class='op'>=</span> <span class='st'>"jaccard"</span>,</span>
+<span class='r-in'>  return_ranked_neighbors <span class='op'>=</span> <span class='fl'>3</span>,</span>
+<span class='r-in'>  id <span class='op'>=</span> <span class='st'>"ID"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

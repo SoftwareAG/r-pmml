@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
       </span>
     </div>
 
@@ -215,25 +215,27 @@ in an example below.</p>
     <p><a href='http://stat.ethz.ch/R-manual/R-devel/library/stats/html/glm.html'>R project: Fitting Generalized Linear Models</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span>, family <span class='op'>=</span> <span class='st'>"gaussian"</span><span class='op'>)</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>audit</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Adjusted</span> <span class='op'>~</span> <span class='va'>Age</span> <span class='op'>+</span> <span class='va'>Employment</span> <span class='op'>+</span> <span class='va'>Education</span> <span class='op'>+</span> <span class='va'>Income</span>, data <span class='op'>=</span> <span class='va'>audit</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='va'>logit</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span>
-
-<span class='co'># Create a new 2-class target from a 3-class variable:</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
-<span class='co'># Add a new 2-class target "Species_setosa" before passing it to glm():</span>
-<span class='va'>dat</span><span class='op'>$</span><span class='va'>Species_setosa</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Species_setosa</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>dat</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='va'>logit</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: algorithm did not converge</span></div><div class='output co'>#&gt; <span class='warning'>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</span></div><div class='input'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span>, family <span class='op'>=</span> <span class='st'>"gaussian"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>audit</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Adjusted</span> <span class='op'>~</span> <span class='va'>Age</span> <span class='op'>+</span> <span class='va'>Employment</span> <span class='op'>+</span> <span class='va'>Education</span> <span class='op'>+</span> <span class='va'>Income</span>, data <span class='op'>=</span> <span class='va'>audit</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='va'>logit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create a new 2-class target from a 3-class variable:</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span></span>
+<span class='r-in'><span class='co'># Add a new 2-class target "Species_setosa" before passing it to glm():</span></span>
+<span class='r-in'><span class='va'>dat</span><span class='op'>$</span><span class='va'>Species_setosa</span> <span class='op'>&lt;-</span> <span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span> <span class='op'>==</span> <span class='st'>"setosa"</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/glm.html'>glm</a></span><span class='op'>(</span><span class='va'>Species_setosa</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>dat</span>, family <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/family.html'>binomial</a></span><span class='op'>(</span><span class='va'>logit</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>glm.fit: algorithm did not converge</span>
+<span class='r-wrn co'><span class='r-pr'>#&gt;</span> <span class='warning'>Warning: </span>glm.fit: fitted probabilities numerically 0 or 1 occurred</span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/rm.html'>rm</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>mod</span>, <span class='va'>mod_pmml</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

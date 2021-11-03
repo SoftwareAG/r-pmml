@@ -1,5 +1,5 @@
 ## Test environments
-* Local Linux Mint 20 install, R 3.6.3
+* Local Linux Mint 20 install, R 4.1.1
 * win-builder (release and devel)
 * windows-x86_64-devel, debian-clang-devel, fedora-gcc-devel via rhub
 
@@ -7,4 +7,4 @@
 No errors, warnings, or notes.
 
 ## Additional Note
-* There is an ERROR for r-devel-windows-ix86+x86_64 Flavor. However, the link shown in the error (https://www.r-project.org/nosvn/R.check/r-devel-windows-ix86+x86_64/pmml-00install.html) shows a blank webpage. We are not sure how to fix this.
+* There is an ERROR for r-patched-solaris-x86, shown on this page: https://cloud.r-project.org/web/checks/check_results_pmml.html. This is due to a suggested package ('glmnet') missing from solaris. We are not sure how to fix this.

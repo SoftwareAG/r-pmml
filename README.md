@@ -9,7 +9,7 @@
 status](https://www.r-pkg.org/badges/version/pmml)](https://cran.r-project.org/package=pmml)
 [![R-CMD-check](https://github.com/SoftwareAG/r-pmml/workflows/R-CMD-check/badge.svg)](https://github.com/SoftwareAG/r-pmml/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/SoftwareAG/r-pmml/branch/master/graph/badge.svg)](https://codecov.io/gh/SoftwareAG/r-pmml?branch=master)
+coverage](https://codecov.io/gh/SoftwareAG/r-pmml/branch/master/graph/badge.svg)](https://app.codecov.io/gh/SoftwareAG/r-pmml?branch=master)
 <!-- badges: end -->
 
 ## Overview
@@ -19,7 +19,7 @@ generate data transformations in PMML format.
 
 For a description of the supported packages, see the vignette:
 [Supported Packages and Additional
-Functions](https://softwareag.github.io/r-pmml/articles/packages_and_functions.html).
+Functions](https://open-source.softwareag.com/r-pmml/articles/packages_and_functions.html).
 
 ## Installation
 
@@ -45,7 +45,7 @@ iris_lm_pmml <- pmml(iris_lm)
 # save_pmml(iris_lm_pmml,"iris_lm.pmml")
 ```
 
------
+------------------------------------------------------------------------
 
 Please note that this project is released with a [Contributor Code of
 Conduct](https://github.com/SoftwareAG/r-pmml/blob/master/.github/CODE_OF_CONDUCT.md).
