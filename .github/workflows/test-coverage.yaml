@@ -3,6 +3,7 @@ on:
     branches:
       - main
       - master
+      - 1.5.1_fix_solaris_tests
   pull_request:
     branches:
       - main
