@@ -228,20 +228,20 @@ factor in the predict function is unclear.</p>
     <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-
-<span class='co'># Build iForest model using iris dataset. Create an isolation</span>
-<span class='co'># forest with 10 trees. Sample 30 data points at a time from</span>
-<span class='co'># the iris dataset to fit the trees.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>isofor</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/isofor/man/iForest.html'>iForest</a></span><span class='op'>(</span><span class='va'>iris</span>, nt <span class='op'>=</span> <span class='fl'>10</span>, phi <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span>
-
-<span class='co'># Convert to PMML:</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Build iForest model using iris dataset. Create an isolation</span></span>
+<span class='r-in'><span class='co'># forest with 10 trees. Sample 30 data points at a time from</span></span>
+<span class='r-in'><span class='co'># the iris dataset to fit the trees.</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>isofor</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'>iForest</span><span class='op'>(</span><span class='va'>iris</span>, nt <span class='op'>=</span> <span class='fl'>10</span>, phi <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Convert to PMML:</span></span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

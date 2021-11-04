@@ -227,28 +227,29 @@ between 0 and 100, non-inclusive.</p>
     <p>Dmitriy Bolotov</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://pkg.robjhyndman.com/forecast/'>forecast</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Registered S3 method overwritten by 'quantmod':</span>
-#&gt; <span class='message'>  method            from</span>
-#&gt; <span class='message'>  as.zoo.data.frame zoo </span></div><div class='input'>
-<span class='co'># non-seasonal model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span>
-
-<span class='co'># seasonal model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"JohnsonJohnson"</span><span class='op'>)</span>
-<span class='va'>mod_02</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>JohnsonJohnson</span>,
-  order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>
-<span class='op'>)</span>
-<span class='va'>mod_02_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod_02</span><span class='op'>)</span>
-
-<span class='co'># non-seasonal model exported with Conditional Least Squares</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span>
-<span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span>, ts_type <span class='op'>=</span> <span class='st'>"arima"</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://pkg.robjhyndman.com/forecast/'>forecast</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Registered S3 method overwritten by 'quantmod':</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   method            from</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   as.zoo.data.frame zoo </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># non-seasonal model</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># seasonal model</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"JohnsonJohnson"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_02</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>JohnsonJohnson</span>,</span>
+<span class='r-in'>  order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  seasonal <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_02_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod_02</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># non-seasonal model exported with Conditional Least Squares</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"WWWusage"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://pkg.robjhyndman.com/forecast/reference/Arima.html'>Arima</a></span><span class='op'>(</span><span class='va'>WWWusage</span>, order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mod_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>mod</span>, ts_type <span class='op'>=</span> <span class='st'>"arima"</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

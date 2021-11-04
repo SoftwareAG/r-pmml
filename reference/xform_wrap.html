@@ -176,21 +176,21 @@ values.</p>
     <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Load the standard iris dataset</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-
-<span class='co'># Make a object for the iris dataset to use with</span>
-<span class='co'># transformation functions</span>
-<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_wrap</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-
-<span class='co'># Output only the transformations in PMML format.</span>
-<span class='co'># This example will output just an empty "LocalTransformations"</span>
-<span class='co'># element as no transformations were performed.</span>
-<span class='va'>trans_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='cn'>NULL</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
-
-<span class='co'># The following will also work</span>
-<span class='va'>trans_pmml_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Load the standard iris dataset</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Make a object for the iris dataset to use with</span></span>
+<span class='r-in'><span class='co'># transformation functions</span></span>
+<span class='r-in'><span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_wrap</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Output only the transformations in PMML format.</span></span>
+<span class='r-in'><span class='co'># This example will output just an empty "LocalTransformations"</span></span>
+<span class='r-in'><span class='co'># element as no transformations were performed.</span></span>
+<span class='r-in'><span class='va'>trans_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='cn'>NULL</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The following will also work</span></span>
+<span class='r-in'><span class='va'>trans_pmml_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

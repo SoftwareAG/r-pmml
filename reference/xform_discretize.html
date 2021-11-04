@@ -263,93 +263,93 @@ below.</p>
     <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># First wrap the data</span>
-<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xform_wrap.html'>xform_wrap</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Convert the continuous variable "Sepal.Length" to a discrete</span>
-<span class='co'># variable "dsl". The intervals to be used for this transformation is</span>
-<span class='co'># given in a file, "intervals.csv", whose content is, for example,:</span>
-<span class='co'>#</span>
-<span class='co'>#  5],val1</span>
-<span class='co'>#  (5:6],22</span>
-<span class='co'>#  (6,val2</span>
-<span class='co'>#</span>
-<span class='co'># This will be used to create a discrete variable named "dsl" of dataType</span>
-<span class='co'># "string" such that:</span>
-<span class='co'>#    if(Sepal.length &lt;= 5) then dsl = "val1"</span>
-<span class='co'>#    if((Sepal.Lenght &gt; 5) and (Sepal.Length &lt;= 6)) then dsl = "22"</span>
-<span class='co'>#    if(Sepal.Length &gt; 6) then dsl = "val2"</span>
-<span class='co'>#</span>
-<span class='co'># Give "dsl" the value 0 if the input variable value is missing.</span>
-<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,
-  xform_info <span class='op'>=</span> <span class='st'>"[Sepal.Length -&gt; dsl][double -&gt; string]"</span>,
-  table <span class='op'>=</span> <span class='st'>"intervals.csv"</span>, map_missing_to <span class='op'>=</span> <span class='st'>"0"</span>
-<span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='co'># A different transformation using a list of data frames, of size 1:</span>
-<span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-    <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,
-    <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span>
-  <span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-    <span class='st'>"double"</span>, <span class='st'>"integer"</span>, <span class='st'>"string"</span>, <span class='st'>"double"</span>, <span class='st'>"string"</span>,
-    <span class='st'>"double"</span>
-  <span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"0)"</span>, <span class='fl'>0</span>, <span class='st'>"open"</span>, <span class='cn'>NA</span>, <span class='st'>"Open"</span>, <span class='fl'>0</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='st'>"closed"</span>, <span class='fl'>0</span>, <span class='st'>"Open"</span>, <span class='fl'>1</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span>, <span class='st'>"closed"</span>, <span class='fl'>1</span>, <span class='st'>"Open"</span>, <span class='fl'>2</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='st'>"closed"</span>, <span class='fl'>2</span>, <span class='st'>"Open"</span>, <span class='fl'>3</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>4</span>, <span class='st'>"closed"</span>, <span class='fl'>3</span>, <span class='st'>"Open"</span>, <span class='fl'>4</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"[4"</span>, <span class='fl'>5</span>, <span class='st'>"closed"</span>, <span class='fl'>4</span>, <span class='st'>"Open"</span>, <span class='cn'>NA</span><span class='op'>)</span>
-<span class='op'>)</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
-<span class='co'># Give column names to make it look nice; not necessary!</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,
-  <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span>
-<span class='op'>)</span>
-
-<span class='co'># A textual representation of the data frame is:</span>
-<span class='co'>#   Petal.Length  dis_pl leftInterval leftValue rightInterval rightValue</span>
-<span class='co'># 1 Petal.Length  dis_pl leftInterval leftValue rightInterval rightValue</span>
-<span class='co'># 2       double integer       string    double        string     double</span>
-<span class='co'># 3           0)       0         open      &lt;NA&gt;          Open          0</span>
-<span class='co'># 4         &lt;NA&gt;       1       closed         0          Open          1</span>
-<span class='co'># 5         &lt;NA&gt;       2       closed         1          Open          2</span>
-<span class='co'># 6         &lt;NA&gt;       3       closed         2          Open          3</span>
-<span class='co'># 7         &lt;NA&gt;       4       closed         3          Open          4</span>
-<span class='co'># 8           (4       5       closed         4          Open       &lt;NA&gt;</span>
-<span class='co'>#</span>
-<span class='co'># This is a transformation that defines a derived field 'dis_pl'</span>
-<span class='co'># which has the integer value '0' if the original field</span>
-<span class='co'># 'Petal.Length' has a value less than 0. The derived field has a</span>
-<span class='co'># value '1' if the input is greater than or equal to 0 and less</span>
-<span class='co'># than 1. Note that the values of the 1st column after row 2 have</span>
-<span class='co'># been deliberately given NA values in the middle. This is to</span>
-<span class='co'># show that that column is meant for a textual representation of</span>
-<span class='co'># the transformation as defined for the method involving external</span>
-<span class='co'># files; however in this methodtheir values are not used.</span>
-
-<span class='co'># Add the data frame to a list. The default values and the missing</span>
-<span class='co'># values should be given as a vector, each element of the vector</span>
-<span class='co'># corresponding to the element at the same index in the list. If</span>
-<span class='co'># these values are not given as a vector, they will be used for the</span>
-<span class='co'># first list element only.</span>
-<span class='va'>t</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>m</span>
-<span class='va'>def</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span><span class='op'>)</span>
-<span class='va'>mis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>22</span><span class='op'>)</span>
-<span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,
-  xform_info <span class='op'>=</span> <span class='va'>t</span>, default_value <span class='op'>=</span> <span class='va'>def</span>,
-  map_missing_to <span class='op'>=</span> <span class='va'>mis</span>
-<span class='op'>)</span>
-
-<span class='co'># Make a simple model to see the effect.</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Width</span> <span class='op'>~</span> <span class='va'>.</span>, <span class='va'>iris_box</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># First wrap the data</span></span>
+<span class='r-in'><span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'><a href='xform_wrap.html'>xform_wrap</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'><span class='co'># Convert the continuous variable "Sepal.Length" to a discrete</span></span>
+<span class='r-in'><span class='co'># variable "dsl". The intervals to be used for this transformation is</span></span>
+<span class='r-in'><span class='co'># given in a file, "intervals.csv", whose content is, for example,:</span></span>
+<span class='r-in'><span class='co'>#</span></span>
+<span class='r-in'><span class='co'>#  5],val1</span></span>
+<span class='r-in'><span class='co'>#  (5:6],22</span></span>
+<span class='r-in'><span class='co'>#  (6,val2</span></span>
+<span class='r-in'><span class='co'>#</span></span>
+<span class='r-in'><span class='co'># This will be used to create a discrete variable named "dsl" of dataType</span></span>
+<span class='r-in'><span class='co'># "string" such that:</span></span>
+<span class='r-in'><span class='co'>#    if(Sepal.length &lt;= 5) then dsl = "val1"</span></span>
+<span class='r-in'><span class='co'>#    if((Sepal.Lenght &gt; 5) and (Sepal.Length &lt;= 6)) then dsl = "22"</span></span>
+<span class='r-in'><span class='co'>#    if(Sepal.Length &gt; 6) then dsl = "val2"</span></span>
+<span class='r-in'><span class='co'>#</span></span>
+<span class='r-in'><span class='co'># Give "dsl" the value 0 if the input variable value is missing.</span></span>
+<span class='r-in'><span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,</span>
+<span class='r-in'>  xform_info <span class='op'>=</span> <span class='st'>"[Sepal.Length -&gt; dsl][double -&gt; string]"</span>,</span>
+<span class='r-in'>  table <span class='op'>=</span> <span class='st'>"intervals.csv"</span>, map_missing_to <span class='op'>=</span> <span class='st'>"0"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A different transformation using a list of data frames, of size 1:</span></span>
+<span class='r-in'><span class='va'>t</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,</span>
+<span class='r-in'>    <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='st'>"double"</span>, <span class='st'>"integer"</span>, <span class='st'>"string"</span>, <span class='st'>"double"</span>, <span class='st'>"string"</span>,</span>
+<span class='r-in'>    <span class='st'>"double"</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"0)"</span>, <span class='fl'>0</span>, <span class='st'>"open"</span>, <span class='cn'>NA</span>, <span class='st'>"Open"</span>, <span class='fl'>0</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>1</span>, <span class='st'>"closed"</span>, <span class='fl'>0</span>, <span class='st'>"Open"</span>, <span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>2</span>, <span class='st'>"closed"</span>, <span class='fl'>1</span>, <span class='st'>"Open"</span>, <span class='fl'>2</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='st'>"closed"</span>, <span class='fl'>2</span>, <span class='st'>"Open"</span>, <span class='fl'>3</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='fl'>4</span>, <span class='st'>"closed"</span>, <span class='fl'>3</span>, <span class='st'>"Open"</span>, <span class='fl'>4</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"[4"</span>, <span class='fl'>5</span>, <span class='st'>"closed"</span>, <span class='fl'>4</span>, <span class='st'>"Open"</span>, <span class='cn'>NA</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Give column names to make it look nice; not necessary!</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>m</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"Petal.Length"</span>, <span class='st'>"dis_pl"</span>, <span class='st'>"leftInterval"</span>, <span class='st'>"leftValue"</span>,</span>
+<span class='r-in'>  <span class='st'>"rightInterval"</span>, <span class='st'>"rightValue"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># A textual representation of the data frame is:</span></span>
+<span class='r-in'><span class='co'>#   Petal.Length  dis_pl leftInterval leftValue rightInterval rightValue</span></span>
+<span class='r-in'><span class='co'># 1 Petal.Length  dis_pl leftInterval leftValue rightInterval rightValue</span></span>
+<span class='r-in'><span class='co'># 2       double integer       string    double        string     double</span></span>
+<span class='r-in'><span class='co'># 3           0)       0         open      &lt;NA&gt;          Open          0</span></span>
+<span class='r-in'><span class='co'># 4         &lt;NA&gt;       1       closed         0          Open          1</span></span>
+<span class='r-in'><span class='co'># 5         &lt;NA&gt;       2       closed         1          Open          2</span></span>
+<span class='r-in'><span class='co'># 6         &lt;NA&gt;       3       closed         2          Open          3</span></span>
+<span class='r-in'><span class='co'># 7         &lt;NA&gt;       4       closed         3          Open          4</span></span>
+<span class='r-in'><span class='co'># 8           (4       5       closed         4          Open       &lt;NA&gt;</span></span>
+<span class='r-in'><span class='co'>#</span></span>
+<span class='r-in'><span class='co'># This is a transformation that defines a derived field 'dis_pl'</span></span>
+<span class='r-in'><span class='co'># which has the integer value '0' if the original field</span></span>
+<span class='r-in'><span class='co'># 'Petal.Length' has a value less than 0. The derived field has a</span></span>
+<span class='r-in'><span class='co'># value '1' if the input is greater than or equal to 0 and less</span></span>
+<span class='r-in'><span class='co'># than 1. Note that the values of the 1st column after row 2 have</span></span>
+<span class='r-in'><span class='co'># been deliberately given NA values in the middle. This is to</span></span>
+<span class='r-in'><span class='co'># show that that column is meant for a textual representation of</span></span>
+<span class='r-in'><span class='co'># the transformation as defined for the method involving external</span></span>
+<span class='r-in'><span class='co'># files; however in this methodtheir values are not used.</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Add the data frame to a list. The default values and the missing</span></span>
+<span class='r-in'><span class='co'># values should be given as a vector, each element of the vector</span></span>
+<span class='r-in'><span class='co'># corresponding to the element at the same index in the list. If</span></span>
+<span class='r-in'><span class='co'># these values are not given as a vector, they will be used for the</span></span>
+<span class='r-in'><span class='co'># first list element only.</span></span>
+<span class='r-in'><span class='va'>t</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>m</span></span>
+<span class='r-in'><span class='va'>def</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>mis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>22</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>iris_box</span> <span class='op'>&lt;-</span> <span class='fu'>xform_discretize</span><span class='op'>(</span><span class='va'>iris_box</span>,</span>
+<span class='r-in'>  xform_info <span class='op'>=</span> <span class='va'>t</span>, default_value <span class='op'>=</span> <span class='va'>def</span>,</span>
+<span class='r-in'>  map_missing_to <span class='op'>=</span> <span class='va'>mis</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Make a simple model to see the effect.</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Petal.Width</span> <span class='op'>~</span> <span class='va'>.</span>, <span class='va'>iris_box</span><span class='op'>$</span><span class='va'>data</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span>, transforms <span class='op'>=</span> <span class='va'>iris_box</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

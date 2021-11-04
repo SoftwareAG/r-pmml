@@ -217,13 +217,13 @@ contain information about the used categorical variable.</p>
 Machine Learning Lab (on CRAN)</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Train a support vector machine to perform classification.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>kernlab</span><span class='op'>)</span>
-
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/kernlab/man/ksvm.html'>ksvm</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-
-<span class='va'>model_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>model</span>, dataset <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Train a support vector machine to perform classification.</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>kernlab</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/kernlab/man/ksvm.html'>ksvm</a></span><span class='op'>(</span><span class='va'>Species</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>model_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>model</span>, dataset <span class='op'>=</span> <span class='va'>iris</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

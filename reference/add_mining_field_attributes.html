@@ -199,39 +199,39 @@ impute missing values in a model at different times.</p>
     <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Make a sample model</span>
-<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span>
-<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
-
-<span class='co'># The resulting model has mining fields with no information</span>
-<span class='co'># besides fieldName, dataType and optype. This object is</span>
-<span class='co'># already an xml node (not an external text file), so there</span>
-<span class='co'># is no need to convert it to an xml node object.</span>
-
-<span class='co'># Create data frame with attribute information:</span>
-<span class='va'>attributes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='fl'>1.1</span>, <span class='st'>"asIs"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='fl'>2.2</span>, <span class='st'>"asIs"</span><span class='op'>)</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='cn'>NA</span>, <span class='st'>"asMissing"</span><span class='op'>)</span>,
-  stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"usageType"</span>, <span class='st'>"missingValueReplacement"</span>,
-  <span class='st'>"invalidValueTreatment"</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"Sepal.Width"</span>, <span class='st'>"Petal.Length"</span>,
-  <span class='st'>"Petal.Width"</span>
-<span class='op'>)</span>
-
-<span class='co'># Although not needed in this first try, necessary to easily</span>
-<span class='co'># add new values later:</span>
-<span class='kw'>for</span> <span class='op'>(</span><span class='va'>k</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>attributes</span><span class='op'>[[</span><span class='va'>k</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>[[</span><span class='va'>k</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'>add_mining_field_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>, <span class='va'>attributes</span>, namespace <span class='op'>=</span> <span class='st'>"4_4"</span><span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Make a sample model</span></span>
+<span class='r-in'><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>Sepal.Length</span> <span class='op'>~</span> <span class='va'>.</span>, data <span class='op'>=</span> <span class='va'>iris</span><span class='op'>[</span>, <span class='op'>-</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'><a href='pmml.html'>pmml</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># The resulting model has mining fields with no information</span></span>
+<span class='r-in'><span class='co'># besides fieldName, dataType and optype. This object is</span></span>
+<span class='r-in'><span class='co'># already an xml node (not an external text file), so there</span></span>
+<span class='r-in'><span class='co'># is no need to convert it to an xml node object.</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create data frame with attribute information:</span></span>
+<span class='r-in'><span class='va'>attributes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='fl'>1.1</span>, <span class='st'>"asIs"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='fl'>2.2</span>, <span class='st'>"asIs"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"active"</span>, <span class='cn'>NA</span>, <span class='st'>"asMissing"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  stringsAsFactors <span class='op'>=</span> <span class='cn'>TRUE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"usageType"</span>, <span class='st'>"missingValueReplacement"</span>,</span>
+<span class='r-in'>  <span class='st'>"invalidValueTreatment"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='st'>"Sepal.Width"</span>, <span class='st'>"Petal.Length"</span>,</span>
+<span class='r-in'>  <span class='st'>"Petal.Width"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Although not needed in this first try, necessary to easily</span></span>
+<span class='r-in'><span class='co'># add new values later:</span></span>
+<span class='r-in'><span class='kw'>for</span> <span class='op'>(</span><span class='va'>k</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>attributes</span><span class='op'>[[</span><span class='va'>k</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>attributes</span><span class='op'>[[</span><span class='va'>k</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>fit_pmml</span> <span class='op'>&lt;-</span> <span class='fu'>add_mining_field_attributes</span><span class='op'>(</span><span class='va'>fit_pmml</span>, <span class='va'>attributes</span>, namespace <span class='op'>=</span> <span class='st'>"4_4"</span><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

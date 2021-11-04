@@ -180,13 +180,13 @@ all the parameters must be given as lists of equal length.</p>
     <p>Tridivesh Jena</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Make two nodes, one with attributes</span>
-<span class='va'>two_nodes</span> <span class='op'>&lt;-</span> <span class='fu'>make_output_nodes</span><span class='op'>(</span>
-  name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"OutputField"</span>, <span class='st'>"OutputField"</span><span class='op'>)</span>,
-  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"dbl"</span>, optype <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span>, <span class='cn'>NULL</span><span class='op'>)</span>,
-  expression <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"ln(x)"</span>, <span class='st'>"ln(x/(1-x))"</span><span class='op'>)</span>
-<span class='op'>)</span>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Make two nodes, one with attributes</span></span>
+<span class='r-in'><span class='va'>two_nodes</span> <span class='op'>&lt;-</span> <span class='fu'>make_output_nodes</span><span class='op'>(</span></span>
+<span class='r-in'>  name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"OutputField"</span>, <span class='st'>"OutputField"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  attributes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"dbl"</span>, optype <span class='op'>=</span> <span class='st'>"continuous"</span><span class='op'>)</span>, <span class='cn'>NULL</span><span class='op'>)</span>,</span>
+<span class='r-in'>  expression <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"ln(x)"</span>, <span class='st'>"ln(x/(1-x))"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
