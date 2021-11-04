@@ -18,6 +18,7 @@ test_that("discrete variables are one-hot-encoded", {
   invisible(capture.output(model_fit <- xgboost(
     data = train$data, label = train$label,
     max_depth = 2, eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic",
+    eval_metric = "error",
     save_name = tmp_01_save
   )))
 
@@ -41,7 +42,8 @@ test_that("error is thrown when objective = reg:linear", {
   modX <- xgboost(
     data = as.matrix(iris[, 1:3]), label = iris[, 4],
     max_depth = 2, eta = 1, nthread = 2, nrounds = 2,
-    objective = "reg:linear", verbose = 0,
+    objective = "reg:squarederror", # objective = "reg:linear" is deprecated
+    verbose = 0,
     save_name = tmp_01_save
   )
 
@@ -94,7 +96,8 @@ test_that("error is thrown when objective = binary:logitraw", {
 
   model9 <- xgboost(
     data = as.matrix(ir[, 1:4]), label = as.numeric(ir[, 5]) - 1,
-    max_depth = 3, nrounds = 3, objective = "binary:logitraw", verbose = 0,
+    max_depth = 3, nrounds = 3, objective = "binary:logitraw",
+    eval_metric = "auc", verbose = 0,
     save_name = tmp_01_save
   )
 

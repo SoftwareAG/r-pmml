@@ -1096,7 +1096,9 @@ test_that("MiningModel/xgboost PMML output matches R", {
   invisible(capture.output(fit <- xgboost(
     data = as.matrix(audit_factor[, c(2, 7, 9, 10, 12)]),
     label = as.numeric(audit_factor[, 13]) - 1, max_depth = 2, nrounds = 2,
-    objective = "binary:logistic", save_name = xgb_tmp_01_save
+    objective = "binary:logistic",
+    eval_metric = "error",
+    save_name = xgb_tmp_01_save
   )))
   xgb.dump(fit, xgb_tmp_01_dump)
   p_fit <- pmml(fit,
@@ -1123,6 +1125,7 @@ test_that("MiningModel/xgboost PMML output matches R", {
   invisible(capture.output(fit <- xgboost(
     data = sparse_mat, label = audit[, c("Adjusted")], max_depth = 2,
     eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic",
+    eval_metric = "error",
     save_name = xgb_tmp_01_save
   )))
   xgb.dump(fit, xgb_tmp_01_dump)
@@ -1154,6 +1157,7 @@ test_that("MiningModel/xgboost PMML output matches R", {
     data = as.matrix(iris_string_subsets[, 1:4]),
     label = as.numeric(iris_string_subsets[, 5]) - 1,
     max_depth = 3, eta = 1, nthread = 1, nrounds = 3, objective = "binary:logistic",
+    eval_metric = "auc",
     save_name = xgb_tmp_01_save
   )))
   xgb.dump(fit, xgb_tmp_01_dump)
@@ -1291,6 +1295,7 @@ test_that("MiningModel/xgboost PMML output matches R", {
     data = as.matrix(audit_box_filt),
     label = output_vector, max_depth = 2,
     eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic",
+    eval_metric = "error",
     save_name = xgb_tmp_01_save
   )))
   xgb.dump(fit, xgb_tmp_01_dump)
@@ -1326,6 +1331,7 @@ test_that("MiningModel/xgboost PMML output matches R", {
     data = as.matrix(audit_box_filt),
     label = output_vector, max_depth = 2,
     eta = 1, nthread = 2, nrounds = 2, objective = "binary:logistic",
+    eval_metric = "auc",
     save_name = xgb_tmp_01_save
   )))
   xgb.dump(fit, xgb_tmp_01_dump)
