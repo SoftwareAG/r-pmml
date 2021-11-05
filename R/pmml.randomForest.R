@@ -87,8 +87,7 @@ pmml.randomForest <- function(model,
     if (field$class[[field$name[i]]] == "factor") {
       if (field$name[i] == target) {
         field$levels[[field$name[i]]] <- model$classes
-      }
-      else {
+      } else {
         cat <- c(cat, model$forest$xlevels[field$name[i]])
       }
     }
@@ -100,8 +99,10 @@ pmml.randomForest <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -274,8 +275,7 @@ pmml.randomForest <- function(model,
 .makeNode <- function(n, mod, tinf, fieldInfo) {
   if (n == 1) {
     return(append.XMLNode(xmlNode("Node", attrs = c(id = 1)), xmlNode("True")))
-  }
-  else {
+  } else {
     side <- 2
     if (n / 2 == floor(n / 2)) {
       side <- 1

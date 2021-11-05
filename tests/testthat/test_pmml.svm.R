@@ -85,7 +85,6 @@ test_that("Output node is formatted correctly for SV regression", {
   data(iris)
   fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
   fit_pmml <- pmml(fit)
-  
+
   expect_equal(toString(fit_pmml[[3]][[2]]), "<Output>\n <OutputField name=\"predictedValue\" feature=\"predictedValue\" dataType=\"double\" optype=\"continuous\"/>\n <OutputField name=\"svm_predict_function\" feature=\"transformedValue\" dataType=\"double\" optype=\"continuous\">\n  <Apply function=\"+\">\n   <Apply function=\"*\">\n    <FieldRef field=\"predictedValue\"/>\n    <Constant>-0.828066127977863</Constant>\n   </Apply>\n   <Constant>5.84333333333333</Constant>\n  </Apply>\n </OutputField>\n</Output>")
-  
 })

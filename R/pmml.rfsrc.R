@@ -49,7 +49,6 @@
 #' \emph{Cleveland Clinic Technical Report}.
 #' }
 #' @examples
-#'
 #' \dontrun{
 #' library(randomForestSRC)
 #'
@@ -118,8 +117,10 @@ pmml.rfsrc <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -391,8 +392,7 @@ pmml.rfsrc <- function(model,
     rsfNode <- xmlNode("Node", attrs = c(score = "HazardFunction", id = ident))
     rsfNode <- append.xmlNode(rsfNode, extensionNode)
     terminalFlag <- TRUE
-  }
-  else if (fwdSplitParameter != 0) {
+  } else if (fwdSplitParameter != 0) {
     rsfNode <- xmlNode("Node")
 
     terminalFlag <- FALSE

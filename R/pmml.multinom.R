@@ -90,8 +90,7 @@ pmml.multinom <- function(model,
       numfac <- numfac + 1
       if (field$name[i] == target) {
         field$levels[[field$name[i]]] <- model$lev
-      }
-      else {
+      } else {
         field$levels[[field$name[i]]] <- model$xlevels[[field$name[i]]]
       }
     }
@@ -108,8 +107,10 @@ pmml.multinom <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, 
-                                           model_version, app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright,
+    model_version, app_name
+  ))
 
   # PMML -> DataDictionary
 

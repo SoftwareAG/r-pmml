@@ -46,8 +46,8 @@
 #' @export
 make_values <- function(value = NULL, displayValue = NULL, property = NULL, namespace = "4_4") {
   namespace <- .getNamespace(namespace)
-  if ((length(value) != length(displayValue)) || (length(value) != length(property))
-  || (length(displayValue) != length(property))) {
+  if ((length(value) != length(displayValue)) || (length(value) != length(property)) ||
+    (length(displayValue) != length(property))) {
     stop("all parameters must have same length.")
   }
 

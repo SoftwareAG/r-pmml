@@ -529,8 +529,7 @@ xform_discretize <-
       newmatrixcol <- rep(as.numeric(default), nrow(newBoxData$data))
     } else if (dataType == "boolean") {
       newcol <- rep(as.logical(default), nrow(newBoxData$data))
-    }
-    else {
+    } else {
       newcol <- rep(default, nrow(newBoxData$data))
       newmatrixcol <- rep(default, nrow(newBoxData$data))
     }
@@ -540,8 +539,7 @@ xform_discretize <-
       newmatrixcol <- rep(as.numeric(missingValue), nrow(newBoxData$data))
     } else if (missingValue == "boolean") {
       newcol <- rep(as.logical(missingValue), nrow(newBoxData$data))
-    }
-    else {
+    } else {
       newcol <- rep(missingValue, nrow(newBoxData$data))
       newmatrixcol <- rep(missingValue, nrow(newBoxData$data))
     }

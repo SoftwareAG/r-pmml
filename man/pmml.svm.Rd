@@ -116,7 +116,6 @@ integer class.
 }
 
 \examples{
-
 \dontrun{
 library(e1071)
 data(iris)

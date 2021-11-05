@@ -39,9 +39,9 @@
 #' The name of the new field is optional (a default name is provided), but an error
 #' will be thrown if attempting to create a field with a name that already exists in
 #' the xform_wrap object.
-#' 
+#'
 #' When \code{new_field_data_type = "numeric"}, the \code{DerivedField} attributes
-#' in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}. 
+#' in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}.
 #' When \code{new_field_data_type = "factor"}, these attributes will be
 #' \code{dataType = "string"} and \code{optype = "categorical"}.
 #'
@@ -83,13 +83,12 @@
 #' @export
 xform_function <- function(wrap_object, orig_field_name, new_field_name = "newField",
                            new_field_data_type = "numeric", expression, map_missing_to = NA) {
-  
-  if (!(new_field_data_type %in% c("numeric", "factor"))){
+  if (!(new_field_data_type %in% c("numeric", "factor"))) {
     stop('new_field_data_type must be "numeric" or "factor".')
   }
-  
+
   wrap_object$data$new_field_name <- NA
-  
+
 
   parsed_text <- parse(text = expression)
 
@@ -100,22 +99,22 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
     for (n in 1:length(wrap_object$data$new_field_name)) {
       boxrow <- wrap_object$data[n, ]
       wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
-    } 
+    }
   } else { # new_field_data_type == "factor"
     for (n in 1:length(wrap_object$data$new_field_name)) {
       boxrow <- wrap_object$data[n, ]
       wrap_object$data$new_field_name[n] <- toString(eval(parsed_text, boxrow))
-    } 
+    }
   }
-    
-    
+
+
   # for (n in 1:length(wrap_object$data$new_field_name)) {
   #   boxrow <- wrap_object$data[n, ]
   #   wrap_object$data$new_field_name[n] <- eval(parsed_text, boxrow)
   # }
 
   # Change class of new column to match new_field_data_type
-  if(!(class(wrap_object$data$new_field_name) == new_field_data_type)) {
+  if (!(class(wrap_object$data$new_field_name) == new_field_data_type)) {
     if (new_field_data_type == "numeric") {
       wrap_object$data$new_field_name <- as.numeric(wrap_object$data$new_field_name)
     } else { # else convert to factor
@@ -149,11 +148,11 @@ xform_function <- function(wrap_object, orig_field_name, new_field_name = "newFi
   #
   # newrow <- data.frame(temprow, stringsAsFactors = TRUE)
   # colnames(newrow) <- colnames(wrap_object$field_data)
-  
+
   # if temprow's dataType is not a factor level in wrap_object$field_data$dataType, add it
-  if (!(unname(temprow['dataType']) %in% levels(wrap_object$field_data$dataType))) {
+  if (!(unname(temprow["dataType"]) %in% levels(wrap_object$field_data$dataType))) {
     num_dataType_levels <- length(levels(wrap_object$field_data$dataType))
-    levels(wrap_object$field_data$dataType)[num_dataType_levels+1] <- unname(temprow['dataType'])
+    levels(wrap_object$field_data$dataType)[num_dataType_levels + 1] <- unname(temprow["dataType"])
   }
   wrap_object$field_data <- rbind(wrap_object$field_data, temprow)
 

@@ -153,8 +153,7 @@ pmml.lm <- function(model,
         normalizationMethod = "softmax"
       )
     )
-  }
-  else if (model.type == "poisson") {
+  } else if (model.type == "poisson") {
     the.model <- xmlNode("RegressionModel",
       attrs = c(
         modelName = model_name,
@@ -163,8 +162,7 @@ pmml.lm <- function(model,
         normalizationMethod = "exp"
       )
     )
-  }
-  else if (model.type == "gaussian") {
+  } else if (model.type == "gaussian") {
     the.model <- xmlNode("RegressionModel",
       attrs = c(
         modelName = model_name,
@@ -172,8 +170,7 @@ pmml.lm <- function(model,
         algorithmName = "glm"
       )
     )
-  }
-  else if (model.type == "lm") {
+  } else if (model.type == "lm") {
     # The original code for linear regression models.
     the.model <- xmlNode("RegressionModel",
       attrs = c(
@@ -182,8 +179,7 @@ pmml.lm <- function(model,
         algorithmName = "least squares"
       )
     )
-  }
-  else {
+  } else {
     stop("pmml.lm: Not a supported family object: ", model.type)
   }
 
@@ -223,8 +219,7 @@ pmml.lm <- function(model,
         intercept = "0.0"
       )
     )
-  }
-  else {
+  } else {
     regTable <- xmlNode("RegressionTable",
       attrs = c(intercept = intercept)
     )

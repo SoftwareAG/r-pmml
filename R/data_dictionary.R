@@ -86,16 +86,13 @@
       if (field$class[[field$name[i]]] == "numeric") {
         optypelist[[fname]] <- "continuous"
         datypelist[[fname]] <- "double"
-      }
-      else if (field$class[[field$name[i]]] == "logical") {
+      } else if (field$class[[field$name[i]]] == "logical") {
         optypelist[[fname]] <- "categorical"
         datypelist[[fname]] <- "boolean"
-      }
-      else if (field$class[[field$name[i]]] == "factor") {
+      } else if (field$class[[field$name[i]]] == "factor") {
         optypelist[[fname]] <- "categorical"
         datypelist[[fname]] <- "string"
-      }
-      else {
+      } else {
         disallowed_class <- field$class[[field$name[i]]]
         stop(paste(disallowed_class, "class is not supported for features. Supported classes: numeric, logical, factor."))
       }
@@ -112,8 +109,7 @@
         if (!(.removeAsFactor(field$name[i]) %in% namelist)) {
           namelist <- c(namelist, .removeAsFactor(field$name[i]))
         }
-      }
-      else {
+      } else {
         ofnames <- strsplit(transformed$field_data[field$name[i], "orig_field_name"][[1]], ",")[[1]]
         for (j in 1:length(ofnames)) {
           ofname <- gsub("^\\s+|\\s+$", "", ofnames[j])
@@ -133,8 +129,7 @@
         }
       }
     }
-  }
-  else {
+  } else {
     for (i in begin:number.of.fields) {
       fName <- field$name[i]
       if (length(grep("as\\.factor\\(", field$name[i])) == 1) {
@@ -277,8 +272,7 @@
       } else if (field$class[[field$name[i]]] == "logical") {
         optypelist[[field$name[i]]] <- "categorical"
         datypelist[[field$name[i]]] <- "boolean"
-      }
-      else if (field$class[[field$name[i]]] == "factor") {
+      } else if (field$class[[field$name[i]]] == "factor") {
         optypelist[[field$name[i]]] <- "categorical"
         datypelist[[field$name[i]]] <- "string"
       }

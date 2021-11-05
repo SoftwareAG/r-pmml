@@ -70,8 +70,7 @@ pmml.nnet <- function(model,
   if (model$call[[1]] != "nnet.formula") {
     if (is.null(attributes(model$fitted.values)$dimnames[[2]][1])) {
       numerical <- TRUE
-    }
-    else {
+    } else {
       numerical <- FALSE
       tmp <- c()
       for (i in 1:length(attributes(model$fitted.values)$dimnames[[2]]))
@@ -90,8 +89,7 @@ pmml.nnet <- function(model,
       input.names <- c()
       if (numerical) {
         classes <- c("numeric")
-      }
-      else {
+      } else {
         classes <- c("factor")
       }
       for (i in 1:number.of.inputs)
@@ -122,8 +120,7 @@ pmml.nnet <- function(model,
     target <- field$name[1]
     number.of.fields <- length(terms$term.labels) + 1
     number.of.inputs <- length(terms$term.labels)
-  }
-  else {
+  } else {
     number.of.fields <- model$n[1] + 1
     number.of.inputs <- model$n[1]
     target <- "y"
@@ -192,8 +189,10 @@ pmml.nnet <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -204,8 +203,7 @@ pmml.nnet <- function(model,
 
   if (model$n[length(model$n)] == 1 && field$class[[field$name[1]]] == "factor") {
     temp <- number.of.neural.layers + 1
-  }
-  else {
+  } else {
     temp <- number.of.neural.layers
   }
 
@@ -218,8 +216,7 @@ pmml.nnet <- function(model,
         activationFunction = "logistic"
       )
     )
-  }
-  else {
+  } else {
     the.model <- xmlNode("NeuralNetwork",
       attrs = c(
         modelName = model_name,
@@ -293,8 +290,7 @@ pmml.nnet <- function(model,
             neuralInputs <- append.XMLNode(neuralInputs, neuralInputNode)
           }
       }
-    }
-    else {
+    } else {
       neuralInputNode <- xmlNode("NeuralInput",
         attrs = c(id = as.numeric(input_count))
       )
@@ -342,8 +338,7 @@ pmml.nnet <- function(model,
           neuralLayerNode <- xmlNode("NeuralLayer",
             attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
           )
-        }
-        else if (model$softmax) {
+        } else if (model$softmax) {
           neuralLayerNode <- xmlNode("NeuralLayer",
             attrs = c(
               numberOfNeurons = as.numeric(number.of.neurons),
@@ -351,22 +346,19 @@ pmml.nnet <- function(model,
               normalizationMethod = "softmax"
             )
           )
-        }
-        else if (linearOutputUnits) {
+        } else if (linearOutputUnits) {
           neuralLayerNode <- xmlNode("NeuralLayer",
             attrs = c(
               numberOfNeurons = as.numeric(number.of.neurons),
               activationFunction = "identity"
             )
           )
-        }
-        else {
+        } else {
           neuralLayerNode <- xmlNode("NeuralLayer",
             attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
           )
         }
-      }
-    else # Hidden layer.
+      } else # Hidden layer.
     {
       neuralLayerNode <- xmlNode("NeuralLayer",
         attrs = c(numberOfNeurons = as.numeric(number.of.neurons))
@@ -518,8 +510,7 @@ pmml.nnet <- function(model,
       )
 
       derivedFieldNode <- append.XMLNode(derivedFieldNode, normDiscreteNode)
-    }
-    else # Regression.
+    } else # Regression.
     {
       name <- field$name[1]
       fieldName <- paste("derivedNO_", name, sep = "")

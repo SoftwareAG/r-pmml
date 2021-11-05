@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.0.9000</span>
       </span>
     </div>
 
@@ -129,9 +129,29 @@
       <small>Source: <a href='https://github.com/SoftwareAG/r-pmml/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pmml-2509000" class="section level1">
+<h1 class="page-header" data-toc-text="2.5.0.9000">
+<a href="#pmml-2509000" class="anchor"></a>pmml 2.5.0.9000<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li>Fixed tests failing on CRAN Package Check Issue Kinds (M1mac and noLD) after release of 2.5.0.</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<ul>
+<li>
+<code>eval_metric</code> is now explicitly set in <code>xgboost</code> tests to avoid warning messages.</li>
+</ul>
+</div>
+</div>
     <div id="pmml-250" class="section level1">
 <h1 class="page-header" data-toc-text="2.5.0">
-<a href="#pmml-250" class="anchor"></a>pmml 2.5.0<small> Unreleased </small>
+<a href="#pmml-250" class="anchor"></a>pmml 2.5.0<small> 2021-11-04 </small>
 </h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
@@ -143,9 +163,9 @@
 <code><a href="../reference/xform_function.html">xform_function()</a></code> now supports <code>"numeric"</code> and <code>"factor"</code> <code>new_field_data_type</code>.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/save_pmml.html">save_pmml()</a></code> no longer has the <code>version</code> parameter, since <code>r-pmml</code> exports PMML compliant with only the latest schema.</li>
@@ -173,9 +193,9 @@
 <li>Package now exports PMML with schema version 4.4.1.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/xform_function.html">xform_function()</a></code> no longer creates an unnecessary <code>"NA"</code> level in <code>field_data$dataType</code>.</li>
@@ -188,9 +208,9 @@
 <h1 class="page-header" data-toc-text="2.3.1">
 <a href="#pmml-231" class="anchor"></a>pmml 2.3.1<small> 2020-04-22 </small>
 </h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/pmml.xgb.Booster.html">pmml.xgb.Booster()</a></code> no longer switches probabilities for <code>"binary:logistic"</code> objective function.</li>
@@ -212,9 +232,9 @@
 <li>The <code>exact_least_squares</code> parameter in <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> is now deprecated. In a future release, all exports where <code>ts_type = "arima"</code> will be exported with the Exact Least Squares method.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
 <ul>
 <li>Package is now compliant with the <code>stringsAsFactors</code> change in R 4.0.0.</li>
 </ul>
@@ -293,9 +313,9 @@
 </li>
 </ul>
 </div>
-<div id="other-changes-1" class="section level2">
+<div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
 <li><p><code>pmml.iForest</code> now uses attribute <code>sampleDataSize</code> instead of element <code>ParameterList</code> to store the <code>model$phi</code> value.</p></li>
@@ -538,9 +558,9 @@
 <code>Initialize()</code> has been made internal.</li>
 </ul>
 </div>
-<div id="other-changes-2" class="section level2">
+<div id="other-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-3" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>All documentation is created with roxygen.</p></li>
 <li><p>Documentation is now uniform across different exporters.</p></li>

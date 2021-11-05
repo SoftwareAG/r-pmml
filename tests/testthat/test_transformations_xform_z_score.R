@@ -24,24 +24,23 @@ test_that("PMML with xform_z_score has correct localTransformations", {
   # linear regression
   fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
   fit_pmml <- pmml(fit, transforms = iris_box)
-  
+
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "name"), "derived_Sepal.Width")
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "dataType"), "double")
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "optype"), "continuous")
-  
+
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "field"), "Sepal.Width")
-  
+
   # one-class svm
   library(e1071)
   fit_2 <- svm(iris_box$data[, 6:7], y = NULL, type = "one-classification")
   fit_pmml_2 <- pmml(fit_2, dataset = iris_box$data[, 6:7], transforms = iris_box)
-  
+
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "name"), "derived_Sepal.Width")
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "dataType"), "double")
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "optype"), "continuous")
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]][[1]], "field"), "Sepal.Width")
-  
+
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]], "name"), "derived_Sepal.Length")
   expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]][[1]], "field"), "Sepal.Length")
-  
-  })
+})

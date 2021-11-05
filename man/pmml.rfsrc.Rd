@@ -51,7 +51,6 @@ printing binary trees.
 The \pkg{pmml} package supports randomSurvivalForest up to version 2.5.0.
 }
 \examples{
-
 \dontrun{
 library(randomForestSRC)
 

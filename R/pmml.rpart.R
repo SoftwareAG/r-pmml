@@ -107,8 +107,7 @@ pmml.rpart <- function(model,
     leaves <- frame$var == "<leaf>"
     used <- unique(frame$var[!leaves])
     inactive <- setdiff(setdiff(levels(used), used), "<leaf>")
-  }
-  else {
+  } else {
     inactive <- NULL
   }
 
@@ -118,8 +117,10 @@ pmml.rpart <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -143,7 +144,8 @@ pmml.rpart <- function(model,
   # PMML -> TreeModel -> Output
 
   the.model <- append.XMLNode(the.model, .pmmlOutput(field, target, switch(function.name,
-    classification = "categorical", regression = "continuous"
+    classification = "categorical",
+    regression = "continuous"
   )))
 
   # PMML -> TreeModel -> LocalTransformations -> DerivedField -> NormContiuous
@@ -193,12 +195,10 @@ pmml.rpart <- function(model,
       if (op == ">=") {
         operator <- c(operator, "greaterOrEqual")
         value <- c(value, substr(label[i], nchar(fieldLabel[i]) + 3, nchar(label[i])))
-      }
-      else if (op == "< ") {
+      } else if (op == "< ") {
         operator <- c(operator, "lessThan")
         value <- c(value, substr(label[i], nchar(fieldLabel[i]) + 3, nchar(label[i])))
-      }
-      else if (substr(op, 1, 1) == "=") {
+      } else if (substr(op, 1, 1) == "=") {
         operator <- c(operator, "isIn")
         value <- c(value, substr(label[i], nchar(fieldLabel[i]) + 2, nchar(label[i])))
       }
@@ -207,8 +207,7 @@ pmml.rpart <- function(model,
       depth, id, count, score, fieldLabel, operator, value,
       model, parent_ii, rows, "right"
     )
-  }
-  else {
+  } else {
     node <- .genBinaryTreeNodes(
       depth, id, count, score, fieldLabel, operator, value,
       model, parent_ii, rows, "right"
@@ -244,8 +243,7 @@ pmml.rpart <- function(model,
         id = id, score = score, recordCount = count,
         defaultChild = childId
       ))
-    }
-  else # Leaf node
+    } else # Leaf node
   {
     node <- xmlNode("Node", attrs = c(id = id, score = score, recordCount = count))
   }
@@ -253,8 +251,7 @@ pmml.rpart <- function(model,
   # Create the predicate for the node.
   if (fieldLabel == "root") {
     predicate <- xmlNode("True")
-  }
-  else if (ff$nsurrogate[parent_ii] > 0) # When the node has surrogate predicates.
+  } else if (ff$nsurrogate[parent_ii] > 0) # When the node has surrogate predicates.
     {
       predicate <- xmlNode("CompoundPredicate", attrs = c(booleanOperator = "surrogate"))
 
@@ -263,8 +260,7 @@ pmml.rpart <- function(model,
 
       # Add the surrogate predicates.
       predicate <- .getSurrogatePredicates(predicate, model, parent_ii, position)
-    }
-  else # When the node does not have surrogate predicates.
+    } else # When the node does not have surrogate predicates.
   {
     # Add the primary predicate.
     predicate <- .getPrimaryPredicates(fieldLabel, op, value)
@@ -281,8 +277,7 @@ pmml.rpart <- function(model,
   if (length(depths) == 1) {
     left <- NULL
     right <- NULL
-  }
-  else {
+  } else {
     split.point <- which(depths[c(-1, -2)] == depths[2]) + 1 # Binary tree
     lb <- 2:split.point
     rb <- (split.point + 1):length(depths)
@@ -311,8 +306,7 @@ pmml.rpart <- function(model,
     predicate <- xmlNode("SimplePredicate",
       attrs = c(field = field, operator = op, value = value)
     )
-  }
-  else if (op == "isIn") {
+  } else if (op == "isIn") {
     predicate <- .getSimpleSetPredicate(field, op, value)
   }
 

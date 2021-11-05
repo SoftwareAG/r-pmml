@@ -102,7 +102,7 @@ pmml.ada <- function(model,
 
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(noTargetFields, transformed = transforms))
 
-  #------------------------------------------------------------- 
+  #-------------------------------------------------------------
   # PMML -> MiningModel
 
   # Even though ADA is a binary classifier, we set the functionName as regression here.

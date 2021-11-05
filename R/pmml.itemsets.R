@@ -36,8 +36,10 @@ pmml.itemsets <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright,
-                                           model_version, app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright,
+    model_version, app_name
+  ))
 
   # PMML -> DataDictionary
   data.dictionary <- xmlNode("DataDictionary", attrs = c(numberOfFields = 2L))

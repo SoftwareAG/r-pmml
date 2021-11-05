@@ -89,8 +89,7 @@ pmml.iForest <- function(model,
   {
     if (is.null(field$levels[[field$name[i]]])) {
       field$class[[field$name[i]]] <- "numeric"
-    }
-    else {
+    } else {
       field$class[[field$name[i]]] <- "factor"
     }
   }
@@ -101,8 +100,10 @@ pmml.iForest <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -284,8 +285,7 @@ pmml.iForest <- function(model,
 .makeANode <- function(n, mod, tinf, fieldInfo) {
   if (n == 1) {
     return(append.XMLNode(xmlNode("Node", attrs = c(id = 1)), xmlNode("True")))
-  }
-  else {
+  } else {
     side <- 2
     if (n / 2 == floor(n / 2)) {
       side <- 1

@@ -101,7 +101,6 @@
 #'   \url{https://www.csie.ntu.edu.tw/~cjlin/libsvm/}
 #'
 #' @examples
-#'
 #' \dontrun{
 #' library(e1071)
 #' data(iris)
@@ -181,8 +180,10 @@ pmml.svm <- function(model,
     #----------------------------------------------------------
     # PMML -> Header
 
-    pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright,
-                                             model_version, app_name))
+    pmml <- append.XMLNode(pmml, .pmmlHeader(
+      description, copyright,
+      model_version, app_name
+    ))
 
     #-----------------------------------------------------------
     # PMML -> DataDictionary
@@ -287,8 +288,10 @@ pmml.svm <- function(model,
     #----------------------------------------------------------
     # PMML -> Header
 
-    pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright,
-                                             model_version, app_name))
+    pmml <- append.XMLNode(pmml, .pmmlHeader(
+      description, copyright,
+      model_version, app_name
+    ))
 
     #-----------------------------------------------------------
     # PMML -> DataDictionary

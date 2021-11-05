@@ -333,8 +333,7 @@
         if (!(.removeAsFactor(field$name[i]) %in% namelist)) {
           namelist <- c(namelist, .removeAsFactor(field$name[i]))
         }
-      }
-      else {
+      } else {
         ofnames <- strsplit(transformed$field_data[field$name[i], "orig_field_name"][[1]], ",")[[1]]
         for (j in 1:length(ofnames)) {
           ofname <- gsub("^\\s+|\\s+$", "", ofnames[j])

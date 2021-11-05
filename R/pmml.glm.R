@@ -170,8 +170,7 @@ pmml.glm <- function(model,
   if (model$call[[1]] == "glm") {
     model.type <- model$family$family
     model.link <- model$family$link
-  }
-  else {
+  } else {
     model.type <- "unknown"
   }
 

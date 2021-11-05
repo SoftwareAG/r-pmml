@@ -144,8 +144,7 @@ pmml <- function(model = NULL,
     } else {
       return(.pmmlLocalTransformations(field, transforms, NULL))
     }
-  }
-  else {
+  } else {
     UseMethod("pmml")
   }
 }

@@ -122,8 +122,10 @@ pmml.gbm <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -455,8 +457,7 @@ pmml.gbm <- function(model,
 .makeNodes <- function(n, mod, tinf, fieldInfo) {
   if (n == 1) {
     return(append.XMLNode(xmlNode("Node", attrs = c(id = 1)), xmlNode("True")))
-  }
-  else {
+  } else {
     side <- 6
     if (n %in% tinf[, 1]) {
       side <- 1

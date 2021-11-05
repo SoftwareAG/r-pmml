@@ -62,8 +62,7 @@
     if (dec >= 2^(n - 1)) {
       bin <- c(bin, 1)
       dec <- dec - 2^(n - 1)
-    }
-    else {
+    } else {
       bin <- c(bin, 0)
     }
     n <- n - 1
@@ -90,54 +89,55 @@
 
 
 .pmmlHeader <- function(description, copyright, model_version, app_name) {
-  
-  if (!is.null(model_version)){
-    if ((!(is.character(model_version))) || !(length(model_version) == 1)){
+  if (!is.null(model_version)) {
+    if ((!(is.character(model_version))) || !(length(model_version) == 1)) {
       stop('model_version must be of type "character" and of length 1.')
     }
   }
 
-  
+
   if (is.null(copyright)) copyright <- .generateCopyright()
-  
+
   # Header Node
-  header <- xmlNode("Header", attrs = c(copyright = copyright,
-                                        description = description,
-                                        modelVersion = model_version))
-  
+  header <- xmlNode("Header", attrs = c(
+    copyright = copyright,
+    description = description,
+    modelVersion = model_version
+  ))
+
   # Header -> Extension for user info
   header <- append.XMLNode(
     header,
     xmlNode("Extension",
-            attrs = c(
-              name = "user",
-              value = sprintf("%s", Sys.info()["user"]),
-              extender = app_name
-            )
+      attrs = c(
+        name = "user",
+        value = sprintf("%s", Sys.info()["user"]),
+        extender = app_name
+      )
     )
   )
-  
+
   # Header -> Application
   header <- append.XMLNode(header, xmlNode("Application",
-                                           attrs = c(
-                                             name = app_name,
-                                             version = toString(packageVersion("pmml"))
-                                           )
+    attrs = c(
+      name = app_name,
+      version = toString(packageVersion("pmml"))
+    )
   ))
-  
+
   # Header -> Timestamp
   header <- append.XMLNode(header, xmlNode("Timestamp", sprintf("%s", Sys.time())))
-  
+
   return(header)
 }
 
 
 # .pmmlHeader <- function(description, copyright, app_name) {
 #   if (is.null(copyright)) copyright <- .generateCopyright()
-# 
+#
 #   # Header Node
 #   header <- xmlNode("Header", attrs = c(copyright = copyright, description = description))
-# 
+#
 #   # Header -> Extension for user info
 #   header <- append.XMLNode(
 #     header,
@@ -149,7 +149,7 @@
 #       )
 #     )
 #   )
-# 
+#
 #   # Header -> Application
 #   header <- append.XMLNode(header, xmlNode("Application",
 #     attrs = c(
@@ -157,10 +157,10 @@
 #       version = toString(packageVersion("pmml"))
 #     )
 #   ))
-# 
+#
 #   # Header -> Timestamp
 #   header <- append.XMLNode(header, xmlNode("Timestamp", sprintf("%s", Sys.time())))
-# 
+#
 #   return(header)
 # }
 
@@ -329,8 +329,7 @@
             if ((dtype == "numeric") || (dtype == "integer") || (dtype == "double")) {
               dtype <- "double"
               otype <- "continuous"
-            }
-            else {
+            } else {
               dtype <- "string"
               otype <- "categorical"
             }
@@ -381,22 +380,24 @@
           } else if (!is.na(inputs[fname, "xform_function"])) {
             origName <- inputs[fname, "orig_field_name"]
             missing <- inputs[fname, "missingValue"]
-            
+
             xform_dataType_r <- as.character(inputs[fname, "dataType"])
-            
-            if(xform_dataType_r == "numeric") {
+
+            if (xform_dataType_r == "numeric") {
               xform_dataType <- "double"
               xform_optype <- "continuous"
             } else {
               xform_dataType <- "string"
               xform_optype <- "categorical"
             }
-            
-            
-            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, 
-                                                        dataType = xform_dataType,
-                                                        optype = xform_optype))
-            
+
+
+            dfNode <- xmlNode("DerivedField", attrs = c(
+              name = fname,
+              dataType = xform_dataType,
+              optype = xform_optype
+            ))
+
             # # previous call that always sets dataType to "double"
             # dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
 
@@ -592,9 +593,7 @@
             if ((dtype == "numeric") || (dtype == "integer") || (dtype == "double")) {
               dtype <- "double"
               otype <- "continuous"
-            }
-
-            else {
+            } else {
               dtype <- "string"
               otype <- "categorical"
             }
@@ -647,20 +646,22 @@
             missing <- inputs[fname, "missingValue"]
 
             xform_dataType_r <- as.character(inputs[fname, "dataType"])
-            
-            if(xform_dataType_r == "numeric") {
+
+            if (xform_dataType_r == "numeric") {
               xform_dataType <- "double"
               xform_optype <- "continuous"
             } else {
               xform_dataType <- "string"
               xform_optype <- "categorical"
             }
-            
-            
-            dfNode <- xmlNode("DerivedField", attrs = c(name = fname, 
-                                                        dataType = xform_dataType,
-                                                        optype = xform_optype))
-            
+
+
+            dfNode <- xmlNode("DerivedField", attrs = c(
+              name = fname,
+              dataType = xform_dataType,
+              optype = xform_optype
+            ))
+
             # # previous call that always sets dataType to "double"
             # dfNode <- xmlNode("DerivedField", attrs = c(name = fname, dataType = "double", optype = "continuous"))
 

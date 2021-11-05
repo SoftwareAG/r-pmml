@@ -335,8 +335,7 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
         newmatrixcol <- rep(as.numeric(default), nrow(newBoxData$data))
       } else if (outDat == "boolean") {
         newcol <- rep(as.logical(default), nrow(newBoxData$data))
-      }
-      else {
+      } else {
         newcol <- rep(default, nrow(newBoxData$data))
         newmatrixcol <- rep(default, nrow(newBoxData$data))
       }
@@ -454,8 +453,7 @@ xform_map <- function(wrap_object, xform_info, table = NA, default_value = NA, m
           newmatrixcol <- rep(as.numeric(default), nrow(newBoxData$data))
         } else if (outDat == "boolean") {
           newcol <- rep(as.logical(default), nrow(newBoxData$data))
-        }
-        else {
+        } else {
           newcol <- rep(default, nrow(newBoxData$data))
           newmatrixcol <- rep(default, nrow(newBoxData$data))
         }

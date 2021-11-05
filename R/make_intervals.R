@@ -48,8 +48,8 @@
 make_intervals <- function(closure = NULL, leftMargin = NULL, rightMargin = NULL, namespace = "4_4") {
   namespace <- .getNamespace(namespace)
 
-  if ((length(closure) != length(leftMargin)) || (length(closure) != length(rightMargin))
-  || (length(leftMargin) != length(rightMargin))) {
+  if ((length(closure) != length(leftMargin)) || (length(closure) != length(rightMargin)) ||
+    (length(leftMargin) != length(rightMargin))) {
     stop("all parameters must have same length.")
   }
 

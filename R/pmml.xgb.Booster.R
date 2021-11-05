@@ -277,8 +277,10 @@ pmml.xgb.Booster <- function(model,
   pmml <- .pmmlRootNode()
 
   # PMML -> Header
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
   pmml <- append.XMLNode(pmml, .pmmlDataDictionary(field, transformed = transforms))

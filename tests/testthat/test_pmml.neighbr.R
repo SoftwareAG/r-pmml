@@ -31,7 +31,7 @@ test_that("pmml.neighbr produces expected elements for function_name=mixed", {
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
   test_set <- iris[141:150, -c(4, 5, 6)]
-  
+
   fit <- knn(
     train_set = train_set, test_set = test_set,
     k = 3,
@@ -41,27 +41,26 @@ test_that("pmml.neighbr produces expected elements for function_name=mixed", {
     return_ranked_neighbors = 3,
     id = "ID"
   )
-  
+
   fit_pmml <- pmml(fit)
-  
+
   # Expect ComparisonMeasure kind to be "distance" and squaredEuclidean
   expect_equal(toString(fit_pmml[[3]][[4]]), "<ComparisonMeasure kind=\"distance\">\n <squaredEuclidean/>\n</ComparisonMeasure>")
   # Expect the inputs to be Sepal.Length, Sepal.Width, and Petal.Length, and compareFunction is "absDiff"
   expect_equal(toString(fit_pmml[[3]][[5]]), "<KNNInputs>\n <KNNInput field=\"Sepal.Length\" compareFunction=\"absDiff\"/>\n <KNNInput field=\"Sepal.Width\" compareFunction=\"absDiff\"/>\n <KNNInput field=\"Petal.Length\" compareFunction=\"absDiff\"/>\n</KNNInputs>")
   # Expect that MiningSchema contains two MiningFields with usageType="predicted"
   expect_equal(toString(fit_pmml[[3]][[1]]), "<MiningSchema>\n <MiningField name=\"Sepal.Length\" usageType=\"active\"/>\n <MiningField name=\"Sepal.Width\" usageType=\"active\"/>\n <MiningField name=\"Petal.Length\" usageType=\"active\"/>\n <MiningField name=\"Species\" usageType=\"predicted\"/>\n <MiningField name=\"Petal.Width\" usageType=\"predicted\"/>\n</MiningSchema>")
-  
 })
 
 test_that("pmml.neighbr produces expected elements for function_name=regression", {
   data(iris)
-  
-  iris <- iris[ , -which(names(iris) %in% c("Species"))]
-  
+
+  iris <- iris[, -which(names(iris) %in% c("Species"))]
+
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
   test_set <- iris[141:150, -c(4, 5, 6)]
-  
+
   fit <- knn(
     train_set = train_set, test_set = test_set,
     k = 3,
@@ -70,9 +69,9 @@ test_that("pmml.neighbr produces expected elements for function_name=regression"
     return_ranked_neighbors = 3,
     id = "ID"
   )
-  
+
   fit_pmml <- pmml(fit)
-  
+
   # Expect ComparisonMeasure kind to be "distance" and euclidean
   expect_equal(toString(fit_pmml[[3]][[4]]), "<ComparisonMeasure kind=\"distance\">\n <euclidean/>\n</ComparisonMeasure>")
   # Expect the inputs to be Sepal.Length, Sepal.Width, and Petal.Length, and compareFunction is "absDiff"
@@ -84,11 +83,11 @@ test_that("pmml.neighbr produces expected elements for function_name=regression"
 
 test_that("pmml.neighbr produces expected elements for function_name=classification", {
   data(iris)
-  
+
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
   test_set <- iris[141:150, -c(5, 6)]
-  
+
   fit <- knn(
     train_set = train_set, test_set = test_set,
     k = 3,
@@ -98,9 +97,9 @@ test_that("pmml.neighbr produces expected elements for function_name=classificat
     return_ranked_neighbors = 3,
     id = "ID"
   )
-  
+
   fit_pmml <- pmml(fit)
-  
+
   # Expect ComparisonMeasure kind to be "distance" and euclidean
   expect_equal(toString(fit_pmml[[3]][[4]]), "<ComparisonMeasure kind=\"distance\">\n <euclidean/>\n</ComparisonMeasure>")
   # Expect the inputs to be Sepal.Length, Sepal.Width, Petal.Length, and Petal.Width, and compareFunction is "absDiff"
@@ -111,13 +110,13 @@ test_that("pmml.neighbr produces expected elements for function_name=classificat
 
 test_that("pmml.neighbr produces expected elements for function_name=clustering", {
   data(iris)
-  
-  iris <- iris[ , -which(names(iris) %in% c("Species"))]
-  
+
+  iris <- iris[, -which(names(iris) %in% c("Species"))]
+
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
   test_set <- iris[141:150, -c(5)]
-  
+
   fit <- knn(
     train_set = train_set, test_set = test_set,
     k = 3,
@@ -127,9 +126,9 @@ test_that("pmml.neighbr produces expected elements for function_name=clustering"
     return_ranked_neighbors = 3,
     id = "ID"
   )
-  
+
   fit_pmml <- pmml(fit)
-  
+
   # Expect ComparisonMeasure kind to be "distance" and euclidean
   expect_equal(toString(fit_pmml[[3]][[4]]), "<ComparisonMeasure kind=\"distance\">\n <euclidean/>\n</ComparisonMeasure>")
   # Expect the inputs to be Sepal.Length, Sepal.Width, Petal.Length, and Petal.Width, and compareFunction is "absDiff"
@@ -146,7 +145,7 @@ test_that("error when transforms are not NULL", {
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
   test_set <- iris[141:150, -c(4, 5, 6)]
-  
+
   fit <- knn(
     train_set = train_set, test_set = test_set,
     k = 3,
@@ -156,13 +155,6 @@ test_that("error when transforms are not NULL", {
     return_ranked_neighbors = 3,
     id = "ID"
   )
-  
+
   expect_error(pmml(fit, transforms = "foo"), "transforms currently not supported for knn models")
 })
-
-
-
-
-
-
-

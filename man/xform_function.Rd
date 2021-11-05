@@ -47,7 +47,7 @@ will be thrown if attempting to create a field with a name that already exists i
 the xform_wrap object.
 
 When \code{new_field_data_type = "numeric"}, the \code{DerivedField} attributes
-in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}. 
+in PMML will be \code{dataType = "double"} and \code{optype = "continuous"}.
 When \code{new_field_data_type = "factor"}, these attributes will be
 \code{dataType = "string"} and \code{optype = "categorical"}.
 }

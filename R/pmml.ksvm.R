@@ -87,8 +87,7 @@ pmml.ksvm <- function(model,
 
   if (field$class[[1]][1] == "numeric") {
     field$function.name <- "regression"
-  }
-  else {
+  } else {
     field$function.name <- "classification"
   }
 
@@ -99,8 +98,7 @@ pmml.ksvm <- function(model,
 
   if (field$function.name == "classification" && model@nclass > 2) {
     number.of.SVMs <- (model@nclass * (model@nclass - 1)) / 2
-  }
-  else {
+  } else {
     number.of.SVMs <- 1
   }
 
@@ -133,8 +131,10 @@ pmml.ksvm <- function(model,
 
   # PMML -> Header
 
-  pmml <- append.XMLNode(pmml, .pmmlHeader(description, copyright, model_version,
-                                           app_name))
+  pmml <- append.XMLNode(pmml, .pmmlHeader(
+    description, copyright, model_version,
+    app_name
+  ))
 
   # PMML -> DataDictionary
 
@@ -256,8 +256,7 @@ pmml.ksvm <- function(model,
           derivedFieldNode
         )
       }
-    }
-    else {
+    } else {
       for (j in seq_len(number.of.scaled))
       {
         if (number.of.scaled == 1) break
@@ -288,8 +287,7 @@ pmml.ksvm <- function(model,
       if (centerValue > 0) {
         normContinuousNode <- append.XMLNode(normContinuousNode, linearNormNode1)
         normContinuousNode <- append.XMLNode(normContinuousNode, linearNormNode2)
-      }
-      else {
+      } else {
         normContinuousNode <- append.XMLNode(normContinuousNode, linearNormNode2)
         normContinuousNode <- append.XMLNode(normContinuousNode, linearNormNode1)
       }
@@ -315,8 +313,7 @@ pmml.ksvm <- function(model,
         description = "Radial basis kernel type"
       )
     )
-  }
-  else {
+  } else {
     if (model@kcall[["kernel"]] == "rbfdot") {
       KernelTypeNode <- xmlNode("RadialBasisKernelType",
         attrs = c(
@@ -324,8 +321,7 @@ pmml.ksvm <- function(model,
           description = "Radial basis kernel type"
         )
       )
-    }
-    else if (model@kcall[["kernel"]] == "polydot") {
+    } else if (model@kcall[["kernel"]] == "polydot") {
       KernelTypeNode <- xmlNode("PolynomialKernelType",
         attrs = c(
           gamma = model@kernelf@kpar$scale,
@@ -334,13 +330,11 @@ pmml.ksvm <- function(model,
           description = "Polynomial kernel type"
         )
       )
-    }
-    else if (model@kcall[["kernel"]] == "vanilladot") {
+    } else if (model@kcall[["kernel"]] == "vanilladot") {
       KernelTypeNode <- xmlNode("LinearKernelType",
         attrs = c(description = "Linear kernel type")
       )
-    }
-    else if (model@kcall[["kernel"]] == "tanhdot") {
+    } else if (model@kcall[["kernel"]] == "tanhdot") {
       KernelTypeNode <- xmlNode("SigmoidKernelType",
         attrs = c(
           gamma = model@kernelf@kpar$scale,
@@ -348,8 +342,7 @@ pmml.ksvm <- function(model,
           description = "Sigmoid kernel type"
         )
       )
-    }
-    else {
+    } else {
       unsupported_kernel <- model@kcall[["kernel"]]
       stop(paste(unsupported_kernel, "kernel is not supported. Supported ksvm kernels: rbfdot, polydot, vanilladot, tanhdot."))
     }
@@ -367,8 +360,7 @@ pmml.ksvm <- function(model,
 
   if (field$function.name == "classification") {
     number.of.SV.entries <- length(model@xmatrix[[1]][1, ])
-  }
-  else {
+  } else {
     number.of.SV.entries <- length(model@xmatrix[1, ])
   }
   ix.matrix <- array(0, dim = c(number.of.SVMs, number.of.SV))
@@ -406,8 +398,7 @@ pmml.ksvm <- function(model,
         }
       }
     }
-  }
-  else
+  } else
   # Regression
   {
     coeff <- kernlab::coef(model)
@@ -467,8 +458,7 @@ pmml.ksvm <- function(model,
           firstFactor <- FALSE
         }
       }
-    }
-    else {
+    } else {
       fieldName <- paste("derived_", terms$term.labels[i], sep = "")
 
       vectorFieldsNode <- xmlNode("FieldRef",
@@ -545,16 +535,14 @@ pmml.ksvm <- function(model,
         SupportVectorMachine <- xmlNode("SupportVectorMachine",
           attrs = c(targetCategory = model@lev[target1[[ix]]], alternateTargetCategory = model@lev[target2[[ix]]])
         )
-      }
-      else
+      } else
       # Binary classification
       {
         SupportVectorMachine <- xmlNode("SupportVectorMachine",
           attrs = c(targetCategory = model@lev[ix], alternateTargetCategory = model@lev[ix + 1])
         )
       }
-    }
-    else
+    } else
     # Regression
     {
       coeff <- kernlab::coef(model)
