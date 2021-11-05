@@ -137,7 +137,15 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
 <ul>
-<li>TODO</li>
+<li>Fixed tests failing on CRAN Package Check Issue Kinds (M1mac and noLD) after release of 2.5.0.</li>
+</ul>
+</div>
+<div id="other-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<ul>
+<li>
+<code>eval_metric</code> is now explicitly set in <code>xgboost</code> tests to avoid warning messages.</li>
 </ul>
 </div>
 </div>
@@ -224,9 +232,9 @@
 <li>The <code>exact_least_squares</code> parameter in <code><a href="../reference/pmml.ARIMA.html">pmml.ARIMA()</a></code> is now deprecated. In a future release, all exports where <code>ts_type = "arima"</code> will be exported with the Exact Least Squares method.</li>
 </ul>
 </div>
-<div id="other-changes" class="section level2">
+<div id="other-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
 <ul>
 <li>Package is now compliant with the <code>stringsAsFactors</code> change in R 4.0.0.</li>
 </ul>
@@ -305,9 +313,9 @@
 </li>
 </ul>
 </div>
-<div id="other-changes-1" class="section level2">
+<div id="other-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-1" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>Application version in PMML Header corresponds to pmml package version.</p></li>
 <li><p><code>pmml.iForest</code> now uses attribute <code>sampleDataSize</code> instead of element <code>ParameterList</code> to store the <code>model$phi</code> value.</p></li>
@@ -550,9 +558,9 @@
 <code>Initialize()</code> has been made internal.</li>
 </ul>
 </div>
-<div id="other-changes-2" class="section level2">
+<div id="other-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-changes-2" class="anchor"></a>Other Changes</h2>
+<a href="#other-changes-3" class="anchor"></a>Other Changes</h2>
 <ul>
 <li><p>All documentation is created with roxygen.</p></li>
 <li><p>Documentation is now uniform across different exporters.</p></li>
