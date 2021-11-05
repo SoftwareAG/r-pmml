@@ -1,4 +1,4 @@
-# pmml 2.5.0.9000
+# pmml 2.5.1
 ## Bug Fixes
 * Fixed tests failing on CRAN Package Check Issue Kinds (M1mac and noLD) after release of 2.5.0.
 

@@ -1,19 +1,17 @@
 ## Test environments
 * Local Linux Mint 20 install, R 4.1.1
 * win-builder (devel)
-* windows-x86_64-devel, debian-clang-devel, fedora-gcc-devel via rhub
+* windows-x86_64-devel, debian-clang-devel, fedora-gcc-devel, solaris-x86-patched via rhub
 
 ## R CMD check results
-No errors, warnings, or notes.
+No errors or warnings.
 
 ## Additional Notes
-* There is an ERROR for r-patched-solaris-x86, shown on this page: https://cloud.r-project.org/web/checks/check_results_pmml.html. This is due to a suggested package ('glmnet') missing from solaris. We are not sure how to fix this.
+There was 1 NOTE:
 
-* There is a NOTE for win-devel, but the word "gravesee" is spelled correctly:
-checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Dmitriy Bolotov <dmitriy.bolotov@softwareag.com>'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Dmitriy Bolotov '
+Days since last update: 1
 
-Possibly misspelled words in DESCRIPTION:
-  gravesee (22:568)
-
+Explanation: After version 2.5.0 was accepted on CRAN on Nov.3, 2021, we were notified of tests failing on the page "CRAN Package Check Issue Kinds" ("M1mac" and "noLD"). This new release (2.5.1) fixes those tests.
 
