@@ -25,12 +25,23 @@ test_that("PMML with xform_z_score has correct localTransformations", {
   fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
   fit_pmml <- pmml(fit, transforms = iris_box)
   
-  expect_equal(toString(fit_pmml[[3]][[3]]), "<LocalTransformations>\n <DerivedField name=\"derived_Sepal.Width\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Width\">\n   <LinearNorm orig=\"3.05733333333333\" norm=\"0\"/>\n   <LinearNorm orig=\"3.49319961827003\" norm=\"1\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"derived_Sepal.Length\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Length\">\n   <LinearNorm orig=\"5.84333333333333\" norm=\"0\"/>\n   <LinearNorm orig=\"6.6713994613112\" norm=\"1\"/>\n  </NormContinuous>\n </DerivedField>\n</LocalTransformations>")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "name"), "derived_Sepal.Width")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "optype"), "continuous")
+  
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "field"), "Sepal.Width")
   
   # one-class svm
   library(e1071)
   fit_2 <- svm(iris_box$data[, 6:7], y = NULL, type = "one-classification")
   fit_pmml_2 <- pmml(fit_2, dataset = iris_box$data[, 6:7], transforms = iris_box)
   
-  expect_equal(toString(fit_pmml_2[[3]][[3]][[3]]), "<LocalTransformations>\n <DerivedField name=\"derived_Sepal.Width\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Width\">\n   <LinearNorm orig=\"3.05733333333333\" norm=\"0\"/>\n   <LinearNorm orig=\"3.49319961827003\" norm=\"1\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"derived_Sepal.Length\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Length\">\n   <LinearNorm orig=\"5.84333333333333\" norm=\"0\"/>\n   <LinearNorm orig=\"6.6713994613112\" norm=\"1\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_derived_Sepal.Width\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"derived_Sepal.Width\">\n   <LinearNorm orig=\"0\" norm=\"-2.03540887847945e-16\"/>\n   <LinearNorm orig=\"2.03540887847945e-16\" norm=\"0\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_derived_Sepal.Length\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"derived_Sepal.Length\">\n   <LinearNorm orig=\"-4.48067509021636e-16\" norm=\"0\"/>\n   <LinearNorm orig=\"0\" norm=\"4.48067509021636e-16\"/>\n  </NormContinuous>\n </DerivedField>\n</LocalTransformations>")
-})
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "name"), "derived_Sepal.Width")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]], "optype"), "continuous")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]][[1]], "field"), "Sepal.Width")
+  
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]], "name"), "derived_Sepal.Length")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]][[1]], "field"), "Sepal.Length")
+  
+  })

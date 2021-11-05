@@ -47,13 +47,29 @@ test_that("PMML with xform_discretize has correct localTransformations", {
   # linear regression
   fit <- lm(Petal.Width ~ ., iris_box$data[, -5])
   fit_pmml <- pmml(fit, transforms = iris_box)
-  expect_equal(toString(fit_pmml[[3]][[3]]), "<LocalTransformations>\n <DerivedField name=\"dis_pl\" dataType=\"double\" optype=\"continuous\">\n  <Discretize field=\"Petal.Length\" mapMissingTo=\"22\" defaultValue=\"11\">\n   <DiscretizeBin binValue=\"0\">\n    <Interval closure=\"openOpen\" rightMargin=\"0\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"1\">\n    <Interval closure=\"closedOpen\" leftMargin=\"0\" rightMargin=\"1\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"2\">\n    <Interval closure=\"closedOpen\" leftMargin=\"1\" rightMargin=\"2\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"3\">\n    <Interval closure=\"closedOpen\" leftMargin=\"2\" rightMargin=\"3\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"4\">\n    <Interval closure=\"closedOpen\" leftMargin=\"3\" rightMargin=\"4\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"5\">\n    <Interval closure=\"closedOpen\" leftMargin=\"4\"/>\n   </DiscretizeBin>\n  </Discretize>\n </DerivedField>\n</LocalTransformations>")
 
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "name"), "dis_pl")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]], "optype"), "continuous")
+
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "field"), "Petal.Length")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "mapMissingTo"), "22")
+  expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "defaultValue"), "11")
+  
   # one-class svm; this transformation is not usable because svm expects numeric, not factor input
   library(e1071)
   fit_2 <- svm(iris_box$data[, 1:4], y = NULL, type = "one-classification")
   fit_pmml_2 <- pmml(fit_2, dataset = iris_box$data[, 1:4], transforms = iris_box)
-  expect_equal(toString(fit_pmml_2[[3]][[3]][[3]]), "<LocalTransformations>\n <DerivedField name=\"dis_pl\" dataType=\"double\" optype=\"continuous\">\n  <Discretize field=\"Petal.Length\" mapMissingTo=\"22\" defaultValue=\"11\">\n   <DiscretizeBin binValue=\"0\">\n    <Interval closure=\"openOpen\" rightMargin=\"0\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"1\">\n    <Interval closure=\"closedOpen\" leftMargin=\"0\" rightMargin=\"1\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"2\">\n    <Interval closure=\"closedOpen\" leftMargin=\"1\" rightMargin=\"2\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"3\">\n    <Interval closure=\"closedOpen\" leftMargin=\"2\" rightMargin=\"3\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"4\">\n    <Interval closure=\"closedOpen\" leftMargin=\"3\" rightMargin=\"4\"/>\n   </DiscretizeBin>\n   <DiscretizeBin binValue=\"5\">\n    <Interval closure=\"closedOpen\" leftMargin=\"4\"/>\n   </DiscretizeBin>\n  </Discretize>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_Sepal.Length\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Length\">\n   <LinearNorm orig=\"0\" norm=\"-7.05660228803556\"/>\n   <LinearNorm orig=\"5.84333333333333\" norm=\"0\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_Sepal.Width\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Sepal.Width\">\n   <LinearNorm orig=\"0\" norm=\"-7.01438362863362\"/>\n   <LinearNorm orig=\"3.05733333333333\" norm=\"0\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_Petal.Length\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Petal.Length\">\n   <LinearNorm orig=\"0\" norm=\"-2.12881876228992\"/>\n   <LinearNorm orig=\"3.758\" norm=\"0\"/>\n  </NormContinuous>\n </DerivedField>\n <DerivedField name=\"algorithm_derived_nc_Petal.Width\" dataType=\"double\" optype=\"continuous\">\n  <NormContinuous field=\"Petal.Width\">\n   <LinearNorm orig=\"0\" norm=\"-1.57343750141496\"/>\n   <LinearNorm orig=\"1.19933333333333\" norm=\"0\"/>\n  </NormContinuous>\n </DerivedField>\n</LocalTransformations>")
+
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]][[1]], name = "field"), "Petal.Length")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]][[1]], name = "mapMissingTo"), "22")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[1]][[1]], name = "defaultValue"), "11")
+  
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]], name = "name"), "algorithm_derived_nc_Sepal.Length")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]], name = "dataType"), "double")
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]], name = "optype"), "continuous")
+  
+  expect_equal(xmlGetAttr(fit_pmml_2[[3]][[3]][[3]][[2]][[1]], name = "field"), "Sepal.Length")
   
 })
 

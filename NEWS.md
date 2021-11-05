@@ -1,6 +1,10 @@
 # pmml 2.5.0.9000
 ## Bug Fixes
-* TODO
+* Fixed tests failing on CRAN Package Check Issue Kinds (M1mac and noLD) after release of 2.5.0.
+
+## Other Changes
+* `eval_metric` is now explicitly set in `xgboost` tests to avoid warning messages.
+
 
 # pmml 2.5.0
 ## New Features
