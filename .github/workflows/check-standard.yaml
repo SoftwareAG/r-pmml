@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - master
-      - 1.5.1_fix_solaris_tests
+      - 1.5.1.9000_dev
   pull_request:
     branches:
       - main
