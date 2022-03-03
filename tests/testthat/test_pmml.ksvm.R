@@ -1,4 +1,3 @@
-library(kernlab)
 data(iris)
 
 teardown({
@@ -6,6 +5,8 @@ teardown({
 })
 
 test_that("pmml.ksvm error when a specified kernel is not supported", {
+  skip_if_not_installed("kernlab")
+  library(kernlab)
   expect_error(
     pmml(ksvm(Sepal.Length ~ ., data = iris, kernel = "laplacedot"), dataset = iris),
     "laplacedot kernel is not supported. Supported ksvm kernels: rbfdot, polydot, vanilladot, tanhdot."

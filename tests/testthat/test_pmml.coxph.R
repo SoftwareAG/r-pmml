@@ -1,15 +1,18 @@
-library(survival)
-# most of the tests are from survival::coxph doc
+# Note: most of the tests are from survival::coxph doc
 
 teardown({
   detach("package:survival", unload = TRUE)
 })
 
 test_that("error when object is not coxph", {
+  skip_if_not_installed("survival")
+  library(survival)
   expect_error(pmml.coxph("foo"), "Not a legitimate coxph object")
 })
 
 test_that("no error for stratified model", {
+  skip_if_not_installed("survival")
+  library(survival)
   # stratified model
   test1 <- list(
     time = c(4, 3, 1, 1, 2, 2, 3),
@@ -32,6 +35,8 @@ test_that("no error for stratified model", {
 })
 
 test_that("Error for multiplicative strata variables", {
+  skip_if_not_installed("survival")
+  library(survival)
   # stratified model clustered on patients
   # data(bladder)
   bladder1 <- bladder[bladder$enum < 5, ]
@@ -41,6 +46,8 @@ test_that("Error for multiplicative strata variables", {
 })
 
 test_that("Error for model with time-transform", {
+  skip_if_not_installed("survival")
+  library(survival)
   # time transform model using current age
   fit4 <- coxph(Surv(time, status) ~ ph.ecog + tt(age),
     data = lung,

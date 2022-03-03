@@ -1,4 +1,3 @@
-library(e1071)
 data("audit")
 
 set.seed(123)
@@ -20,6 +19,8 @@ teardown({
 })
 
 test_that("error when dataset is null for one-classification", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   expect_error(
     pmml(svm_model_1),
     "dataset must not be null for one-classification."
@@ -27,10 +28,14 @@ test_that("error when dataset is null for one-classification", {
 })
 
 test_that("pmml.svm no error when model is one-class svm", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   expect_silent(pmml(svm_model_1, dataset = df_1))
 })
 
 test_that("pmml.svm no error when model is one-class svm", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   # set.seed(321)
   df_2 <- na.omit(audit)
 
@@ -50,8 +55,9 @@ test_that("pmml.svm no error when model is one-class svm", {
   expect_silent(pmml(svm_model_2, dataset = df_2))
 })
 
-
 test_that("pmml.svm error when model is one-class svm and data has integer", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   # set.seed(311)
   df_3 <- na.omit(audit)
   df_3 <- df_3[, c("Age", "Income", "Deductions", "Hours", "Adjustment", "Adjusted")]
@@ -70,8 +76,9 @@ test_that("pmml.svm error when model is one-class svm and data has integer", {
   )
 })
 
-
 test_that("pmml.svm error when model is one-class svm and formula interface is used", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   data(iris)
   df_4 <- iris[, 1:3]
   fit <- svm(Petal.Length ~ ., data = df_4, type = "one-classification")
@@ -82,6 +89,8 @@ test_that("pmml.svm error when model is one-class svm and formula interface is u
 })
 
 test_that("Output node is formatted correctly for SV regression", {
+  skip_if_not_installed("e1071")
+  library(e1071)
   data(iris)
   fit <- svm(Sepal.Length ~ Sepal.Width + Petal.Length + Petal.Width, data = iris)
   fit_pmml <- pmml(fit)

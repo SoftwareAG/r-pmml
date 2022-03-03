@@ -26,6 +26,7 @@ test_that("GeneralRegressionModel/stats pmml() output contains MiningSchema, Out
 })
 
 test_that("MiningModel/randomForest pmml() output contains MiningSchema, Output, and Segmentation nodes", {
+  skip_if_not_installed("randomForest")
   library(randomForest)
   fit <- randomForest(Species ~ ., data = iris, ntree = 3)
   a <- capture.output(pmml_fit <- pmml(fit))

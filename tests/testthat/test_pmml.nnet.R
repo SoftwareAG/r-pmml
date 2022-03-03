@@ -1,4 +1,3 @@
-library(nnet)
 data(iris)
 
 # teardown({detach("package:nnet", unload=TRUE)})
@@ -8,11 +7,17 @@ test_that("error when object is not nnet", {
 })
 
 test_that("No error for formula input", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   fit_3 <- nnet(Species ~ ., data = iris, size = 4, trace = FALSE)
   expect_error(pmml.nnet(fit_3), NA)
 })
 
 test_that("No error when number of output neurons is 1", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   fit_4 <- nnet(Sepal.Width ~ Petal.Length + Petal.Width,
     data = iris,
     size = 3, trace = FALSE
@@ -22,6 +27,9 @@ test_that("No error when number of output neurons is 1", {
 
 
 test_that("No error for matrix input", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   ir <- rbind(iris3[, , 1], iris3[, , 2], iris3[, , 3])
   targets <- class.ind(c(rep("s", 50), rep("c", 50), rep("v", 50)))
   set.seed(1)
@@ -35,6 +43,9 @@ test_that("No error for matrix input", {
 })
 
 test_that("No error for data.frame input", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   ir <- as.data.frame(rbind(iris3[, , 1], iris3[, , 2], iris3[, , 3]))
   targets <- as.data.frame(class.ind(c(rep("s", 50), rep("c", 50), rep("v", 50))))
   set.seed(2)
@@ -48,6 +59,9 @@ test_that("No error for data.frame input", {
 })
 
 test_that("PMML is exported correctly when input to nnet() is not a formula", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   data(audit)
   skip("skip until export issue is resolved")
 
@@ -58,6 +72,9 @@ test_that("PMML is exported correctly when input to nnet() is not a formula", {
 })
 
 test_that("PMML is exported correctly when training data has factors", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   data(audit)
   fit <- nnet(Adjusted ~ ., data = audit, size = 3, trace = FALSE)
   pmml_fit <- pmml(fit)
@@ -67,6 +84,9 @@ test_that("PMML is exported correctly when training data has factors", {
 })
 
 test_that("PMML with 1 output neuron for classification is exported correctly", {
+  skip_if_not_installed("nnet")
+  library(nnet)
+  
   data(audit)
   audit_factor <- audit
   audit_factor$Adjusted <- as.factor(audit_factor$Adjusted)

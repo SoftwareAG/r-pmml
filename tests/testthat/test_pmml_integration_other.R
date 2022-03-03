@@ -850,6 +850,7 @@ test_that("MiningModel/gbm PMML output matches R", {
 test_that("MiningModel/randomForest PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
+  skip_if_not_installed("randomForest")
 
   library(zementisr)
   library(randomForest)

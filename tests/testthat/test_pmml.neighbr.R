@@ -1,11 +1,10 @@
-library(neighbr)
-data(iris)
-
 teardown({
   detach("package:neighbr", unload = TRUE)
 })
 
 test_that("error when transform argument is not null", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   set.seed(1131231)
   train_set <- iris[1:147, ]
   test_set <- iris[148:150, !names(iris) %in% c("Species")]
@@ -27,6 +26,8 @@ test_that("error when object is not neighbr", {
 })
 
 test_that("pmml.neighbr produces expected elements for function_name=mixed", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   data(iris)
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]
@@ -53,6 +54,8 @@ test_that("pmml.neighbr produces expected elements for function_name=mixed", {
 })
 
 test_that("pmml.neighbr produces expected elements for function_name=regression", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   data(iris)
 
   iris <- iris[, -which(names(iris) %in% c("Species"))]
@@ -80,8 +83,9 @@ test_that("pmml.neighbr produces expected elements for function_name=regression"
   expect_equal(toString(fit_pmml[[3]][[1]]), "<MiningSchema>\n <MiningField name=\"Sepal.Length\" usageType=\"active\"/>\n <MiningField name=\"Sepal.Width\" usageType=\"active\"/>\n <MiningField name=\"Petal.Length\" usageType=\"active\"/>\n <MiningField name=\"Petal.Width\" usageType=\"predicted\"/>\n</MiningSchema>")
 })
 
-
 test_that("pmml.neighbr produces expected elements for function_name=classification", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   data(iris)
 
   iris$ID <- c(1:150)
@@ -109,6 +113,8 @@ test_that("pmml.neighbr produces expected elements for function_name=classificat
 })
 
 test_that("pmml.neighbr produces expected elements for function_name=clustering", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   data(iris)
 
   iris <- iris[, -which(names(iris) %in% c("Species"))]
@@ -137,10 +143,9 @@ test_that("pmml.neighbr produces expected elements for function_name=clustering"
   expect_equal(toString(fit_pmml[[3]][[1]]), "<MiningSchema>\n <MiningField name=\"Sepal.Length\" usageType=\"active\"/>\n <MiningField name=\"Sepal.Width\" usageType=\"active\"/>\n <MiningField name=\"Petal.Length\" usageType=\"active\"/>\n <MiningField name=\"Petal.Width\" usageType=\"active\"/>\n</MiningSchema>")
 })
 
-
-
-
 test_that("error when transforms are not NULL", {
+  skip_if_not_installed("neighbr")
+  library(neighbr)
   data(iris)
   iris$ID <- c(1:150)
   train_set <- iris[1:140, ]

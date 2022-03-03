@@ -1,8 +1,5 @@
 # Additional tests with transformations
 
-library(rpart)
-# library(zementisr)
-
 data(iris)
 data(audit)
 audit_factor <- audit
@@ -22,7 +19,9 @@ test_that("Transformations PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
+  skip_if_not_installed("rpart")
   library(zementisr)
+  library(rpart)
 
   box_obj <- xform_wrap(iris_p)
   box_obj <- xform_function(box_obj,
@@ -320,6 +319,7 @@ test_that("Transformations PMML matches R 2", {
   skip_on_cran()
   skip_on_ci()
 
+  skip_if_not_installed("randomForest")
   library(randomForest)
   library(zementisr)
   iris_box_1 <- xform_wrap(iris)

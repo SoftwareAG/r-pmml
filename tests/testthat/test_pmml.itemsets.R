@@ -1,11 +1,11 @@
-library(arules)
-
 test_that("error when object is not itemsets", {
   expect_error(pmml.itemsets("foo"), "Not a legitimate arules itemsets rules object")
 })
 
 
 test_that("pmml.itemsets produces correct PMML", {
+  skip_if_not_installed("arules")
+  library(arules)
   # Example from arules::itemsets
   data("Adult")
 

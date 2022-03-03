@@ -1,12 +1,14 @@
 # these tests use examples from cv.glmnet documentation
 
-library(glmnet)
+
 
 teardown({
   detach("package:glmnet", unload = TRUE)
 })
 
 test_that("pmml.cv.glmnet throws no error when family is gaussian", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   x <- matrix(rnorm(100 * 20), 100, 20)
   y <- rnorm(100)
   fit1 <- cv.glmnet(x, y)
@@ -14,6 +16,8 @@ test_that("pmml.cv.glmnet throws no error when family is gaussian", {
 })
 
 test_that("pmml.cv.glmnet throws error when family is mgaussian", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   x <- matrix(rnorm(100 * 20), 100, 20)
   y <- matrix(rnorm(100 * 3), 100, 3)
   fit1m <- cv.glmnet(x, y, family = "mgaussian")
@@ -24,6 +28,8 @@ test_that("pmml.cv.glmnet throws error when family is mgaussian", {
 })
 
 test_that("pmml.cv.glmnet throws error when family is binomial", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   x <- matrix(rnorm(100 * 20), 100, 20)
   g2 <- sample(1:2, 100, replace = TRUE)
   fit2 <- cv.glmnet(x, g2, family = "binomial")
@@ -34,6 +40,8 @@ test_that("pmml.cv.glmnet throws error when family is binomial", {
 })
 
 test_that("pmml.cv.glmnet throws error when family is multinomial", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   x <- matrix(rnorm(100 * 20), 100, 20)
   g4 <- sample(1:4, 100, replace = TRUE)
   fit3 <- cv.glmnet(x, g4, family = "multinomial")
@@ -49,6 +57,8 @@ test_that("pmml.cv.glmnet throws error when family is multinomial", {
 })
 
 test_that("pmml.cv.glmnet throws no error when family is poisson", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   N <- 500
   p <- 20
   nzc <- 5
@@ -62,6 +72,8 @@ test_that("pmml.cv.glmnet throws no error when family is poisson", {
 })
 
 test_that("pmml.cv.glmnet throws error when family is cox", {
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   set.seed(10101)
   N <- 1000
   p <- 30
@@ -81,7 +93,8 @@ test_that("pmml.cv.glmnet throws error when family is cox", {
 })
 
 test_that("pmml.cv.glmnet throws no error when input is sparse matrix", {
-  # n=10000;p=200
+  skip_if_not_installed("glmnet")
+  library(glmnet)
   n <- 1000
   p <- 20
   nzc <- trunc(p / 10)

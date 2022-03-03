@@ -1,8 +1,11 @@
-library(gbm)
 data(audit)
 
 
 test_that("pmml.gbm final Segment contains modelName attribute", {
+  
+  skip_if_not_installed("gbm")
+  library(gbm)
+  
   audit_dat <- audit[, -c(1, 4, 6, 9, 10, 11, 12)]
   fit <- gbm(Adjusted ~ ., data = audit_dat, n.trees = 3, interaction.depth = 4, distribution = "multinomial")
   p_fit <- pmml(fit)

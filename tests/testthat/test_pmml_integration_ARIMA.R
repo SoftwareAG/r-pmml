@@ -110,7 +110,6 @@ test_that("TimeSeriesModel/forecast PMML output matches R for non-seasonal and t
   skip_on_ci()
   # skip("skip non-seasonal ts_type='arima'")
 
-  skip_if_not_installed("zementisr")
   skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)
@@ -186,7 +185,6 @@ test_that("TimeSeriesModel/forecast PMML output matches R for seasonal,ts_type='
   skip_on_ci()
   # skip("skip seasonal CLS")
 
-  skip_if_not_installed("zementisr")
   skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)
@@ -272,7 +270,6 @@ test_that("TimeSeriesModel/forecast PMML output matches R for statespace represe
   skip_on_ci()
   # skip("skip statespace")
 
-  skip_if_not_installed("zementisr")
   skip_if_not_installed("forecast")
   library(zementisr)
   library(forecast)

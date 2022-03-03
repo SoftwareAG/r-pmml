@@ -1,4 +1,3 @@
-library(ada)
 data(audit)
 
 test_that("pmml.ada error when object is not ada", {
@@ -7,6 +6,8 @@ test_that("pmml.ada error when object is not ada", {
 })
 
 test_that("Elements and attributes are correct", {
+  skip_if_not_installed("ada")
+  library(ada)
   fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
   fit_pmml <- pmml(fit)
 

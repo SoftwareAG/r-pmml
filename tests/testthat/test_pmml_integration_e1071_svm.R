@@ -27,6 +27,7 @@ test_that("AnomalyDetectionModel/e1071 one-classification PMML output matches R"
   skip_on_cran()
   skip_on_ci()
 
+  skip_if_not_installed("e1071")
   library(e1071)
   library(zementisr)
 
@@ -274,6 +275,7 @@ test_that("SupportVectorMachineModel/e1071 PMML output matches R", {
   skip_on_cran()
   skip_on_ci()
 
+  skip_if_not_installed("e1071")
   library(e1071)
   library(zementisr)
 
