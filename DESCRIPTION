@@ -28,7 +28,6 @@ Suggests:
     neighbr,
     nnet,
     rpart,
-    randomForestSRC (<= 2.5.0),
     randomForest,
     rattle,
     kernlab,

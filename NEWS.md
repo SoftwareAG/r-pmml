@@ -1,5 +1,6 @@
 # pmml 2.5.1.9000
-
+## Breaking Changes
+* Removed support for RandomForestSRC package.
 
 # pmml 2.5.1
 ## Bug Fixes

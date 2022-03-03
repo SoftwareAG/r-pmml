@@ -67,7 +67,6 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          remotes::install_version("randomForestSRC", "2.5.0")
           remotes::install_github("alex23lemm/zementisr")
           remotes::install_github("gravesee/isofor")
           remotes::install_cran("rcmdcheck")

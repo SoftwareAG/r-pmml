@@ -47,7 +47,6 @@ This package supports the following packages and model types:
     - [ada](https://CRAN.R-project.org/package=ada): `ada`
     - [gbm](https://CRAN.R-project.org/package=gbm): `gbm` with "bernoulli", "poisson", and "multinomial" distribution types
     - [randomForest](https://CRAN.R-project.org/package=randomForest): `randomForest`
-    - [randomForestSRC](https://CRAN.R-project.org/package=randomForestSRC) (version 2.5.0): `randomSurvivalForest`
     - [rpart](https://CRAN.R-project.org/package=rpart): `rpart`
     - [xgboost](https://CRAN.R-project.org/package=xgboost): `xgb.Booster` with "multi:softprob", "multi:softmax", and "binary:logistic" objectives
 - Other Packages

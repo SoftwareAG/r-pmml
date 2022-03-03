@@ -115,7 +115,6 @@ iris_trans_pmml <- pmml(NULL, transforms = iris_trans)
 \code{\link{pmml.kmeans}}, \code{\link{pmml.ksvm}}, \code{\link{pmml.lm}},
 \code{\link{pmml.multinom}}, \code{\link{pmml.naiveBayes}},
 \code{\link{pmml.neighbr}}, \code{\link{pmml.nnet}},
-\code{\link{pmml.randomForest}}, \code{\link{pmml.rfsrc}},
 \code{\link{pmml.rpart}}, \code{\link{pmml.svm}},
 \code{\link{pmml.xgb.Booster}}
 }
