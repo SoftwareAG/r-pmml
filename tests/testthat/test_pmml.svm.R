@@ -7,7 +7,7 @@ teardown({
 test_that("error when dataset is null for one-classification", {
   skip_if_not_installed("e1071")
   library(e1071)
-  
+
   set.seed(123)
   ft_1 <- runif(100) * 10
   ft_2 <- runif(100) * 7
@@ -15,13 +15,13 @@ test_that("error when dataset is null for one-classification", {
   anom_rows <- sample(1:100, 5)
   df_1[anom_rows, 1] <- sample(20:30, 5)
   df_1[anom_rows, 2] <- sample(20:30, 5)
-  
+
   svm_model_1 <- svm(df_1,
-                     y = NULL, type = "one-classification",
-                     nu = 0.10, scale = TRUE, kernel = "radial"
+    y = NULL, type = "one-classification",
+    nu = 0.10, scale = TRUE, kernel = "radial"
   )
-  
-  
+
+
   expect_error(
     pmml(svm_model_1),
     "dataset must not be null for one-classification."
@@ -31,7 +31,7 @@ test_that("error when dataset is null for one-classification", {
 test_that("pmml.svm no error when model is one-class svm", {
   skip_if_not_installed("e1071")
   library(e1071)
-  
+
   set.seed(123)
   ft_1 <- runif(100) * 10
   ft_2 <- runif(100) * 7
@@ -39,13 +39,13 @@ test_that("pmml.svm no error when model is one-class svm", {
   anom_rows <- sample(1:100, 5)
   df_1[anom_rows, 1] <- sample(20:30, 5)
   df_1[anom_rows, 2] <- sample(20:30, 5)
-  
+
   svm_model_1 <- svm(df_1,
-                     y = NULL, type = "one-classification",
-                     nu = 0.10, scale = TRUE, kernel = "radial"
+    y = NULL, type = "one-classification",
+    nu = 0.10, scale = TRUE, kernel = "radial"
   )
-  
-  
+
+
   expect_silent(pmml(svm_model_1, dataset = df_1))
 })
 
