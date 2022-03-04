@@ -1,10 +1,8 @@
 # these tests use examples from cv.glmnet documentation
 
-
-
-teardown({
-  detach("package:glmnet", unload = TRUE)
-})
+# teardown({
+#   detach("package:glmnet", unload = TRUE)
+# })
 
 test_that("pmml.cv.glmnet throws no error when family is gaussian", {
   skip_if_not_installed("glmnet")

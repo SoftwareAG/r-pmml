@@ -1,4 +1,5 @@
 test_that("datadictionary error when features with unsupported class are used in tree model", {
+  skip_if_not_installed("rpart")
   library(rpart)
   data(kyphosis)
   kyphosis[1, 2] <- ""

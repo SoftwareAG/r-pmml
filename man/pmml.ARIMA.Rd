@@ -74,6 +74,7 @@ Models with a drift term will be supported in a future version.
 Transforms are currently not supported for ARIMA models.
 }
 \examples{
+\dontrun{
 library(forecast)
 
 # non-seasonal model
@@ -93,6 +94,8 @@ mod_02_pmml <- pmml(mod_02)
 data("WWWusage")
 mod <- Arima(WWWusage, order = c(3, 1, 1))
 mod_pmml <- pmml(mod, ts_type = "arima")
+}
+
 }
 \author{
 Dmitriy Bolotov

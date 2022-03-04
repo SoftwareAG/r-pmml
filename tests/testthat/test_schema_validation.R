@@ -1,9 +1,9 @@
-library(clue)
-library(data.table)
-library(caret)
-library(Matrix)
-library(neighbr)
-library(forecast)
+# library(clue)
+# library(data.table)
+# library(caret)
+# library(Matrix)
+# library(neighbr)
+# library(forecast)
 
 data(iris)
 data(audit)
@@ -136,7 +136,7 @@ test_that("TimeSeries/Arima PMML validates against schema", {
   skip_on_ci()
 
   skip_if_not_installed("forecast")
-  # library()
+  library(forecast)
 
   fit <- Arima(WWWusage, order = c(1, 0, 1))
   expect_equal(validate_pmml(pmml(fit), schema), 0)
@@ -203,6 +203,9 @@ test_that("AnomalyDetectionModel/iForest PMML validates against schema", {
 test_that("ClusteringModel/stats kmeans PMML validates against schema", {
   skip_on_cran()
   skip_on_ci()
+  
+  skip_if_not_installed("clue")
+  library(clue)
 
   fit <- kmeans(audit[, c(2, 7, 9, 10, 12)], 2)
   expect_equal(validate_pmml(pmml(fit), schema), 0)

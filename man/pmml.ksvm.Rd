@@ -58,12 +58,14 @@ The argument \code{dataset} is required since the \code{ksvm} object does not
 contain information about the used categorical variable.
 }
 \examples{
+\dontrun{
 # Train a support vector machine to perform classification.
 library(kernlab)
 
 model <- ksvm(Species ~ ., data = iris)
 
 model_pmml <- pmml(model, dataset = iris)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=kernlab}{kernlab: Kernel-based

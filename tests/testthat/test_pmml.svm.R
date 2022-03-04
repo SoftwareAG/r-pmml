@@ -1,8 +1,8 @@
 data("audit")
 
-teardown({
-  detach("package:e1071", unload = TRUE)
-})
+# teardown({
+#   detach("package:e1071", unload = TRUE)
+# })
 
 test_that("error when dataset is null for one-classification", {
   skip_if_not_installed("e1071")

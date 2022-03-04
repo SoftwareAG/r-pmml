@@ -16,6 +16,9 @@ test_that("xform_wrap box$field_data contains specific column names", {
 })
 
 test_that("xform_wrap does not convert all columns to factors for tibbles", {
+  skip_if_not_installed("tibble")
+  library(tibble)
+  
   rtbl <- as_tibble(iris)
   rtbl_box <- xform_wrap(rtbl)
   expect_equal(

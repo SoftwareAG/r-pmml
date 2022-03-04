@@ -47,9 +47,11 @@ categorical and multiplicative terms involving both numerical and
 categorical variables.
 }
 \examples{
+\dontrun{
 library(nnet)
 fit <- multinom(Species ~ ., data = iris)
 fit_pmml <- pmml(fit)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=nnet}{nnet: Feed-forward

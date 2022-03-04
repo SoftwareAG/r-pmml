@@ -39,11 +39,13 @@
 #' Neural Networks and Multinomial Log-Linear Models (on CRAN)}
 #'
 #' @examples
+#' \dontrun{
 #' library(nnet)
 #' fit <- nnet(Species ~ ., data = iris, size = 4)
 #' fit_pmml <- pmml(fit)
 #'
 #' rm(fit)
+#' }
 #' @export pmml.nnet
 #' @export
 pmml.nnet <- function(model,

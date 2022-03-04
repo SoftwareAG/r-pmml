@@ -53,6 +53,7 @@
 #' \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/hclust.html}{R project: Hierarchical Clustering}
 #'
 #' @examples
+#' \dontrun{
 #'
 #' # Cluster the 4 numeric variables of the iris dataset.
 #' library(amap)
@@ -67,6 +68,7 @@
 #'
 #' # Convert to pmml
 #' model_pmml <- pmml(model, centers = centerInfo)
+#' }
 #' @export pmml.hclust
 #' @export
 pmml.hclust <- function(model,

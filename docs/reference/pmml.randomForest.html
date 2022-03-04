@@ -135,41 +135,16 @@ Breiman and Cutler's random forests for classification and regression</a></p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Build a randomForest model</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># Build a randomForest model</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.stat.berkeley.edu/~breiman/RandomForests/" class="external-link">randomForest</a></span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> randomForest 4.7-1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Type rfNews() to see new features/changes/bug fixes.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: 'randomForest'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from 'package:rattle':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     importance</span>
 <span class="r-in"><span class="va">iris_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/randomForest/man/randomForest.html" class="external-link">randomForest</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">iris</span>, ntree <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Convert to pmml</span></span>
 <span class="r-in"><span class="va">iris_rf_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="pmml.html">pmml</a></span><span class="op">(</span><span class="va">iris_rf</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  1  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  2  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  3  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  4  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  5  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  6  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  7  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  8  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  9  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  10  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  11  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  12  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  13  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  14  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  15  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  16  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  17  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  18  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  19  to PMML</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Now converting tree  20  to PMML</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">iris_rf</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>

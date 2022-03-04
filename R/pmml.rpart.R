@@ -41,11 +41,13 @@
 #' Partitioning (on CRAN)}
 #'
 #' @examples
+#' \dontrun{
 #' library(rpart)
 #'
 #' fit <- rpart(Species ~ ., data = iris)
 #'
 #' fit_pmml <- pmml(fit)
+#' }
 #' @export pmml.rpart
 #' @export
 pmml.rpart <- function(model,

@@ -39,9 +39,10 @@
 #' \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/lm.html}{R project: Fitting Linear Models}
 #'
 #' @examples
-#'
+#'\dontrun{
 #' fit <- lm(Sepal.Length ~ ., data = iris)
 #' fit_pmml <- pmml(fit)
+#' }
 #' @export pmml.lm
 #' @export
 pmml.lm <- function(model,

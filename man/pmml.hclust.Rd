@@ -63,6 +63,7 @@ The hclust object will be approximated by \code{k} centroids and is
 converted into a PMML representation for kmeans clusters.
 }
 \examples{
+\dontrun{
 
 # Cluster the 4 numeric variables of the iris dataset.
 library(amap)
@@ -77,6 +78,7 @@ centerInfo <- centers.hclust(iris[, -5], model, 3)
 
 # Convert to pmml
 model_pmml <- pmml(model, centers = centerInfo)
+}
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/hclust.html}{R project: Hierarchical Clustering}

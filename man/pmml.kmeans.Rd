@@ -51,7 +51,7 @@ all the variables; these operations can be done using transforms so that the
 normalization information is included in PMML.
 }
 \examples{
-
+\dontrun{
 ds <- rbind(
   matrix(rnorm(100, sd = 0.3), ncol = 2),
   matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
@@ -59,6 +59,7 @@ ds <- rbind(
 colnames(ds) <- c("Dimension1", "Dimension2")
 cl <- kmeans(ds, 2)
 cl_pmml <- pmml(cl)
+}
 }
 \references{
 \href{http://stat.ethz.ch/R-manual/R-devel/library/stats/html/kmeans.html}{R

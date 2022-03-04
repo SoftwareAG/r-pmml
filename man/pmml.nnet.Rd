@@ -47,11 +47,13 @@ This function supports both regression and classification neural
 network models. The model is represented in the PMML NeuralNetwork format.
 }
 \examples{
+\dontrun{
 library(nnet)
 fit <- nnet(Species ~ ., data = iris, size = 4)
 fit_pmml <- pmml(fit)
 
 rm(fit)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=nnet}{nnet: Feed-forward

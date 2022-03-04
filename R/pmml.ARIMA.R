@@ -57,6 +57,7 @@
 #' @author Dmitriy Bolotov
 #'
 #' @examples
+#' \dontrun{
 #' library(forecast)
 #'
 #' # non-seasonal model
@@ -76,6 +77,8 @@
 #' data("WWWusage")
 #' mod <- Arima(WWWusage, order = c(3, 1, 1))
 #' mod_pmml <- pmml(mod, ts_type = "arima")
+#' }
+#' 
 #' @export pmml.ARIMA
 #' @export
 pmml.ARIMA <- function(model,

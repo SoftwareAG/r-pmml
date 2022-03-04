@@ -50,11 +50,13 @@ Supports regression tree as well as classification. The object is
 represented in the PMML TreeModel format.
 }
 \examples{
+\dontrun{
 library(rpart)
 
 fit <- rpart(Species ~ ., data = iris)
 
 fit_pmml <- pmml(fit)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=rpart}{rpart: Recursive

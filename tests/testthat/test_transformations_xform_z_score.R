@@ -32,6 +32,7 @@ test_that("PMML with xform_z_score has correct localTransformations", {
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "field"), "Sepal.Width")
 
   # one-class svm
+  skip_if_not_installed("e1071")
   library(e1071)
   fit_2 <- svm(iris_box$data[, 6:7], y = NULL, type = "one-classification")
   fit_pmml_2 <- pmml(fit_2, dataset = iris_box$data[, 6:7], transforms = iris_box)

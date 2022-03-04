@@ -43,6 +43,7 @@
 #' Breiman and Cutler's random forests for classification and regression}
 #'
 #' @examples
+#' \dontrun{
 #' # Build a randomForest model
 #' library(randomForest)
 #' iris_rf <- randomForest(Species ~ ., data = iris, ntree = 20)
@@ -51,6 +52,7 @@
 #' iris_rf_pmml <- pmml(iris_rf)
 #'
 #' rm(iris_rf)
+#' }
 #' @export pmml.randomForest
 #' @export
 pmml.randomForest <- function(model,

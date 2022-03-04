@@ -1,8 +1,8 @@
 # Note: most of the tests are from survival::coxph doc
 
-teardown({
-  detach("package:survival", unload = TRUE)
-})
+# teardown({
+#   detach("package:survival", unload = TRUE)
+# })
 
 test_that("error when object is not coxph", {
   skip_if_not_installed("survival")

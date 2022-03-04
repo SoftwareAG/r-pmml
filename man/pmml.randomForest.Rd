@@ -56,6 +56,7 @@ Generate the PMML representation for a randomForest object from the package
 This function outputs a Random Forest in PMML format.
 }
 \examples{
+\dontrun{
 # Build a randomForest model
 library(randomForest)
 iris_rf <- randomForest(Species ~ ., data = iris, ntree = 20)
@@ -64,6 +65,7 @@ iris_rf <- randomForest(Species ~ ., data = iris, ntree = 20)
 iris_rf_pmml <- pmml(iris_rf)
 
 rm(iris_rf)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=randomForest}{randomForest:

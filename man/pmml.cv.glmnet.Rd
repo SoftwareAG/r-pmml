@@ -69,6 +69,7 @@ Currently, only \code{gaussian} and \code{poisson} family types are
 supported.
 }
 \examples{
+\dontrun{
 library(glmnet)
 
 # Create a simple predictor (x) and response(y) matrices:
@@ -97,6 +98,7 @@ model2 <- cv.glmnet(x, y, family = "poisson")
 # Output the regression model in PMML format at the lambda
 # parameter = 0.006:
 model2_pmml <- pmml(model2, s = 0.006)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=glmnet}{glmnet: Lasso and

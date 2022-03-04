@@ -43,7 +43,7 @@
 #' project: K-Means Clustering}
 #'
 #' @examples
-#'
+#' \dontrun{
 #' ds <- rbind(
 #'   matrix(rnorm(100, sd = 0.3), ncol = 2),
 #'   matrix(rnorm(100, mean = 1, sd = 0.3), ncol = 2)
@@ -51,6 +51,7 @@
 #' colnames(ds) <- c("Dimension1", "Dimension2")
 #' cl <- kmeans(ds, 2)
 #' cl_pmml <- pmml(cl)
+#' }
 #' @export pmml.kmeans
 #' @export
 pmml.kmeans <- function(model,

@@ -44,6 +44,7 @@ test_that(".pmmlLocalTransformationsAD sets dataType and optype provided in tran
   # .pmmlLocalTransformationsAD is only used by pmml.svm(). e1071::svm()
   # requires training data to be numeric.
 
+  skip_if_not_installed("e1071")
   library(e1071)
   iris_box_1 <- xform_wrap(iris[, 1:4])
   iris_box_1 <- xform_function(

@@ -57,6 +57,7 @@ with the value 0 are replaced by the threshold value. The two values will
 therefore not match exactly for cases involving very small probabilities.
 }
 \examples{
+\dontrun{
 library(e1071)
 
 data(houseVotes84)
@@ -65,6 +66,7 @@ house <- na.omit(houseVotes84)
 model <- naiveBayes(Class ~ V1 + V2 + V3, data = house, threshold = 0.003)
 
 model_pmml <- pmml(model, dataset = house, predicted_field = "Class")
+}
 }
 \references{
 \itemize{

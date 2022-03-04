@@ -1,6 +1,6 @@
-teardown({
-  detach("package:neighbr", unload = TRUE)
-})
+# teardown({
+#   detach("package:neighbr", unload = TRUE)
+# })
 
 test_that("error when transform argument is not null", {
   skip_if_not_installed("neighbr")

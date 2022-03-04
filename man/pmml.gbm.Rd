@@ -51,6 +51,7 @@ For all cases, the model output includes the gbm prediction type
 "link" and "response".
 }
 \examples{
+\dontrun{
 library(gbm)
 data(audit)
 
@@ -70,6 +71,7 @@ mod2 <- gbm(Species ~ .,
 # The PMML will include a regression model to read the gbm object outputs
 # and convert to a "response" prediction type.
 mod2_pmml <- pmml(mod2)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=gbm}{gbm: Generalized Boosted

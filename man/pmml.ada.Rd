@@ -62,11 +62,13 @@ last 3 outputs are the predicted class and the probabilities of each of the
 classification models).
 }
 \examples{
+\dontrun{
 library(ada)
 data(audit)
 
 fit <- ada(Adjusted ~ Employment + Education + Hours + Income, iter = 3, audit)
 fit_pmml <- pmml(fit)
+}
 }
 \references{
 \href{https://CRAN.R-project.org/package=ada}{ada: an R package for

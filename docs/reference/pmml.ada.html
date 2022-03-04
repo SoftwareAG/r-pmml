@@ -135,12 +135,13 @@ stochastic boosting (on CRAN)</a></p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ada</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rpart</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ada</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">audit</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ada/man/ada.html" class="external-link">ada</a></span><span class="op">(</span><span class="va">Adjusted</span> <span class="op">~</span> <span class="va">Employment</span> <span class="op">+</span> <span class="va">Education</span> <span class="op">+</span> <span class="va">Hours</span> <span class="op">+</span> <span class="va">Income</span>, iter <span class="op">=</span> <span class="fl">3</span>, <span class="va">audit</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">fit_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="pmml.html">pmml</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>

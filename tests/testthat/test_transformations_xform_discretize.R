@@ -57,6 +57,7 @@ test_that("PMML with xform_discretize has correct localTransformations", {
   expect_equal(xmlGetAttr(fit_pmml[[3]][[3]][[1]][[1]], name = "defaultValue"), "11")
 
   # one-class svm; this transformation is not usable because svm expects numeric, not factor input
+  skip_if_not_installed("e1071")
   library(e1071)
   fit_2 <- svm(iris_box$data[, 1:4], y = NULL, type = "one-classification")
   fit_pmml_2 <- pmml(fit_2, dataset = iris_box$data[, 1:4], transforms = iris_box)
