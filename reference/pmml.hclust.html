@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pmml</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.2</span>
       </span>
     </div>
 
@@ -136,25 +136,11 @@ converted into a PMML representation for kmeans clusters.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"></span>
 <span class="r-in"><span class="co"># Cluster the 4 numeric variables of the iris dataset.</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">amap</span><span class="op">)</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rattle.togaware.com/" class="external-link">rattle</a></span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: tibble</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: bitops</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: 'bitops'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from 'package:Matrix':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     %&amp;%</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Rattle: A free graphical interface for data science with R.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Version 5.4.0 Copyright (c) 2006-2020 Togaware Pty Ltd.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Type 'rattle()' to shake, rattle, and roll your data.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: 'rattle'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked _by_ '.GlobalEnv':</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     audit</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/amap/man/hcluster.html" class="external-link">hclusterpar</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>, <span class="op">-</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
 <span class="r-in"></span>
@@ -165,6 +151,7 @@ converted into a PMML representation for kmeans clusters.</p>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># Convert to pmml</span></span>
 <span class="r-in"><span class="va">model_pmml</span> <span class="op">&lt;-</span> <span class="fu"><a href="pmml.html">pmml</a></span><span class="op">(</span><span class="va">model</span>, centers <span class="op">=</span> <span class="va">centerInfo</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </div>
