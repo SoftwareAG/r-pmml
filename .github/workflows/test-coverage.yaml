@@ -3,7 +3,7 @@ on:
     branches:
       - main
       - master
-      - 2.5.2.9000_dev
+      - 1.5.1.9000_dev
   pull_request:
     branches:
       - main
